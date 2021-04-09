@@ -50,7 +50,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-
     //navigation
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.navigation:navigation-fragment-ktx:${Versions.navigation_version}"
@@ -75,10 +74,7 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:${Versions.dagger_version}"
     kapt "com.google.dagger:hilt-android-compiler:${Versions.dagger_version}"
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
 
-    //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}"
@@ -93,4 +89,5 @@ dependencies {
     kapt "androidx.room:room-compiler:${Versions.room_version}"
     implementation "androidx.room:room-rxjava2:${Versions.room_version}"
     implementation "androidx.room:room-ktx:${Versions.room_version}"
+
 }
