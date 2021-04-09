@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".home.HomeFragment">
+        tools:context=".ReviewSearchAddressFragment">
+
 
         <com.example.zeepyforandroid.ZeepyToolbar
             android:id="@+id/review_toolbar"
@@ -46,31 +46,6 @@
             app:layout_constraintTop_toBottomOf="@id/textview_search_address"/>
 
 
-        <TextView
-            android:id="@+id/textview_search_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:text="이 집이 맞나요?"
-            android:textColor="@color/zeepy_black_3b"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/edittext_search_address"
-            app:layout_constraintTop_toBottomOf="@id/edittext_search_address"
-            app:layout_constraintVertical_bias="0.08" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_result_house"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical"
-            tools:listitem="@layout/item_result_house"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/edittext_search_address"
-            app:layout_constraintStart_toStartOf="@+id/edittext_search_address"
-            app:layout_constraintTop_toBottomOf="@id/textview_search_result" />
 
 
 

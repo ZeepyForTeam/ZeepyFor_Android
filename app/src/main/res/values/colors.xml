@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#397be6</color>
+    <color name="colorPrimaryDark">#172742</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="colorTransparent">#00000000</color>
+
+    <color name="zeepy_black_3b">#3b3b3b</color>
+    <color name="zeepy_black_2a">#2a323b</color>
+    <color name="zeepy_blue_5f">#5f86f1</color>
+    <color name="zeepy_gray_9a">#9a9fa3</color>
+    <color name="zeepy_gray_f4">#f4f4f4</color>
+    
 </resources>
