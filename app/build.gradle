@@ -30,6 +30,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+        
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -50,7 +57,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //navigation
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.navigation:navigation-fragment-ktx:${Versions.navigation_version}"
     implementation "androidx.navigation:navigation-ui-ktx:${Versions.navigation_version}"
@@ -74,20 +80,19 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:${Versions.dagger_version}"
     kapt "com.google.dagger:hilt-android-compiler:${Versions.dagger_version}"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
 
+    //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}"
     kapt "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle_version}"
 
-    //Fragment-Ktx
+    //Fragment-ktx
     implementation "androidx.fragment:fragment-ktx:${Versions.fragment_ktx_version}"
 
-
-    //Room
-    implementation "androidx.room:room-runtime:${Versions.room_version}"
-    kapt "androidx.room:room-compiler:${Versions.room_version}"
-    implementation "androidx.room:room-rxjava2:${Versions.room_version}"
-    implementation "androidx.room:room-ktx:${Versions.room_version}"
+    //Activity-ktx
+    implementation "androidx.activity:activity-ktx:${Versions.activity_ktx_version}"
 
 }

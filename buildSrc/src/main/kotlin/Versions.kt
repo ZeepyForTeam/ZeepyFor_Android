@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin_version = "1.4.30"
+    const val kotlin_version = "1.4.3"
 
     const val retrofit_version = "2.9.0"
     const val okhttp_version = "4.9.0"
