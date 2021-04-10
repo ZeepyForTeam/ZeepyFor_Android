@@ -1,11 +1,11 @@
-package com.example.zeepyforandroid
+package com.example.zeepyforandroid.customview
 
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ViewZeepyToolbarBinding
 
 class ZeepyToolbar : ConstraintLayout {
