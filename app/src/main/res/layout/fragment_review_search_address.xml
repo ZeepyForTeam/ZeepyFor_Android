@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable
-            name="view"
-            type="android.view.View" />
+
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -46,7 +45,6 @@
             app:layout_constraintDimensionRatio="8.5:1"
             android:layout_marginTop="12dp"
             android:textSize="12sp"
-            android:text="@={viewModel.searchQuery}"
             android:paddingStart="15dp"
             android:drawableLeft="@drawable/icon_search"
             android:drawablePadding="10dp"
@@ -59,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/textview_search_address"/>
 
         <TextView
-            android:id="@+id/button_delete_all"
+            android:id="@+id/button_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="검색"

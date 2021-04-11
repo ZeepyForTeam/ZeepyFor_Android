@@ -18,7 +18,7 @@
             android:id="@+id/textview_name_house"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_black_3b"
             android:text="@{data.buildingName}"
@@ -57,9 +57,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_blue_5f"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:text="집주인 성향"
-            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintVertical_bias="0.18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/textview_name_house"
             app:layout_constraintTop_toBottomOf="@id/textview_name_house" />
@@ -71,7 +71,7 @@
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:text="@{data.personalityReview}"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/textview_personality"
             app:layout_constraintStart_toStartOf="@+id/textview_building_review"
             app:layout_constraintTop_toTopOf="@id/textview_personality"
@@ -85,10 +85,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_blue_5f"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:text="건물 평가"
-            app:layout_constraintVertical_bias="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/textview_personality"
             app:layout_constraintTop_toBottomOf="@id/textview_personality_review" />
 
@@ -99,7 +98,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:text="@{data.buildingReview}"
             android:layout_marginStart="15dp"
             app:layout_constraintVertical_bias="0.1"
@@ -107,6 +106,48 @@
             app:layout_constraintStart_toEndOf="@id/textview_building"
             app:layout_constraintTop_toTopOf="@id/textview_building"
             tools:text="여기서 살고싶어 여기" />
+
+
+        <TextView
+            android:id="@+id/textview_building_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:text="@{data.buildingType}"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/textview_building"
+            app:layout_constraintTop_toBottomOf="@id/textview_building"
+            tools:text="빌라"/>
+
+        <TextView
+            android:id="@+id/textview_room_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:text="@{data.roomType}"
+            android:layout_marginStart="7dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_building_type"
+            app:layout_constraintStart_toEndOf="@id/textview_building_type"
+            app:layout_constraintTop_toTopOf="@id/textview_building_type"
+            tools:text="투룸"/>
+
+        <TextView
+            android:id="@+id/textview_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:text="@{data.floor}"
+            android:layout_marginStart="7dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_room_type"
+            app:layout_constraintStart_toEndOf="@id/textview_room_type"
+            app:layout_constraintTop_toTopOf="@id/textview_room_type"
+            tools:text="3층"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
