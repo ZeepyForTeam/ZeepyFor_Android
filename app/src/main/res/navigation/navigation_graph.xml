@@ -9,7 +9,11 @@
         android:id="@+id/mainFrameFragment"
         android:name="com.example.zeepyforandroid.mainframe.MainFrameFragment"
         android:label="fragment_main_frame"
-        tools:layout="@layout/fragment_main_frame" />
+        tools:layout="@layout/fragment_main_frame" >
+        <action
+            android:id="@+id/action_mainFrameFragment_to_reviewSearchAddressFragment"
+            app:destination="@id/reviewSearchAddressFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/singInFragment"
@@ -29,4 +33,10 @@
         android:name="com.example.zeepyforandroid.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+
+    <fragment
+        android:id="@+id/reviewSearchAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.ReviewSearchAddressFragment"
+        android:label="fragment_review_search_address"
+        tools:layout="@layout/fragment_review_search_address"/>
 </navigation>

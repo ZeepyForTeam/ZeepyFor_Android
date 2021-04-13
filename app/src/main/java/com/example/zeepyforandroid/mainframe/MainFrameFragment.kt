@@ -2,30 +2,25 @@ package com.example.zeepyforandroid.mainframe
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.FragmentMainFrameBinding
 import java.lang.RuntimeException
 
 
-class MainFrameFragment : Fragment() {
-    private lateinit var binding: FragmentMainFrameBinding
+class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
     private val viewModel: MainFrameViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentMainFrameBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return binding.root
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMainFrameBinding {
+        return FragmentMainFrameBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

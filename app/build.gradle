@@ -95,4 +95,7 @@ dependencies {
     //Activity-ktx
     implementation "androidx.activity:activity-ktx:${Versions.activity_ktx_version}"
 
+    //Coil
+    implementation "io.coil-kt:coil:${Versions.coil_version}"
+
 }
