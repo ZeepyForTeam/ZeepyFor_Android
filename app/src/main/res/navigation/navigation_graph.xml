@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_reviewSearchAddressFragment"
             app:destination="@id/reviewSearchAddressFragment" />
+        <action
+            android:id="@+id/action_mainFrameFragment_to_mapFragment"
+            app:destination="@+id/mapFragment"/>
     </fragment>
 
     <fragment
@@ -39,4 +42,10 @@
         android:name="com.example.zeepyforandroid.review.view.ReviewSearchAddressFragment"
         android:label="fragment_review_search_address"
         tools:layout="@layout/fragment_review_search_address"/>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.zeepyforandroid.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map"/>
 </navigation>
