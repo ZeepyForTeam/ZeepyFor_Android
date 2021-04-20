@@ -1,12 +1,14 @@
 package com.example.zeepyforandroid.map
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
+import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
+import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.databinding.FragmentMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -14,7 +16,7 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     private lateinit var mapView: MapView
     private lateinit var naverMap : NaverMap
@@ -26,20 +28,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var marker3 = Marker()
     private var marker4 = Marker()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMapBinding {
+        return FragmentMapBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setToolbar()
         mapView = view.findViewById(R.id.mv_NMap)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this) // Calls onMapReady
-
 
     }
 
@@ -86,12 +87,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapView.onLowMemory()
     }
 
-    fun setMarker(marker: Marker, lat: Double, lng: Double, resourceID: Int) {
+    private fun setToolbar() {
+        binding.mapToolbar.run {
+            setTitle("지도로 검색하기")
+            setBackButton {
+                Navigation.findNavController(binding.root).popBackStack()
+            }
+        }
+    }
+
+    private fun setMarker(marker: Marker, lat: Double, lng: Double, resourceID: Int) {
         // marker.isIconPerspectiveEnabled = true
         marker.icon = OverlayImage.fromResource(resourceID)
         // marker.alpha = 0.8f
         marker.position = LatLng(lat, lng)
         marker.map = naverMap
     }
+
+
 
 }
