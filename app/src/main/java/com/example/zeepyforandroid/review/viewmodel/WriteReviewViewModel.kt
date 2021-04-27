@@ -21,6 +21,14 @@ class WriteReviewViewModel : ViewModel() {
     val addressList: LiveData<AddressList>
         get() = _addressList
 
+    private val _addressSelected = MutableLiveData<String>()
+    val addressSelected: LiveData<String>
+        get() = _addressSelected
+
+    fun changeAddressSelected(address:String){
+        _addressSelected.value = address
+    }
+
     init {
         setDummyAddress()
     }
@@ -133,7 +141,7 @@ class WriteReviewViewModel : ViewModel() {
         }
     }
 
-    fun deleteAddress(addressModel: AddressModel){
+    fun deleteAddress(addressModel: AddressModel) {
         _addressList.value?.remove(addressModel)
     }
 }

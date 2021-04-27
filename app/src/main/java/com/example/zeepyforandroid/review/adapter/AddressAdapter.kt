@@ -1,18 +1,29 @@
 package com.example.zeepyforandroid.review.adapter
 
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
+import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemAddressBinding
 import com.example.zeepyforandroid.review.dto.AddressModel
+import kotlin.properties.Delegates
 
-class AddressAdapter(val listener: (AddressModel) -> Unit): ListAdapter<AddressModel, AddressAdapter.AddressViewHolder>(diffCallback) {
+class AddressAdapter(val listener: ClickListener): ListAdapter<AddressModel, AddressAdapter.AddressViewHolder>(diffCallback) {
 
-    interface DeleteAddress{
-        fun delete(position: Int)
+    interface ClickListener{
+        fun delete(item: AddressModel)
+        fun select(item: AddressModel)
+    }
+
+    var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
+        if (newPos in currentList.indices){
+            notifyItemChanged(oldPos)
+            notifyItemChanged(newPos)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddressViewHolder {
@@ -24,8 +35,18 @@ class AddressAdapter(val listener: (AddressModel) -> Unit): ListAdapter<AddressM
         val item = getItem(position)
         holder.binding.setVariable(BR.data, item)
         holder.binding.btnDelete.setOnClickListener {
-            listener(item)
+            listener.delete(item)
             notifyItemRemoved(position)
+        }
+        holder.binding.root.setOnClickListener {
+            listener.select(item)
+            selectedPosition = position
+        }
+
+        if (position == selectedPosition){
+            holder.binding.root.setBackgroundResource(R.drawable.box_address_selected)
+        } else {
+            holder.binding.root.setBackgroundResource(R.drawable.box_address)
         }
     }
 

@@ -9,14 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentWriteDetailAddressBinding
+import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 
 
 class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBinding>() {
+    private val viewModel by activityViewModels<WriteReviewViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -34,6 +38,8 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         val spannableText = binding.tvWriteAddress.text.toSpannable()
         val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(), R.font.nanum_square_round_extrabold), Typeface.NORMAL)
         spannableText.setSpan(CustomTypefaceSpan(typeface), 0, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+
+        binding.tvAddress.text = viewModel.addressSelected.value
 
         binding.toolbar.run {
             setTitle("리뷰작성")

@@ -46,6 +46,10 @@
     <fragment
         android:id="@+id/writeDetailAddressFragment"
         android:name="com.example.zeepyforandroid.review.view.WriteDetailAddressFragment"
-        android:label="WriteDetailAddressFragment" />
+        android:label="WriteDetailAddressFragment" >
+        <argument
+            android:name="address_selected"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

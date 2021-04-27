@@ -15,6 +15,7 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentSelectAddressBinding
 import com.example.zeepyforandroid.review.adapter.AddressAdapter
+import com.example.zeepyforandroid.review.dto.AddressModel
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
@@ -34,7 +35,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         setDatas()
-        registerAddress()
     }
 
     private fun initView() {
@@ -57,15 +57,19 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         binding.btnNext.run {
             setText("다음으로")
             onClick {
-
+                registerAddress()
             }
         }
 
         binding.rvAddressList.run {
-            adapter = AddressAdapter {
-                viewModel.deleteAddress(it)
-                Log.e("list", viewModel.addressList.value.toString())
-            }
+            adapter = AddressAdapter(object : AddressAdapter.ClickListener{
+                override fun delete(item: AddressModel) {
+                    viewModel.deleteAddress(item)
+                }
+                override fun select(item: AddressModel) {
+                    viewModel.changeAddressSelected(item.address)
+                }
+            })
             addItemDecoration(ItemDecoration(8, 0))
         }
     }
@@ -75,9 +79,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun registerAddress() {
-        binding.tvRegisterAddress.setOnClickListener {
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_selectAddressFragment_to_writeDetailAddressFragment)
-        }
+        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_writeDetailAddressFragment)
     }
 }
