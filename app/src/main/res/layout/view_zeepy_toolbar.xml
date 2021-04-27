@@ -5,6 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constriantlayout_toolbar"
         android:layout_width="match_parent"
+        android:background="@drawable/toolbar_border"
         android:layout_height="60dp">
 
         <ImageButton

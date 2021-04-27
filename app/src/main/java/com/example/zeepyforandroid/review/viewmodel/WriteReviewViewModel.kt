@@ -3,16 +3,26 @@ package com.example.zeepyforandroid.review.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.zeepyforandroid.review.dto.AddressList
+import com.example.zeepyforandroid.review.dto.AddressModel
 import com.example.zeepyforandroid.review.dto.ReviewSearchAddressModel
 
 
 class WriteReviewViewModel : ViewModel() {
-    private val _houseListSearched= MutableLiveData<List<ReviewSearchAddressModel>>()
+    private val _houseListSearched = MutableLiveData<List<ReviewSearchAddressModel>>()
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
 
-    fun changeHouseListSearched(list: List<ReviewSearchAddressModel>){
+    fun changeHouseListSearched(list: List<ReviewSearchAddressModel>) {
         _houseListSearched.postValue(list)
+    }
+
+    private val _addressList = MutableLiveData<AddressList>()
+    val addressList: LiveData<AddressList>
+        get() = _addressList
+
+    init {
+        setDummyAddress()
     }
 
     //Todo: api 연결하면 더미데이터 지우기
@@ -101,4 +111,29 @@ class WriteReviewViewModel : ViewModel() {
         changeHouseListSearched(dummyHouseList)
     }
 
+    private fun setDummyAddress() {
+        val dummy = AddressList()
+        dummy.apply {
+            add(
+                AddressModel(
+                    "서울특별시 마포구 망원로 48-1"
+                )
+            )
+            add(
+                AddressModel(
+                    "서울특별시 강남구 신사동 56-1"
+                )
+            )
+            add(
+                AddressModel(
+                    "서울특별시 서대문구 연희동 26-8"
+                )
+            )
+            _addressList.value = dummy
+        }
+    }
+
+    fun deleteAddress(addressModel: AddressModel){
+        _addressList.value?.remove(addressModel)
+    }
 }

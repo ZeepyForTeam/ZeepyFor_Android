@@ -11,8 +11,8 @@
         android:label="fragment_main_frame"
         tools:layout="@layout/fragment_main_frame" >
         <action
-            android:id="@+id/action_mainFrameFragment_to_reviewSearchAddressFragment"
-            app:destination="@id/reviewSearchAddressFragment" />
+            android:id="@+id/action_mainFrameFragment_to_selectAddressFragment"
+            app:destination="@id/selectAddressFragment" />
     </fragment>
 
     <fragment
@@ -35,8 +35,17 @@
         tools:layout="@layout/fragment_sign_up" />
 
     <fragment
-        android:id="@+id/reviewSearchAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.ReviewSearchAddressFragment"
-        android:label="fragment_review_search_address"
-        tools:layout="@layout/fragment_review_search_address"/>
+        android:id="@+id/selectAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.SelectAddressFragment"
+        android:label="fragment_select_address"
+        tools:layout="@layout/fragment_select_address">
+        <action
+            android:id="@+id/action_selectAddressFragment_to_writeDetailAddressFragment"
+            app:destination="@id/writeDetailAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeDetailAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.WriteDetailAddressFragment"
+        android:label="WriteDetailAddressFragment" />
+
 </navigation>
