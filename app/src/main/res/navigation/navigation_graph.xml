@@ -42,14 +42,23 @@
         <action
             android:id="@+id/action_selectAddressFragment_to_writeDetailAddressFragment"
             app:destination="@id/writeDetailAddressFragment" />
+        <action
+            android:id="@+id/action_selectAddressFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeDetailAddressFragment"
         android:name="com.example.zeepyforandroid.review.view.WriteDetailAddressFragment"
-        android:label="WriteDetailAddressFragment" >
+        android:label="WriteDetailAddressFragment"
+        tools:layout="@layout/fragment_write_detail_address">
         <argument
             android:name="address_selected"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/searchAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.SearchAddressFragment"
+        android:label="SearchAddressFragment"
+        tools:layout="@layout/fragment_search_address"/>
 
 </navigation>

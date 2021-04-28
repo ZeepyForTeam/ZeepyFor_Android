@@ -3,7 +3,6 @@ package com.example.zeepyforandroid.review.view
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spanned
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +34,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         setDatas()
+        goToSearchAddress()
     }
 
     private fun initView() {
@@ -56,8 +56,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         }
         binding.btnNext.run {
             setText("다음으로")
+            unUseableButton()
             onClick {
-                registerAddress()
+                goToWriteDetailAddress()
             }
         }
 
@@ -68,6 +69,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
                 }
                 override fun select(item: AddressModel) {
                     viewModel.changeAddressSelected(item.address)
+                    binding.btnNext.usableButton()
                 }
             })
             addItemDecoration(ItemDecoration(8, 0))
@@ -78,7 +80,13 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         (binding.rvAddressList.adapter as AddressAdapter).submitList(viewModel.addressList.value)
     }
 
-    private fun registerAddress() {
+    private fun goToWriteDetailAddress() {
         Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_writeDetailAddressFragment)
+    }
+
+    private fun goToSearchAddress() {
+        binding.tvRegisterAddress.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
+        }
     }
 }

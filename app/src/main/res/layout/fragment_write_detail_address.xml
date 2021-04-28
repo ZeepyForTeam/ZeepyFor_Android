@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".review.view.WriteDetailAddressFragment">
-
 
         <com.example.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
@@ -68,6 +72,8 @@
             app:layout_constraintDimensionRatio="1:0.146"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
+            android:inputType="text"
+            android:text="@={viewModel.detailAddress}"
             android:hint="상세주소를 입력해주세요"
             android:paddingLeft="12dp"
             android:background="@drawable/box_address"
@@ -77,19 +83,15 @@
             app:layout_constraintStart_toStartOf="@id/tv_address"
             app:layout_constraintEnd_toEndOf="@id/tv_address"/>
 
-
-
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintVertical_bias="0.95"
             app:layout_constraintStart_toStartOf="@id/tv_address"
             app:layout_constraintEnd_toEndOf="@id/tv_address"
-            app:layout_constraintTop_toBottomOf="@id/tv_address"/>
-
-
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -13,10 +13,6 @@ class WriteReviewViewModel : ViewModel() {
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
 
-    fun changeHouseListSearched(list: List<ReviewSearchAddressModel>) {
-        _houseListSearched.postValue(list)
-    }
-
     private val _addressList = MutableLiveData<AddressList>()
     val addressList: LiveData<AddressList>
         get() = _addressList
@@ -25,8 +21,18 @@ class WriteReviewViewModel : ViewModel() {
     val addressSelected: LiveData<String>
         get() = _addressSelected
 
+    val detailAddress = MutableLiveData<String>()
+
     fun changeAddressSelected(address:String){
         _addressSelected.value = address
+    }
+
+    fun changeHouseListSearched(list: List<ReviewSearchAddressModel>) {
+        _houseListSearched.postValue(list)
+    }
+
+    fun checkEmptyDetailAddress():Boolean{
+        return detailAddress.value.isNullOrEmpty()
     }
 
     init {
@@ -118,7 +124,7 @@ class WriteReviewViewModel : ViewModel() {
         }
         changeHouseListSearched(dummyHouseList)
     }
-
+    //Todo: api 연결하면 더미데이터 지우기
     private fun setDummyAddress() {
         val dummy = AddressList()
         dummy.apply {
