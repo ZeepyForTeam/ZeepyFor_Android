@@ -8,7 +8,16 @@
         <item name="android:statusBarColor">@color/zeepy_gray_9a</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:includeFontPadding">false</item>
+    </style>
 
+    <style name="personality_checked">
+        <item name="fontFamily">@font/nanum_square_round_extrabold</item>
+        <item name="background">@drawable/box_lessor_personality_checked</item>
+    </style>
+
+    <style name="personality_unchecked">
+        <item name="fontFamily">@font/nanum_square_round_regular</item>
+        <item name="background">@drawable/box_lessor_personality_unchecked</item>
     </style>
 
 </resources>

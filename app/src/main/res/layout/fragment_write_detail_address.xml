@@ -73,6 +73,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
             android:inputType="text"
+            android:textCursorDrawable="@drawable/cursor"
             android:text="@={viewModel.detailAddress}"
             android:hint="상세주소를 입력해주세요"
             android:paddingLeft="12dp"

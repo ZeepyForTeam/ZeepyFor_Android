@@ -57,12 +57,16 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
+            unUseableButton()
         }
     }
 
     private fun setLessorPersonalities() {
         binding.rvLessorCommunication.run {
-            adapter = LessorPersonalityAdapter()
+            adapter = LessorPersonalityAdapter{
+                binding.btnNext.usableButton()
+                Navigation.findNavController(binding.root).navigate(R.id.action_lessorPersonalityFragment_to_writeLessorInfoFragment)
+            }
             addItemDecoration(ItemDecoration(10,0))
             (adapter as LessorPersonalityAdapter).submitList(viewModel.lessorPersonalities)
         }

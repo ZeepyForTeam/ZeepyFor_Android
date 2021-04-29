@@ -1,16 +1,12 @@
 package com.example.zeepyforandroid.review.viewmodel
 
-import android.content.Context
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zeepyforandroid.R
-import com.example.zeepyforandroid.review.LessorPersonalityDataSource
-import com.example.zeepyforandroid.review.dto.AddressList
-import com.example.zeepyforandroid.review.dto.AddressModel
-import com.example.zeepyforandroid.review.dto.LessorPersonalityModel
-import com.example.zeepyforandroid.review.dto.ReviewSearchAddressModel
+import com.example.zeepyforandroid.review.data.source.LessorPersonalityDataSource
+import com.example.zeepyforandroid.review.data.dto.AddressList
+import com.example.zeepyforandroid.review.data.dto.AddressModel
+import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

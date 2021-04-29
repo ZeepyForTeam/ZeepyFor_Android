@@ -1,6 +1,6 @@
-package com.example.zeepyforandroid
+package com.example.zeepyforandroid.di
 
-import com.example.zeepyforandroid.review.LessorPersonalityDataSource
+import com.example.zeepyforandroid.review.data.source.LessorPersonalityDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

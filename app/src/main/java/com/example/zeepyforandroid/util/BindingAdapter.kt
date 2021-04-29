@@ -1,16 +1,20 @@
 package com.example.zeepyforandroid
 
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.graphics.fonts.FontFamily
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.toSpannable
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import coil.load
+import com.example.zeepyforandroid.util.CustomTypefaceSpan
+import com.example.zeepyforandroid.util.FontType
 
 @BindingAdapter("loadUrl")
 fun loadUrl(imageView:ImageView, url: String?) {
@@ -28,6 +32,11 @@ fun loadDrawable(imageView:ImageView, drawable: Int?) {
     } else {
         imageView.load(drawable)
     }
+}
+
+@BindingAdapter("toggleBackground")
+fun setToggleBackground(toggleButton: ToggleButton, selector: Drawable){
+    toggleButton.background = selector
 }
 
 @BindingAdapter("android:text")
@@ -55,4 +64,18 @@ fun setTextWatcher(editText: EditText, textAttrChanged: InverseBindingListener) 
             textAttrChanged?.onChange()
         }
     })
+}
+
+@BindingAdapter("isSelected")
+fun setIsSelected(imageView: ImageView, isSelected: Boolean) {
+    imageView.isSelected = isSelected
+}
+
+@BindingAdapter("font")
+fun TextView.font(type: FontType){
+    try {
+        typeface = ResourcesCompat.getFont(context, type.fontRes)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }

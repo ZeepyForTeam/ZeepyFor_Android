@@ -67,6 +67,15 @@
         android:id="@+id/lessorPersonalityFragment"
         android:name="com.example.zeepyforandroid.review.view.LessorPersonalityFragment"
         android:label="LessorPersonalityFragment"
-        tools:layout="@layout/fragment_lessor_personality"/>
+        tools:layout="@layout/fragment_lessor_personality">
+        <action
+            android:id="@+id/action_lessorPersonalityFragment_to_writeLessorInfoFragment"
+            app:destination="@id/writeLessorInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeLessorInfoFragment"
+        android:name="com.example.zeepyforandroid.review.view.WriteLessorInfoFragment"
+        android:label="WriteLessorInfoFragment"
+        tools:layout="@layout/fragment_write_lessor_info"/>
 
 </navigation>

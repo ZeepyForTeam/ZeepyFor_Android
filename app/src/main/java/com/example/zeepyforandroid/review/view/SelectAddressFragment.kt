@@ -14,7 +14,7 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentSelectAddressBinding
 import com.example.zeepyforandroid.review.view.adapter.AddressAdapter
-import com.example.zeepyforandroid.review.dto.AddressModel
+import com.example.zeepyforandroid.review.data.dto.AddressModel
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
