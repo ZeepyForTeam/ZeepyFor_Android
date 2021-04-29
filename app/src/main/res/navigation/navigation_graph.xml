@@ -11,8 +11,8 @@
         android:label="fragment_main_frame"
         tools:layout="@layout/fragment_main_frame" >
         <action
-            android:id="@+id/action_mainFrameFragment_to_selectAddressFragment"
-            app:destination="@id/selectAddressFragment" />
+            android:id="@+id/action_mainFrameFragment_to_reviewFrameFragment"
+            app:destination="@id/reviewFrameFragment" />
     </fragment>
 
     <fragment
@@ -35,47 +35,8 @@
         tools:layout="@layout/fragment_sign_up" />
 
     <fragment
-        android:id="@+id/selectAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.SelectAddressFragment"
-        android:label="fragment_select_address"
-        tools:layout="@layout/fragment_select_address">
-        <action
-            android:id="@+id/action_selectAddressFragment_to_writeDetailAddressFragment"
-            app:destination="@id/writeDetailAddressFragment" />
-        <action
-            android:id="@+id/action_selectAddressFragment_to_searchAddressFragment"
-            app:destination="@id/searchAddressFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/writeDetailAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.WriteDetailAddressFragment"
-        android:label="WriteDetailAddressFragment"
-        tools:layout="@layout/fragment_write_detail_address">
-        <argument
-            android:name="address_selected"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_writeDetailAddressFragment_to_lessorPersonalityFragment"
-            app:destination="@id/lessorPersonalityFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.SearchAddressFragment"
-        android:label="SearchAddressFragment"
-        tools:layout="@layout/fragment_search_address"/>
-    <fragment
-        android:id="@+id/lessorPersonalityFragment"
-        android:name="com.example.zeepyforandroid.review.view.LessorPersonalityFragment"
-        android:label="LessorPersonalityFragment"
-        tools:layout="@layout/fragment_lessor_personality">
-        <action
-            android:id="@+id/action_lessorPersonalityFragment_to_writeLessorInfoFragment"
-            app:destination="@id/writeLessorInfoFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/writeLessorInfoFragment"
-        android:name="com.example.zeepyforandroid.review.view.WriteLessorInfoFragment"
-        android:label="WriteLessorInfoFragment"
-        tools:layout="@layout/fragment_write_lessor_info"/>
+        android:id="@+id/reviewFrameFragment"
+        android:name="com.example.zeepyforandroid.review.view.ReviewFrameFragment"
+        android:label="ReviewFrameFragment" />
 
 </navigation>

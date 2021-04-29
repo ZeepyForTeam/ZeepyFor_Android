@@ -6,11 +6,13 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -35,23 +37,10 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val spannableText = binding.tvLessorCommunication.text.toSpannable()
-        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(), R.font.nanum_square_round_extrabold), Typeface.NORMAL)
-        spannableText.setSpan(CustomTypefaceSpan(typeface), 0, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-        spannableText.setSpan(CustomTypefaceSpan(typeface), 5, 10, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
-        setToolbar()
         setNextButton()
         setLessorPersonalities()
-    }
-
-    private fun setToolbar() {
-        binding.toolbar.run {
-            setTitle("리뷰작성")
-            setBackButton{
-                Navigation.findNavController(binding.root).popBackStack()
-            }
-        }
+        reviewNotice()
+        goToWriteDetailLessorInfo()
     }
 
     private fun setNextButton() {
@@ -61,14 +50,29 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
         }
     }
 
+    private fun reviewNotice() {
+        val parent = (parentFragment as NavHostFragment).parentFragment
+        val notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
+        notice?.text = getString(R.string.lessor_communication)
+        val spannableText = notice?.text?.toSpannable()
+        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(), R.font.nanum_square_round_extrabold), Typeface.NORMAL)
+        spannableText?.setSpan(CustomTypefaceSpan(typeface), 0, 3, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+        spannableText?.setSpan(CustomTypefaceSpan(typeface), 5, 10, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+    }
+
     private fun setLessorPersonalities() {
         binding.rvLessorCommunication.run {
             adapter = LessorPersonalityAdapter{
                 binding.btnNext.usableButton()
-                Navigation.findNavController(binding.root).navigate(R.id.action_lessorPersonalityFragment_to_writeLessorInfoFragment)
             }
             addItemDecoration(ItemDecoration(10,0))
             (adapter as LessorPersonalityAdapter).submitList(viewModel.lessorPersonalities)
+        }
+    }
+
+    private fun goToWriteDetailLessorInfo() {
+        binding.btnNext.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_lessorPersonalityFragment_to_writeLessorInfoFragment)
         }
     }
 }

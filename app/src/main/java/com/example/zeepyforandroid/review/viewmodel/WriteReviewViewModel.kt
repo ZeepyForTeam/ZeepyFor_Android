@@ -131,7 +131,7 @@ class WriteReviewViewModel @Inject constructor(
         }
         changeHouseListSearched(dummyHouseList)
     }
-    //Todo: api 연결하면 더미데이터 지우기
+    //Todo: api 연결하면 더미데이터 지우고 Datasource - Repository pattern으로 바꾸기
     private fun setDummyAddress() {
         val dummy = AddressList()
         dummy.apply {

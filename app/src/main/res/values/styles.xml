@@ -19,5 +19,9 @@
         <item name="fontFamily">@font/nanum_square_round_regular</item>
         <item name="background">@drawable/box_lessor_personality_unchecked</item>
     </style>
+    
+    <style name="SpinnerColor" parent="Widget.AppCompat.Spinner">
+        <item name="colorControlNormal">@color/zeepy_blue_5f</item>
+    </style>
 
 </resources>
