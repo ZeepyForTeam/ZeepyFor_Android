@@ -31,7 +31,10 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
         initView()
+        enableButton()
     }
 
     private fun initView(){
@@ -50,6 +53,17 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
         binding.btnNext.run {
             setText("다음으로")
+            unUseableButton()
+        }
+    }
+
+    private fun enableButton() {
+        viewModel.detailAddress.observe(viewLifecycleOwner){
+            if (!viewModel.checkEmptyDetailAddress()) {
+                binding.btnNext.usableButton()
+            } else {
+                binding.btnNext.unUseableButton()
+            }
         }
     }
 }
