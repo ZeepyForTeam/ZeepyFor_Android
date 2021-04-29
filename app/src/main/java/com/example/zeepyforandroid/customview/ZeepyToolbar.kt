@@ -11,10 +11,6 @@ import com.example.zeepyforandroid.databinding.ViewZeepyToolbarBinding
 class ZeepyToolbar : ConstraintLayout {
     private lateinit var binding: ViewZeepyToolbarBinding
 
-    companion object {
-        private const val layoutRes = R.layout.view_zeepy_toolbar
-    }
-
     constructor(context: Context) : super(context) {
         init()
     }

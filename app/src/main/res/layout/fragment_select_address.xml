@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".review.view.SelectAddressFragment">
+
+        <com.example.zeepyforandroid.customview.ZeepyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_select_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:text="@string/select_address"
+            android:textColor="@color/zeepy_blue_5f"
+            android:textSize="24sp"
+            android:bufferType="spannable"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/rv_address_list"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintVertical_bias="0.05" />
+
+        <TextView
+            android:id="@+id/tv_address_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:text="현재 등록된 주소"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@id/rv_address_list"
+            app:layout_constraintStart_toStartOf="@id/tv_select_address" />
+
+        <TextView
+            android:id="@+id/tv_register_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="10sp"
+            android:text="직접 등록하기"
+            android:fontFamily="@font/nanum_square_round_bold"
+            app:layout_constraintTop_toTopOf="@id/tv_address_list"
+            app:layout_constraintBottom_toBottomOf="@id/tv_address_list"
+            app:layout_constraintEnd_toEndOf="@id/rv_address_list"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_address_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
+            app:layout_constraintVertical_bias="0.22"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_select_address"
+            tools:listitem="@layout/item_address" />
+
+        <TextView
+            android:id="@+id/tv_address_count_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/limit_count_address"
+            android:layout_marginTop="16dp"
+            android:textSize="10sp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_gray_9a"
+            app:layout_constraintTop_toBottomOf="@id/rv_address_list"
+            app:layout_constraintStart_toStartOf="@id/rv_address_list"/>
+
+    <com.example.zeepyforandroid.customview.ZeepyButton
+        android:id="@+id/btn_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/rv_address_list"
+        app:layout_constraintEnd_toEndOf="@id/rv_address_list"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
