@@ -47,6 +47,7 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         binding.toolbar.run {
             setTitle("리뷰작성")
             setBackButton{
+                binding.etAddressDetail.text.clear()
                 Navigation.findNavController(binding.root).popBackStack()
             }
         }
@@ -61,9 +62,17 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         viewModel.detailAddress.observe(viewLifecycleOwner){
             if (!viewModel.checkEmptyDetailAddress()) {
                 binding.btnNext.usableButton()
+                goToCheckLessorPersonality()
             } else {
                 binding.btnNext.unUseableButton()
             }
+        }
+    }
+
+    private fun goToCheckLessorPersonality(){
+        binding.btnNext.setOnClickListener {
+            binding.etAddressDetail.text.clear()
+            Navigation.findNavController(binding.root).navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
         }
     }
 }

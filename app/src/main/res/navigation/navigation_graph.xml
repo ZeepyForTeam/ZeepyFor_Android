@@ -54,11 +54,19 @@
         <argument
             android:name="address_selected"
             app:argType="string" />
+        <action
+            android:id="@+id/action_writeDetailAddressFragment_to_lessorPersonalityFragment"
+            app:destination="@id/lessorPersonalityFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchAddressFragment"
         android:name="com.example.zeepyforandroid.review.view.SearchAddressFragment"
         android:label="SearchAddressFragment"
         tools:layout="@layout/fragment_search_address"/>
+    <fragment
+        android:id="@+id/lessorPersonalityFragment"
+        android:name="com.example.zeepyforandroid.review.view.LessorPersonalityFragment"
+        android:label="LessorPersonalityFragment"
+        tools:layout="@layout/fragment_lessor_personality"/>
 
 </navigation>

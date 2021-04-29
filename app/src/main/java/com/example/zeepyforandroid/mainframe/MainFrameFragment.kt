@@ -10,9 +10,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.FragmentMainFrameBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.RuntimeException
 
-
+@AndroidEntryPoint
 class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
     private val viewModel: MainFrameViewModel by activityViewModels()
 

@@ -7,4 +7,9 @@
     <string name="lessor_communication">임대인의 소통 성향은\n어땠나요?</string>
     <string name="next">다음으로</string>
     <string name="limit_count_address">*최대 3개까지 등록 가능합니다.</string>
+    <string name="business">칼 같은 우리 사이, 비즈니스형</string>
+    <string name="kindness">다음으로</string>
+    <string name="free">다음으로</string>
+    <string name="basakchokchok">다음으로</string>
+    <string name="keep_words">다음으로</string>
 </resources>

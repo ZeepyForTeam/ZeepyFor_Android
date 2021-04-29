@@ -13,7 +13,7 @@ import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentSelectAddressBinding
-import com.example.zeepyforandroid.review.adapter.AddressAdapter
+import com.example.zeepyforandroid.review.view.adapter.AddressAdapter
 import com.example.zeepyforandroid.review.dto.AddressModel
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
@@ -77,7 +77,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun setDatas() {
-        (binding.rvAddressList.adapter as AddressAdapter).submitList(viewModel.addressList.value)
+        viewModel.addressList.observe(viewLifecycleOwner){
+            (binding.rvAddressList.adapter as AddressAdapter).submitList(viewModel.addressList.value)
+        }
     }
 
     private fun goToWriteDetailAddress() {

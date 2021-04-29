@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.review.adapter
+package com.example.zeepyforandroid.review.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

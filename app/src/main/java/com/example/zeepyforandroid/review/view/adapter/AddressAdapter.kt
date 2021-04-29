@@ -1,6 +1,5 @@
-package com.example.zeepyforandroid.review.adapter
+package com.example.zeepyforandroid.review.view.adapter
 
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
