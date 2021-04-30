@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentWriteLessorInfoBinding
@@ -22,7 +25,10 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
         viewModel.changeCurrentFragment(ReviewUi.WRITE_LESSOR_DETAIL)
+        setSpinner()
         setNextButton()
     }
 
@@ -30,5 +36,28 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         binding.btnNext.run {
             setText("다음으로")
         }
+    }
+
+    private fun checkSex(){
+        //Todo: checkbox Single Selection
+    }
+
+    private fun setSpinner() {
+        val spinnerAdapter = ArrayAdapter<Int>(requireContext(), android.R.layout.simple_list_item_1, ARRAY_AGE_GROUP)
+        binding.spinnerAge.run {
+            adapter = spinnerAdapter
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {}
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+            }
+        }
+
+    }
+
+    companion object {
+        private val ARRAY_AGE_GROUP = arrayListOf(10,20,30,40,50,60,70,80,90)
     }
 }

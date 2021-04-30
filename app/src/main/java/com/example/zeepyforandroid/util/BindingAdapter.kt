@@ -34,11 +34,6 @@ fun loadDrawable(imageView:ImageView, drawable: Int?) {
     }
 }
 
-@BindingAdapter("toggleBackground")
-fun setToggleBackground(toggleButton: ToggleButton, selector: Drawable){
-    toggleButton.background = selector
-}
-
 @BindingAdapter("android:text")
 fun setText(textView: TextView, content: MutableLiveData<String>?){
     if (content == null) {
@@ -66,6 +61,29 @@ fun setTextWatcher(editText: EditText, textAttrChanged: InverseBindingListener) 
     })
 }
 
+@BindingAdapter("android:checked")
+fun setChecked(checkBox: CheckBox, isChecked: MutableLiveData<Boolean>?){
+    if (isChecked == null) {
+        checkBox.isChecked = false
+    } else {
+        checkBox.isChecked = isChecked.value == true
+    }
+}
+
+@BindingAdapter("checkChanged")
+fun CheckBox.setOnChangedListener(checkChanged: InverseBindingListener) {
+    setOnCheckedChangeListener { _, _ ->
+        checkChanged?.onChange()
+    }
+
+}
+
+@InverseBindingAdapter(attribute = "android:checked", event = "checkChanged")
+fun getChecked(checkBox: CheckBox): Boolean{
+    return checkBox.isChecked
+}
+
+
 @BindingAdapter("isSelected")
 fun setIsSelected(imageView: ImageView, isSelected: Boolean) {
     imageView.isSelected = isSelected
@@ -79,4 +97,5 @@ fun TextView.font(type: FontType){
         e.printStackTrace()
     }
 }
+
 

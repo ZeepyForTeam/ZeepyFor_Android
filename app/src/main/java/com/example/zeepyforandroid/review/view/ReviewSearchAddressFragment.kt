@@ -52,7 +52,6 @@ class ReviewSearchAddressFragment : BaseFragment<FragmentReviewSearchAddressBind
 
     private fun searchHouse() {
         binding.buttonSearch.setOnClickListener {
-            viewModel.loadDummyData()
         }
     }
 
