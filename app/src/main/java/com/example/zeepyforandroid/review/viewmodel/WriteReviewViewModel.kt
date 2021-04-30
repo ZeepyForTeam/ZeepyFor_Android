@@ -3,12 +3,11 @@ package com.example.zeepyforandroid.review.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.zeepyforandroid.review.data.source.LessorPersonalityDataSource
 import com.example.zeepyforandroid.review.data.dto.AddressList
 import com.example.zeepyforandroid.review.data.dto.AddressModel
 import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
-import com.example.zeepyforandroid.util.ReviewUi
+import com.example.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,8 +15,8 @@ import javax.inject.Inject
 class WriteReviewViewModel @Inject constructor(
     private val lessorPersonalityDataSource: LessorPersonalityDataSource
 ) : ViewModel() {
-    private val _currentFragment = MutableLiveData<ReviewUi>()
-    val currentFragment: LiveData<ReviewUi>
+    private val _currentFragment = MutableLiveData<ReviewNotice>()
+    val currentFragment: LiveData<ReviewNotice>
         get() = _currentFragment
 
     private val _houseListSearched = MutableLiveData<List<ReviewSearchAddressModel>>()
@@ -46,8 +45,8 @@ class WriteReviewViewModel @Inject constructor(
         return detailAddress.value.isNullOrEmpty()
     }
 
-    fun changeCurrentFragment(reviewUi: ReviewUi){
-        _currentFragment.value = reviewUi
+    fun changeCurrentFragment(reviewNotice: ReviewNotice){
+        _currentFragment.value = reviewNotice
     }
 
     init {

@@ -4,14 +4,12 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spanned
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -19,7 +17,6 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentReviewFrameBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.example.zeepyforandroid.setText
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 
 class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {

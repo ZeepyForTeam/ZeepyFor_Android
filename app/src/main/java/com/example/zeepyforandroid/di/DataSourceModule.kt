@@ -19,9 +19,4 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun providesLessorPersonalityDataSource(): LessorPersonalityDataSource = LessorPersonalityDataSource()
-
-    @Provides
-    @Singleton
-    fun provideTypeface(@ApplicationContext context : Context): Typeface = Typeface.create(ResourcesCompat.getFont(context,
-        R.font.nanum_square_round_extrabold),Typeface.NORMAL)
 }

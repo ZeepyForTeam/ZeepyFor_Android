@@ -1,23 +1,16 @@
 package com.example.zeepyforandroid.review.view
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.toSpannable
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentWriteDetailAddressBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.example.zeepyforandroid.util.CustomTypefaceSpan
-import com.example.zeepyforandroid.util.ReviewUi
+import com.example.zeepyforandroid.util.ReviewNotice
 
 
 class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBinding>() {
@@ -35,7 +28,7 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.changeCurrentFragment(ReviewUi.WRITE_DETAIL_ADDRESS)
+        viewModel.changeCurrentFragment(ReviewNotice.WRITE_DETAIL_ADDRESS)
         initView()
         enableButton()
     }

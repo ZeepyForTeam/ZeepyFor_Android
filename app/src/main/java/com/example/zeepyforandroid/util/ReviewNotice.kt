@@ -3,7 +3,7 @@ package com.example.zeepyforandroid.util
 import androidx.annotation.StringRes
 import com.example.zeepyforandroid.R
 
-enum class ReviewUi(@StringRes val text: Int, val map: Map<Int,Int>) {
+enum class ReviewNotice(@StringRes val text: Int, val map: Map<Int,Int>) {
     SELECT_ADDRESS(R.string.select_address, mapOf(0 to 9)),
     CHECK_LESSOR_PERSONALITY(R.string.lessor_personality, mapOf(0 to 3, 5 to 10)),
     WRITE_LESSOR_DETAIL(R.string.lessor_detail_info, mapOf(0 to 3, 13 to 19)),

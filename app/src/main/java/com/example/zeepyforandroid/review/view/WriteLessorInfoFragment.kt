@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentWriteLessorInfoBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.example.zeepyforandroid.util.ReviewUi
+import com.example.zeepyforandroid.util.ReviewNotice
 
 class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     private val viewModel by activityViewModels<WriteReviewViewModel>()
@@ -27,9 +26,10 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        viewModel.changeCurrentFragment(ReviewUi.WRITE_LESSOR_DETAIL)
+        viewModel.changeCurrentFragment(ReviewNotice.WRITE_LESSOR_DETAIL)
         setSpinner()
         setNextButton()
+        checkSingleSex()
     }
 
     private fun setNextButton() {
@@ -38,8 +38,17 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         }
     }
 
-    private fun checkSex(){
-        //Todo: checkbox Single Selection
+    private fun checkSingleSex(){
+        viewModel.manCheck.observe(viewLifecycleOwner){manChecking ->
+            if (manChecking) {
+                viewModel.womenCheck.value = !manChecking
+            }
+        }
+        viewModel.womenCheck.observe(viewLifecycleOwner){ womenChecking ->
+            if (womenChecking){
+                viewModel.manCheck.value = !womenChecking
+            }
+        }
     }
 
     private fun setSpinner() {
