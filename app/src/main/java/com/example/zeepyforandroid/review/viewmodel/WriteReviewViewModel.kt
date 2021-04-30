@@ -7,6 +7,7 @@ import com.example.zeepyforandroid.review.data.source.LessorPersonalityDataSourc
 import com.example.zeepyforandroid.review.data.dto.AddressList
 import com.example.zeepyforandroid.review.data.dto.AddressModel
 import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
+import com.example.zeepyforandroid.util.ReviewUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -14,6 +15,10 @@ import javax.inject.Inject
 class WriteReviewViewModel @Inject constructor(
     private val lessorPersonalityDataSource: LessorPersonalityDataSource
 ) : ViewModel() {
+    private val _currentFragment = MutableLiveData<ReviewUi>()
+    val currentFragment: LiveData<ReviewUi>
+        get() = _currentFragment
+
     private val _houseListSearched = MutableLiveData<List<ReviewSearchAddressModel>>()
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
@@ -29,8 +34,9 @@ class WriteReviewViewModel @Inject constructor(
     val lessorPersonalities = lessorPersonalityDataSource.getLessorPersonality()
 
     val detailAddress = MutableLiveData<String>()
+    val addressSearchQuery = MutableLiveData<String>()
 
-    fun changeAddressSelected(address:String){
+    fun changeAddressSelected(address: String) {
         _addressSelected.value = address
     }
 
@@ -38,8 +44,12 @@ class WriteReviewViewModel @Inject constructor(
         _houseListSearched.postValue(list)
     }
 
-    fun checkEmptyDetailAddress():Boolean{
+    fun checkEmptyDetailAddress(): Boolean {
         return detailAddress.value.isNullOrEmpty()
+    }
+
+    fun changeCurrentFragment(reviewUi: ReviewUi){
+        _currentFragment.value = reviewUi
     }
 
     init {
@@ -131,6 +141,11 @@ class WriteReviewViewModel @Inject constructor(
         }
         changeHouseListSearched(dummyHouseList)
     }
+
+    fun checkInputAddressQuery(): Boolean {
+        return !addressSearchQuery.value.isNullOrEmpty()
+    }
+
     //Todo: api 연결하면 더미데이터 지우고 Datasource - Repository pattern으로 바꾸기
     private fun setDummyAddress() {
         val dummy = AddressList()

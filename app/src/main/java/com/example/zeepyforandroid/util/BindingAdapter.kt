@@ -79,3 +79,4 @@ fun TextView.font(type: FontType){
         e.printStackTrace()
     }
 }
+

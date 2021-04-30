@@ -23,6 +23,7 @@ import com.example.zeepyforandroid.review.data.dto.AddressModel
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
+import com.example.zeepyforandroid.util.ReviewUi
 
 
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
@@ -37,6 +38,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.changeCurrentFragment(ReviewUi.SELECT_ADDRESS)
         initView()
         setDatas()
         goToSearchAddress()
@@ -44,13 +47,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun initView() {
-        val parent: Fragment? = (parentFragment as NavHostFragment).parentFragment
-        var notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
-        notice?.text = getString(R.string.select_address)
-
-        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(), R.font.nanum_square_round_extrabold), Typeface.NORMAL)
-        notice?.text?.toSpannable()?.setSpan(CustomTypefaceSpan(typeface), 0, 9, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
         binding.btnNext.run {
             setText("다음으로")
             unUseableButton()
@@ -80,12 +76,17 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun goToWriteDetailAddress() {
-        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_writeDetailAddressFragment)
+        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_lessorPersonalityFragment)
     }
 
     private fun goToSearchAddress() {
         binding.tvRegisterAddress.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.addressSearchQuery.value = null
     }
 }

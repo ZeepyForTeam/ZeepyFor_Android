@@ -20,17 +20,21 @@
         android:label="SelectAddressFragment"
         tools:layout="@layout/fragment_select_address">
         <action
-            android:id="@+id/action_selectAddressFragment_to_writeDetailAddressFragment"
-            app:destination="@id/writeDetailAddressFragment" />
-        <action
             android:id="@+id/action_selectAddressFragment_to_searchAddressFragment"
             app:destination="@id/searchAddressFragment" />
+        <action
+            android:id="@+id/action_selectAddressFragment_to_lessorPersonalityFragment"
+            app:destination="@id/lessorPersonalityFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchAddressFragment"
         android:name="com.example.zeepyforandroid.review.view.SearchAddressFragment"
         android:label="SearchAddressFragment"
-        tools:layout="@layout/fragment_search_address"/>
+        tools:layout="@layout/fragment_search_address">
+        <action
+            android:id="@+id/action_searchAddressFragment_to_writeDetailAddressFragment"
+            app:destination="@id/writeDetailAddressFragment" />
+    </fragment>
     <fragment
         android:id="@+id/writeDetailAddressFragment"
         android:name="com.example.zeepyforandroid.review.view.WriteDetailAddressFragment"

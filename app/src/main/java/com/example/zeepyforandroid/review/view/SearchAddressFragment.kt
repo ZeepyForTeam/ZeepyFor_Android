@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentSearchAddressBinding
@@ -25,23 +29,40 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setToolbar()
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
         setNextButton()
+        setEnableButton()
+        invisibleNotice()
     }
 
-    fun setToolbar() {
-        binding.toolbar.run {
-            setTitle("리뷰작성")
-            setBackButton{
-                Navigation.findNavController(binding.root).popBackStack()
+    private fun setNextButton(){
+        binding.btnNext.run {
+            setText("다음으로")
+            unUseableButton()
+        }
+    }
+
+    private fun invisibleNotice() {
+        val parent = (parentFragment as NavHostFragment).parentFragment
+        val notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
+        notice?.visibility = View.GONE
+    }
+
+    private fun setEnableButton() {
+        viewModel.addressSearchQuery.observe(viewLifecycleOwner){
+            if(viewModel.checkInputAddressQuery()) {
+                binding.btnNext.usableButton()
+                goToWriteDetailAddress()
+            } else {
+                binding.btnNext.unUseableButton()
             }
         }
     }
 
-    fun setNextButton(){
-        binding.btnNext.run {
-            setText("다음으로")
-            unUseableButton()
+    private fun goToWriteDetailAddress() {
+        binding.btnNext.setOnClickListener{
+            Navigation.findNavController(binding.root).navigate(R.id.action_searchAddressFragment_to_writeDetailAddressFragment)
         }
     }
 }

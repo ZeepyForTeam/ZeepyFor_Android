@@ -17,6 +17,7 @@ import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentWriteDetailAddressBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
+import com.example.zeepyforandroid.util.ReviewUi
 
 
 class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBinding>() {
@@ -33,20 +34,14 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        viewModel.changeCurrentFragment(ReviewUi.WRITE_DETAIL_ADDRESS)
         initView()
         enableButton()
     }
 
     private fun initView(){
-        val parent = (parentFragment as NavHostFragment).parentFragment
-        val notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
-        notice?.text = getString(R.string.write_detail_address)
-        val spannableText = notice?.text?.toSpannable()
-        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(), R.font.nanum_square_round_extrabold), Typeface.NORMAL)
-        spannableText?.setSpan(CustomTypefaceSpan(typeface), 0, 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
-        binding.tvAddress.text = viewModel.addressSelected.value
-
+        binding.tvAddress.text = viewModel.addressSearchQuery.value
         binding.btnNext.run {
             setText("다음으로")
             unUseableButton()
@@ -72,6 +67,7 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
     override fun onStop() {
         super.onStop()
+        viewModel.addressSearchQuery.value = null
         binding.etAddressDetail.text.clear()
     }
 }

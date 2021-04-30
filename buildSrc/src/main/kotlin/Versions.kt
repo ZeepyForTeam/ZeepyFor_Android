@@ -19,4 +19,6 @@ object Versions {
     const val fragment_ktx_version = "1.3.1"
     const val activity_ktx_version = "1.2.1"
     const val lifecycle_version = "2.2.0"
+
+    const val annotations_version = "28.0.0"
 }
