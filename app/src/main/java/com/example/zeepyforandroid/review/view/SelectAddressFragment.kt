@@ -6,15 +6,20 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.databinding.FragmentReviewFrameBinding
 import com.example.zeepyforandroid.databinding.FragmentSelectAddressBinding
-import com.example.zeepyforandroid.review.adapter.AddressAdapter
-import com.example.zeepyforandroid.review.dto.AddressModel
+import com.example.zeepyforandroid.review.view.adapter.AddressAdapter
+import com.example.zeepyforandroid.review.data.dto.AddressModel
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
@@ -35,25 +40,17 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         initView()
         setDatas()
         goToSearchAddress()
+
     }
 
     private fun initView() {
-        val span = binding.tvSelectAddress.text
-        val typeface = Typeface.create(
-            ResourcesCompat.getFont(
-                requireContext(),
-                R.font.nanum_square_round_extrabold
-            ), Typeface.NORMAL
-        )
-        span.toSpannable()
-            .setSpan(CustomTypefaceSpan(typeface), 0, 9, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+        val parent: Fragment? = (parentFragment as NavHostFragment).parentFragment
+        var notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
+        notice?.text = getString(R.string.select_address)
 
-        binding.toolbar.run {
-            setTitle("리뷰작성")
-            setBackButton {
-                Navigation.findNavController(binding.root).popBackStack()
-            }
-        }
+        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(), R.font.nanum_square_round_extrabold), Typeface.NORMAL)
+        notice?.text?.toSpannable()?.setSpan(CustomTypefaceSpan(typeface), 0, 9, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+
         binding.btnNext.run {
             setText("다음으로")
             unUseableButton()
@@ -77,7 +74,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun setDatas() {
-        (binding.rvAddressList.adapter as AddressAdapter).submitList(viewModel.addressList.value)
+        viewModel.addressList.observe(viewLifecycleOwner){
+            (binding.rvAddressList.adapter as AddressAdapter).submitList(viewModel.addressList.value)
+        }
     }
 
     private fun goToWriteDetailAddress() {

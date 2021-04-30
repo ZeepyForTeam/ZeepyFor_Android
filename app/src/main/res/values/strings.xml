@@ -5,6 +5,13 @@
     <string name="select_address">거주하고 계신 집을\n검색하세요</string>
     <string name="write_detail_address">상세주소를\n입력해주세요</string>
     <string name="lessor_communication">임대인의 소통 성향은\n어땠나요?</string>
+    <string name="lessor_detail_info">임대인에 대해\n조금 더 알려주세요!</string>
+    <string name="lessor_house_info">집에 대한 정보를\n조금 더 알려주세요!</string>
+    <string name="lessor_house_picture">집의 외부와 내부 사진을\n첨부해 주세요.</string>
+    <string name="notice_review">*임대인을 향한 비방이나 너무 심한 욕설은 자제해주세요. T-T!</string>
+
+
     <string name="next">다음으로</string>
     <string name="limit_count_address">*최대 3개까지 등록 가능합니다.</string>
+
 </resources>

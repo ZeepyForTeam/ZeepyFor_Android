@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.dto.ReviewSearchAddressModel" />
+            type="com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,7 @@
                 android:id="@+id/imageview_house"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                loadImage="@{data.buildingPicture}"
+                loadUrl="@{data.buildingPicture}"
                 android:scaleType="fitXY"/>
 
         </androidx.cardview.widget.CardView>

@@ -3,12 +3,17 @@ package com.example.zeepyforandroid.review.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zeepyforandroid.review.dto.AddressList
-import com.example.zeepyforandroid.review.dto.AddressModel
-import com.example.zeepyforandroid.review.dto.ReviewSearchAddressModel
+import com.example.zeepyforandroid.review.data.source.LessorPersonalityDataSource
+import com.example.zeepyforandroid.review.data.dto.AddressList
+import com.example.zeepyforandroid.review.data.dto.AddressModel
+import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-
-class WriteReviewViewModel : ViewModel() {
+@HiltViewModel
+class WriteReviewViewModel @Inject constructor(
+    private val lessorPersonalityDataSource: LessorPersonalityDataSource
+) : ViewModel() {
     private val _houseListSearched = MutableLiveData<List<ReviewSearchAddressModel>>()
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
@@ -20,6 +25,8 @@ class WriteReviewViewModel : ViewModel() {
     private val _addressSelected = MutableLiveData<String>()
     val addressSelected: LiveData<String>
         get() = _addressSelected
+
+    val lessorPersonalities = lessorPersonalityDataSource.getLessorPersonality()
 
     val detailAddress = MutableLiveData<String>()
 
@@ -124,7 +131,7 @@ class WriteReviewViewModel : ViewModel() {
         }
         changeHouseListSearched(dummyHouseList)
     }
-    //Todo: api 연결하면 더미데이터 지우기
+    //Todo: api 연결하면 더미데이터 지우고 Datasource - Repository pattern으로 바꾸기
     private fun setDummyAddress() {
         val dummy = AddressList()
         dummy.apply {
@@ -143,8 +150,8 @@ class WriteReviewViewModel : ViewModel() {
                     "서울특별시 서대문구 연희동 26-8"
                 )
             )
-            _addressList.value = dummy
         }
+        _addressList.value = dummy
     }
 
     fun deleteAddress(addressModel: AddressModel) {
