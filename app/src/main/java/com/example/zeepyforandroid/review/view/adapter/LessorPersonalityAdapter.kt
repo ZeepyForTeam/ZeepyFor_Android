@@ -33,7 +33,6 @@ class LessorPersonalityAdapter(val mSelected: (Int) -> Unit): ListAdapter<Lessor
 
         holder.binding.root.setOnClickListener {
             mSelectedItem = position
-            Log.d("possss", mSelectedItem.toString())
             mSelected(mSelectedItem)
         }
         item.isSelected = mSelectedItem == position
