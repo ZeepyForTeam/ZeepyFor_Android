@@ -98,4 +98,7 @@ dependencies {
     //Coil
     implementation "io.coil-kt:coil:${Versions.coil_version}"
 
+    //Annotations
+    implementation "com.android.support:support-annotations:${Versions.annotations_version}"
+
 }

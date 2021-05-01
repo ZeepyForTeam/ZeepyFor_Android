@@ -1,28 +1,19 @@
 package com.example.zeepyforandroid.review.view
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.toSpannable
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
-import com.example.zeepyforandroid.databinding.FragmentReviewFrameBinding
 import com.example.zeepyforandroid.databinding.FragmentSelectAddressBinding
 import com.example.zeepyforandroid.review.view.adapter.AddressAdapter
 import com.example.zeepyforandroid.review.data.dto.AddressModel
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
+import com.example.zeepyforandroid.util.ReviewNotice
 
 
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
@@ -37,6 +28,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.changeCurrentFragment(ReviewNotice.SELECT_ADDRESS)
         initView()
         setDatas()
         goToSearchAddress()
@@ -44,13 +37,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun initView() {
-        val parent: Fragment? = (parentFragment as NavHostFragment).parentFragment
-        var notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
-        notice?.text = getString(R.string.select_address)
-
-        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(), R.font.nanum_square_round_extrabold), Typeface.NORMAL)
-        notice?.text?.toSpannable()?.setSpan(CustomTypefaceSpan(typeface), 0, 9, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
         binding.btnNext.run {
             setText("다음으로")
             unUseableButton()
@@ -80,12 +66,17 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun goToWriteDetailAddress() {
-        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_writeDetailAddressFragment)
+        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_lessorPersonalityFragment)
     }
 
     private fun goToSearchAddress() {
         binding.tvRegisterAddress.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.addressSearchQuery.value = null
     }
 }

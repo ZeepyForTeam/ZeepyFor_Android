@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,15 +25,18 @@
             app:layout_constraintBottom_toTopOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.45" />
+            app:layout_constraintVertical_bias="0.62" />
 
-        <ToggleButton
+        <CheckBox
             android:id="@+id/toggle_man"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:button="@color/colorTransparent"
             android:background="@drawable/toggle_selector"
-            android:textOff="남"
-            android:textOn="남"
+            android:text="남"
+            android:textAlignment="center"
+            android:checked="@={viewModel.manCheck}"
+            android:textColor="@{viewModel.manCheck ? @color/white : @color/zeepy_black_3b}"
             android:layout_marginStart="22dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_sex"
             app:layout_constraintDimensionRatio="1:1"
@@ -35,14 +44,17 @@
             app:layout_constraintStart_toEndOf="@id/tv_sex"
             app:layout_constraintTop_toTopOf="@id/tv_sex" />
 
-        <ToggleButton
+        <CheckBox
             android:id="@+id/toggle_women"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:button="@color/colorTransparent"
             android:background="@drawable/toggle_selector"
             android:layout_marginStart="11dp"
-            android:textOff="여"
-            android:textOn="여"
+            android:textAlignment="center"
+            android:text="여"
+            android:checked="@={viewModel.womenCheck}"
+            android:textColor="@{viewModel.womenCheck ? @color/white : @color/zeepy_black_3b}"
             app:layout_constraintBottom_toBottomOf="@id/toggle_man"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintHeight_percent="0.04"
@@ -54,6 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="연령대"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
             app:layout_constraintBottom_toBottomOf="@+id/toggle_women"
             app:layout_constraintEnd_toStartOf="@+id/spinner_age"
             app:layout_constraintHorizontal_bias="0.7"
@@ -63,23 +77,29 @@
 
         <Spinner
             android:id="@+id/spinner_age"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/nanum_square_round_extrabold"
+            android:background="@drawable/box_spinner"
             android:textSize="14sp"
-            app:theme="@style/SpinnerColor"
-            app:layout_constraintWidth_percent="0.15"
+            style="@style/SpinnerColor"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintWidth_percent="0.12"
             app:layout_constraintBottom_toBottomOf="@+id/tv_age"
             app:layout_constraintEnd_toStartOf="@+id/tv_age_group"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/tv_age"
             app:layout_constraintTop_toTopOf="@+id/tv_age" />
+
         <TextView
             android:id="@+id/tv_age_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="대"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
             android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/spinner_age"
             app:layout_constraintEnd_toEndOf="@+id/et_detail_lessor_info"
@@ -98,7 +118,7 @@
             app:layout_constraintBottom_toTopOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toBottomOf="@id/tv_sex"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.6" />
 
         <EditText
             android:id="@+id/et_detail_lessor_info"
@@ -116,7 +136,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.4" />
+            app:layout_constraintVertical_bias="0.3" />
 
         <TextView
             android:id="@+id/notice"

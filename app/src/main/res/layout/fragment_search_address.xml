@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".review.view.SearchAddressFragment">
-
-        <com.example.zeepyforandroid.customview.ZeepyToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/tv_search_address"
@@ -22,12 +19,10 @@
             android:text="주소검색"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="18sp"
-            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintVertical_bias="0.05" />
-
+            app:layout_constraintStart_toStartOf="@id/et_search_address"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/et_search_address"
@@ -37,6 +32,7 @@
             android:layout_marginTop="12dp"
             android:textSize="12sp"
             android:inputType="text"
+            android:text="@={viewModel.addressSearchQuery}"
             android:paddingStart="15dp"
             android:drawableLeft="@drawable/icon_search"
             android:drawablePadding="10dp"
@@ -45,7 +41,6 @@
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/edittext_box"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="18dp"
             app:layout_constraintTop_toBottomOf="@id/tv_search_address"/>
 
         <TextView
