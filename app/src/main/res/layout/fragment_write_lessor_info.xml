@@ -25,7 +25,7 @@
             app:layout_constraintBottom_toTopOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.62" />
+            app:layout_constraintVertical_bias="0.8" />
 
         <CheckBox
             android:id="@+id/toggle_man"
@@ -40,7 +40,7 @@
             android:layout_marginStart="22dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_sex"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintHeight_percent="0.04"
+            app:layout_constraintWidth_percent="0.088"
             app:layout_constraintStart_toEndOf="@id/tv_sex"
             app:layout_constraintTop_toTopOf="@id/tv_sex" />
 
@@ -57,7 +57,7 @@
             android:textColor="@{viewModel.womenCheck ? @color/white : @color/zeepy_black_3b}"
             app:layout_constraintBottom_toBottomOf="@id/toggle_man"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintHeight_percent="0.04"
+            app:layout_constraintWidth_percent="0.088"
             app:layout_constraintStart_toEndOf="@id/toggle_man"
             app:layout_constraintTop_toTopOf="@id/toggle_man" />
 

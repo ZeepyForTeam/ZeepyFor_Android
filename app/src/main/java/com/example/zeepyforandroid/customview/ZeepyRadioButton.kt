@@ -29,7 +29,7 @@ import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 
-class ZeepyChipButton @JvmOverloads constructor(context: Context, attributeSet: AttributeSet?= null, defStyleAttr:Int = 0): AppCompatRadioButton(context, attributeSet, defStyleAttr) {
+class ZeepyRadioButton @JvmOverloads constructor(context: Context, attributeSet: AttributeSet?= null, defStyleAttr:Int = 0): AppCompatRadioButton(context, attributeSet, defStyleAttr) {
     var buttonType = DEFAULT_CHIP
 
     init {

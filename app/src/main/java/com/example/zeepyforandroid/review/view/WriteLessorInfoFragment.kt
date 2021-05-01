@@ -90,6 +90,7 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         super.onStop()
         viewModel.manCheck.value = false
         viewModel.womenCheck.value = false
+        binding.etDetailLessorInfo.text.clear()
     }
 
     companion object {
