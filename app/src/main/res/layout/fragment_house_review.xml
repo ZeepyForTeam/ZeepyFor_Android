@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:zeepy ="http://schemas.android.com/apk/res/com.example.zeepyforandroid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".review.view.HouseReviewFragment">
+
+        <TextView
+            android:id="@+id/tv_count_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/room_count"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_blue_5f"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.15"/>
+
+        <LinearLayout
+            android:id="@+id/layout_btn_room_type"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:0.146"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintTop_toBottomOf="@id/tv_count_room"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.example.zeepyforandroid.customview.ZeepyChipButton
+                android:id="@+id/tv_cnt_one"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:layout_height="match_parent"
+                zeepy:chip_name="1개"
+                zeepy:button_type="1" />
+
+            <com.example.zeepyforandroid.customview.ZeepyChipButton
+                android:id="@+id/tv_cnt_two"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                zeepy:chip_name= "2개"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                zeepy:button_type="1" />
+
+            <com.example.zeepyforandroid.customview.ZeepyChipButton
+                android:id="@+id/tv_cnt_three_more"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                zeepy:chip_name="3개 이상"
+                android:layout_weight="1"
+                zeepy:button_type="1" />
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -29,7 +29,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.changeCurrentFragment(ReviewNotice.SELECT_ADDRESS)
         initView()
         setDatas()
         goToSearchAddress()

@@ -9,6 +9,7 @@
     <string name="house_condition">집에 대한 정보를\n조금 더 알려주세요!</string>
     <string name="lessor_house_picture">집의 외부와 내부 사진을\n첨부해 주세요.</string>
     <string name="notice_review">*임대인을 향한 비방이나 너무 심한 욕설은 자제해주세요. T-T!</string>
+    <string name="room_count">방의 개수는 몇 개인가요?</string>
 
 
     <string name="next">다음으로</string>

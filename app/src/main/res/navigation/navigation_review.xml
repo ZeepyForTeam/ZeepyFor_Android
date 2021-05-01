@@ -48,5 +48,14 @@
         android:id="@+id/writeLessorInfoFragment"
         android:name="com.example.zeepyforandroid.review.view.WriteLessorInfoFragment"
         android:label="WriteLessorInfoFragment"
-        tools:layout="@layout/fragment_write_lessor_info"/>
+        tools:layout="@layout/fragment_write_lessor_info">
+        <action
+            android:id="@+id/action_writeLessorInfoFragment_to_houseReviewFragment"
+            app:destination="@id/houseReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/houseReviewFragment"
+        android:name="com.example.zeepyforandroid.review.view.HouseReviewFragment"
+        android:label="HouseReviewFragment"
+        tools:layout="@layout/fragment_house_review"/>
 </navigation>

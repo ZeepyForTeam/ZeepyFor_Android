@@ -21,5 +21,6 @@
     <color name="zeepy_gray_f7">#f7f7f7</color>
     <color name="zeepy_white_f3">#fffbf3</color>
     <color name ="colorControlHighlight">#BFBFBF</color>
+    <color name="zeepy_yellow">#fff5db</color>
 
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="zeepyChipButton">
+        <attr name="chip_name" format="string"/>
+        <attr name="button_type" format="integer"/>
+    </declare-styleable>
+
+</resources>
