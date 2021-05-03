@@ -25,6 +25,7 @@
             tools:text="항목"/>
 
             <RadioGroup
+                android:id="@+id/group_choice"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="1:0.146"
@@ -57,7 +58,6 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 zeepy:button_type="4" />
-
 
             </RadioGroup>
 

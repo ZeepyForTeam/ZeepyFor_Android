@@ -18,15 +18,15 @@
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/toolbar"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintEnd_toEndOf="@id/toolbar"
-            android:fillViewport="true">
+            app:layout_constraintEnd_toEndOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp">
 
                 <TextView
                     android:id="@+id/tv_review_notice"
@@ -41,7 +41,6 @@
                     app:layout_constraintStart_toStartOf="@id/review_nav_host_fragment"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/select_address"/>
-
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/review_nav_host_fragment"
@@ -58,11 +57,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </ScrollView>
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

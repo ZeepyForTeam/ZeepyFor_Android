@@ -6,19 +6,41 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.databinding.ItemReviewChoiceBinding
 import com.example.zeepyforandroid.review.data.dto.ReviewChoiceModel
-import kotlin.properties.Delegates
 
-class ReviewChoiceAdapter: RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoiceViewHolder>() {
-
+class ReviewChoiceAdapter : RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoiceViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewChoiceViewHolder {
-        val binding = ItemReviewChoiceBinding.inflate(LayoutInflater.from(parent.context), parent,false)
+        val binding =
+            ItemReviewChoiceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ReviewChoiceViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ReviewChoiceViewHolder, position: Int) {
         val item = REVIEW_ITEM[position]
         holder.binding.setVariable(BR.data, item)
+        holder.binding.apply {
+            groupChoice.setOnCheckedChangeListener { _ , checkId ->
+                when (checkId) {
+                    btnLike.id -> {
+                        btnDislike.isSelected = false
+                        btnSoso.isSelected = false
+                    }
+                    btnDislike.id -> {
+                        btnLike.isSelected = false
+                        btnSoso.isSelected = false
+                    }
+                    btnSoso.id -> {
+                        btnDislike.isSelected = false
+                        btnLike.isSelected = false
+                    }
+                    else -> {
+                        btnDislike.isSelected = false
+                        btnLike.isSelected = false
+                        btnSoso.isSelected = false
+                    }
+                }
+            }
+        }
     }
 
     override fun getItemCount() = REVIEW_ITEM.size
@@ -32,5 +54,5 @@ class ReviewChoiceAdapter: RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoice
         )
     }
 
-    class ReviewChoiceViewHolder(val binding: ItemReviewChoiceBinding): RecyclerView.ViewHolder(binding.root)
+    class ReviewChoiceViewHolder(val binding: ItemReviewChoiceBinding) : RecyclerView.ViewHolder(binding.root)
 }

@@ -4,10 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spanned
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
 import androidx.fragment.app.activityViewModels
@@ -21,6 +18,7 @@ import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ReviewNotice
 
+//FIXME: HouseReviewFragment 일 때를 제외하고는 스크롤뷰가 작동하지 않도록 수정해야함
 class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
     private val viewModel by activityViewModels<WriteReviewViewModel>()
     private lateinit var navController: NavController
