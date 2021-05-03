@@ -4,9 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spanned
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
 import androidx.fragment.app.activityViewModels
@@ -18,7 +16,9 @@ import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentReviewFrameBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
+import com.example.zeepyforandroid.util.ReviewNotice
 
+//FIXME: HouseReviewFragment 일 때를 제외하고는 스크롤뷰가 작동하지 않도록 수정해야함
 class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
     private val viewModel by activityViewModels<WriteReviewViewModel>()
     private lateinit var navController: NavController
@@ -53,15 +53,15 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
     }
 
     private fun changeToolbar() {
-        viewModel.currentFragment.observe(viewLifecycleOwner){ reviewUi ->
-            binding.tvReviewNotice.text = getString(reviewUi.text)
-            binding.tvReviewNotice.visibility = View.VISIBLE
-            val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
-
-            for(i in reviewUi.map){
-                binding.tvReviewNotice.text.toSpannable().setSpan(CustomTypefaceSpan(typeface), i.key, i.value, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
+        viewModel.currentFragment.observe(viewLifecycleOwner){ reviewNotice ->
+            binding.tvReviewNotice.apply {
+                text = getString(reviewNotice.text)
+                visibility = View.VISIBLE
+                reviewNotice.map.forEach{
+                    text.toSpannable().setSpan(CustomTypefaceSpan(typeface),it.key,it.value,Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                }
             }
         }
     }
-
 }

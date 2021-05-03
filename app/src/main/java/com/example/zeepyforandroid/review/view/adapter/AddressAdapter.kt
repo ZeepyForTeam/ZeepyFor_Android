@@ -1,24 +1,28 @@
 package com.example.zeepyforandroid.review.view.adapter
 
+import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemAddressBinding
+import com.example.zeepyforandroid.font
 import com.example.zeepyforandroid.review.data.dto.AddressModel
 import kotlin.properties.Delegates
 
-class AddressAdapter(val listener: ClickListener): ListAdapter<AddressModel, AddressAdapter.AddressViewHolder>(diffCallback) {
+class AddressAdapter(private val context: Context, val listener: ClickListener): ListAdapter<AddressModel, AddressAdapter.AddressViewHolder>(diffCallback) {
 
     interface ClickListener{
         fun delete(item: AddressModel)
         fun select(item: AddressModel)
     }
 
-    var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
+    private var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
         if (newPos in currentList.indices){
             notifyItemChanged(oldPos)
             notifyItemChanged(newPos)
@@ -43,10 +47,20 @@ class AddressAdapter(val listener: ClickListener): ListAdapter<AddressModel, Add
         }
 
         if (position == selectedPosition){
-            holder.binding.root.setBackgroundResource(R.drawable.box_address_selected)
+            holder.binding.apply {
+                root.setBackgroundResource(R.drawable.box_address_selected)
+                tvAddress.typeface = changeFontFamily(R.font.nanum_square_round_extrabold)
+            }
         } else {
-            holder.binding.root.setBackgroundResource(R.drawable.box_address)
+            holder.binding.apply {
+                root.setBackgroundResource(R.drawable.box_address)
+                tvAddress.typeface = changeFontFamily(R.font.nanum_square_round_regular)
+            }
         }
+    }
+
+    private fun changeFontFamily(font: Int):Typeface {
+        return Typeface.create(ResourcesCompat.getFont(context, font), Typeface.NORMAL)
     }
 
     companion object{

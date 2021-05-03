@@ -31,11 +31,21 @@ class WriteReviewViewModel @Inject constructor(
     val addressSelected: LiveData<String>
         get() = _addressSelected
 
+    val reviewOfLessor = MutableLiveData<String>()
+
     val lessorPersonalities = lessorPersonalityDataSource.getLessorPersonality()
     val detailAddress = MutableLiveData<String>()
     val addressSearchQuery = MutableLiveData<String>()
     val manCheck = MutableLiveData<Boolean>()
     val womenCheck = MutableLiveData<Boolean>()
+
+    init {
+        setDummyAddress()
+    }
+
+    fun checkReviewOfLessor(): Boolean{
+        return !reviewOfLessor.value.isNullOrEmpty()
+    }
 
     fun changeAddressSelected(address: String) {
         _addressSelected.value = address
@@ -45,12 +55,8 @@ class WriteReviewViewModel @Inject constructor(
         return detailAddress.value.isNullOrEmpty()
     }
 
-    fun changeCurrentFragment(reviewNotice: ReviewNotice){
+    fun changeCurrentFragment(reviewNotice: ReviewNotice) {
         _currentFragment.value = reviewNotice
-    }
-
-    init {
-        setDummyAddress()
     }
 
     fun checkInputAddressQuery(): Boolean {

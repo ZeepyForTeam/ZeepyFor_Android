@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="data"
+            type="com.example.zeepyforandroid.review.data.dto.OptionModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+
+        <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="48dp"
+            android:text="@{data.option}"
+            zeepy:button_type="1"
+            tools:text="zeepy button"/>
+
+    </FrameLayout>
+</layout>

@@ -16,7 +16,7 @@ import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentSearchAddressBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 
-
+//Todo: 이 Fragment 삭제해도 됨...
 class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
     private val viewModel: WriteReviewViewModel by activityViewModels()
 
