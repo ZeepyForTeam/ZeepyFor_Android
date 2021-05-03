@@ -22,10 +22,10 @@
             android:text="성별"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@id/et_detail_lessor_info"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.18" />
 
         <CheckBox
             android:id="@+id/toggle_man"
@@ -118,26 +118,26 @@
             app:layout_constraintBottom_toTopOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toBottomOf="@id/tv_sex"
-            app:layout_constraintVertical_bias="0.6" />
+            app:layout_constraintVertical_bias="0.55" />
 
         <EditText
             android:id="@+id/et_detail_lessor_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@null"
-            android:gravity="top"
-            android:paddingVertical="6dp"
-            android:paddingHorizontal="6dp"
-            android:text="@={viewModel.reviewOfLessor}"
-            android:textCursorDrawable="@drawable/cursor"
             android:fontFamily="@font/nanum_square_round_regular"
             android:foreground="@drawable/box_address"
+            android:gravity="top"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="6dp"
+            android:text="@={viewModel.reviewOfLessor}"
+            android:textCursorDrawable="@drawable/cursor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:0.496"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_sex"
+            app:layout_constraintVertical_bias="0.14" />
 
         <TextView
             android:id="@+id/notice"
