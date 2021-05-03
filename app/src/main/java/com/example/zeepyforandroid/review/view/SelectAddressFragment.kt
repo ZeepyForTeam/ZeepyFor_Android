@@ -45,7 +45,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         }
 
         binding.rvAddressList.run {
-            adapter = AddressAdapter(object : AddressAdapter.ClickListener{
+            adapter = AddressAdapter(requireContext(), object : AddressAdapter.ClickListener{
                 override fun delete(item: AddressModel) {
                     viewModel.deleteAddress(item)
                 }

@@ -4,14 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentHouseReviewBinding
 import com.example.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
 import com.example.zeepyforandroid.review.view.adapter.ReviewOptionAdapter
+import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
+import com.example.zeepyforandroid.util.ReviewNotice
 
 
-class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
+class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
+    private val viewModel by activityViewModels<WriteReviewViewModel>()
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -21,6 +26,7 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
         setReviewChoice()
         setRoomTypeChoice()
         setOptionChoice()
