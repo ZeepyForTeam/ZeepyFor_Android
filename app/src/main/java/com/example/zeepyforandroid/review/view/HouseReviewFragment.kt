@@ -1,10 +1,14 @@
 package com.example.zeepyforandroid.review.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.forEach
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
+import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentHouseReviewBinding
 import com.example.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
@@ -31,11 +35,19 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
         setRoomTypeChoice()
         setOptionChoice()
         setNextButton()
+        goToWriteHouseInfo()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.roomtypeGroup.clearCheck()
     }
 
     private fun setReviewChoice() {
         binding.rvReviewChoice.run {
-            adapter = ReviewChoiceAdapter()
+            adapter = ReviewChoiceAdapter{
+                enableNextButton(it)
+            }
             addItemDecoration(ItemDecoration(13, 0))
         }
     }
@@ -50,7 +62,16 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            usableButton()
+            unUseableButton()
+        }
+    }
+
+    private fun enableNextButton(map:Map<Int,Int>) {
+        if(map.size == 4) {
+            binding.btnNext.usableButton()
+            goToWriteHouseInfo()
+        } else {
+            binding.btnNext.unUseableButton()
         }
     }
 
@@ -58,18 +79,25 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
         binding.roomtypeGroup.setOnCheckedChangeListener { group, checkId ->
             when (checkId) {
                 binding.radiobtnOneRoom.id -> {
-                    binding.radiobtnTwoRoom.isSelected = false
-                    binding.radiobtnThreeRoom.isSelected = false
+                    binding.radiobtnTwoRoom.isChecked = false
+                    binding.radiobtnThreeRoom.isChecked = false
                 }
                 binding.radiobtnTwoRoom.id -> {
-                    binding.radiobtnOneRoom.isSelected = false
-                    binding.radiobtnThreeRoom.isSelected = false
+                    binding.radiobtnOneRoom.isChecked = false
+                    binding.radiobtnThreeRoom.isChecked = false
                 }
                 binding.radiobtnThreeRoom.id -> {
-                    binding.radiobtnTwoRoom.isSelected = false
-                    binding.radiobtnOneRoom.isSelected = false
+                    binding.radiobtnTwoRoom.isChecked = false
+                    binding.radiobtnOneRoom.isChecked = false
                 }
             }
+
+        }
+    }
+
+    private fun goToWriteHouseInfo() {
+        binding.btnNext.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_houseReviewFragment_to_writeHouseInfoFragment)
         }
     }
 }

@@ -1,17 +1,20 @@
 package com.example.zeepyforandroid.review.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.databinding.ItemReviewChoiceBinding
 import com.example.zeepyforandroid.review.data.dto.ReviewChoiceModel
+import kotlin.properties.Delegates
 
-class ReviewChoiceAdapter : RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoiceViewHolder>() {
+class ReviewChoiceAdapter(val listener: (Map<Int,Int>)-> Unit) : RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoiceViewHolder>() {
+
+    var checkedListMap = mutableMapOf<Int,Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewChoiceViewHolder {
-        val binding =
-            ItemReviewChoiceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemReviewChoiceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ReviewChoiceViewHolder(binding)
     }
 
@@ -19,26 +22,32 @@ class ReviewChoiceAdapter : RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoic
         val item = REVIEW_ITEM[position]
         holder.binding.setVariable(BR.data, item)
         holder.binding.apply {
-            groupChoice.setOnCheckedChangeListener { _ , checkId ->
+            groupChoice.setOnCheckedChangeListener { group , checkId ->
                 when (checkId) {
                     btnLike.id -> {
-                        btnDislike.isSelected = false
-                        btnSoso.isSelected = false
+                        btnDislike.isChecked = false
+                        btnSoso.isChecked = false
+                        checkedListMap[position] = checkId
                     }
                     btnDislike.id -> {
-                        btnLike.isSelected = false
-                        btnSoso.isSelected = false
+                        btnLike.isChecked = false
+                        btnSoso.isChecked = false
+                        checkedListMap[position] = checkId
                     }
                     btnSoso.id -> {
-                        btnDislike.isSelected = false
-                        btnLike.isSelected = false
+                        btnDislike.isChecked = false
+                        btnLike.isChecked = false
+                        checkedListMap[position] = checkId
                     }
                     else -> {
-                        btnDislike.isSelected = false
-                        btnLike.isSelected = false
-                        btnSoso.isSelected = false
+                        btnLike.isChecked = false
+                        btnDislike.isChecked = false
+                        btnSoso.isChecked = false
+                        checkedListMap.remove(position)
                     }
                 }
+                Log.e("map list", checkedListMap.values.toString())
+                listener(checkedListMap)
             }
         }
     }

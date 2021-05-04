@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".review.view.WriteHouseInfoFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+
+        <TextView
+            android:id="@+id/tv_detail_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:text="상세리뷰"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.15" />
+
+
+        <EditText
+            android:id="@+id/et_detail_house_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@null"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:foreground="@drawable/box_address"
+            android:gravity="top"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="6dp"
+            android:textCursorDrawable="@drawable/cursor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:0.496"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_info"
+            app:layout_constraintVertical_bias="0.05" />
+
+        <TextView
+            android:id="@+id/tv_final_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="종합평가"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="16sp"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintTop_toBottomOf="@id/et_detail_house_info"
+            app:layout_constraintStart_toStartOf="@id/et_detail_house_info"
+            app:layout_constraintBottom_toTopOf="@id/group_final_review"/>
+
+        <RadioGroup
+            android:id="@+id/group_final_review"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintDimensionRatio="1:0.487"
+            android:weightSum="3"
+            app:layout_constraintVertical_bias="0.35"
+            app:layout_constraintTop_toBottomOf="@id/et_detail_house_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/et_detail_house_info"
+            app:layout_constraintEnd_toEndOf="@id/et_detail_house_info">
+
+            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+                android:id="@+id/btn_good"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/final_good"
+                android:layout_marginBottom="8dp"
+                zeepy:button_type="5"/>
+
+            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+                android:id="@+id/btn_recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/final_recommendation"
+                android:layout_marginBottom="8dp"
+                zeepy:button_type="5"/>
+
+            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+                android:id="@+id/btn_no_recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/final_no_recommendation"
+                zeepy:button_type="5"/>
+
+        </RadioGroup>
+
+        <com.example.zeepyforandroid.customview.ZeepyButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/et_detail_house_info"
+            app:layout_constraintStart_toStartOf="@id/et_detail_house_info"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
