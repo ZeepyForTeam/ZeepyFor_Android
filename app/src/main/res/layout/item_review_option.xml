@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
 
-        <com.example.zeepyforandroid.customview.ZeepyRadioButton
+        <com.example.zeepyforandroid.customview.ZeepyCheckBox
             android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_height="48dp"
-            android:text="@{data.option}"
+            android:textSize="14sp"
             zeepy:button_type="1"
+            android:text="@{data.option}"
             tools:text="zeepy button"/>
 
     </FrameLayout>

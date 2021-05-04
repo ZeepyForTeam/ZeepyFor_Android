@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
+import androidx.core.view.forEach
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
