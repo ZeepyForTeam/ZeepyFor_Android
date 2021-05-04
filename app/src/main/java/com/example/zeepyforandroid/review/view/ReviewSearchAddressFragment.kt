@@ -9,9 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentReviewSearchAddressBinding
-import com.example.zeepyforandroid.review.adapter.ReviewSearchAddressAdapter
+import com.example.zeepyforandroid.review.view.adapter.ReviewSearchAddressAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.example.zeepyforandroid.util.VerticalItemDecoration
+import com.example.zeepyforandroid.util.ItemDecoration
 
 
 class ReviewSearchAddressFragment : BaseFragment<FragmentReviewSearchAddressBinding>() {
@@ -46,13 +46,12 @@ class ReviewSearchAddressFragment : BaseFragment<FragmentReviewSearchAddressBind
         houseListAdapter = ReviewSearchAddressAdapter()
         binding.recyclerviewResultHouse.run {
             adapter = houseListAdapter
-            addItemDecoration(VerticalItemDecoration(10))
+            addItemDecoration(ItemDecoration(10,0))
         }
     }
 
     private fun searchHouse() {
         binding.buttonSearch.setOnClickListener {
-            viewModel.loadDummyData()
         }
     }
 

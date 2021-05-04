@@ -101,4 +101,7 @@ dependencies {
     // Naver Map SDK
     implementation 'com.naver.maps:map-sdk:3.11.0'
 
+    //Annotations
+    implementation "com.android.support:support-annotations:${Versions.annotations_version}"
+
 }

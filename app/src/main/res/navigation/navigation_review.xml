@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_review"
+    app:startDestination="@id/selectAddressFragment">
+
+    <fragment
+        android:id="@+id/lessorPersonalityFragment"
+        android:name="com.example.zeepyforandroid.review.view.LessorPersonalityFragment"
+        android:label="LessorPersonalityFragment"
+        tools:layout="@layout/fragment_lessor_personality">
+        <action
+            android:id="@+id/action_lessorPersonalityFragment_to_writeLessorInfoFragment"
+            app:destination="@id/writeLessorInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.SelectAddressFragment"
+        android:label="SelectAddressFragment"
+        tools:layout="@layout/fragment_select_address">
+        <action
+            android:id="@+id/action_selectAddressFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment" />
+        <action
+            android:id="@+id/action_selectAddressFragment_to_lessorPersonalityFragment"
+            app:destination="@id/lessorPersonalityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.SearchAddressFragment"
+        android:label="SearchAddressFragment"
+        tools:layout="@layout/fragment_search_address">
+        <action
+            android:id="@+id/action_searchAddressFragment_to_writeDetailAddressFragment"
+            app:destination="@id/writeDetailAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeDetailAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.WriteDetailAddressFragment"
+        android:label="WriteDetailAddressFragment"
+        tools:layout="@layout/fragment_write_detail_address">
+        <action
+            android:id="@+id/action_writeDetailAddressFragment_to_lessorPersonalityFragment"
+            app:destination="@id/lessorPersonalityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeLessorInfoFragment"
+        android:name="com.example.zeepyforandroid.review.view.WriteLessorInfoFragment"
+        android:label="WriteLessorInfoFragment"
+        tools:layout="@layout/fragment_write_lessor_info">
+        <action
+            android:id="@+id/action_writeLessorInfoFragment_to_houseReviewFragment"
+            app:destination="@id/houseReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/houseReviewFragment"
+        android:name="com.example.zeepyforandroid.review.view.HouseReviewFragment"
+        android:label="HouseReviewFragment"
+        tools:layout="@layout/fragment_house_review"/>
+</navigation>

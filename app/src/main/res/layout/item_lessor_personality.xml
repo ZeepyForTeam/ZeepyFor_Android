@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="data"
+            type="com.example.zeepyforandroid.review.data.dto.LessorPersonalityModel" />
+        <variable
+            name="fontType"
+            type="com.example.zeepyforandroid.util.FontType" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <ImageView
+            android:id="@+id/iv_emoji"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            loadDrawable="@{data.emoji}"
+            isSelected="@{data.selected}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toTopOf="@id/tv_lessor_communication"
+            app:layout_constraintBottom_toBottomOf="@id/tv_lessor_communication"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_lessor_communication"
+            tools:src="@drawable/ic_emoji1"/>
+
+        <TextView
+            android:id="@+id/tv_lessor_communication"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textSize="14sp"
+            android:paddingVertical="6dp"
+            android:text="@{data.personality}"
+            android:paddingLeft="12dp"
+            font="@{data.selected ? fontType.FONT_EXTRABOLD : fontType.FONT_REGULAR}"
+            android:gravity="center_vertical"
+            android:background="@{data.selected ? @drawable/box_lessor_personality_checked : @drawable/box_lessor_personality_unchecked}"
+            app:layout_constraintWidth_percent="0.594"
+            app:layout_constraintDimensionRatio="1:0.143"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="칼 같은 우리 사이, 비즈니스형"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

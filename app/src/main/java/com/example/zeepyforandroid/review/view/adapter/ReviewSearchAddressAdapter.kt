@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.review.adapter
+package com.example.zeepyforandroid.review.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.databinding.ItemResultHouseBinding
-import com.example.zeepyforandroid.review.dto.ReviewSearchAddressModel
+import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
 import com.example.zeepyforandroid.util.DiffCallback
 
 class ReviewSearchAddressAdapter: RecyclerView.Adapter<ReviewSearchAddressAdapter.ReviewSearchAddressViewHolder>() {

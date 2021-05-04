@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_mapFragment"
             app:destination="@+id/mapFragment"/>
+        <action
+            android:id="@+id/action_mainFrameFragment_to_reviewFrameFragment"
+            app:destination="@id/reviewFrameFragment" />
     </fragment>
 
     <fragment
@@ -48,4 +51,9 @@
         android:name="com.example.zeepyforandroid.map.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map"/>
+    <fragment
+        android:id="@+id/reviewFrameFragment"
+        android:name="com.example.zeepyforandroid.review.view.ReviewFrameFragment"
+        android:label="ReviewFrameFragment" />
+
 </navigation>

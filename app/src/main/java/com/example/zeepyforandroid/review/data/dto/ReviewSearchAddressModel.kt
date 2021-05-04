@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.review.dto
+package com.example.zeepyforandroid.review.data.dto
 
 data class ReviewSearchAddressModel(
     val buildingName: String,

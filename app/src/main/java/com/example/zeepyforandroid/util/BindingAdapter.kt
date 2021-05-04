@@ -1,22 +1,36 @@
 package com.example.zeepyforandroid
 
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.graphics.fonts.FontFamily
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.text.toSpannable
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import coil.load
+import com.example.zeepyforandroid.util.CustomTypefaceSpan
+import com.example.zeepyforandroid.util.FontType
 
-@BindingAdapter("loadImage")
-fun loadImage(imageView:ImageView, url: String?) {
+@BindingAdapter("loadUrl")
+fun loadUrl(imageView:ImageView, url: String?) {
     if (url == null){
-        imageView.load(R.drawable.paris)
+        imageView.load(R.drawable.ic_launcher_background)
     } else {
         imageView.load(url)
+    }
+}
+
+@BindingAdapter("loadDrawable")
+fun loadDrawable(imageView:ImageView, drawable: Int?) {
+    if (drawable == null) {
+        imageView.load(R.drawable.ic_launcher_background)
+    } else {
+        imageView.load(drawable)
     }
 }
 
@@ -46,3 +60,42 @@ fun setTextWatcher(editText: EditText, textAttrChanged: InverseBindingListener) 
         }
     })
 }
+
+@BindingAdapter("android:checked")
+fun setChecked(checkBox: CheckBox, isChecked: MutableLiveData<Boolean>?){
+    if (isChecked == null) {
+        checkBox.isChecked = false
+    } else {
+        checkBox.isChecked = isChecked.value == true
+    }
+}
+
+@BindingAdapter("checkChanged")
+fun CheckBox.setOnChangedListener(checkChanged: InverseBindingListener) {
+    setOnCheckedChangeListener { _, _ ->
+        checkChanged?.onChange()
+    }
+
+}
+
+@InverseBindingAdapter(attribute = "android:checked", event = "checkChanged")
+fun getChecked(checkBox: CheckBox): Boolean{
+    return checkBox.isChecked
+}
+
+
+@BindingAdapter("isSelected")
+fun setIsSelected(imageView: ImageView, isSelected: Boolean) {
+    imageView.isSelected = isSelected
+}
+
+@BindingAdapter("font")
+fun TextView.font(type: FontType){
+    try {
+        typeface = ResourcesCompat.getFont(context, type.fontRes)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+
