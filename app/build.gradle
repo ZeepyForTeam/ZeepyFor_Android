@@ -98,10 +98,20 @@ dependencies {
     //Coil
     implementation "io.coil-kt:coil:${Versions.coil_version}"
 
-    // Naver Map SDK
+    //Naver Map SDK
     implementation 'com.naver.maps:map-sdk:3.11.0'
 
     //Annotations
     implementation "com.android.support:support-annotations:${Versions.annotations_version}"
 
+    //search-dialog
+    implementation 'com.github.mirrajabi:search-dialog:1.2.4'
+
+    //koin
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-core-ext:$koin_version"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-scope:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-android-ext:$koin_version"
 }

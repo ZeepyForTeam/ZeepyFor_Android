@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.map
+package com.example.zeepyforandroid.map.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,17 +9,27 @@ import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentMapBinding
+import com.example.zeepyforandroid.map.data.searchdialog.SearchDialog
+import com.example.zeepyforandroid.map.viewmodel.MapViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
+import com.naver.maps.map.util.FusedLocationSource
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
+    private val LOCATION_PERMISSION_REQUEST_CODE = 100
+    private lateinit var locationSource: FusedLocationSource
+
     private lateinit var mapView: MapView
-    private lateinit var naverMap : NaverMap
+    private lateinit var naverMap: NaverMap
+
+    private val mapViewModel: MapViewModel by viewModel { parametersOf() }
 
     // 여러 개의 마커 선언 및 초기화
     private var marker0 = Marker()
@@ -37,10 +47,43 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
         setToolbar()
         mapView = view.findViewById(R.id.mv_NMap)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this) // Calls onMapReady
+
+        mapView.run {
+            onCreate(savedInstanceState)
+            getMapAsync { navermap ->
+                naverMap = navermap
+                naverMap.run {
+                    this.locationSource = locationSource
+
+                    setOnMapClickListener { pointF, latLng ->
+                        mapView.parent.requestDisallowInterceptTouchEvent(true)
+                        //resetSearchView()
+                    }
+                }
+
+                //setMyLocation()
+            }
+        }
+
+        mapViewModel.searchAddressData.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { geocodingResponse ->
+                val searchDialogs = mutableListOf<SearchDialog>()
+
+                geocodingResponse.addresses?.forEach {
+                    it?.roadAddress?.let { title ->
+                        searchDialogs.add(SearchDialog(title))
+                    }
+                }
+            }
+        )
 
     }
 
@@ -96,6 +139,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         }
     }
 
+    private fun setMyLocation() {
+        //showLoading()
+
+        locationSource.activate {
+            val myLocation = LatLng(it?.latitude!!, it.longitude)
+
+            //CONTINUE...
+        }
+    }
+
     private fun setMarker(marker: Marker, lat: Double, lng: Double, resourceID: Int) {
         // marker.isIconPerspectiveEnabled = true
         marker.icon = OverlayImage.fromResource(resourceID)
@@ -103,7 +156,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         marker.position = LatLng(lat, lng)
         marker.map = naverMap
     }
-
 
 
 }
