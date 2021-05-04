@@ -98,6 +98,9 @@ dependencies {
     //Coil
     implementation "io.coil-kt:coil:${Versions.coil_version}"
 
+    // Naver Map SDK
+    implementation 'com.naver.maps:map-sdk:3.11.0'
+
     //Annotations
     implementation "com.android.support:support-annotations:${Versions.annotations_version}"
 
