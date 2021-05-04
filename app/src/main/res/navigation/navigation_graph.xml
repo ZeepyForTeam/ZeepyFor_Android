@@ -11,6 +11,12 @@
         android:label="fragment_main_frame"
         tools:layout="@layout/fragment_main_frame" >
         <action
+            android:id="@+id/action_mainFrameFragment_to_reviewSearchAddressFragment"
+            app:destination="@id/reviewSearchAddressFragment" />
+        <action
+            android:id="@+id/action_mainFrameFragment_to_mapFragment"
+            app:destination="@+id/mapFragment"/>
+        <action
             android:id="@+id/action_mainFrameFragment_to_reviewFrameFragment"
             app:destination="@id/reviewFrameFragment" />
     </fragment>
@@ -34,6 +40,17 @@
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
 
+    <fragment
+        android:id="@+id/reviewSearchAddressFragment"
+        android:name="com.example.zeepyforandroid.review.view.ReviewSearchAddressFragment"
+        android:label="fragment_review_search_address"
+        tools:layout="@layout/fragment_review_search_address"/>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.zeepyforandroid.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map"/>
     <fragment
         android:id="@+id/reviewFrameFragment"
         android:name="com.example.zeepyforandroid.review.view.ReviewFrameFragment"
