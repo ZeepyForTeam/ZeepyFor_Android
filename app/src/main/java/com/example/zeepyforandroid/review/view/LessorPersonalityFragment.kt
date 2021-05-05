@@ -47,7 +47,6 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
                 binding.btnNext.usableButton()
             }
             addItemDecoration(ItemDecoration(10,0))
-            (adapter as LessorPersonalityAdapter).submitList(viewModel.lessorPersonalities)
         }
     }
 

@@ -53,5 +53,4 @@ class ZeepyCheckBox @JvmOverloads constructor( context: Context, attributeSet: A
             }
         }
     }
-
 }

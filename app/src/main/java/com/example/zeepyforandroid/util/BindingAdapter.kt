@@ -3,6 +3,7 @@ package com.example.zeepyforandroid
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.fonts.FontFamily
+import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
@@ -33,6 +34,11 @@ fun loadDrawable(imageView:ImageView, drawable: Int?) {
     } else {
         imageView.load(drawable)
     }
+}
+
+@BindingAdapter("load_uri")
+fun ImageView.loadFromStorage(uri:Uri) {
+    load(uri)
 }
 
 @BindingAdapter("android:text")

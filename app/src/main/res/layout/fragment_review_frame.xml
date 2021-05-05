@@ -14,20 +14,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:id="@+id/scrollview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/toolbar"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintEnd_toEndOf="@id/toolbar">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
                 <TextView
                     android:id="@+id/tv_review_notice"
                     android:layout_width="wrap_content"
@@ -39,13 +25,13 @@
                     android:textSize="24sp"
                     android:layout_marginTop="23dp"
                     app:layout_constraintStart_toStartOf="@id/review_nav_host_fragment"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
                     tools:text="@string/select_address"/>
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/review_nav_host_fragment"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:name="androidx.navigation.fragment.NavHostFragment"
                     app:defaultNavHost="true"
                     android:layout_marginHorizontal="16dp"
@@ -54,10 +40,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
