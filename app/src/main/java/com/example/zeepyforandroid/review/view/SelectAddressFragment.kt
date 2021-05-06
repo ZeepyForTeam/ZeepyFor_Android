@@ -16,9 +16,9 @@ import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.util.ReviewNotice
 
-
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
-    private val viewModel: WriteReviewViewModel by activityViewModels()
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

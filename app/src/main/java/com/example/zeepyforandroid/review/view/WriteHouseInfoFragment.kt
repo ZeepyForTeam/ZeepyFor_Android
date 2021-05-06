@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -13,9 +14,9 @@ import com.example.zeepyforandroid.databinding.FragmentWriteHouseInfoBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ReviewNotice
 
-
 class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
-    private val viewModel by activityViewModels<WriteReviewViewModel>()
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

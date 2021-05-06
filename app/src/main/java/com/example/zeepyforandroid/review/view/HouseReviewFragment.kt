@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.forEach
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.zeepyforandroid.R
@@ -24,9 +25,8 @@ import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.util.ReviewNotice
 
-
 class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
-    private val viewModel by activityViewModels<WriteReviewViewModel>()
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

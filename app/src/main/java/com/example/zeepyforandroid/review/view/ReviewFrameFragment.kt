@@ -20,9 +20,8 @@ import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ReviewNotice
 
-//Todo: activityViewModels말고 fragment level로 바꾸기
 class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
-    private val viewModel by activityViewModels<WriteReviewViewModel>()
+    private val viewModel by viewModels<WriteReviewViewModel>()
     private lateinit var navController: NavController
 
     override fun getFragmentBinding(

@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
@@ -30,7 +31,8 @@ import java.util.*
 class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     private lateinit var pictureUri: Uri
     private val pictures = mutableListOf<HousePictureModel>()
-    private val viewModel by activityViewModels<WriteReviewViewModel>()
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

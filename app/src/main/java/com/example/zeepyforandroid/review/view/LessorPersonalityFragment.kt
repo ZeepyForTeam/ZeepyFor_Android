@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -17,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>() {
-    private val viewModel by activityViewModels<WriteReviewViewModel>()
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

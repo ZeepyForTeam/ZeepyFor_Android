@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -17,7 +18,7 @@ import com.example.zeepyforandroid.databinding.FragmentSearchAddressBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 
 class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
-    private val viewModel: WriteReviewViewModel by activityViewModels()
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
