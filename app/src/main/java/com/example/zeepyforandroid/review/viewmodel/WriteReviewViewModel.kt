@@ -36,8 +36,7 @@ class WriteReviewViewModel @Inject constructor(
     val lessorPersonalities = lessorPersonalityDataSource.getLessorPersonality()
     val detailAddress = MutableLiveData<String>()
     val addressSearchQuery = MutableLiveData<String>()
-    val manCheck = MutableLiveData<Boolean>()
-    val womenCheck = MutableLiveData<Boolean>()
+    val sexChecked = MutableLiveData<Int>()
 
     init {
         setDummyAddress()

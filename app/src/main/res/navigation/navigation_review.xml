@@ -57,5 +57,14 @@
         android:id="@+id/houseReviewFragment"
         android:name="com.example.zeepyforandroid.review.view.HouseReviewFragment"
         android:label="HouseReviewFragment"
-        tools:layout="@layout/fragment_house_review"/>
+        tools:layout="@layout/fragment_house_review">
+        <action
+            android:id="@+id/action_houseReviewFragment_to_writeHouseInfoFragment"
+            app:destination="@id/writeHouseInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeHouseInfoFragment"
+        android:name="com.example.zeepyforandroid.review.view.WriteHouseInfoFragment"
+        android:label="WriteHouseInfoFragment"
+        tools:layout="@layout/fragment_write_house_info"/>
 </navigation>
