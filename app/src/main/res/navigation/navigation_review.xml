@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_review"
-    app:startDestination="@id/housePictureFragment">
+    app:startDestination="@id/selectAddressFragment">
 
     <fragment
         android:id="@+id/lessorPersonalityFragment"
@@ -75,5 +75,7 @@
         android:id="@+id/housePictureFragment"
         android:name="com.example.zeepyforandroid.review.view.HousePictureFragment"
         android:label="HousePictureFragment"
-        tools:layout="@layout/fragment_house_picture"/>
+        tools:layout="@layout/fragment_house_picture">
+    </fragment>
+
 </navigation>

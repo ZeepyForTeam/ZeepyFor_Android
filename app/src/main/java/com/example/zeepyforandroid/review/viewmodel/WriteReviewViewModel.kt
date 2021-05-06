@@ -44,8 +44,8 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         setDummyAddress()
     }
 
-    fun changeHousePictures(list: List<HousePictureModel>) {
-        _housePictures.value = list
+    fun changeHousePictures(pictures: List<HousePictureModel>) {
+        _housePictures.value = pictures
     }
 
     fun checkReviewOfLessor(): Boolean {

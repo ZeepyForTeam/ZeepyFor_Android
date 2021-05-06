@@ -132,12 +132,12 @@
             android:id="@+id/et_detail_lessor_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@null"
+            android:background="@drawable/box_address"
             android:fontFamily="@font/nanum_square_round_regular"
-            android:foreground="@drawable/box_address"
             android:gravity="top"
             android:paddingHorizontal="6dp"
             android:paddingVertical="6dp"
+            android:layout_marginHorizontal="16dp"
             android:text="@={viewModel.reviewOfLessor}"
             android:textCursorDrawable="@drawable/cursor"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -159,6 +159,17 @@
             app:layout_constraintTop_toBottomOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"/>
 
+        <View
+            android:id="@+id/view_btn_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
 
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
@@ -168,7 +179,7 @@
             app:layout_constraintEnd_toEndOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintVertical_bias="0.972" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

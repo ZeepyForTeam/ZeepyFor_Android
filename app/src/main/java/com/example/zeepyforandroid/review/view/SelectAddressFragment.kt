@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -18,7 +19,6 @@ import com.example.zeepyforandroid.util.ReviewNotice
 
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     private val viewModel: WriteReviewViewModel by activityViewModels()
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

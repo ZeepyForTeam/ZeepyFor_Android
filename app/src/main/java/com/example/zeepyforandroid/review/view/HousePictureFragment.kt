@@ -9,25 +9,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
-import com.example.zeepyforandroid.BuildConfig
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentHousePictureBinding
+import com.example.zeepyforandroid.mainframe.MainFrameFragment
 import com.example.zeepyforandroid.review.data.dto.HousePictureModel
 import com.example.zeepyforandroid.review.view.adapter.HousePictureAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.util.ReviewNotice
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
-    private val pictures = mutableListOf<HousePictureModel>()
     private lateinit var pictureUri: Uri
+    private val pictures = mutableListOf<HousePictureModel>()
     private val viewModel by activityViewModels<WriteReviewViewModel>()
 
     override fun getFragmentBinding(
@@ -42,10 +44,14 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.changeCurrentFragment(ReviewNotice.LOAD_HOUSE_PICTURE)
+        changeVisibility()
         setPictureList()
         setRegisterButton()
         openGallery()
         openCamera()
+        stagePictures()
+        completeUpload()
+
     }
 
     private fun setPictureList() {
@@ -59,15 +65,17 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         binding.btnRegister.setText("동록하기")
     }
 
-    private fun openCamera() {
-        binding.ivCamera.setOnClickListener {
-            requestCameraPermission.launch(PERMISSION_REQUESTED)
+    private fun openGallery() {
+        binding.cslGallery.clipToOutline = false
+        binding.cslGallery.setOnClickListener {
+            requestGalleryPermission.launch(PERMISSION_REQUESTED)
         }
     }
 
-    private fun openGallery() {
-        binding.ivGallery.setOnClickListener {
-            requestGalleryPermission.launch(PERMISSION_REQUESTED)
+    private fun openCamera() {
+        binding.cslCamera.clipToOutline = true
+        binding.cslCamera.setOnClickListener {
+            requestCameraPermission.launch(PERMISSION_REQUESTED)
         }
     }
 
@@ -78,8 +86,10 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
 
     private val requestGalleryPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permissions ->
-            val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivity(intent)
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = MediaStore.Images.Media.CONTENT_TYPE
+            intent.type = "image/*"
+            getHousePicture.launch(intent)
         }
 
     private fun takePicture() {
@@ -89,17 +99,48 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     //Todo: SubmitList 이슈 해결하고 notifyDataSetChanged 삭제하기
-    val cameraActivityLauncher =
+    private val cameraActivityLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if(isSaved) {
                 pictures.add(HousePictureModel(pictureUri))
                 viewModel.changeHousePictures(pictures)
-                (binding.rvHousePictures.adapter as HousePictureAdapter).apply {
-                    submitList(pictures)
-                    notifyDataSetChanged()
-                }
+                Log.e("pictures", viewModel.housePictures.value.toString())
             }
         }
+
+    private val getHousePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if(result.data != null) {
+            pictures.add(HousePictureModel(result.data?.data))
+            viewModel.changeHousePictures(pictures)
+            Log.e("pictures", viewModel.housePictures.value.toString())
+        }
+    }
+
+    private fun stagePictures() {
+        viewModel.housePictures.observe(viewLifecycleOwner){
+            (binding.rvHousePictures.adapter as HousePictureAdapter).apply {
+                submitList(viewModel.housePictures.value)
+                notifyDataSetChanged()
+            }
+            changeVisibility()
+        }
+    }
+
+    private fun changeVisibility() {
+        if(viewModel.housePictures.value.isNullOrEmpty()) {
+            binding.tvUploadImages.visibility = View.GONE
+            binding.rvHousePictures.visibility = View.GONE
+        } else {
+            binding.tvUploadImages.visibility = View.VISIBLE
+            binding.rvHousePictures.visibility = View.VISIBLE
+        }
+    }
+
+    private fun completeUpload() {
+        val parent = (parentFragment as NavHostFragment).parentFragment
+        binding.btnRegister.setOnClickListener { parent?.findNavController()?.popBackStack() }
+        binding.tvSkip.setOnClickListener { parent?.findNavController()?.popBackStack() }
+    }
 
     companion object {
         private const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
