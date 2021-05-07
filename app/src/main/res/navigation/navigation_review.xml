@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_review"
-    app:startDestination="@id/selectAddressFragment">
+    app:startDestination="@id/housePictureFragment">
 
     <fragment
         android:id="@+id/lessorPersonalityFragment"
@@ -66,5 +66,16 @@
         android:id="@+id/writeHouseInfoFragment"
         android:name="com.example.zeepyforandroid.review.view.WriteHouseInfoFragment"
         android:label="WriteHouseInfoFragment"
-        tools:layout="@layout/fragment_write_house_info"/>
+        tools:layout="@layout/fragment_write_house_info">
+        <action
+            android:id="@+id/action_writeHouseInfoFragment_to_housePictureFragment"
+            app:destination="@id/housePictureFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/housePictureFragment"
+        android:name="com.example.zeepyforandroid.review.view.HousePictureFragment"
+        android:label="HousePictureFragment"
+        tools:layout="@layout/fragment_house_picture">
+    </fragment>
+
 </navigation>

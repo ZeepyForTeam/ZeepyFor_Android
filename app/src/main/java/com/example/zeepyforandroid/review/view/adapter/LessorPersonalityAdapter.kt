@@ -7,28 +7,27 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
+import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemLessorPersonalityBinding
 import com.example.zeepyforandroid.review.data.dto.LessorPersonalityModel
+import com.example.zeepyforandroid.review.view.adapter.LessorPersonalityAdapter.Companion.LESSOR_PERSONALITY
 import kotlin.properties.Delegates
 
-class LessorPersonalityAdapter(val mSelected: (Int) -> Unit): ListAdapter<LessorPersonalityModel, LessorPersonalityAdapter.LessorPersonalityViewHolder>(
-    diffCallback
-) {
+class LessorPersonalityAdapter(val mSelected: (Int) -> Unit): RecyclerView.Adapter<LessorPersonalityAdapter.LessorPersonalityViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessorPersonalityViewHolder {
         val binding = ItemLessorPersonalityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LessorPersonalityViewHolder(binding)
-
     }
 
     private var mSelectedItem by Delegates.observable(-1) { property, oldValue, newValue ->
-      for (i in currentList.indices) {
+      for (i in LESSOR_PERSONALITY.indices) {
           notifyItemChanged(oldValue)
           notifyItemChanged(newValue)
       }
     }
 
     override fun onBindViewHolder(holder: LessorPersonalityViewHolder, position: Int) {
-        val item = getItem(position)
+        val item = LESSOR_PERSONALITY[position]
         holder.binding.setVariable(BR.data, item)
 
         holder.binding.root.setOnClickListener {
@@ -38,22 +37,32 @@ class LessorPersonalityAdapter(val mSelected: (Int) -> Unit): ListAdapter<Lessor
         item.isSelected = mSelectedItem == position
     }
 
-    companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<LessorPersonalityModel>(){
-            override fun areItemsTheSame(
-                oldItem: LessorPersonalityModel,
-                newItem: LessorPersonalityModel
-            ): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
-            }
+    override fun getItemCount() = LESSOR_PERSONALITY.size
 
-            override fun areContentsTheSame(
-                oldItem: LessorPersonalityModel,
-                newItem: LessorPersonalityModel
-            ): Boolean {
-                return oldItem == newItem
-            }
-        }
+    companion object {
+        private val LESSOR_PERSONALITY = listOf<LessorPersonalityModel>(
+            LessorPersonalityModel(
+                R.drawable.selector_emoji1,
+                "칼 같은 우리 사이, 비즈니스형"
+            ),
+            LessorPersonalityModel(
+                R.drawable.selector_emoji2,
+                "따뜻해 녹아내리는 중!, 친절형"
+            ),
+            LessorPersonalityModel(
+                R.drawable.selector_emoji3,
+                "자유롭게만 살아다오, 방목형"
+            ),
+            LessorPersonalityModel(
+                R.drawable.selector_emoji5,
+                "겉은 바삭 속은 촉촉! 츤데레형"
+            ),
+            LessorPersonalityModel(
+                R.drawable.selector_emoji4,
+                "할말은 많지만 하지 않을래요:("
+            )
+        )
     }
+
     class LessorPersonalityViewHolder(val binding: ItemLessorPersonalityBinding): RecyclerView.ViewHolder(binding.root)
 }

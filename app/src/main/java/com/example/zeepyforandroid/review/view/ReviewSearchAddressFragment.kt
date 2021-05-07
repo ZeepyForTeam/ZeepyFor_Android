@@ -13,7 +13,7 @@ import com.example.zeepyforandroid.review.view.adapter.ReviewSearchAddressAdapte
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
 
-
+//Todo: 삭제해도 되는 Fragment
 class ReviewSearchAddressFragment : BaseFragment<FragmentReviewSearchAddressBinding>() {
     private lateinit var houseListAdapter: ReviewSearchAddressAdapter
     private val viewModel: WriteReviewViewModel by activityViewModels()

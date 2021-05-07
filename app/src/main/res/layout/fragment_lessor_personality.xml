@@ -15,6 +15,7 @@
             android:paddingVertical="18dp"
             android:clipToPadding="false"
             tools:itemCount="5"
+            android:layout_marginHorizontal="16dp"
             tools:listitem="@layout/item_lessor_personality"
             android:background="@drawable/box_house_result"
             app:layout_constraintVertical_bias="0.3"
@@ -23,11 +24,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <View
+            android:id="@+id/view_btn_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0.95"
+            app:layout_constraintVertical_bias="0.972"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/rv_lessor_communication"
             app:layout_constraintEnd_toEndOf="@id/rv_lessor_communication"

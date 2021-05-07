@@ -17,18 +17,18 @@
             android:textColor="@color/zeepy_black_3b"
             android:textSize="16sp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/et_detail_house_info"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.15" />
+            app:layout_constraintVertical_bias="0.05" />
 
 
         <EditText
             android:id="@+id/et_detail_house_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@null"
+            android:background="@drawable/box_address"
+            android:layout_marginHorizontal="16dp"
             android:fontFamily="@font/nanum_square_round_regular"
-            android:foreground="@drawable/box_address"
             android:gravity="top"
             android:paddingHorizontal="6dp"
             android:paddingVertical="6dp"
@@ -38,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_info"
-            app:layout_constraintVertical_bias="0.05" />
+            app:layout_constraintVertical_bias="0.03" />
 
         <TextView
             android:id="@+id/tv_final_review"
@@ -55,7 +55,7 @@
 
         <RadioGroup
             android:id="@+id/group_final_review"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintDimensionRatio="1:0.487"
@@ -91,9 +91,19 @@
                 android:layout_weight="1"
                 android:text="@string/final_no_recommendation"
                 zeepy:button_type="5"/>
-
         </RadioGroup>
 
+        <View
+            android:id="@+id/view_btn_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+      
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
             android:layout_width="0dp"
@@ -102,7 +112,7 @@
             app:layout_constraintEnd_toEndOf="@id/et_detail_house_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_house_info"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintVertical_bias="0.972" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

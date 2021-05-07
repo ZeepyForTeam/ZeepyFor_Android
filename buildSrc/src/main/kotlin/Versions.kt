@@ -10,7 +10,7 @@ object Versions {
     const val room_version = "2.3.0-alpha04"
     const val dagger_version = "2.32-alpha"
 
-    const val paging_version = "3.0.0-alpha13"
+    const val paging_version = "3.0.0"
 
     const val glide_version = "4.12.0"
     const val coil_version = "1.1.1"
