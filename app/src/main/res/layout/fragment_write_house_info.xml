@@ -91,7 +91,6 @@
                 android:layout_weight="1"
                 android:text="@string/final_no_recommendation"
                 zeepy:button_type="5"/>
-
         </RadioGroup>
 
         <View
@@ -104,7 +103,7 @@
             app:layout_constraintBottom_toTopOf="@id/btn_next"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
+      
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
             android:layout_width="0dp"

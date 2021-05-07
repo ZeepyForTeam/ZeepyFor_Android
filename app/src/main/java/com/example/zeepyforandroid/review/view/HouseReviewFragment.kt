@@ -60,7 +60,6 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
         val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
         span.setSpan(CustomTypefaceSpan(typeface), 0, 8, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
         span.setSpan(CustomTypefaceSpan(typeface), 15, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-
     }
 
     private fun setReviewChoice() {
