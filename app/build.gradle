@@ -22,6 +22,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "NAVER_API_URL", "\"https://naveropenapi.apigw.ntruss.com\""
+        buildConfigField "String", "NAVER_CLIENT_ID", String.format("\"%s\"", "htb7p0m05n")
+        //buildConfigField "String", "NAVER_CLIENT_SECRET", String.format("\"%s\"", NAVER_CLIENT_SECRET)
+
+        manifestPlaceholders = [naverClientId: "htb7p0m05n"]
     }
 
     buildTypes {
@@ -114,4 +120,8 @@ dependencies {
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
+
+    //location service
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }

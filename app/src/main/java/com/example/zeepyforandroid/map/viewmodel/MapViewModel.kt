@@ -6,11 +6,13 @@ import com.example.zeepyforandroid.base.BaseViewModel
 import com.example.zeepyforandroid.map.data.ResultListener
 import com.example.zeepyforandroid.map.data.geocoding.GeocodingDataSource
 import com.example.zeepyforandroid.network.response.GeocodingResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-
-class MapViewModel (
+@HiltViewModel
+class MapViewModel @Inject constructor (
     private val geocodingDataSource: GeocodingDataSource,
 ) : BaseViewModel(){
 
