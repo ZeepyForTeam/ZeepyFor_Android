@@ -21,7 +21,6 @@ class HousePictureAdapter: ListAdapter<HousePictureModel, HousePictureAdapter.Ho
     override fun onBindViewHolder(holder: HousePictureViewHolder, position: Int) {
         val item = getItem(position)
         holder.binding.setVariable(BR.data, item)
-        Log.d("current list", currentList.toString())
     }
 
     companion object {
@@ -30,7 +29,7 @@ class HousePictureAdapter: ListAdapter<HousePictureModel, HousePictureAdapter.Ho
                 oldItem: HousePictureModel,
                 newItem: HousePictureModel
             ): Boolean {
-                return oldItem.image == newItem.image
+                return oldItem.hashCode() == newItem.hashCode()
             }
 
             override fun areContentsTheSame(

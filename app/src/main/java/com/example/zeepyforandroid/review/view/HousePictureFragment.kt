@@ -43,8 +43,8 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changeCurrentFragment(ReviewNotice.LOAD_HOUSE_PICTURE)
         changeVisibility()
         setPictureList()
@@ -100,13 +100,11 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         cameraActivityLauncher.launch(pictureUri)
     }
 
-    //Todo: SubmitList 이슈 해결하고 notifyDataSetChanged 삭제하기
     private val cameraActivityLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if(isSaved) {
                 pictures.add(HousePictureModel(pictureUri))
                 viewModel.changeHousePictures(pictures)
-                Log.e("pictures", viewModel.housePictures.value.toString())
             }
         }
 
@@ -114,15 +112,13 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         if(result.data != null) {
             pictures.add(HousePictureModel(result.data?.data))
             viewModel.changeHousePictures(pictures)
-            Log.e("pictures", viewModel.housePictures.value.toString())
         }
     }
 
     private fun stagePictures() {
         viewModel.housePictures.observe(viewLifecycleOwner){
             (binding.rvHousePictures.adapter as HousePictureAdapter).apply {
-                submitList(viewModel.housePictures.value)
-                notifyDataSetChanged()
+                submitList(viewModel.housePictures.value?.toList())
             }
             changeVisibility()
         }

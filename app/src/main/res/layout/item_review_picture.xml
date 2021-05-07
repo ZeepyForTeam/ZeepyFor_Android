@@ -23,8 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 load_uri="@{data.image}"
-                android:scaleType="centerCrop"
-                android:background="@drawable/ic_launcher_background"/>
+                android:scaleType="centerCrop"/>
+
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
