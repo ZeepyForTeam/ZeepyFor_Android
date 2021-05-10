@@ -24,4 +24,9 @@
         <item name="colorControlNormal">@color/zeepy_blue_5f</item>
     </style>
 
+    <style name="tab_text" parent="Widget.Design.TabLayout">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/nanum_square_round_extrabold</item>
+    </style>
+
 </resources>

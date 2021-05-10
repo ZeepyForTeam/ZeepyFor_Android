@@ -10,12 +10,11 @@
 
         <ImageButton
             android:id="@+id/button_back"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@null"
             app:layout_constraintHorizontal_bias="0.12"
             app:layout_constraintBottom_toBottomOf="@id/textview_toolbar"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/textview_toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/textview_toolbar" />
@@ -24,8 +23,9 @@
             android:id="@+id/textview_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:layout_gravity="center"
+            android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_extrabold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
