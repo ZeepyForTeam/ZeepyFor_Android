@@ -23,11 +23,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "NAVER_API_URL", "\"https://naveropenapi.apigw.ntruss.com\""
-        buildConfigField "String", "NAVER_CLIENT_ID", String.format("\"%s\"", "htb7p0m05n")
-        //buildConfigField "String", "NAVER_CLIENT_SECRET", String.format("\"%s\"", NAVER_CLIENT_SECRET)
-
-        manifestPlaceholders = [naverClientId: "htb7p0m05n"]
     }
 
     buildTypes {
@@ -59,6 +54,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation files('libs/libDaumMapAndroid.jar')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -104,24 +101,7 @@ dependencies {
     //Coil
     implementation "io.coil-kt:coil:${Versions.coil_version}"
 
-    //Naver Map SDK
-    implementation 'com.naver.maps:map-sdk:3.11.0'
-
     //Annotations
     implementation "com.android.support:support-annotations:${Versions.annotations_version}"
 
-    //search-dialog
-    implementation 'com.github.mirrajabi:search-dialog:1.2.4'
-
-    //koin
-    implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-core-ext:$koin_version"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-android-ext:$koin_version"
-
-    //location service
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }
