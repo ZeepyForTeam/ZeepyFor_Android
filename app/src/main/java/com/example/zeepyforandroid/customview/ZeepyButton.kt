@@ -30,6 +30,7 @@ class ZeepyButton: ConstraintLayout {
 
     private fun init() {
         binding = ViewZeepyButtonBinding.inflate(LayoutInflater.from(context), this, true)
+        binding.root.clipToOutline = true
     }
 
     fun setText(string: String) {
@@ -54,6 +55,10 @@ class ZeepyButton: ConstraintLayout {
         binding.root.setOnTouchListener { _, _ -> false }
         binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button)
         binding.tvButton.setTextColor(getColor(context, R.color.zeepy_white_f3))
+    }
 
+    fun setParticipationButton() {
+        binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_participation)
+        binding.tvButton.setTextColor(getColor(context, R.color.zeepy_green_33))
     }
 }

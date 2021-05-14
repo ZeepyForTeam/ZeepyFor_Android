@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginEnd
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ViewZeepyToolbarBinding
 
@@ -51,6 +52,25 @@ class ZeepyToolbar @JvmOverloads constructor(
         val title = binding.textviewToolbar.layoutParams as ConstraintLayout.LayoutParams
         title.endToEnd = id
         title.marginStart = 32
-        binding.textviewToolbar.layoutParams = title
+        val arrowDown = ContextCompat.getDrawable(context, R.drawable.ic_btn_arrow_down)
+        binding.textviewToolbar.apply {
+            layoutParams = title
+            setCompoundDrawablesWithIntrinsicBounds(null, null, arrowDown, null)
+            compoundDrawablePadding = 3
+        }
+    }
+
+    fun setRightButton(drawable: Int, listener: OnClickListener) {
+        binding.buttonRight.run {
+            setImageResource(drawable)
+            setOnClickListener {
+                listener.onClick(this@ZeepyToolbar)
+            }
+        }
+    }
+
+    fun setRightButtonMargin(margin: Int) {
+        val rightButton = binding.buttonRight.layoutParams as ConstraintLayout.LayoutParams
+        rightButton.marginEnd = margin
     }
 }
