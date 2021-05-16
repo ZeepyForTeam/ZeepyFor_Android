@@ -77,17 +77,17 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:${Versions.glide_version}"
     kapt "com.github.bumptech.glide:compiler:${Versions.glide_version}"
 
+    // LoremIpsum
+    implementation("com.thedeanda:lorem:${Versions.lorem_version}")
+
     //hilt
     implementation "com.google.dagger:hilt-android:${Versions.dagger_version}"
     kapt "com.google.dagger:hilt-android-compiler:${Versions.dagger_version}"
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
+
 
     //lifecycle
-    implementation "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}"
-    kapt "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle_version}"
 
     //Fragment-ktx
     implementation "androidx.fragment:fragment-ktx:${Versions.fragment_ktx_version}"

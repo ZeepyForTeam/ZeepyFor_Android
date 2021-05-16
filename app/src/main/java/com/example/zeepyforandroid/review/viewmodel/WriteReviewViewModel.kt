@@ -1,12 +1,11 @@
 package com.example.zeepyforandroid.review.viewmodel
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.zeepyforandroid.review.data.dto.AddressList
 import com.example.zeepyforandroid.review.data.dto.AddressModel
-import com.example.zeepyforandroid.review.data.dto.HousePictureModel
+import com.example.zeepyforandroid.review.data.dto.PictureModel
 import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
 import com.example.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,8 +29,8 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val addressSelected: LiveData<String>
         get() = _addressSelected
 
-    private val _housePictures = MutableLiveData<List<HousePictureModel>>()
-    val housePictures: LiveData<List<HousePictureModel>>
+    private val _housePictures = MutableLiveData<List<PictureModel>>()
+    val pictures: LiveData<List<PictureModel>>
         get() = _housePictures
 
     val reviewOfLessor = MutableLiveData<String>()
@@ -44,7 +43,7 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         setDummyAddress()
     }
 
-    fun changeHousePictures(pictures: List<HousePictureModel>) {
+    fun changeHousePictures(pictures: List<PictureModel>) {
         _housePictures.value = pictures
     }
 

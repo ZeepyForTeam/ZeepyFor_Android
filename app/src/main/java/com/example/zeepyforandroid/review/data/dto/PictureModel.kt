@@ -2,6 +2,6 @@ package com.example.zeepyforandroid.review.data.dto
 
 import android.net.Uri
 
-data class HousePictureModel(
+data class PictureModel(
     val image: Uri?
 )
