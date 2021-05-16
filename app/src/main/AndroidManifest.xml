@@ -39,8 +39,8 @@
         </activity>
 
         <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="htb7p0m05n" />
+            android:name="com.kakao.sdk.AppKey"
+            android:value="69787ba7afc14df675086826b9ed87e8"/>
     </application>
 
 </manifest>

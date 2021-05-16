@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.zeepyforandroid.map.MapFragment"
+        android:name="com.example.zeepyforandroid.map.view.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map"/>
 
