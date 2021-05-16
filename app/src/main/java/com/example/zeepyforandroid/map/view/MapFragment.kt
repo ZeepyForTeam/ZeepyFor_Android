@@ -1,193 +1,64 @@
 package com.example.zeepyforandroid.map.view
 
+import android.Manifest
+import android.content.ContentValues.TAG
+import android.content.Context.LOCATION_SERVICE
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentMapBinding
-//import com.example.zeepyforandroid.map.viewmodel.MapViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
-//@AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>() {
 
-    //private val LOCATION_PERMISSION_REQUEST_CODE = 100
-    //private lateinit var locationSource: FusedLocationSource
-
+    //private val ACCESS_FINE_LOCATION = 1000
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
-    //private lateinit var naverMap: NaverMap
-
-    //private val mapViewModel: MapViewModel by viewModels<MapViewModel>()
-
-    // 여러 개의 마커 선언 및 초기화
-    private var marker0 = MapPOIItem()
-    private var marker1 = MapPOIItem()
-    private var marker2 = MapPOIItem()
-    private var marker3 = MapPOIItem()
-    private var marker4 = MapPOIItem()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentMapBinding {
+
         return FragmentMapBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-
-        setToolbar()
         mapView = MapView(activity)
-        mapViewContainer = view.findViewById(R.id.map_view)
+        mapViewContainer = view.findViewById(R.id.map_view_container)
         mapViewContainer.addView(mapView)
 
-        setMarker(marker0, 37.5632424, 126.9834535, R.drawable.emoji_5_map)
-        setMarker(marker1, 37.5632500, 126.9836324, R.drawable.emoji_1_map)
-        //mapView.getMapAsync(this) // Calls onMapReady
+        setToolbar()
 
-//        mapView.run {
-//            onCreate(savedInstanceState)
-//            getMapAsync { navermap ->
-//                naverMap = navermap
-//                naverMap.run {
-//                    this.locationSource = locationSource
-//
-//                    setOnMapClickListener { pointF, latLng ->
-//                        mapView.parent.requestDisallowInterceptTouchEvent(true)
-//                        //resetSearchView()
-//                    }
-//                }
-//
-//                //setMyLocation()
-//            }
-//        }
+        setMarker(37.5632424, 126.9834535, R.drawable.emoji_5_map)
+        setMarker(37.5632500, 126.9836324, R.drawable.emoji_1_map)
 
-
-
-//        mapViewModel.searchAddressData.observe(
-//            viewLifecycleOwner,
-//            Observer { geocodingResponse ->
-//                val searchDialogs = mutableListOf<SearchDialog>()
-//
-//                geocodingResponse.addresses?.forEach {
-//                    it?.roadAddress?.let { title ->
-//                        searchDialogs.add(SearchDialog(title))
-//                    }
-//                }
-//            }
-//        )
-
-//        mapViewModel.searchAddressData.observe(
-//            viewLifecycleOwner,
-//            Observer { geocodingResponse ->
-//                val searchDialogs = mutableListOf<SearchDialog>()
-//
-//                geocodingResponse.addresses?.forEach {
-//                    it?.roadAddress?.let { title ->
-//                        searchDialogs.add(SearchDialog(title))
-//                    }
-//                }
-//
-//                // 검색 다이얼로그 show
-//                SimpleSearchDialogCompat(activity,
-//                    getString(com.naver.maps.map.R.string.search_dialog_title),
-//                    getString(com.naver.maps.map.R.string.search_dialog_search_hint),
-//                    null,
-//                    searchDialogs as ArrayList<SearchDialog>,
-//                    SearchResultListener { dialog, item, position ->
-//                        val selectedItem =
-//                            geocodingResponse.addresses?.find { addressesItem -> addressesItem?.roadAddress == item.title }
-//
-//                        curLocation =
-//                            LatLng(selectedItem?.Y?.toDouble()!!, selectedItem.X?.toDouble()!!)
-//
-//                        showLoading()
-//
-//                        // room에 검색한 주소 저장
-//                        mapViewModel.insertSearchAddress(
-//                            searchQuery.toString(),
-//                            item.title,
-//                            curLocation?.latitude!!,
-//                            curLocation?.longitude!!,
-//                            DateTime.now()
-//                        )
-//
-//                        floatingAddress = selectedItem.roadAddress
-//
-//                        moveMap(curLocation, searchQuery.toString(), floatingAddress.toString())
-//
-//                        dialog.dismiss()
-//                    }).show()
-//            }
-//        )
+        if (checkLocationService()) {
+            permissionCheck()
+        } else {
+            Toast.makeText(activity, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
+        }
 
     }
-
-//    override fun onMapReady(@NonNull naverMap: NaverMap) {
-//        this.naverMap = naverMap
-//
-//
-//
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//        mapView.onStart()
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        mapView.onResume()
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        mapView.onPause()
-//    }
-//
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        mapView.onSaveInstanceState(outState)
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        mapView.onStop()
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        mapView.onDestroy()
-//    }
-//
-//    override fun onLowMemory() {
-//        super.onLowMemory()
-//        mapView.onLowMemory()
-//    }
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
-//            if (!locationSource.isActivated) {
-//                naverMap.locationTrackingMode = LocationTrackingMode.None
-//            }
-//            return
-//        }
-//
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//    }
 
     private fun setToolbar() {
         binding.mapToolbar.run {
@@ -198,22 +69,90 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
-//    private fun setMyLocation() {
-//        //showLoading()
-//
-//        locationSource.activate {
-//            val myLocation = LatLng(it?.latitude!!, it.longitude)
-//
-//            //CONTINUE...
-//        }
-//    }
-
-    private fun setMarker(marker: MapPOIItem, lat: Double, lng: Double, resourceID: Int) {
-        marker.tag = 0
-        marker.markerType = MapPOIItem.MarkerType.BluePin
-        marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
-        marker.mapPoint = MapPoint.mapPointWithGeoCoord(lat, lng)
+    private fun setMarker(lat: Double, lng: Double, resourceID: Int) {
+        val marker = MapPOIItem()
+        marker.apply {
+            itemName = "테스트 마커"
+            mapPoint = MapPoint.mapPointWithGeoCoord(lat, lng)
+            markerType = MapPOIItem.MarkerType.CustomImage
+            customImageResourceId = resourceID
+            selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+            //customSelectedImageResourceId =
+            //isCustomImageAutoscale = false
+            //setCustomImageAnchor(0.5f, 1.0f)
+        }
         mapView.addPOIItem(marker)
     }
+
+
+    // 위치 권한 확인
+    private fun permissionCheck() {
+        val preference = requireActivity().getPreferences(MODE_PRIVATE)
+        val isFirstCheck = preference.getBoolean("isFirstPermissionCheck", true)
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // 권한이 없는 상태
+            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // 권한 거절 (다시 한 번 물어봄)
+                val builder = AlertDialog.Builder(requireActivity())
+                builder.setMessage("현재 위치를 확인하시려면 위치 권한을 허용해주세요.")
+                builder.setPositiveButton("확인") { dialog, which ->
+                    requestMultiplePermissions.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+                }
+                builder.setNegativeButton("취소") { dialog, which ->
+
+                }
+                builder.show()
+            } else {
+                if (isFirstCheck) {
+                    // 최초 권한 요청
+                    preference.edit().putBoolean("isFirstPermissionCheck", false).apply()
+                    requestMultiplePermissions.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+                } else {
+                    // 다시 묻지 않음 클릭 (앱 정보 화면으로 이동)
+                    val builder = AlertDialog.Builder(requireActivity())
+                    builder.setMessage("현재 위치를 확인하시려면 설정에서 위치 권한을 허용해주세요.")
+                    builder.setPositiveButton("설정으로 이동") { dialog, which ->
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + activity?.packageName))
+                        startActivity(intent)
+                    }
+                    builder.setNegativeButton("취소") { dialog, which ->
+
+                    }
+                    builder.show()
+                }
+            }
+        } else {
+            // 권한이 있는 상태
+            startTracking()
+        }
+    }
+
+    //위치 권환 요청
+    private val requestMultiplePermissions =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            permissions.entries.forEach {
+                Log.d(TAG, "${it.key} = ${it.value}")
+            }
+            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
+                Log.d(TAG, "Permission granted")
+                startTracking()
+            } else {
+                Log.d(TAG, "Permission not granted")
+                permissionCheck()
+            }
+        }
+
+    // GPS가 켜져있는지 확인
+    private fun checkLocationService(): Boolean {
+        val locationManager = context?.getSystemService(LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    // 위치추적 시작
+    private fun startTracking() {
+        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+    }
+
+
 
 }
