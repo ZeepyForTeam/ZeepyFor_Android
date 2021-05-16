@@ -3,11 +3,13 @@ package com.example.zeepyforandroid
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.fonts.FontFamily
+import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
+import androidx.core.view.forEach
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -32,6 +34,11 @@ fun loadDrawable(imageView:ImageView, drawable: Int?) {
     } else {
         imageView.load(drawable)
     }
+}
+
+@BindingAdapter("load_uri")
+fun ImageView.loadFromStorage(uri:Uri) {
+    load(uri)
 }
 
 @BindingAdapter("android:text")

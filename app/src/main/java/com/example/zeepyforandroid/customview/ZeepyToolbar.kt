@@ -4,33 +4,21 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ViewZeepyToolbarBinding
 
-class ZeepyToolbar : ConstraintLayout {
-    private lateinit var binding: ViewZeepyToolbarBinding
-
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
-        init()
-    }
-
-    private fun init() {
-        binding = ViewZeepyToolbarBinding.inflate(LayoutInflater.from(context),this,true)
-
-    }
+class ZeepyToolbar @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int=0
+) : ConstraintLayout(context, attrs, defStyleAttr) {
+    private var binding: ViewZeepyToolbarBinding =
+        ViewZeepyToolbarBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setTitle(title: String) {
         binding.textviewToolbar.text = title
@@ -46,10 +34,23 @@ class ZeepyToolbar : ConstraintLayout {
         }
     }
 
-    fun clearButton(){
+    fun clearButton() {
         this.binding.buttonBack.run {
             visibility = View.INVISIBLE
             setOnClickListener(null)
         }
+    }
+
+    fun setCommunityLocation() {
+        binding.textviewToolbar.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.zeepy_black_3b
+            )
+        )
+        val title = binding.textviewToolbar.layoutParams as ConstraintLayout.LayoutParams
+        title.endToEnd = id
+        title.marginStart = 32
+        binding.textviewToolbar.layoutParams = title
     }
 }

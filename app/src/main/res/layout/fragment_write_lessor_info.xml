@@ -23,43 +23,51 @@
             android:textColor="@color/zeepy_black_3b"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/group_select_sex"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.18" />
+            app:layout_constraintVertical_bias="0.18"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
-        <CheckBox
-            android:id="@+id/toggle_man"
+        <RadioGroup
+            android:id="@+id/group_select_sex"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:button="@color/colorTransparent"
-            android:background="@drawable/toggle_selector"
-            android:text="남"
-            android:textAlignment="center"
-            android:checked="@={viewModel.manCheck}"
-            android:textColor="@{viewModel.manCheck ? @color/white : @color/zeepy_black_3b}"
-            android:layout_marginStart="22dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            app:layout_constraintWidth_percent="0.208"
+            app:layout_constraintDimensionRatio="1:0.426"
+            app:layout_constraintTop_toTopOf="@id/tv_sex"
             app:layout_constraintBottom_toBottomOf="@id/tv_sex"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintWidth_percent="0.088"
-            app:layout_constraintStart_toEndOf="@id/tv_sex"
-            app:layout_constraintTop_toTopOf="@id/tv_sex" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15">
 
-        <CheckBox
-            android:id="@+id/toggle_women"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:button="@color/colorTransparent"
-            android:background="@drawable/toggle_selector"
-            android:layout_marginStart="11dp"
-            android:textAlignment="center"
-            android:text="여"
-            android:checked="@={viewModel.womenCheck}"
-            android:textColor="@{viewModel.womenCheck ? @color/white : @color/zeepy_black_3b}"
-            app:layout_constraintBottom_toBottomOf="@id/toggle_man"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintWidth_percent="0.088"
-            app:layout_constraintStart_toEndOf="@id/toggle_man"
-            app:layout_constraintTop_toTopOf="@id/toggle_man" />
+            <RadioButton
+                android:id="@+id/toggle_man"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:button="@color/colorTransparent"
+                android:background="@drawable/toggle_selector"
+                android:text="남"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/selector_deafult_rb_text" />
+
+            <RadioButton
+                android:id="@+id/toggle_women"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@color/colorTransparent"
+                android:background="@drawable/toggle_selector"
+                android:layout_marginStart="11dp"
+                android:textAlignment="center"
+                android:text="여"
+                android:textColor="@color/selector_deafult_rb_text" />
+
+        </RadioGroup>
+
 
         <TextView
             android:id="@+id/tv_age"
@@ -68,12 +76,12 @@
             android:text="연령대"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_black_3b"
-            app:layout_constraintBottom_toBottomOf="@+id/toggle_women"
+            app:layout_constraintBottom_toBottomOf="@+id/group_select_sex"
             app:layout_constraintEnd_toStartOf="@+id/spinner_age"
             app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/toggle_women"
-            app:layout_constraintTop_toTopOf="@+id/toggle_women" />
+            app:layout_constraintStart_toEndOf="@+id/group_select_sex"
+            app:layout_constraintTop_toTopOf="@+id/group_select_sex" />
 
         <Spinner
             android:id="@+id/spinner_age"
@@ -124,12 +132,12 @@
             android:id="@+id/et_detail_lessor_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@null"
+            android:background="@drawable/box_address"
             android:fontFamily="@font/nanum_square_round_regular"
-            android:foreground="@drawable/box_address"
             android:gravity="top"
             android:paddingHorizontal="6dp"
             android:paddingVertical="6dp"
+            android:layout_marginHorizontal="16dp"
             android:text="@={viewModel.reviewOfLessor}"
             android:textCursorDrawable="@drawable/cursor"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -151,6 +159,17 @@
             app:layout_constraintTop_toBottomOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"/>
 
+        <View
+            android:id="@+id/view_btn_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
 
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
@@ -160,7 +179,7 @@
             app:layout_constraintEnd_toEndOf="@id/et_detail_lessor_info"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintVertical_bias="0.972" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

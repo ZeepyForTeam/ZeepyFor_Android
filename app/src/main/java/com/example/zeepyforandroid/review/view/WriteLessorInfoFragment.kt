@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -15,7 +17,7 @@ import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ReviewNotice
 
 class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
-    private val viewModel by activityViewModels<WriteReviewViewModel>()
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -32,28 +34,19 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
 
         setSpinner()
         setNextButton()
-        checkSingleSex()
         enableButton()
         goToReviewHouse()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.groupSelectSex.clearCheck()
     }
 
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
             unUseableButton()
-        }
-    }
-
-    private fun checkSingleSex(){
-        viewModel.manCheck.observe(viewLifecycleOwner){manChecking ->
-            if (manChecking) {
-                viewModel.womenCheck.value = !manChecking
-            }
-        }
-        viewModel.womenCheck.observe(viewLifecycleOwner){ womenChecking ->
-            if (womenChecking){
-                viewModel.manCheck.value = !womenChecking
-            }
         }
     }
 
@@ -88,8 +81,6 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
 
     override fun onStop() {
         super.onStop()
-        viewModel.manCheck.value = false
-        viewModel.womenCheck.value = false
         binding.etDetailLessorInfo.text.clear()
     }
 

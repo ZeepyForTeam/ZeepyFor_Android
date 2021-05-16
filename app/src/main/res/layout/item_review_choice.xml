@@ -40,6 +40,7 @@
                 android:id="@+id/btn_like"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:text="좋아요"
                 android:layout_marginEnd="8dp"
                 android:layout_height="match_parent"
                 zeepy:button_type="2" />
@@ -48,6 +49,7 @@
                 android:id="@+id/btn_soso"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:text="적당해요"
                 android:layout_marginEnd="8dp"
                 android:layout_height="match_parent"
                 zeepy:button_type="3" />
@@ -56,6 +58,7 @@
                 android:id="@+id/btn_dislike"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:text="별로예요"
                 android:layout_height="match_parent"
                 zeepy:button_type="4" />
 

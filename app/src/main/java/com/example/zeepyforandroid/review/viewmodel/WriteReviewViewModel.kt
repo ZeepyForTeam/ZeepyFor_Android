@@ -1,20 +1,19 @@
 package com.example.zeepyforandroid.review.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zeepyforandroid.review.data.source.LessorPersonalityDataSource
 import com.example.zeepyforandroid.review.data.dto.AddressList
 import com.example.zeepyforandroid.review.data.dto.AddressModel
+import com.example.zeepyforandroid.review.data.dto.HousePictureModel
 import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
 import com.example.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class WriteReviewViewModel @Inject constructor(
-    private val lessorPersonalityDataSource: LessorPersonalityDataSource
-) : ViewModel() {
+class WriteReviewViewModel @Inject constructor() : ViewModel() {
     private val _currentFragment = MutableLiveData<ReviewNotice>()
     val currentFragment: LiveData<ReviewNotice>
         get() = _currentFragment
@@ -31,19 +30,25 @@ class WriteReviewViewModel @Inject constructor(
     val addressSelected: LiveData<String>
         get() = _addressSelected
 
+    private val _housePictures = MutableLiveData<List<HousePictureModel>>()
+    val housePictures: LiveData<List<HousePictureModel>>
+        get() = _housePictures
+
     val reviewOfLessor = MutableLiveData<String>()
 
-    val lessorPersonalities = lessorPersonalityDataSource.getLessorPersonality()
     val detailAddress = MutableLiveData<String>()
     val addressSearchQuery = MutableLiveData<String>()
-    val manCheck = MutableLiveData<Boolean>()
-    val womenCheck = MutableLiveData<Boolean>()
+    val sexChecked = MutableLiveData<Int>()
 
     init {
         setDummyAddress()
     }
 
-    fun checkReviewOfLessor(): Boolean{
+    fun changeHousePictures(pictures: List<HousePictureModel>) {
+        _housePictures.value = pictures
+    }
+
+    fun checkReviewOfLessor(): Boolean {
         return !reviewOfLessor.value.isNullOrEmpty()
     }
 

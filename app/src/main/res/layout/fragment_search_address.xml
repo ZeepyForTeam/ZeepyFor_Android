@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/et_search_address"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.03" />
 
         <EditText
             android:id="@+id/et_search_address"
@@ -30,6 +30,7 @@
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="8.5:1"
             android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="16dp"
             android:textSize="12sp"
             android:inputType="text"
             android:text="@={viewModel.addressSearchQuery}"
@@ -56,11 +57,22 @@
             app:layout_constraintStart_toStartOf="@id/et_search_address"
             app:layout_constraintHorizontal_bias="0.96"/>
 
+        <View
+            android:id="@+id/view_btn_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0.95"
+            app:layout_constraintVertical_bias="0.972"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/et_search_address"
