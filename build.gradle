@@ -3,9 +3,11 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.2"
+        classpath 'com.android.tools.build:gradle:4.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin_version}"
         classpath "com.google.dagger:hilt-android-gradle-plugin:${Versions.dagger_version}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation_version}"
@@ -20,10 +22,7 @@ allprojects {
         google()
         jcenter()
 
-        // Naver Map Storage
-        maven {
-            url 'https://naver.jfrog.io/artifactory/maven/'
-        }
+        maven { url "https://jitpack.io" }
     }
 }
 

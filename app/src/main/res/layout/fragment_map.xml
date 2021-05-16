@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".map.MapFragment">
+        tools:context=".map.view.MapFragment">
 
         <com.example.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/map_toolbar"
@@ -16,6 +17,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
+
+
+        <!--            <androidx.appcompat.widget.SearchView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                app:iconifiedByDefault="false"-->
+        <!--                android:background="@drawable/edittext_box"-->
+        <!--                app:queryHint="지역, 동, 지하철역으로 입력해주세요"-->
+        <!--                android:layout_marginTop="12dp"-->
+        <!--                android:paddingStart="15dp"-->
+        <!--                app:layout_constraintDimensionRatio="8.5:1"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@id/map_toolbar"-->
+        <!--                android:layout_marginHorizontal="18dp"/>-->
+
+        <RelativeLayout
+            android:id="@+id/map_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/map_toolbar" />
 
         <EditText
             android:id="@+id/edittext_search_map"
@@ -48,21 +73,7 @@
             app:layout_constraintStart_toStartOf="@id/edittext_search_map"
             app:layout_constraintHorizontal_bias="0.96"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edittext_search_map"
-            android:layout_marginTop="16dp">
 
-            <com.naver.maps.map.MapView
-                android:id="@+id/mv_NMap"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
