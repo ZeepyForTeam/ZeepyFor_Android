@@ -23,10 +23,21 @@
             android:id="@+id/btn_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="지도"
+            android:text="지도검색"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp"/>
+
+        <Button
+            android:id="@+id/btn_conditionsearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="조건검색"
+            app:layout_constraintTop_toBottomOf="@id/btn_map"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

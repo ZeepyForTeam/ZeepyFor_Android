@@ -77,7 +77,11 @@ class ZeepyRadioButton @JvmOverloads constructor(
         REVIEW_GOOD(2, R.drawable.selector_good,R.color.selector_review_choice),
         REVIEW_SOSO(3, R.drawable.selector_soso, R.color.selector_review_choice),
         REVIEW_BAD(4, R.drawable.selector_dislike, R.color.selector_review_choice),
-        REVIEW_FINAL(5, R.drawable.selector_review_final, R.color.zeepy_black_3b);
+        REVIEW_FINAL(5, R.drawable.selector_review_final, R.color.zeepy_black_3b),
+        OPTION_TYPE_1(6, R.drawable.selector_option_1, R.color.selector_deafult_rb_text),
+        OPTION_TYPE_2(7, R.drawable.selector_option_2, R.color.selector_deafult_rb_text),
+        OPTION_TYPE_3(8, R.drawable.selector_option_3, R.color.selector_deafult_rb_text),
+        OPTION_TYPE_READY(9, R.drawable.selector_option_ready, R.color.selector_deafult_rb_text);
 
         companion object {
             fun findButtonType(buttonType: Int): RadioButtonType {

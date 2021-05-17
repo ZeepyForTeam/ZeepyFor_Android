@@ -25,5 +25,9 @@ class LookAroundFragment : BaseFragment<FragmentLookAroundBinding>() {
         binding.btnMap.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_mainFrameFragment_to_mapFragment)
         }
+
+        binding.btnConditionsearch.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_mainFrameFragment_to_ConditionSearchFragment)
+        }
     }
 }
