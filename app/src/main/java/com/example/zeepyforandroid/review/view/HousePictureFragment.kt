@@ -16,7 +16,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentHousePictureBinding
-import com.example.zeepyforandroid.review.data.dto.PictureModel
+import com.example.zeepyforandroid.review.data.entity.PictureModel
 import com.example.zeepyforandroid.review.view.adapter.HousePictureAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
@@ -78,12 +78,12 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     private val requestCameraPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             takePicture()
         }
 
     private val requestGalleryPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permissions ->
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = MediaStore.Images.Media.CONTENT_TYPE
             intent.type = "image/*"
@@ -96,8 +96,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         cameraActivityLauncher.launch(pictureUri)
     }
 
-    private val cameraActivityLauncher =
-        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
+    private val cameraActivityLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if(isSaved) {
                 pictures.add(PictureModel(pictureUri))
                 viewModel.changeHousePictures(pictures)

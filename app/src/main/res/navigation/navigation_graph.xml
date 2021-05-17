@@ -20,8 +20,14 @@
             android:id="@+id/action_mainFrameFragment_to_reviewFrameFragment"
             app:destination="@id/reviewFrameFragment" />
         <action
+
             android:id="@+id/action_mainFrameFragment_to_postingDetailFragment"
             app:destination="@id/postingDetailFragment" />
+
+        <action
+            android:id="@+id/action_mainFrameFragment_to_ConditionSearchFragment"
+            app:destination="@+id/conditionsearchFragment"/>
+
     </fragment>
 
     <fragment
@@ -72,5 +78,11 @@
             app:argType="com.example.zeepyforandroid.community.data.entity.PostingModel"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/conditionsearchFragment"
+        android:name="com.example.zeepyforandroid.conditionsearch.ConditionSearchFragment"
+        android:label="ConditionSearchFragment"
+        tools:layout="@layout/fragment_search_by_condition"/>
 
 </navigation>

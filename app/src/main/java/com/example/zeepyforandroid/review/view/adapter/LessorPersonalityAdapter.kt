@@ -1,16 +1,12 @@
 package com.example.zeepyforandroid.review.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemLessorPersonalityBinding
-import com.example.zeepyforandroid.review.data.dto.LessorPersonalityModel
-import com.example.zeepyforandroid.review.view.adapter.LessorPersonalityAdapter.Companion.LESSOR_PERSONALITY
+import com.example.zeepyforandroid.review.data.entity.LessorPersonalityModel
 import kotlin.properties.Delegates
 
 class LessorPersonalityAdapter(val mSelected: (Int) -> Unit): RecyclerView.Adapter<LessorPersonalityAdapter.LessorPersonalityViewHolder>() {

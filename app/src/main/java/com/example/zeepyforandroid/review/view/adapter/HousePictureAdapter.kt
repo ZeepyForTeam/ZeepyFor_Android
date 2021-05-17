@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.zeepyforandroid.databinding.ItemPictureBinding
-import com.example.zeepyforandroid.review.data.dto.PictureModel
+import com.example.zeepyforandroid.review.data.entity.PictureModel
 import com.example.zeepyforandroid.util.DiffUtil
 
 class HousePictureAdapter: ListAdapter<PictureModel, HousePictureAdapter.HousePictureViewHolder>(

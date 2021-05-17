@@ -3,10 +3,10 @@ package com.example.zeepyforandroid.review.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zeepyforandroid.review.data.dto.AddressList
-import com.example.zeepyforandroid.review.data.dto.AddressModel
-import com.example.zeepyforandroid.review.data.dto.PictureModel
-import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
+import com.example.zeepyforandroid.review.data.entity.AddressList
+import com.example.zeepyforandroid.review.data.entity.AddressModel
+import com.example.zeepyforandroid.review.data.entity.PictureModel
+import com.example.zeepyforandroid.review.data.entity.ReviewSearchAddressModel
 import com.example.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

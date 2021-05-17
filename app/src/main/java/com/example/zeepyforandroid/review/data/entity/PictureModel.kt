@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.review.data.dto
+package com.example.zeepyforandroid.review.data.entity
 
 import android.net.Uri
 
