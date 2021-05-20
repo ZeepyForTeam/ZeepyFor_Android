@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.dto.HousePictureModel" />
+            type="com.example.zeepyforandroid.review.data.entity.PictureModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,9 +20,9 @@
             app:cardCornerRadius="6dp">
 
             <ImageView
+                android:id="@+id/picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                load_uri="@{data.image}"
                 android:scaleType="centerCrop"/>
 
         </androidx.cardview.widget.CardView>

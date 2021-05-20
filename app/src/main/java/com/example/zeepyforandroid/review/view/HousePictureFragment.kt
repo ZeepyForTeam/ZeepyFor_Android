@@ -5,22 +5,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentHousePictureBinding
-import com.example.zeepyforandroid.mainframe.MainFrameFragment
-import com.example.zeepyforandroid.review.data.dto.HousePictureModel
+import com.example.zeepyforandroid.review.data.entity.PictureModel
 import com.example.zeepyforandroid.review.view.adapter.HousePictureAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
@@ -30,7 +26,7 @@ import java.util.*
 
 class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     private lateinit var pictureUri: Uri
-    private val pictures = mutableListOf<HousePictureModel>()
+    private val pictures = mutableListOf<PictureModel>()
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
 
 
@@ -82,12 +78,12 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     private val requestCameraPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             takePicture()
         }
 
     private val requestGalleryPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permissions ->
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = MediaStore.Images.Media.CONTENT_TYPE
             intent.type = "image/*"
@@ -100,32 +96,31 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         cameraActivityLauncher.launch(pictureUri)
     }
 
-    private val cameraActivityLauncher =
-        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
+    private val cameraActivityLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if(isSaved) {
-                pictures.add(HousePictureModel(pictureUri))
+                pictures.add(PictureModel(pictureUri))
                 viewModel.changeHousePictures(pictures)
             }
         }
 
     private val getHousePicture = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if(result.data != null) {
-            pictures.add(HousePictureModel(result.data?.data))
+            pictures.add(PictureModel(result.data?.data))
             viewModel.changeHousePictures(pictures)
         }
     }
 
     private fun stagePictures() {
-        viewModel.housePictures.observe(viewLifecycleOwner){
+        viewModel.pictures.observe(viewLifecycleOwner){
             (binding.rvHousePictures.adapter as HousePictureAdapter).apply {
-                submitList(viewModel.housePictures.value?.toList())
+                submitList(viewModel.pictures.value?.toList())
             }
             changeVisibility()
         }
     }
 
     private fun changeVisibility() {
-        if(viewModel.housePictures.value.isNullOrEmpty()) {
+        if(viewModel.pictures.value.isNullOrEmpty()) {
             binding.tvUploadImages.visibility = View.GONE
             binding.rvHousePictures.visibility = View.GONE
         } else {

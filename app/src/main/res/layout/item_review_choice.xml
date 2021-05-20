@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.dto.ReviewChoiceModel" />
+            type="com.example.zeepyforandroid.review.data.entity.ReviewChoiceModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

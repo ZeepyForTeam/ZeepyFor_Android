@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentSelectAddressBinding
 import com.example.zeepyforandroid.review.view.adapter.AddressAdapter
-import com.example.zeepyforandroid.review.data.dto.AddressModel
+import com.example.zeepyforandroid.review.data.entity.AddressModel
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.util.ReviewNotice

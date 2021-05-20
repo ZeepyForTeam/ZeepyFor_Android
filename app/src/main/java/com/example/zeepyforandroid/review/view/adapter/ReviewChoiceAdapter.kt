@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.databinding.ItemReviewChoiceBinding
-import com.example.zeepyforandroid.review.data.dto.ReviewChoiceModel
-import kotlin.properties.Delegates
+import com.example.zeepyforandroid.review.data.entity.ReviewChoiceModel
 
 class ReviewChoiceAdapter(val listener: (Map<Int,Int>)-> Unit) : RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoiceViewHolder>() {
 

@@ -132,7 +132,7 @@
             android:background="@drawable/box_write_address"
             app:layout_constraintEnd_toEndOf="@id/layout_button"
             app:layout_constraintVertical_bias="0.048"
-            tools:listitem="@layout/item_review_picture"
+            tools:listitem="@layout/item_picture"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"/>
 

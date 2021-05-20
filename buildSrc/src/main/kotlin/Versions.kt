@@ -8,7 +8,8 @@ object Versions {
     const val rxandroid_version = "2.0.2"
 
     const val room_version = "2.3.0-alpha04"
-    const val dagger_version = "2.32-alpha"
+    const val dagger_version = "2.35.1"
+    const val lorem_version = "2.1"
 
     const val paging_version = "3.0.0"
 

@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemAddressBinding
-import com.example.zeepyforandroid.font
-import com.example.zeepyforandroid.review.data.dto.AddressModel
+import com.example.zeepyforandroid.review.data.entity.AddressModel
 import kotlin.properties.Delegates
 
 class AddressAdapter(private val context: Context, val listener: ClickListener): ListAdapter<AddressModel, AddressAdapter.AddressViewHolder>(diffCallback) {

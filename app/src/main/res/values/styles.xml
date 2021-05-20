@@ -28,5 +28,10 @@
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/nanum_square_round_extrabold</item>
     </style>
+    
+    <style name="circleShapeImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 
 </resources>

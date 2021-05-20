@@ -1,45 +1,30 @@
 package com.example.zeepyforandroid.review.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.zeepyforandroid.BR
-import com.example.zeepyforandroid.databinding.ItemReviewPictureBinding
-import com.example.zeepyforandroid.review.data.dto.HousePictureModel
+import coil.load
+import com.example.zeepyforandroid.databinding.ItemPictureBinding
+import com.example.zeepyforandroid.review.data.entity.PictureModel
+import com.example.zeepyforandroid.util.DiffUtil
 
-class HousePictureAdapter: ListAdapter<HousePictureModel, HousePictureAdapter.HousePictureViewHolder>(
-    diffCallback
+class HousePictureAdapter: ListAdapter<PictureModel, HousePictureAdapter.HousePictureViewHolder>(
+    DiffUtil<PictureModel>().diffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HousePictureViewHolder {
-        val binding =  ItemReviewPictureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =  ItemPictureBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HousePictureViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: HousePictureViewHolder, position: Int) {
         val item = getItem(position)
-        holder.binding.setVariable(BR.data, item)
+        holder.onBind(item)
     }
 
-    companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<HousePictureModel>(){
-            override fun areItemsTheSame(
-                oldItem: HousePictureModel,
-                newItem: HousePictureModel
-            ): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
-            }
-
-            override fun areContentsTheSame(
-                oldItem: HousePictureModel,
-                newItem: HousePictureModel
-            ): Boolean {
-                return oldItem == newItem
-            }
+    class HousePictureViewHolder(val binding: ItemPictureBinding): RecyclerView.ViewHolder(binding.root) {
+        fun onBind(item: PictureModel) {
+            binding.picture.load(item.image)
         }
     }
-
-    class HousePictureViewHolder(val binding: ItemReviewPictureBinding): RecyclerView.ViewHolder(binding.root)
 }
