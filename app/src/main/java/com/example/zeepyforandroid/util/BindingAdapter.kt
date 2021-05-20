@@ -111,4 +111,8 @@ fun ShapeableImageView.loadShapeableImage(url:String?){
     load(url)
 }
 
+@BindingAdapter("app:circleRadius")
+fun ShapeableImageView.circleRadiusImage() {
+
+}
 
