@@ -11,7 +11,7 @@
             type="com.example.zeepyforandroid.community.postingdetail.PostingDetailViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".community.postingdetail.PostingDetailFragment">
@@ -19,7 +19,11 @@
         <ScrollView
             android:id="@+id/scrollview_community"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_box"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -238,9 +242,12 @@
                     app:layout_constraintStart_toStartOf="@id/btn_participation"/>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_comments"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/tv_comment"
                     app:layout_constraintStart_toStartOf="@id/btn_participation"
                     app:layout_constraintEnd_toEndOf="@id/btn_participation"/>
@@ -252,9 +259,10 @@
             android:id="@+id/layout_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/box_comments_edittext"
-            app:layout_anchor="@id/scrollview_community"
-            app:layout_anchorGravity="bottom|right|end">
+            android:background="@drawable/box_comments_edittext_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.example.zeepyforandroid.customview.ZeepyCheckBox
                 android:id="@+id/checkbox_secret"
@@ -288,7 +296,7 @@
                 app:layout_constraintDimensionRatio="1:0.134"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/box_community_comment"
+                android:background="@drawable/box_community_edittext"
                 app:layout_constraintStart_toStartOf="@id/checkbox_secret"
                 app:layout_constraintTop_toBottomOf="@id/checkbox_secret"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -311,5 +319,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

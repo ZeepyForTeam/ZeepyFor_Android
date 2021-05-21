@@ -2,18 +2,11 @@ package com.example.zeepyforandroid.community.postingdetail
 
 import android.os.Bundle
 import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.color
-import androidx.core.text.toSpannable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.zeepyforandroid.R
@@ -49,6 +42,7 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
         setPictureRecyclerview()
         loadPictures()
         setAchievementTextColor()
+        setCommentsRecyclerView()
     }
 
     private fun setToolbar() {
@@ -102,5 +96,13 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
             }
             text = spannableText
         }
+    }
+
+    private fun setCommentsRecyclerView() {
+        binding.rvComments.apply {
+            adapter = CommentsAdapter()
+            addItemDecoration(ItemDecoration(8,0))
+        }
+        (binding.rvComments.adapter as CommentsAdapter).submitList(viewModel.posting.value?.comments)
     }
 }

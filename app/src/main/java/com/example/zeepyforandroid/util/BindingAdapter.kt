@@ -18,6 +18,7 @@ import coil.load
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.FontType
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.shape.ShapeAppearanceModel
 
 @BindingAdapter("loadUrl")
 fun loadUrl(imageView:ImageView, url: String?) {
@@ -112,7 +113,7 @@ fun ShapeableImageView.loadShapeableImage(url:String?){
 }
 
 @BindingAdapter("app:circleRadius")
-fun ShapeableImageView.circleRadiusImage() {
-
+fun ShapeableImageView.circleRadiusImage(radius: Float) {
+    shapeAppearanceModel = ShapeAppearanceModel().withCornerSize(radius)
 }
 

@@ -3,6 +3,7 @@ package com.example.zeepyforandroid.community.data.remote.response
 import com.example.zeepyforandroid.community.data.entity.PostingModel
 import com.example.zeepyforandroid.community.data.entity.UrlPictureModel
 import com.example.zeepyforandroid.community.data.remote.response.ResponsePosting.PostingType.Companion.toPostingType
+import com.example.zeepyforandroid.community.postingdetail.CommentModel
 import java.lang.IllegalArgumentException
 
 //Fixme: 서버 api나오면 변경하기
@@ -15,7 +16,8 @@ data class ResponsePosting(
     val contentPosting: String,
     val picturesPosting: List<UrlPictureModel>,
     val isSetAchievement: Boolean,
-    val achivementRate: Int
+    val achivementRate: Int,
+    val comments: List<CommentModel>
 ) {
     fun toPostingModel(): PostingModel =
         PostingModel(
@@ -26,7 +28,8 @@ data class ResponsePosting(
             titlePosting,
             contentPosting,
             picturesPosting,
-            isSetAchievement
+            isSetAchievement,
+            comments
         )
 
     enum class PostingType(val typePosting: Int,val  tag: String) {
