@@ -10,4 +10,4 @@ data class CommentModel(
     val comment: String,
     val date: String,
     val nestedComments: List<NestedCommentModel>?
-): Parcelable
+) : Parcelable

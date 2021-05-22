@@ -77,9 +77,7 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
     private fun loadPictures() {
         viewModel.posting.observe(viewLifecycleOwner) {
             (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
-            binding.apply {
 
-            }
         }
     }
 

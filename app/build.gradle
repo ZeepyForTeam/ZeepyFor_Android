@@ -12,7 +12,7 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.zeepyforandroid"
@@ -35,7 +35,6 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
-        
     }
 
     compileOptions {

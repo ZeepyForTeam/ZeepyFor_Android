@@ -4,7 +4,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.community.postingdetail.CommentModel" />
+            type="com.example.zeepyforandroid.community.postingdetail.NestedCommentModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:textColor="@color/zeepy_black_3b"
-            android:text="@{data.nickname}"
+            android:text="@{data.writerName}"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="14sp"
             app:layout_constraintTop_toTopOf="@id/iv_icon_nested_comment"

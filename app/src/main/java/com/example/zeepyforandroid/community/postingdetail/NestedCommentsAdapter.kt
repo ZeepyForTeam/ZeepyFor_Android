@@ -9,8 +9,8 @@ import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.databinding.ItemNestedCommentBinding
 import com.example.zeepyforandroid.util.DiffCallback
 
-class NestedCommentsAdapter: ListAdapter<CommentModel, NestedCommentsAdapter.NestedCommentsViewHolder>(
-    DiffCallback<CommentModel>()
+class NestedCommentsAdapter: ListAdapter<NestedCommentModel, NestedCommentsAdapter.NestedCommentsViewHolder>(
+    DiffCallback<NestedCommentModel>()
 ){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NestedCommentsViewHolder {
         val binding = ItemNestedCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
