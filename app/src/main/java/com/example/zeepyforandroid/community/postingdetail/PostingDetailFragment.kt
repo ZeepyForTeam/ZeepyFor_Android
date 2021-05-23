@@ -2,6 +2,7 @@ package com.example.zeepyforandroid.community.postingdetail
 
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +14,13 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.example.zeepyforandroid.util.ItemDecoration
+import com.example.zeepyforandroid.util.SharedUtil
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
+class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
+    @Inject lateinit var prefs: SharedUtil
     private val viewModel by viewModels<PostingDetailViewModel>()
     private val args: PostingDetailFragmentArgs by navArgs()
 
@@ -37,12 +41,15 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        prefs.putSharedPref("userId", 11)
+
         setToolbar()
         setParticipaitonButton()
         setPictureRecyclerview()
         loadPictures()
         setAchievementTextColor()
         setCommentsRecyclerView()
+
     }
 
     private fun setToolbar() {
@@ -62,7 +69,7 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
             setText("공구 참여하기")
             setParticipationButton()
             onClick{
-
+                Log.e("name", prefs.getSharedPrefs("userId", -1).toString())
             }
         }
     }

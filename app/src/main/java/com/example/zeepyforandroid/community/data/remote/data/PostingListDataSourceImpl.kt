@@ -39,6 +39,13 @@ class PostingListDataSourceImpl : PostingListDataSource {
                                 "2021.05.21"
                             )
                         )
+                    ),
+                    CommentModel(
+                        "https://picsum.photos/${Random.nextInt(100, 300)}",
+                        "hyeonjong",
+                        "서버개발 너무 쉽다ㅋㅋㅋㅋㅋ",
+                        "2020.05.22",
+                        null
                     )
                 )
             )
