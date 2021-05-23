@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlin_version = "1.4.3"
+    const val kotlin_version = "1.5.0"
 
     const val retrofit_version = "2.9.0"
     const val okhttp_version = "4.9.0"
@@ -16,10 +16,10 @@ object Versions {
     const val glide_version = "4.12.0"
     const val coil_version = "1.1.1"
 
-    const val navigation_version = "2.3.4"
-    const val fragment_ktx_version = "1.3.1"
-    const val activity_ktx_version = "1.2.1"
-    const val lifecycle_version = "2.2.0"
+    const val navigation_version = "2.3.5"
+    const val fragment_ktx_version = "1.3.4"
+    const val activity_ktx_version = "1.2.3"
+    const val lifecycle_version = "2.3.1"
 
     const val annotations_version = "28.0.0"
 }
