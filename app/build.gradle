@@ -104,4 +104,7 @@ dependencies {
 
     //EncryptedSharedPreference
     implementation "androidx.security:security-crypto:${Versions.crypto_version}"
+
+    //SwipeRefreshLayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe_refresh_layout_version}"
 }

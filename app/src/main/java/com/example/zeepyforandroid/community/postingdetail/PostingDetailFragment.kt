@@ -44,12 +44,14 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         prefs.putSharedPref("userId", 11)
 
         setToolbar()
+        setSwipeRefreshLayout()
         setParticipaitonButton()
         setPictureRecyclerview()
-        loadPictures()
-        setAchievementTextColor()
         setCommentsRecyclerView()
-
+        setAchievementTextColor()
+        changeAchievementVisibility()
+        setComments()
+        loadPictures()
     }
 
     private fun setToolbar() {
@@ -64,12 +66,33 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
+    private fun setSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.apply {
+            setOnRefreshListener {
+                loadPictures()
+                setComments()
+                this.isRefreshing = false
+            }
+        }
+    }
+
     private fun setParticipaitonButton() {
         binding.btnParticipation.apply {
             setText("공구 참여하기")
             setParticipationButton()
             onClick{
                 Log.e("name", prefs.getSharedPrefs("userId", -1).toString())
+            }
+        }
+    }
+
+    private fun changeAchievementVisibility() {
+        viewModel.posting.observe(viewLifecycleOwner) {
+            viewModel.changeIsGroupPurchase()
+            if(it.isSetAchievement) {
+                binding.layoutAchievement.background = null
+            } else {
+                binding.layoutAchievement.setBackgroundResource(R.drawable.box_grayf4_8dp)
             }
         }
     }
@@ -108,6 +131,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
             adapter = CommentsAdapter()
             addItemDecoration(ItemDecoration(8,0))
         }
+    }
+
+    private fun setComments() {
         (binding.rvComments.adapter as CommentsAdapter).submitList(viewModel.posting.value?.comments)
+
     }
 }

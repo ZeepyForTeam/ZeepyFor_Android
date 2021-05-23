@@ -12,13 +12,13 @@ class PostingListDataSourceImpl : PostingListDataSource {
         listOf(
             ResponsePosting(
                 "https://github.com/SONPYEONGHWA.png",
-                "peace",
-                "2021.05.16 18:00:00",
+                "zzangu99",
+                "10분전",
                 1,
                 "Community 만드는 중입니다~~",
                 "치킨, 피자, 짜장면, 탕수육, 떡볶이, 삼겹살, 스테이크, 파스타, 라면, 갈비, 회, 조개구이, 매운탕, 보쌈, 족발",
                 (1..4).map { UrlPictureModel("https://picsum.photos/${Random.nextInt(100, 300)}") },
-                true,
+                false,
                 50,
                 listOf(
                     CommentModel(
