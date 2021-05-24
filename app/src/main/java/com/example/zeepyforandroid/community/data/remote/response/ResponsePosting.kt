@@ -8,6 +8,7 @@ import java.lang.IllegalArgumentException
 
 //Fixme: 서버 api나오면 변경하기
 data class ResponsePosting(
+    val writerUserIdx: Int,
     val imageWriter: String,
     val nameWriter: String,
     val postingTime: String,
@@ -21,6 +22,7 @@ data class ResponsePosting(
 ) {
     fun toPostingModel(): PostingModel =
         PostingModel(
+            writerUserIdx,
             imageWriter,
             nameWriter,
             postingTime,

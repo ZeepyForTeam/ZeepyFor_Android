@@ -60,9 +60,21 @@ class ZeepyToolbar @JvmOverloads constructor(
         }
     }
 
-    fun setRightButton(drawable: Int, listener: OnClickListener) {
-        binding.buttonRight.run {
-            setImageResource(drawable)
+    fun setScrapButton(listener: OnClickListener) {
+        binding.checkboxScrap.run {
+            visibility = View.VISIBLE
+            buttonDrawable = null
+            setBackgroundResource(R.drawable.selector_heart)
+            setOnClickListener {
+                listener.onClick(this@ZeepyToolbar)
+            }
+        }
+    }
+
+    fun  setRightButton(drawable: Int, listener: OnClickListener) {
+        binding.buttonRight.apply {
+            visibility = View.VISIBLE
+            setBackgroundResource(drawable)
             setOnClickListener {
                 listener.onClick(this@ZeepyToolbar)
             }

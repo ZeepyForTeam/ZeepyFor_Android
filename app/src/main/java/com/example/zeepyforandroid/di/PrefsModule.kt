@@ -16,6 +16,10 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class EncryptedSharedPrefs
+
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
@@ -29,8 +33,20 @@ object PrefsModule {
         return context.sharedPreferences()
     }
 
+    @Provides
+    @ActivityRetainedScoped
+    @EncryptedSharedPrefs
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        EncryptedSharedPreferences.create(
+            "zeepy_encrypted_prefs",
+            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
     //ActivityRetainedScoped로 설정하면 이슈가 없을지 고민,,,
     @Provides
     @ActivityRetainedScoped
-    fun provideSharedUtil(@ApplicationContext context: Context) = SharedUtil(context)
+    fun provideSharedUtil(@EncryptedSharedPrefs prefs: SharedPreferences): SharedUtil = SharedUtil(prefs)
 }

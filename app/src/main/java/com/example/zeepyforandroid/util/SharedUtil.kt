@@ -11,34 +11,18 @@ import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 class SharedUtil @Inject constructor(
-   context: Context
+    val encryptedSharedPreferences : SharedPreferences
 ) {
-    private val ENCRYPTED_PREFS = "zeepy_encrypted_prefs"
-
-    val encryptedSharedPreferences = EncryptedSharedPreferences.create(
-        ENCRYPTED_PREFS,
-        MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
-        context,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
-//
-//    fun putString(key: String, value: String) {
-//        encryptedSharedPreferences.edit().putString(key, value).apply()
-//    }
-//
-//    fun getString(key: String) = encryptedSharedPreferences.getString(key, "not available")
-
-
     fun <T> putSharedPref(key: String, value: T) = with(encryptedSharedPreferences.edit()) {
         when(value) {
-            is String -> putString(key, value).apply()
-            is Long -> putLong(key, value).apply()
-            is Int -> putInt(key, value).apply()
-            is Boolean -> putBoolean(key, value).apply()
-            is Float -> putFloat(key, value).apply()
+            is String -> putString(key, value)
+            is Long -> putLong(key, value)
+            is Int -> putInt(key, value)
+            is Boolean -> putBoolean(key, value)
+            is Float -> putFloat(key, value)
             else -> IllegalArgumentException("Preferences type error")
         }
+        apply()
     }
 
     @Suppress("UNCHECKED_CAST")

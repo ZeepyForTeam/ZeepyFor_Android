@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.example.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.util.SharedUtil
@@ -41,7 +42,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        prefs.putSharedPref("userId", 11)
+        Log.e("userIdx", prefs.getSharedPrefs("userIdx", -1).toString())
 
         setToolbar()
         setSwipeRefreshLayout()
@@ -57,9 +58,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     private fun setToolbar() {
         binding.toolbar.apply {
             setTitle("커뮤니티")
-            setRightButton(R.drawable.btn_like){
+            setScrapButton {
 
             }
+
             setBackButton{
 
             }
@@ -81,7 +83,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
             setText("공구 참여하기")
             setParticipationButton()
             onClick{
-                Log.e("name", prefs.getSharedPrefs("userId", -1).toString())
             }
         }
     }
@@ -127,14 +128,20 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     }
 
     private fun setCommentsRecyclerView() {
-        binding.rvComments.apply {
-            adapter = CommentsAdapter()
-            addItemDecoration(ItemDecoration(8,0))
+        viewModel.posting.observe(viewLifecycleOwner) { posting ->
+            binding.rvComments.apply {
+                adapter = CommentsAdapter(
+                    CommentAuthenticatedModel(
+                        prefs.getSharedPrefs("userIdx", -1),
+                        posting.writerUserIdx
+                ))
+                addItemDecoration(ItemDecoration(8,0))
+            }
+            (binding.rvComments.adapter as CommentsAdapter).submitList(posting.comments)
+
         }
     }
 
     private fun setComments() {
-        (binding.rvComments.adapter as CommentsAdapter).submitList(viewModel.posting.value?.comments)
-
     }
 }

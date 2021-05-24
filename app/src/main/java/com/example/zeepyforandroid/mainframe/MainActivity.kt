@@ -20,11 +20,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ActivityMainBinding
+import com.example.zeepyforandroid.util.SharedUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.security.MessageDigest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject lateinit var pref: SharedUtil
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
@@ -35,8 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         initNavController()
 
-        //getAppKeyHash()
+        pref.putSharedPref("userIdx", 13)
 
+        //getAppKeyHash()
 
     }
 
