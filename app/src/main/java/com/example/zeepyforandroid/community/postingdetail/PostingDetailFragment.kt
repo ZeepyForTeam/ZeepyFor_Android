@@ -2,6 +2,7 @@ package com.example.zeepyforandroid.community.postingdetail
 
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.example.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.example.zeepyforandroid.util.ItemDecoration
+import com.example.zeepyforandroid.util.SharedUtil
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+//Todo: 댓글을 입력하면 RecyclerView에 데이터 추가하고 뷰 업데이트
 @AndroidEntryPoint
-class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
+class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
+    @Inject lateinit var prefs: SharedUtil
     private val viewModel by viewModels<PostingDetailViewModel>()
     private val args: PostingDetailFragmentArgs by navArgs()
 
@@ -37,32 +43,51 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        Log.e("userIdx", prefs.getSharedPrefs("userIdx", -1).toString())
+
         setToolbar()
-        setParticipaitonButton()
+        setSwipeRefreshLayout()
+        setParticipationButton()
         setPictureRecyclerview()
-        loadPictures()
-        setAchievementTextColor()
         setCommentsRecyclerView()
+        setAchievementTextColor()
+        changePostingDatas()
     }
 
     private fun setToolbar() {
         binding.toolbar.apply {
             setTitle("커뮤니티")
-            setRightButton(R.drawable.btn_like){
+            setScrapButton {}
+            setBackButton{}
+        }
+    }
 
-            }
-            setBackButton{
-
+    private fun setSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.apply {
+            setOnRefreshListener {
+                changePostingDatas()
+                setComments()
+                this.isRefreshing = false
             }
         }
     }
 
-    private fun setParticipaitonButton() {
+    private fun setParticipationButton() {
         binding.btnParticipation.apply {
             setText("공구 참여하기")
             setParticipationButton()
-            onClick{
+            onClick{}
+        }
+    }
 
+    private fun changePostingDatas() {
+        viewModel.posting.observe(viewLifecycleOwner) {
+            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
+            viewModel.changeIsGroupPurchase()
+            if(it.isSetAchievement) {
+                binding.layoutAchievement.background = null
+            } else {
+                binding.layoutAchievement.setBackgroundResource(R.drawable.box_grayf4_8dp)
             }
         }
     }
@@ -71,13 +96,6 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
         binding.rvPicturePosting.apply {
             adapter = PostingPictureAdapter()
             addItemDecoration(ItemDecoration(0, 8))
-        }
-    }
-
-    private fun loadPictures() {
-        viewModel.posting.observe(viewLifecycleOwner) {
-            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
-
         }
     }
 
@@ -97,10 +115,24 @@ class PostingDetailFragment : BaseFragment<FragmentPostingDetailBinding>() {
     }
 
     private fun setCommentsRecyclerView() {
-        binding.rvComments.apply {
-            adapter = CommentsAdapter()
-            addItemDecoration(ItemDecoration(8,0))
+        viewModel.posting.observe(viewLifecycleOwner) { posting ->
+            binding.rvComments.apply {
+                adapter = CommentsAdapter(
+                    CommentAuthenticatedModel(
+                        prefs.getSharedPrefs("userIdx", -1),
+                        posting.writerUserIdx,
+                        null
+                    )
+                )
+                setComments()
+                addItemDecoration(ItemDecoration(8,0))
+            }
         }
-        (binding.rvComments.adapter as CommentsAdapter).submitList(viewModel.posting.value?.comments)
+    }
+    private fun setComments() {
+        //Swipe Refresh 시 ItemDecoration 중복 추가 방지를 위해 위해 따로 분리
+        viewModel.posting.observe(viewLifecycleOwner) { posting ->
+            (binding.rvComments.adapter as CommentsAdapter).submitList(posting.comments)
+        }
     }
 }

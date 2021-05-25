@@ -8,15 +8,36 @@
         android:background="@drawable/toolbar_border"
         android:layout_height="60dp">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0333"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            app:layout_constraintGuide_percent="0.9666"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <ImageButton
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            app:layout_constraintHorizontal_bias="0.12"
+            android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="@id/textview_toolbar"
-            app:layout_constraintEnd_toStartOf="@+id/textview_toolbar"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/textview_toolbar" />
 
         <TextView
@@ -33,14 +54,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="리뷰작성" />
 
+        <CheckBox
+            android:id="@+id/checkbox_scrap"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@null"
+            app:layout_constraintWidth_percent="0.1"
+            android:visibility="gone"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toTopOf="@id/textview_toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/textview_toolbar"/>
+
         <ImageButton
             android:id="@+id/button_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            android:background="@null"
             app:layout_constraintTop_toTopOf="@id/textview_toolbar"
-            app:layout_constraintBottom_toBottomOf="@id/textview_toolbar"/>
+            app:layout_constraintBottom_toBottomOf="@id/textview_toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

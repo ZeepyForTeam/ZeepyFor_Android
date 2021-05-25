@@ -17,7 +17,7 @@
             tools:itemCount="5"
             android:layout_marginHorizontal="16dp"
             tools:listitem="@layout/item_lessor_personality"
-            android:background="@drawable/box_house_result"
+            android:background="@drawable/box_grayf4_8dp"
             app:layout_constraintVertical_bias="0.3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

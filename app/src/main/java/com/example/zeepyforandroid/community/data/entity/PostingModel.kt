@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PostingModel(
+    val writerUserIdx: Int,
     val imageWriter: String,
     val nameWriter: String,
     val postingTime: String,

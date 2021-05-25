@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="community_writer_profile">44dp</dimen>
+    <dimen name="no_achievement_margin">10dp</dimen>
+    <dimen name="achievement_margin">16dp</dimen>
 </resources>

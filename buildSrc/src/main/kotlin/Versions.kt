@@ -22,4 +22,8 @@ object Versions {
     const val lifecycle_version = "2.3.1"
 
     const val annotations_version = "28.0.0"
+
+    const val crypto_version = "1.0.0"
+
+    const val swipe_refresh_layout_version = "1.1.0"
 }

@@ -1,15 +1,15 @@
 package com.example.zeepyforandroid.community.postingdetail
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
+import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.example.zeepyforandroid.databinding.ItemNestedCommentBinding
 import com.example.zeepyforandroid.util.DiffCallback
 
-class NestedCommentsAdapter: ListAdapter<NestedCommentModel, NestedCommentsAdapter.NestedCommentsViewHolder>(
+class NestedCommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel): ListAdapter<NestedCommentModel, NestedCommentsAdapter.NestedCommentsViewHolder>(
     DiffCallback<NestedCommentModel>()
 ){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NestedCommentsViewHolder {
@@ -19,9 +19,24 @@ class NestedCommentsAdapter: ListAdapter<NestedCommentModel, NestedCommentsAdapt
 
     override fun onBindViewHolder(holder: NestedCommentsViewHolder, position: Int) {
         val item = getItem(position)
-        holder.binding.setVariable(BR.data, item)
+        holder.run {
+            binding.setVariable(BR.data, item)
+            setSecretComment(item)
+        }
     }
 
-
-    class NestedCommentsViewHolder(val binding: ItemNestedCommentBinding): RecyclerView.ViewHolder(binding.root)
+    inner class NestedCommentsViewHolder(val binding: ItemNestedCommentBinding): RecyclerView.ViewHolder(binding.root) {
+        fun setSecretComment(item: NestedCommentModel) {
+            authenticatedUsers.apply {
+                if (item.isSecretComment) {
+                    when(currentUserIdx) {
+                        item.writerUserIdx, this.commentWriterIdx -> binding.tvNestedComment.text = item.comment
+                        else -> binding.tvNestedComment.text = "비밀 댓글입니다."
+                    }
+                } else {
+                    binding.tvNestedComment.text = item.comment
+                }
+            }
+        }
+    }
 }

@@ -11,34 +11,58 @@ class PostingListDataSourceImpl : PostingListDataSource {
     override fun getPosting(): Single<List<ResponsePosting>> = Single.just(
         listOf(
             ResponsePosting(
+                1,
                 "https://github.com/SONPYEONGHWA.png",
-                "peace",
-                "2021.05.16 18:00:00",
+                "zzangu99",
+                "10분전",
                 1,
                 "Community 만드는 중입니다~~",
                 "치킨, 피자, 짜장면, 탕수육, 떡볶이, 삼겹살, 스테이크, 파스타, 라면, 갈비, 회, 조개구이, 매운탕, 보쌈, 족발",
                 (1..4).map { UrlPictureModel("https://picsum.photos/${Random.nextInt(100, 300)}") },
-                true,
+                false,
                 50,
                 listOf(
                     CommentModel(
+                        13,
                         "https://picsum.photos/${Random.nextInt(100, 300)}",
                         "sson_peace7",
-                        "뷰 거의 다 만들어간다,,,!!! Zeepy 개발 너무 재밌어ㅎㅎㅎ ",
+                        "뷰 거의 다 만들어간다!! 날씨는 오지게 더워져가고,,화채가 땡기는 날씨네요. Zeepy 여러분 힘내세요:) ",
                         "2021.05.21",
+                        false,
                         listOf(
                             NestedCommentModel(
+                                3,
                             "hand peace",
                             "아소토 바지락술찜, 금태 개맛있어요",
+                                true,
                             "2021.05.21"
                             ),
-
                             NestedCommentModel(
+                                5,
                                 "hansol",
                                 "어제 술값 30만원 나옴 ㅋㅋㅋㅋ",
+                                true,
                                 "2021.05.21"
                             )
                         )
+                    ),
+                    CommentModel(
+                        2,
+                        "https://picsum.photos/${Random.nextInt(100, 300)}",
+                        "hyeonjong",
+                        "서버개발 너무 쉽다ㅋㅋㅋㅋㅋ",
+                        "2020.05.22",
+                        true,
+                        null
+                    ),
+                    CommentModel(
+                        2,
+                        "https://picsum.photos/${Random.nextInt(100, 300)}",
+                        "hyeonjong",
+                        "서버개발 너무 쉽다ㅋㅋㅋㅋㅋ",
+                        "2020.05.22",
+                        false,
+                        null
                     )
                 )
             )

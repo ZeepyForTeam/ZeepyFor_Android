@@ -5,5 +5,7 @@ import android.content.SharedPreferences
 
 const val MAPQUE_PREF = "mapque_pref"
 
-fun Context.sharedPreferences(prefName: String = MAPQUE_PREF) : SharedPreferences =
+fun Context.sharedPreferences(prefName: String = MAPQUE_PREF): SharedPreferences =
     getSharedPreferences(prefName, Context.MODE_PRIVATE)
+
+

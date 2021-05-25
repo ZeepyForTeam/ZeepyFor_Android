@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.zeepyforandroid"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -86,7 +86,6 @@ dependencies {
     implementation "com.google.dagger:hilt-android:${Versions.dagger_version}"
     kapt "com.google.dagger:hilt-android-compiler:${Versions.dagger_version}"
 
-
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}"
@@ -103,4 +102,9 @@ dependencies {
     //Annotations
     implementation "com.android.support:support-annotations:${Versions.annotations_version}"
 
+    //EncryptedSharedPreference
+    implementation "androidx.security:security-crypto:${Versions.crypto_version}"
+
+    //SwipeRefreshLayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe_refresh_layout_version}"
 }
