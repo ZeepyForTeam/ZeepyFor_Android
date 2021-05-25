@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         initNavController()
 
-        pref.putSharedPref("userIdx", 13)
+        pref.putSharedPref("userIdx", 3)
 
         //getAppKeyHash()
 

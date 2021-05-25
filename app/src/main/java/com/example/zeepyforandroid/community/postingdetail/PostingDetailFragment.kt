@@ -19,6 +19,7 @@ import com.example.zeepyforandroid.util.SharedUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+//Todo: 댓글을 입력하면 RecyclerView에 데이터 추가하고 뷰 업데이트
 @AndroidEntryPoint
 class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     @Inject lateinit var prefs: SharedUtil
@@ -50,29 +51,22 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         setPictureRecyclerview()
         setCommentsRecyclerView()
         setAchievementTextColor()
-        changeAchievementVisibility()
-        setComments()
-        loadPictures()
+        changePostringDatas()
     }
 
     private fun setToolbar() {
         binding.toolbar.apply {
             setTitle("커뮤니티")
-            setScrapButton {
-
-            }
-
-            setBackButton{
-
-            }
+            setScrapButton {}
+            setBackButton{}
         }
     }
 
     private fun setSwipeRefreshLayout() {
         binding.swipeRefreshLayout.apply {
             setOnRefreshListener {
-                loadPictures()
-                setComments()
+                changePostringDatas()
+                setCommentsRecyclerView()
                 this.isRefreshing = false
             }
         }
@@ -82,13 +76,13 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.btnParticipation.apply {
             setText("공구 참여하기")
             setParticipationButton()
-            onClick{
-            }
+            onClick{}
         }
     }
 
-    private fun changeAchievementVisibility() {
+    private fun changePostringDatas() {
         viewModel.posting.observe(viewLifecycleOwner) {
+            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
             viewModel.changeIsGroupPurchase()
             if(it.isSetAchievement) {
                 binding.layoutAchievement.background = null
@@ -102,13 +96,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.rvPicturePosting.apply {
             adapter = PostingPictureAdapter()
             addItemDecoration(ItemDecoration(0, 8))
-        }
-    }
-
-    private fun loadPictures() {
-        viewModel.posting.observe(viewLifecycleOwner) {
-            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
-
         }
     }
 
@@ -133,15 +120,13 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                 adapter = CommentsAdapter(
                     CommentAuthenticatedModel(
                         prefs.getSharedPrefs("userIdx", -1),
-                        posting.writerUserIdx
-                ))
+                        posting.writerUserIdx,
+                        null
+                    )
+                )
                 addItemDecoration(ItemDecoration(8,0))
             }
             (binding.rvComments.adapter as CommentsAdapter).submitList(posting.comments)
-
         }
-    }
-
-    private fun setComments() {
     }
 }

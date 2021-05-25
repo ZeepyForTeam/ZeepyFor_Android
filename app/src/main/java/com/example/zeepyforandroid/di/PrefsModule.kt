@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.security.keystore.KeyGenParameterSpec
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.example.zeepyforandroid.community.postingdetail.CommentsAdapter
 import com.example.zeepyforandroid.util.SharedUtil
 import com.example.zeepyforandroid.util.ext.sharedPreferences
 import dagger.Module

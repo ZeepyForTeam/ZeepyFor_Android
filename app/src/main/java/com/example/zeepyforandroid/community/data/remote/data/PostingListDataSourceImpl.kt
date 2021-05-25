@@ -31,13 +31,17 @@ class PostingListDataSourceImpl : PostingListDataSource {
                         false,
                         listOf(
                             NestedCommentModel(
+                                3,
                             "hand peace",
                             "아소토 바지락술찜, 금태 개맛있어요",
+                                true,
                             "2021.05.21"
                             ),
                             NestedCommentModel(
+                                5,
                                 "hansol",
                                 "어제 술값 30만원 나옴 ㅋㅋㅋㅋ",
+                                true,
                                 "2021.05.21"
                             )
                         )
