@@ -47,11 +47,11 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
         setToolbar()
         setSwipeRefreshLayout()
-        setParticipaitonButton()
+        setParticipationButton()
         setPictureRecyclerview()
         setCommentsRecyclerView()
         setAchievementTextColor()
-        changePostringDatas()
+        changePostingDatas()
     }
 
     private fun setToolbar() {
@@ -65,14 +65,14 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     private fun setSwipeRefreshLayout() {
         binding.swipeRefreshLayout.apply {
             setOnRefreshListener {
-                changePostringDatas()
-                setCommentsRecyclerView()
+                changePostingDatas()
+                setComments()
                 this.isRefreshing = false
             }
         }
     }
 
-    private fun setParticipaitonButton() {
+    private fun setParticipationButton() {
         binding.btnParticipation.apply {
             setText("공구 참여하기")
             setParticipationButton()
@@ -80,7 +80,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
-    private fun changePostringDatas() {
+    private fun changePostingDatas() {
         viewModel.posting.observe(viewLifecycleOwner) {
             (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
             viewModel.changeIsGroupPurchase()
@@ -124,8 +124,14 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                         null
                     )
                 )
+                setComments()
                 addItemDecoration(ItemDecoration(8,0))
             }
+        }
+    }
+    private fun setComments() {
+        //Swipe Refresh 시 ItemDecoration 중복 추가 방지를 위해 위해 따로 분리
+        viewModel.posting.observe(viewLifecycleOwner) { posting ->
             (binding.rvComments.adapter as CommentsAdapter).submitList(posting.comments)
         }
     }
