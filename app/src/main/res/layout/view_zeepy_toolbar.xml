@@ -52,7 +52,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="리뷰작성" />
+            tools:text="Zeepy Toolbar" />
 
         <CheckBox
             android:id="@+id/checkbox_scrap"
