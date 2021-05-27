@@ -17,7 +17,7 @@ data class ResponsePosting(
     val contentPosting: String,
     val picturesPosting: List<UrlPictureModel>,
     val isSetAchievement: Boolean,
-    val achivementRate: Int,
+    val achievementRate: Int,
     val comments: List<CommentModel>
 ) {
     fun toPostingModel(): PostingModel =

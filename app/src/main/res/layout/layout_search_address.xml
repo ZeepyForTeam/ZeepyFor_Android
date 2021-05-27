@@ -1,76 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
+<layout>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <TextView
             android:id="@+id/tv_search_address"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/et_search_address"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.03"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:text="주소검색"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/et_search_address"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.03" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/et_search_address"
+            app:layout_constraintDimensionRatio="8.5:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_address"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="8.5:1"
-            android:layout_marginTop="12dp"
             android:layout_marginHorizontal="16dp"
-            android:textSize="12sp"
-            android:inputType="text"
-            android:paddingStart="15dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edittext_box"
             android:drawableLeft="@drawable/icon_search"
             android:drawablePadding="10dp"
             android:hint="지역, 동, 지하철역으로 입력해주세요"
+            android:inputType="text"
+            android:paddingStart="15dp"
             android:textColor="@color/zeepy_black_2a"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/edittext_box"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_search_address"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/button_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="검색"
-            android:textColor="@color/zeepy_blue_5f"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            app:layout_constraintTop_toTopOf="@id/et_search_address"
             app:layout_constraintBottom_toBottomOf="@id/et_search_address"
             app:layout_constraintEnd_toEndOf="@id/et_search_address"
+            app:layout_constraintHorizontal_bias="0.96"
             app:layout_constraintStart_toStartOf="@id/et_search_address"
-            app:layout_constraintHorizontal_bias="0.96"/>
+            app:layout_constraintTop_toTopOf="@id/et_search_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:text="검색"
+            android:textColor="@color/zeepy_blue_5f" />
 
         <View
             android:id="@+id/view_btn_border"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.975"
-            app:layout_constraintBottom_toTopOf="@id/btn_next"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4" />
 
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0.972"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/et_search_address"
             app:layout_constraintStart_toStartOf="@id/et_search_address"
-            app:layout_constraintEnd_toEndOf="@id/et_search_address" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.972"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

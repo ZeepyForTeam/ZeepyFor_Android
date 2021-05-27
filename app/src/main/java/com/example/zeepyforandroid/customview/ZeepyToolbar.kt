@@ -13,7 +13,8 @@ import androidx.core.view.marginEnd
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ViewZeepyToolbarBinding
 
-class ZeepyToolbar @JvmOverloads constructor(
+class
+ZeepyToolbar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int=0

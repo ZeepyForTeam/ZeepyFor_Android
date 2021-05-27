@@ -1,7 +1,6 @@
 package com.example.zeepyforandroid.community.frame
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.example.zeepyforandroid.databinding.FragmentCommunityBinding
 import com.example.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.RuntimeException
 
 @AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding>() {
@@ -45,6 +43,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>() {
                 findNavController().navigate(action)
             }
             setRightButtonMargin(32)
+
+            setOnClickListener {
+                findNavController().navigate(R.id.action_mainFrameFragment_to_communitySearchAddressFragment)
+            }
         }
     }
 
