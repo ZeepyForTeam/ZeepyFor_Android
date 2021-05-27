@@ -15,7 +15,11 @@ class ReviewOptionAdapter : RecyclerView.Adapter<ReviewOptionAdapter.ReviewOptio
 
     override fun onBindViewHolder(holder: ReviewOptionViewHolder, position: Int) {
         val item = OPTION_LIST[position]
-        holder.binding.setVariable(BR.data, item)
+
+        holder.binding.apply {
+            setVariable(BR.data, item)
+            checkbox.setTextColor()
+        }
     }
 
     override fun getItemCount() = OPTION_LIST.size
@@ -34,6 +38,5 @@ class ReviewOptionAdapter : RecyclerView.Adapter<ReviewOptionAdapter.ReviewOptio
         )
     }
 
-    class ReviewOptionViewHolder(val binding: ItemReviewOptionBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class ReviewOptionViewHolder(val binding: ItemReviewOptionBinding) : RecyclerView.ViewHolder(binding.root)
 }

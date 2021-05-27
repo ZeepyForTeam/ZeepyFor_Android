@@ -15,7 +15,7 @@ class ZeepyCheckBox @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0
 ) : CompoundButton(context, attributeSet, defStyle) {
-    var buttonType = 1
+    var buttonType = -1
 
     init {
         val typedArray = context.theme.obtainStyledAttributes(
@@ -27,14 +27,12 @@ class ZeepyCheckBox @JvmOverloads constructor(
         if (typedArray.hasValue(R.styleable.zeepyCompoundButton_button_type)) {
             buttonType = typedArray.getInt(R.styleable.zeepyCompoundButton_button_type, 1)
         }
-
         buttonDrawable = null
         textAlignment = TEXT_ALIGNMENT_CENTER
         gravity = Gravity.CENTER_VERTICAL
         setOnClickListener { }
         setBackground()
         setFontFamily()
-        setTextColor()
     }
 
     private fun setBackground() {
@@ -48,20 +46,21 @@ class ZeepyCheckBox @JvmOverloads constructor(
         )
     }
 
-    private fun setTextColor() {
-        CheckBoxType.findCheckBoxType(buttonType).textColor.apply {
-         this?.let{
-             ContextCompat.getColorStateList(
-                 context,
-                 it
-             )
-         }
-        }
+    fun setTextColor() {
+        setTextColor(
+            CheckBoxType.findCheckBoxType(buttonType).textColor?.let {
+                ContextCompat.getColorStateList(
+                    context,
+                    it
+                )
+            }
+        )
     }
 
     enum class CheckBoxType(val buttonType: Int, val background: Int, val textColor: Int?) {
         DEFAULT_CHECK_BOX(1, R.drawable.selector_zeepy_chip, R.color.selector_deafult_rb_text),
         SECRET_COMMENT_CHECK_BOX(2, R.drawable.selector_checkbox_comment, null);
+
 
         companion object {
             fun findCheckBoxType(buttonType: Int): CheckBoxType {
@@ -71,3 +70,5 @@ class ZeepyCheckBox @JvmOverloads constructor(
         }
     }
 }
+
+

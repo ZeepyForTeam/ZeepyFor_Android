@@ -275,7 +275,6 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                     <com.example.zeepyforandroid.customview.ZeepyButton
                         android:id="@+id/btn_participation"
                         android:layout_width="0dp"

@@ -39,6 +39,7 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
         super.onViewCreated(view, savedInstanceState)
         viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
 
+
         setRoomTypeChoice()
         setReviewChoice()
         setOptionChoice()
