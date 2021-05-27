@@ -27,7 +27,7 @@ class ZeepyCheckBox @JvmOverloads constructor(
         if (typedArray.hasValue(R.styleable.zeepyCompoundButton_button_type)) {
             buttonType = typedArray.getInt(R.styleable.zeepyCompoundButton_button_type, 1)
         }
-        
+
         buttonDrawable = null
         textAlignment = TEXT_ALIGNMENT_CENTER
         gravity = Gravity.CENTER_VERTICAL
