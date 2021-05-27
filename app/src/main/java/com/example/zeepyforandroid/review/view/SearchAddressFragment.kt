@@ -34,12 +34,12 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
         setNextButton()
         setEnableButton()
         invisibleNotice()
+        goToWriteDetailAddress()
     }
 
     private fun setNextButton(){
-        binding.btnNext.run {
+        binding.layoutSearchAddress.btnNext.run {
             setText("다음으로")
-            unUseableButton()
         }
     }
 
@@ -51,17 +51,20 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
 
     private fun setEnableButton() {
         viewModel.addressSearchQuery.observe(viewLifecycleOwner){
-            if(viewModel.checkInputAddressQuery()) {
-                binding.btnNext.usableButton()
-                goToWriteDetailAddress()
-            } else {
-                binding.btnNext.unUseableButton()
-            }
+//            binding.layoutSearchAddress.btnNext.apply {
+//                if(viewModel.checkInputAddressQuery()) {
+//                    usableButton()
+//                    goToWriteDetailAddress()
+//                } else {
+//                    unUseableButton()
+//                }
+//            }
         }
     }
 
     private fun goToWriteDetailAddress() {
-        binding.btnNext.setOnClickListener{
+        binding.layoutSearchAddress.btnNext.setOnClickListener{
+            viewModel.changeAddressSearchgQuery(binding.layoutSearchAddress.etSearchAddress.text.toString())
             Navigation.findNavController(binding.root).navigate(R.id.action_searchAddressFragment_to_writeDetailAddressFragment)
         }
     }

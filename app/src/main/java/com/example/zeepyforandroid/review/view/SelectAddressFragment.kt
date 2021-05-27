@@ -75,6 +75,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     override fun onStop() {
         super.onStop()
-        viewModel.addressSearchQuery.value = null
+        viewModel.changeAddressSearchgQuery("")
     }
 }

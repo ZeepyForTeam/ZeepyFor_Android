@@ -55,6 +55,7 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
     private fun changeToolbar() {
         val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
+
         viewModel.currentFragment.observe(viewLifecycleOwner){ reviewNotice ->
             binding.tvReviewNotice.apply {
                 text = getString(reviewNotice.text)
