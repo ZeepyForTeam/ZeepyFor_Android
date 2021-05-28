@@ -90,7 +90,7 @@
 
     <fragment
         android:id="@+id/communitySearchAddressFragment"
-        android:name="com.example.zeepyforandroid.community.CommunitySearchAddressFragment"
+        android:name="com.example.zeepyforandroid.community.searchaddress.CommunitySearchAddressFragment"
         android:label="CommunitySearchAddressFragment"
         tools:layout="@layout/fragment_community_search_address">
         <action
@@ -100,7 +100,7 @@
 
     <fragment
         android:id="@+id/communityDetailAddressFragment"
-        android:name="com.example.zeepyforandroid.community.CommunityDetailAddressFragment"
+        android:name="com.example.zeepyforandroid.community.searchaddress.CommunityDetailAddressFragment"
         android:label="CommunityDetailAddressFragment"
         tools:layout="@layout/fragment_community_detail_address"/>
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -58,7 +59,9 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.toolbar.apply {
             setTitle("커뮤니티")
             setScrapButton {}
-            setBackButton{}
+            setBackButton{
+                findNavController().popBackStack()
+            }
         }
     }
 

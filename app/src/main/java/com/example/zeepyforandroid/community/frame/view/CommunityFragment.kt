@@ -1,13 +1,15 @@
-package com.example.zeepyforandroid.community.frame
+package com.example.zeepyforandroid.community.frame.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.example.zeepyforandroid.databinding.FragmentCommunityBinding
 import com.example.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.google.android.material.tabs.TabLayoutMediator
@@ -15,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding>() {
-    private val viewModel by viewModels<CommunityFrameViewModel>()
+    private val viewModel by activityViewModels<CommunityFrameViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

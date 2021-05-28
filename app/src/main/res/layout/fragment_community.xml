@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".community.frame.CommunityFragment">
+        tools:context=".community.frame.view.CommunityFragment">
 
         <com.example.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"

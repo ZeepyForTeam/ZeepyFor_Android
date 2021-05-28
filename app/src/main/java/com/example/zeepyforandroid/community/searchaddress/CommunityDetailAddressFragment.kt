@@ -1,25 +1,26 @@
-package com.example.zeepyforandroid.community
+package com.example.zeepyforandroid.community.searchaddress
 
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spanned
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.example.zeepyforandroid.databinding.FragmentCommunityDetailAddressBinding
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
-import com.example.zeepyforandroid.util.ReviewNotice
 
 
 class CommunityDetailAddressFragment : BaseFragment<FragmentCommunityDetailAddressBinding>() {
+    private val viewModel by activityViewModels<CommunityFrameViewModel>()
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -29,6 +30,7 @@ class CommunityDetailAddressFragment : BaseFragment<FragmentCommunityDetailAddre
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.layoutCommunityDetailAddress.tvAddress.text = viewModel.searchAddressQuery.value
         setCommunityTheme()
     }
 
@@ -42,6 +44,9 @@ class CommunityDetailAddressFragment : BaseFragment<FragmentCommunityDetailAddre
         binding.apply {
             toolbar.apply {
                 setTitle("커뮤니티")
+                setBackButton{
+                    findNavController().popBackStack()
+                }
             }
             layoutCommunityDetailAddress.btnNext.apply {
                 setText("다음으로")
@@ -49,6 +54,9 @@ class CommunityDetailAddressFragment : BaseFragment<FragmentCommunityDetailAddre
             }
             tvNotice.text = spannableString
         }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }

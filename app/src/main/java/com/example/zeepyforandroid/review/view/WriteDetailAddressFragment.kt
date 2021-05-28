@@ -1,6 +1,7 @@
 package com.example.zeepyforandroid.review.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        Log.e(viewModel.toString(), viewModel.toString())
 
         viewModel.changeCurrentFragment(ReviewNotice.WRITE_DETAIL_ADDRESS)
         initView()

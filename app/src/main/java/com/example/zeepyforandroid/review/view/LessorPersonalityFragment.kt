@@ -1,6 +1,7 @@
 package com.example.zeepyforandroid.review.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e(viewModel.toString(), viewModel.toString())
 
         viewModel.changeCurrentFragment(ReviewNotice.CHECK_LESSOR_PERSONALITY)
         setNextButton()

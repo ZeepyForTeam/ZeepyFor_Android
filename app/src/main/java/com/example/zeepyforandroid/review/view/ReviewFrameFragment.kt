@@ -33,6 +33,9 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e(viewModel.toString(), viewModel.toString())
+
+
         val navHostFragment = childFragmentManager.findFragmentById(R.id.review_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         setToolbar()

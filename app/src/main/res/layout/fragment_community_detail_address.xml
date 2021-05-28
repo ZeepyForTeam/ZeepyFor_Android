@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".community.CommunityDetailAddressFragment">
+        tools:context=".community.searchaddress.CommunityDetailAddressFragment">
 
         <com.example.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
