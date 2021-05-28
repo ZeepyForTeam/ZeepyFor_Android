@@ -61,4 +61,9 @@ class ZeepyButton: ConstraintLayout {
         binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_participation)
         binding.tvButton.setTextColor(getColor(context, R.color.zeepy_green_33))
     }
+
+    fun setCommunityTheme() {
+        binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_community)
+        binding.tvButton.setTextColor(getColor(context, R.color.white))
+    }
 }

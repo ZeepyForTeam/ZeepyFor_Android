@@ -36,11 +36,18 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val reviewOfLessor = MutableLiveData<String>()
 
     val detailAddress = MutableLiveData<String>()
-    val addressSearchQuery = MutableLiveData<String>()
+    private val _addressSearchQuery = MutableLiveData<String>()
+    val addressSearchQuery: LiveData<String>
+        get() = _addressSearchQuery
+
     val sexChecked = MutableLiveData<Int>()
 
     init {
         setDummyAddress()
+    }
+
+    fun changeAddressSearchgQuery(query: String) {
+        _addressSearchQuery.value = query
     }
 
     fun changeHousePictures(pictures: List<PictureModel>) {

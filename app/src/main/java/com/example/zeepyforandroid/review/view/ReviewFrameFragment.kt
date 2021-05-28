@@ -33,6 +33,9 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e(viewModel.toString(), viewModel.toString())
+
+
         val navHostFragment = childFragmentManager.findFragmentById(R.id.review_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         setToolbar()
@@ -55,6 +58,7 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
     private fun changeToolbar() {
         val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
+
         viewModel.currentFragment.observe(viewLifecycleOwner){ reviewNotice ->
             binding.tvReviewNotice.apply {
                 text = getString(reviewNotice.text)

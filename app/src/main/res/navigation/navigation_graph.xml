@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_ConditionSearchFragment"
             app:destination="@+id/conditionsearchFragment"/>
+        <action
+            android:id="@+id/action_mainFrameFragment_to_communitySearchAddressFragment"
+            app:destination="@id/communitySearchAddressFragment" />
 
     </fragment>
 
@@ -84,5 +87,21 @@
         android:name="com.example.zeepyforandroid.conditionsearch.ConditionSearchFragment"
         android:label="ConditionSearchFragment"
         tools:layout="@layout/fragment_search_by_condition"/>
+
+    <fragment
+        android:id="@+id/communitySearchAddressFragment"
+        android:name="com.example.zeepyforandroid.community.searchaddress.CommunitySearchAddressFragment"
+        android:label="CommunitySearchAddressFragment"
+        tools:layout="@layout/fragment_community_search_address">
+        <action
+            android:id="@+id/action_communitySearchAddressFragment_to_communityDetailAddressFragment"
+            app:destination="@id/communityDetailAddressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityDetailAddressFragment"
+        android:name="com.example.zeepyforandroid.community.searchaddress.CommunityDetailAddressFragment"
+        android:label="CommunityDetailAddressFragment"
+        tools:layout="@layout/fragment_community_detail_address"/>
 
 </navigation>

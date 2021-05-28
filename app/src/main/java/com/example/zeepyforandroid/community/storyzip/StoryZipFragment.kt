@@ -1,8 +1,9 @@
 package com.example.zeepyforandroid.community.storyzip
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentStoryZipBinding
 
@@ -13,6 +14,10 @@ class StoryZipFragment : BaseFragment<FragmentStoryZipBinding>() {
         container: ViewGroup?
     ): FragmentStoryZipBinding {
         return FragmentStoryZipBinding.inflate(inflater, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }

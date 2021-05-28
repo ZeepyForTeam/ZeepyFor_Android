@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.community.frame
+package com.example.zeepyforandroid.community.frame.viewmodel
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -20,6 +20,23 @@ class CommunityFrameViewModel @Inject constructor(
     private val _postingList = MutableLiveData<List<PostingModel>>()
     val postingList: LiveData<List<PostingModel>>
         get() = _postingList
+
+    private val _searchAddressQuery = MutableLiveData<String>()
+    val searchAddressQuery: LiveData<String>
+        get() = _searchAddressQuery
+
+    private val _detailAddress = MutableLiveData<String>()
+    val detailAddress: LiveData<String>
+        get() = _detailAddress
+
+
+    fun changeSearchAddressQuery(address: String) {
+        _searchAddressQuery.value = address
+    }
+
+    fun changeDetailAddressQuery(detailAddress: String) {
+        _detailAddress.value = detailAddress
+    }
 
     @SuppressLint("CheckResult")
     fun getPostingList() {

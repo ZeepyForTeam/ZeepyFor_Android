@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.community.frame
+package com.example.zeepyforandroid.community.frame.view
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
