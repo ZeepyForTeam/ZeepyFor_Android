@@ -25,7 +25,7 @@
                 android:textSize="12sp"
                 android:text="전체보기"
                 android:paddingVertical="7dp"
-                android:paddingHorizontal="8dp"
+                android:paddingHorizontal="10dp"
                 zeepy:button_type="10"/>
 
             <com.example.zeepyforandroid.customview.ZeepyRadioButton
@@ -36,7 +36,7 @@
                 android:text="공동 구매"
                 android:paddingVertical="7dp"
                 android:paddingHorizontal="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="10dp"
                 zeepy:button_type="10"/>
 
             <com.example.zeepyforandroid.customview.ZeepyRadioButton
@@ -46,7 +46,7 @@
                 android:textSize="12sp"
                 android:text="무료 나눔"
                 android:paddingVertical="7dp"
-                android:paddingHorizontal="8dp"
+                android:paddingHorizontal="10dp"
                 android:layout_marginStart="8dp"
                 zeepy:button_type="10"/>
 
@@ -57,7 +57,7 @@
                 android:textSize="12sp"
                 android:text="동네 친구"
                 android:paddingVertical="7dp"
-                android:paddingHorizontal="8dp"
+                android:paddingHorizontal="10dp"
                 android:layout_marginStart="8dp"
                 zeepy:button_type="10"/>
         </RadioGroup>

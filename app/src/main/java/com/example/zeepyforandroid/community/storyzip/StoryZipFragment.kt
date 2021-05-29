@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.example.zeepyforandroid.databinding.FragmentStoryZipBinding
+import com.example.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.example.zeepyforandroid.util.ItemDecoration
 
 
@@ -27,11 +29,17 @@ class StoryZipFragment : BaseFragment<FragmentStoryZipBinding>() {
         setStoryZipRecyclerView()
         viewModel.getPostingList()
         updatePostings()
+        initPostingTag()
     }
 
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
-            adapter = StoryZipAdapter()
+            adapter = StoryZipAdapter{
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(
+                    it
+                )
+                findNavController().navigate(action)
+            }
             addItemDecoration(ItemDecoration(8,0))
         }
     }
@@ -40,5 +48,9 @@ class StoryZipFragment : BaseFragment<FragmentStoryZipBinding>() {
         viewModel.postingList.observe(viewLifecycleOwner){
             (binding.rvStoryzip.adapter as StoryZipAdapter).submitList(it)
         }
+    }
+
+    private fun initPostingTag() {
+        binding.radiogroupTag.check(binding.rbTagEverything.id)
     }
 }

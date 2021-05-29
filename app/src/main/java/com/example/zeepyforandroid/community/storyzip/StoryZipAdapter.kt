@@ -9,7 +9,7 @@ import com.example.zeepyforandroid.community.data.entity.PostingModel
 import com.example.zeepyforandroid.databinding.ItemStoryZipBinding
 import com.example.zeepyforandroid.util.DiffCallback
 
-class StoryZipAdapter: ListAdapter<PostingModel, StoryZipAdapter.StoryZipViewHolder>(
+class StoryZipAdapter(val listener: (PostingModel) -> Unit): ListAdapter<PostingModel, StoryZipAdapter.StoryZipViewHolder>(
     DiffCallback<PostingModel>()
 ) {
 
@@ -21,7 +21,12 @@ class StoryZipAdapter: ListAdapter<PostingModel, StoryZipAdapter.StoryZipViewHol
     override fun onBindViewHolder(holder: StoryZipViewHolder, position: Int) {
         val item = getItem(position)
         holder.binding.setVariable(BR.data, item)
+        holder.binding.root.setOnClickListener{
+            listener(item)
+        }
     }
+
+
 
     class StoryZipViewHolder(val binding: ItemStoryZipBinding): RecyclerView.ViewHolder(binding.root)
 }
