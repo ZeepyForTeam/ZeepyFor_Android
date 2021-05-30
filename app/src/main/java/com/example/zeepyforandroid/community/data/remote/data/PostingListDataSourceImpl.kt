@@ -18,6 +18,7 @@ class PostingListDataSourceImpl : PostingListDataSource {
                 1,
                 "Community 만드는 중입니다~~",
                 "치킨, 피자, 짜장면, 탕수육, 떡볶이, 삼겹살, 스테이크, 파스타, 라면, 갈비, 회, 조개구이, 매운탕, 보쌈, 족발",
+                true,
                 (1..4).map { UrlPictureModel("https://picsum.photos/${Random.nextInt(100, 300)}") },
                 false,
                 50,
@@ -65,6 +66,20 @@ class PostingListDataSourceImpl : PostingListDataSource {
                         null
                     )
                 )
+            ),
+            ResponsePosting(
+                1,
+                "https://github.com/SONPYEONGHWA.png",
+                "zzangu99",
+                "15분전",
+                1,
+                "이것이 커뮤니티다!!!!",
+                "5월 29일 10시반 한사랑 산악회 인왕산 등반. 꽃도보고 맑은 공기도 마시고 열정 열정 열정",
+                true,
+                (1..4).map { UrlPictureModel("https://picsum.photos/${Random.nextInt(100, 300)}") },
+                false,
+                50,
+                null
             )
         )
     )

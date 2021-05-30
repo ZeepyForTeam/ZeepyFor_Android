@@ -13,7 +13,8 @@ data class PostingModel(
     val typePosting: String,
     val titlePosting: String,
     val contentPosting: String,
+    val postingStatus: Boolean,
     val picturesPosting: List<UrlPictureModel>,
     val isSetAchievement: Boolean,
-    val comments: List<CommentModel>
+    val comments: List<CommentModel>?
 ):Parcelable

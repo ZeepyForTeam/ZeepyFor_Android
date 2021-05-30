@@ -28,7 +28,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getPostingList()
 
         setToolbar()
         initViewPager()
@@ -39,10 +38,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>() {
             setTitle("을지로 3가")
             setCommunityLocation()
             setRightButton(R.drawable.ic_btn_write) {
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(
-                    viewModel.postingList.value?.get(0)!!
-                )
-                findNavController().navigate(action)
+
             }
             setRightButtonMargin(32)
 

@@ -15,10 +15,11 @@ data class ResponsePosting(
     val typePosting: Int,
     val titlePosting: String,
     val contentPosting: String,
+    val postingStatus: Boolean,
     val picturesPosting: List<UrlPictureModel>,
     val isSetAchievement: Boolean,
     val achievementRate: Int,
-    val comments: List<CommentModel>
+    val comments: List<CommentModel>?
 ) {
     fun toPostingModel(): PostingModel =
         PostingModel(
@@ -29,6 +30,7 @@ data class ResponsePosting(
             toPostingType(typePosting).tag,
             titlePosting,
             contentPosting,
+            postingStatus,
             picturesPosting,
             isSetAchievement,
             comments
