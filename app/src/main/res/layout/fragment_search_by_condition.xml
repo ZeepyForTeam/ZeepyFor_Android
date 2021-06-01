@@ -49,6 +49,7 @@
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_building_type">
@@ -57,7 +58,7 @@
                         android:id="@+id/radiobtn_option_oneroom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         zeepy:button_type="6"
                         android:checked="true"/>
 
@@ -65,28 +66,76 @@
                         android:id="@+id/radiobtn_option_tworoom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         zeepy:button_type="7" />
 
                     <com.example.zeepyforandroid.customview.ZeepyRadioButton
                         android:id="@+id/radiobtn_option_officetel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         zeepy:button_type="9" />
 
                 </RadioGroup>
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layout_buildingtype_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/buildingtype_group"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="원룸"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="투룸"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="오피스텔"/>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <TextView
+                    android:id="@+id/tv_trade_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:text="거래 종류"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_buildingtype_text"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"/>
+
                 <RadioGroup
-                    android:id="@+id/paytype_group"
+                    android:id="@+id/tradetype_group"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     android:layout_marginHorizontal="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/buildingtype_group"
-                    android:layout_marginTop="30dp">
+                    app:layout_constraintTop_toBottomOf="@id/tv_trade_type"
+                    android:layout_marginTop="12dp">
 
                     <com.example.zeepyforandroid.customview.ZeepyRadioButton
                         android:id="@+id/radiobtn_option_walsae"
@@ -111,6 +160,37 @@
                         zeepy:button_type="8" />
 
                 </RadioGroup>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layout_tradetype_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tradetype_group"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="원룸"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="투룸"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="오피스텔"/>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
