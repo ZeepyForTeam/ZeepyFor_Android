@@ -2,6 +2,7 @@ package com.example.zeepyforandroid.conditionsearch
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,14 +20,13 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setSearchOptions()
 
     }
 
     override fun onResume() {
         super.onResume()
         binding.buildingtypeGroup.clearCheck()
-        binding.paytypeGroup.clearCheck()
+        binding.tradetypeGroup.clearCheck()
     }
 
 //    private fun setTopNotice() {
@@ -92,7 +92,7 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
             }
 
         }
-        binding.paytypeGroup.setOnCheckedChangeListener { _, checkId ->
+        binding.tradetypeGroup.setOnCheckedChangeListener { _, checkId ->
             when (checkId) {
                 binding.radiobtnOptionWalsae.id -> {
                     binding.radiobtnOptionJeonsae.isChecked = false
