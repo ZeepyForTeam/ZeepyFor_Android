@@ -5,9 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -79,15 +81,23 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
 
     private val requestCameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            takePicture()
+            if(it.values.filter { it == false }.count() != 0) {
+                Toast.makeText(requireContext(), "권한을 모두 허용해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                takePicture()
+            }
         }
 
     private val requestGalleryPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = MediaStore.Images.Media.CONTENT_TYPE
-            intent.type = "image/*"
-            getHousePicture.launch(intent)
+            if(it.values.filter { it == false }.count() != 0) {
+                Toast.makeText(requireContext(), "권한을 모두 허용해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = MediaStore.Images.Media.CONTENT_TYPE
+                intent.type = "image/*"
+                getHousePicture.launch(intent)
+            }
         }
 
     private fun takePicture() {
