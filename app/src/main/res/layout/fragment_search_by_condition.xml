@@ -156,6 +156,76 @@
 
                 </RadioGroup>
 
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:text="가격"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tradetype_group"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"/>
+
+                <TextView
+                    android:id="@+id/tv_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:text="보증금"
+                    android:textColor="@color/zeepy_blue_5f"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_price"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp"/>\
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/rs_deposit"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:valueFrom="0"
+                    android:valueTo="100"
+                    app:values="@array/deposit_initial_values"
+                    app:trackColor="@color/zeepy_yellow"
+                    app:trackHeight="16dp"
+                    app:thumbColor="@color/zeepy_blue_5f"
+                    app:layout_constraintTop_toBottomOf="@id/tv_deposit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="16dp"/>
+
+                <TextView
+                    android:id="@+id/tv_monthlypay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:text="보증금"
+                    android:textColor="@color/zeepy_blue_5f"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rs_deposit"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="16dp"/>\
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/rs_monthlypay"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:valueFrom="0"
+                    android:valueTo="100"
+                    app:values="@array/deposit_initial_values"
+                    app:trackColor="@color/zeepy_yellow"
+                    app:trackHeight="16dp"
+                    app:thumbColor="@color/zeepy_blue_5f"
+                    app:layout_constraintTop_toBottomOf="@id/tv_monthlypay"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="16dp"/>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
