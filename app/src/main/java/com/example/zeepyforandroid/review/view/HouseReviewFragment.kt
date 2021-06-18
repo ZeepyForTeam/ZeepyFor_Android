@@ -38,8 +38,12 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
-        setReviewChoice()
+        Log.e(viewModel.toString(), viewModel.toString())
+
+
+
         setRoomTypeChoice()
+        setReviewChoice()
         setOptionChoice()
         setNextButton()
         goToWriteHouseInfo()
@@ -96,20 +100,6 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
 
     private fun setRoomTypeChoice() {
         binding.roomtypeGroup.setOnCheckedChangeListener { group, checkId ->
-            when (checkId) {
-                binding.radiobtnOneRoom.id -> {
-                    binding.radiobtnTwoRoom.isChecked = false
-                    binding.radiobtnThreeRoom.isChecked = false
-                }
-                binding.radiobtnTwoRoom.id -> {
-                    binding.radiobtnOneRoom.isChecked = false
-                    binding.radiobtnThreeRoom.isChecked = false
-                }
-                binding.radiobtnThreeRoom.id -> {
-                    binding.radiobtnTwoRoom.isChecked = false
-                    binding.radiobtnOneRoom.isChecked = false
-                }
-            }
 
         }
     }

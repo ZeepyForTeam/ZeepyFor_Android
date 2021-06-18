@@ -4,9 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
-import com.example.zeepyforandroid.databinding.ItemReviewChoiceBinding
 import com.example.zeepyforandroid.databinding.ItemReviewOptionBinding
-import com.example.zeepyforandroid.review.data.dto.OptionModel
+import com.example.zeepyforandroid.review.data.entity.OptionModel
 
 class ReviewOptionAdapter : RecyclerView.Adapter<ReviewOptionAdapter.ReviewOptionViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewOptionViewHolder {
@@ -16,7 +15,11 @@ class ReviewOptionAdapter : RecyclerView.Adapter<ReviewOptionAdapter.ReviewOptio
 
     override fun onBindViewHolder(holder: ReviewOptionViewHolder, position: Int) {
         val item = OPTION_LIST[position]
-        holder.binding.setVariable(BR.data, item)
+
+        holder.binding.apply {
+            setVariable(BR.data, item)
+            checkbox.setTextColor()
+        }
     }
 
     override fun getItemCount() = OPTION_LIST.size
@@ -35,6 +38,5 @@ class ReviewOptionAdapter : RecyclerView.Adapter<ReviewOptionAdapter.ReviewOptio
         )
     }
 
-    class ReviewOptionViewHolder(val binding: ItemReviewOptionBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class ReviewOptionViewHolder(val binding: ItemReviewOptionBinding) : RecyclerView.ViewHolder(binding.root)
 }

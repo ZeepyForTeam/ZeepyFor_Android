@@ -1,6 +1,7 @@
 package com.example.zeepyforandroid.review.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,40 +29,42 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        Log.e(viewModel.toString(), viewModel.toString())
 
         viewModel.changeCurrentFragment(ReviewNotice.WRITE_DETAIL_ADDRESS)
         initView()
         enableButton()
+        goToCheckLessorPersonality()
+
     }
 
     private fun initView(){
-        binding.tvAddress.text = viewModel.addressSearchQuery.value
-        binding.btnNext.run {
+        binding.layoutDetailAddress.tvAddress.text = viewModel.addressSearchQuery.value
+        binding.layoutDetailAddress.btnNext.run {
             setText("다음으로")
-            unUseableButton()
         }
     }
 
     private fun enableButton() {
         viewModel.detailAddress.observe(viewLifecycleOwner){
-            if (!viewModel.checkEmptyDetailAddress()) {
-                binding.btnNext.usableButton()
-                goToCheckLessorPersonality()
-            } else {
-                binding.btnNext.unUseableButton()
-            }
+//            if (!viewModel.checkEmptyDetailAddress()) {
+//                binding.btnNext.usableButton()
+//                goToCheckLessorPersonality()
+//            } else {
+//                binding.btnNext.unUseableButton()
+//            }
         }
     }
 
     private fun goToCheckLessorPersonality(){
-        binding.btnNext.setOnClickListener {
+        binding.layoutDetailAddress.btnNext.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
         }
     }
 
     override fun onStop() {
         super.onStop()
-        viewModel.addressSearchQuery.value = null
-        binding.etAddressDetail.text.clear()
+//        viewModel.addressSearchQuery.value = null
+        binding.layoutDetailAddress.etAddressDetail.text.clear()
     }
 }

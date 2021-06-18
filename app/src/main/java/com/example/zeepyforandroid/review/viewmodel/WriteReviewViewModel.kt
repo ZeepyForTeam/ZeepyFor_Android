@@ -1,13 +1,12 @@
 package com.example.zeepyforandroid.review.viewmodel
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zeepyforandroid.review.data.dto.AddressList
-import com.example.zeepyforandroid.review.data.dto.AddressModel
-import com.example.zeepyforandroid.review.data.dto.HousePictureModel
-import com.example.zeepyforandroid.review.data.dto.ReviewSearchAddressModel
+import com.example.zeepyforandroid.review.data.entity.AddressList
+import com.example.zeepyforandroid.review.data.entity.AddressModel
+import com.example.zeepyforandroid.review.data.entity.PictureModel
+import com.example.zeepyforandroid.review.data.entity.ReviewSearchAddressModel
 import com.example.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -30,21 +29,28 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val addressSelected: LiveData<String>
         get() = _addressSelected
 
-    private val _housePictures = MutableLiveData<List<HousePictureModel>>()
-    val housePictures: LiveData<List<HousePictureModel>>
+    private val _housePictures = MutableLiveData<List<PictureModel>>()
+    val pictures: LiveData<List<PictureModel>>
         get() = _housePictures
 
     val reviewOfLessor = MutableLiveData<String>()
 
     val detailAddress = MutableLiveData<String>()
-    val addressSearchQuery = MutableLiveData<String>()
+    private val _addressSearchQuery = MutableLiveData<String>()
+    val addressSearchQuery: LiveData<String>
+        get() = _addressSearchQuery
+
     val sexChecked = MutableLiveData<Int>()
 
     init {
         setDummyAddress()
     }
 
-    fun changeHousePictures(pictures: List<HousePictureModel>) {
+    fun changeAddressSearchgQuery(query: String) {
+        _addressSearchQuery.value = query
+    }
+
+    fun changeHousePictures(pictures: List<PictureModel>) {
         _housePictures.value = pictures
     }
 

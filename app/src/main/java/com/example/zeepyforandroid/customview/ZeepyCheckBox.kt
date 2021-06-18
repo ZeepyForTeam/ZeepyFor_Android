@@ -10,8 +10,13 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.zeepyforandroid.R
 import java.lang.IllegalArgumentException
 
-class ZeepyCheckBox @JvmOverloads constructor( context: Context, attributeSet: AttributeSet? = null, defStyle: Int = 0): CompoundButton(context, attributeSet, defStyle) {
+class ZeepyCheckBox @JvmOverloads constructor(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    defStyle: Int = 0
+) : CompoundButton(context, attributeSet, defStyle) {
     var buttonType = -1
+
     init {
         val typedArray = context.theme.obtainStyledAttributes(
             attributeSet,
@@ -28,7 +33,6 @@ class ZeepyCheckBox @JvmOverloads constructor( context: Context, attributeSet: A
         setOnClickListener { }
         setBackground()
         setFontFamily()
-        setTextColor()
     }
 
     private fun setBackground() {
@@ -36,21 +40,35 @@ class ZeepyCheckBox @JvmOverloads constructor( context: Context, attributeSet: A
     }
 
     private fun setFontFamily() {
-        typeface = Typeface.create(ResourcesCompat.getFont(context, R.font.nanum_square_round_extrabold),Typeface.NORMAL)
+        typeface = Typeface.create(
+            ResourcesCompat.getFont(context, R.font.nanum_square_round_extrabold),
+            Typeface.NORMAL
+        )
     }
 
-    private fun setTextColor() {
-        setTextColor(ContextCompat.getColorStateList(context, CheckBoxType.findCheckBoxType(buttonType).textColor))
+    fun setTextColor() {
+        setTextColor(
+            CheckBoxType.findCheckBoxType(buttonType).textColor?.let {
+                ContextCompat.getColorStateList(
+                    context,
+                    it
+                )
+            }
+        )
     }
 
-    enum class CheckBoxType(val buttonType: Int, val background: Int, val textColor: Int){
-        DEFAULT_CHECK_BOX(1, R.drawable.selector_zeepy_chip, R.color.selector_deafult_rb_text);
+    enum class CheckBoxType(val buttonType: Int, val background: Int, val textColor: Int?) {
+        DEFAULT_CHECK_BOX(1, R.drawable.selector_zeepy_chip, R.color.selector_deafult_rb_text),
+        SECRET_COMMENT_CHECK_BOX(2, R.drawable.selector_checkbox_comment, null);
+
 
         companion object {
             fun findCheckBoxType(buttonType: Int): CheckBoxType {
-                return values().find { it.buttonType == buttonType}
+                return values().find { it.buttonType == buttonType }
                     ?: throw IllegalArgumentException("Zeepy Check Box Type Error: ${buttonType}")
             }
         }
     }
 }
+
+

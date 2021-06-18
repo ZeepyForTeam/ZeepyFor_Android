@@ -17,6 +17,8 @@ import androidx.lifecycle.MutableLiveData
 import coil.load
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.FontType
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.shape.ShapeAppearanceModel
 
 @BindingAdapter("loadUrl")
 fun loadUrl(imageView:ImageView, url: String?) {
@@ -105,4 +107,8 @@ fun TextView.font(type: FontType){
     }
 }
 
+@BindingAdapter("load_shapeableimage")
+fun ShapeableImageView.loadShapeableImage(url:String?){
+    load(url)
+}
 

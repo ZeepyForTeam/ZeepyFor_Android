@@ -9,10 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginEnd
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ViewZeepyToolbarBinding
 
-class ZeepyToolbar @JvmOverloads constructor(
+class
+ZeepyToolbar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int=0
@@ -51,6 +53,37 @@ class ZeepyToolbar @JvmOverloads constructor(
         val title = binding.textviewToolbar.layoutParams as ConstraintLayout.LayoutParams
         title.endToEnd = id
         title.marginStart = 32
-        binding.textviewToolbar.layoutParams = title
+        val arrowDown = ContextCompat.getDrawable(context, R.drawable.ic_btn_arrow_down)
+        binding.textviewToolbar.apply {
+            layoutParams = title
+            setCompoundDrawablesWithIntrinsicBounds(null, null, arrowDown, null)
+            compoundDrawablePadding = 3
+        }
+    }
+
+    fun setScrapButton(listener: OnClickListener) {
+        binding.checkboxScrap.run {
+            visibility = View.VISIBLE
+            buttonDrawable = null
+            setBackgroundResource(R.drawable.selector_heart)
+            setOnClickListener {
+                listener.onClick(this@ZeepyToolbar)
+            }
+        }
+    }
+
+    fun  setRightButton(drawable: Int, listener: OnClickListener) {
+        binding.buttonRight.apply {
+            visibility = View.VISIBLE
+            setBackgroundResource(drawable)
+            setOnClickListener {
+                listener.onClick(this@ZeepyToolbar)
+            }
+        }
+    }
+
+    fun setRightButtonMargin(margin: Int) {
+        val rightButton = binding.buttonRight.layoutParams as ConstraintLayout.LayoutParams
+        rightButton.marginEnd = margin
     }
 }

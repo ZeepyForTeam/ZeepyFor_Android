@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.dto.LessorPersonalityModel" />
+            type="com.example.zeepyforandroid.review.data.entity.LessorPersonalityModel" />
         <variable
             name="fontType"
             type="com.example.zeepyforandroid.util.FontType" />

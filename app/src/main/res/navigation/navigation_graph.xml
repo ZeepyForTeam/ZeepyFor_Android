@@ -20,8 +20,17 @@
             android:id="@+id/action_mainFrameFragment_to_reviewFrameFragment"
             app:destination="@id/reviewFrameFragment" />
         <action
+
+            android:id="@+id/action_mainFrameFragment_to_postingDetailFragment"
+            app:destination="@id/postingDetailFragment" />
+
+        <action
             android:id="@+id/action_mainFrameFragment_to_ConditionSearchFragment"
             app:destination="@+id/conditionsearchFragment"/>
+        <action
+            android:id="@+id/action_mainFrameFragment_to_communitySearchAddressFragment"
+            app:destination="@id/communitySearchAddressFragment" />
+
     </fragment>
 
     <fragment
@@ -54,15 +63,45 @@
         android:name="com.example.zeepyforandroid.map.view.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map"/>
+
     <fragment
         android:id="@+id/reviewFrameFragment"
         android:name="com.example.zeepyforandroid.review.view.ReviewFrameFragment"
-        android:label="ReviewFrameFragment" />
+        android:label="ReviewFrameFragment"
+        tools:layout="@layout/fragment_review_frame"/>
+
+    <fragment
+        android:id="@+id/postingDetailFragment"
+        android:name="com.example.zeepyforandroid.community.postingdetail.PostingDetailFragment"
+        android:label="PostingDetailFragment"
+        tools:layout="@layout/fragment_posting_detail">
+
+        <argument
+            android:name="postingModel"
+            app:argType="com.example.zeepyforandroid.community.data.entity.PostingModel"/>
+
+    </fragment>
+
     <fragment
         android:id="@+id/conditionsearchFragment"
         android:name="com.example.zeepyforandroid.conditionsearch.ConditionSearchFragment"
         android:label="ConditionSearchFragment"
         tools:layout="@layout/fragment_search_by_condition"/>
 
+    <fragment
+        android:id="@+id/communitySearchAddressFragment"
+        android:name="com.example.zeepyforandroid.community.searchaddress.CommunitySearchAddressFragment"
+        android:label="CommunitySearchAddressFragment"
+        tools:layout="@layout/fragment_community_search_address">
+        <action
+            android:id="@+id/action_communitySearchAddressFragment_to_communityDetailAddressFragment"
+            app:destination="@id/communityDetailAddressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityDetailAddressFragment"
+        android:name="com.example.zeepyforandroid.community.searchaddress.CommunityDetailAddressFragment"
+        android:label="CommunityDetailAddressFragment"
+        tools:layout="@layout/fragment_community_detail_address"/>
 
 </navigation>

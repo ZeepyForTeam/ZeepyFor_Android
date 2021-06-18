@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="data"
+            type="com.example.zeepyforandroid.community.postingdetail.NestedCommentModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_nested_comment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.056"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_icon_nested_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            android:background="@drawable/ic_arrow_right"/>
+
+
+        <TextView
+            android:id="@+id/tv_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:textColor="@color/zeepy_black_3b"
+            android:text="@{data.writerName}"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="@id/iv_icon_nested_comment"
+            app:layout_constraintBottom_toBottomOf="@id/iv_icon_nested_comment"
+            app:layout_constraintStart_toEndOf="@id/iv_icon_nested_comment"
+            tools:text="핸드피스"/>
+
+        <TextView
+            android:id="@+id/tv_nested_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon_nested_comment"
+            app:layout_constraintStart_toStartOf="@id/iv_icon_nested_comment"
+            tools:text="핸드피스의 대댓글입니다!!!!!!!"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_gray_9a"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
+            android:text="@{data.date}"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="10sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_nested_comment"
+            app:layout_constraintStart_toStartOf="@id/tv_nested_comment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="2021.05.21"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
