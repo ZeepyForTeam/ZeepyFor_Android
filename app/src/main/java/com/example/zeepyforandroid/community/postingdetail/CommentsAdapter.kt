@@ -30,6 +30,7 @@ class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel)
         holder.setSecretComment(item)
         setNestedComment(holder, item)
     }
+
     private fun setNestedComment(holder: CommentsViewHolder, item: CommentModel) {
         holder.binding.rvNestedComment.apply {
             adapter = NestedCommentsAdapter(

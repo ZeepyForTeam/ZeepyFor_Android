@@ -33,7 +33,7 @@ data class ResponsePosting(
             postingStatus,
             picturesPosting,
             isSetAchievement,
-            comments
+            comments?.toMutableList()
         )
 
     enum class PostingType(val typePosting: Int,val  tag: String) {

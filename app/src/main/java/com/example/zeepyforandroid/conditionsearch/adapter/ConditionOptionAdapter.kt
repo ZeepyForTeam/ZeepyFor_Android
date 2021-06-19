@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.databinding.ItemReviewOptionBinding
-import com.example.zeepyforandroid.review.data.dto.OptionModel
+import com.example.zeepyforandroid.review.data.entity.OptionModel
 
 class ConditionOptionAdapter : RecyclerView.Adapter<ConditionOptionAdapter.ConditionOptionViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConditionOptionViewHolder {
