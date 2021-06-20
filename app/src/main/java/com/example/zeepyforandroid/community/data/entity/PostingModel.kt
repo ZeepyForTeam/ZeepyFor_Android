@@ -16,5 +16,5 @@ data class PostingModel(
     val postingStatus: Boolean,
     val picturesPosting: List<UrlPictureModel>,
     val isSetAchievement: Boolean,
-    val comments: List<CommentModel>?
+    val comments: MutableList<CommentModel>?
 ):Parcelable

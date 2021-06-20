@@ -83,7 +83,7 @@
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                         app:layout_constraintStart_toEndOf="@id/iv_picture_writer"
                         tools:text="도로롱"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_time_posting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                         app:layout_constraintStart_toEndOf="@id/tv_nickname"
                         tools:text="10분 전"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_tag_posting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/tv_time_posting"
                         app:layout_constraintEnd_toEndOf="@id/tv_content_posting"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title_posting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                         app:layout_constraintStart_toStartOf="@id/iv_picture_writer"
                         tools:text="위메프에서 같이 사실 분 구해요~"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_content_posting"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_achievement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"/>
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_rate_achievement"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                             app:layout_constraintStart_toStartOf="@id/tv_rate_achievement"
                             app:layout_constraintEnd_toEndOf="parent"/>
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_start_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -259,7 +259,7 @@
                             app:layout_constraintTop_toBottomOf="@id/progressbar_achievement"
                             app:layout_constraintStart_toStartOf="@id/progressbar_achievement"/>
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_finish_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -286,7 +286,7 @@
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"/>
 
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -328,13 +328,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:checked="@={viewModel.isSecretCommentWriting()}"
                     app:layout_constraintHorizontal_bias="0.04"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     zeepy:button_type="2"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_secret_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -347,7 +348,7 @@
                     app:layout_constraintStart_toEndOf="@id/checkbox_secret"
                     app:layout_constraintBottom_toBottomOf="@id/checkbox_secret"/>
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_comment"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -355,6 +356,8 @@
                     app:layout_constraintDimensionRatio="1:0.134"
                     app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginTop="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@={viewModel.commentWriting}"
                     android:background="@drawable/box_community_edittext"
                     app:layout_constraintStart_toStartOf="@id/checkbox_secret"
                     app:layout_constraintTop_toBottomOf="@id/checkbox_secret"
