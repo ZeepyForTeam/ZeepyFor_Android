@@ -16,6 +16,8 @@ import com.example.zeepyforandroid.util.ItemDecoration
 class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>(){
 
     private val viewModel: ConditionSearchViewModel by viewModels()
+    private var roomOptionCnt = 0;
+    private var payOptionCnt = 0;
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -30,10 +32,12 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         binding.lifecycleOwner = this.viewLifecycleOwner
         binding.cbOptionWalsae.setOnCheckedChangeListener(CheckboxListener())
         binding.cbOptionJeonsae.setOnCheckedChangeListener(CheckboxListener())
+        binding.cbOptionOneroom.setOnCheckedChangeListener(CheckboxListener())
+        binding.cbOptionTworoom.setOnCheckedChangeListener(CheckboxListener())
 
         setOptionChoice()
         setNextButton()
-        removeRangerPadding()
+        removeSliderPadding()
 
 
     }
@@ -47,19 +51,59 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
             when (buttonView) {
                 binding.cbOptionWalsae ->
                     if (isChecked) {
-                        binding.rsDeposit.visibility = View.VISIBLE
+                        payOptionCnt++
+                        binding.tvPrice.visibility = View.VISIBLE
                         binding.rsMonthlypay.visibility = View.VISIBLE
-                    }
-                    else if (binding.cbOptionJeonsae.isChecked) {
-                        binding.rsMonthlypay.visibility = View.GONE
+                        binding.tvMonthlypay.visibility = View.VISIBLE
+                        binding.tvMonthlypayRange.visibility = View.VISIBLE
+                        if (!binding.cbOptionJeonsae.isChecked) {
+                            binding.rsDeposit.visibility = View.VISIBLE
+                            binding.tvDeposit.visibility = View.VISIBLE
+                            binding.tvDepositRange.visibility = View.VISIBLE
+                        }
                     }
                     else {
-                        binding.rsDeposit.visibility = View.GONE
+                        payOptionCnt--
                         binding.rsMonthlypay.visibility = View.GONE
+                        binding.tvMonthlypay.visibility = View.GONE
+                        binding.tvMonthlypayRange.visibility = View.GONE
+                        if (!binding.cbOptionJeonsae.isChecked) {
+                            binding.tvPrice.visibility = View.GONE
+                            binding.rsDeposit.visibility = View.GONE
+                            binding.tvDeposit.visibility = View.GONE
+                            binding.tvDepositRange.visibility = View.GONE
+                        }
                     }
                 binding.cbOptionJeonsae ->
-                    if (isChecked) binding.rsDeposit.visibility = View.VISIBLE
+                    if (isChecked) {
+                        payOptionCnt++
+                        binding.tvPrice.visibility = View.VISIBLE
+                        if (!binding.cbOptionWalsae.isChecked) {
+                            binding.rsDeposit.visibility = View.VISIBLE
+                            binding.tvDeposit.visibility = View.VISIBLE
+                            binding.tvDepositRange.visibility = View.VISIBLE
+                        }
+                    }
+                    else {
+                        payOptionCnt--
+                        if (!binding.cbOptionWalsae.isChecked) {
+                            binding.tvPrice.visibility = View.GONE
+                            binding.rsDeposit.visibility = View.GONE
+                            binding.tvDeposit.visibility = View.GONE
+                            binding.tvDepositRange.visibility = View.GONE
+                        }
+                    }
+                binding.cbOptionOneroom ->
+                    if (isChecked) roomOptionCnt++
+                    else roomOptionCnt--
+                binding.cbOptionTworoom ->
+                    if (isChecked) roomOptionCnt++
+                    else roomOptionCnt--
             }
+            if (roomOptionCnt >= 1 && payOptionCnt >= 1)
+                binding.btnNext.usableButton()
+            else
+                binding.btnNext.unUseableButton()
         }
     }
 
@@ -77,22 +121,9 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         }
     }
 
-    private fun removeRangerPadding() {
+    private fun removeSliderPadding() {
         binding.rsDeposit.setPadding(0, 0, 0, 0)
         binding.rsMonthlypay.setPadding(0, 0, 0, 0)
-    }
-
-
-
-    // TODO 언제 다음으로 버튼을 보이게 할 건지 조건을 줘야 함
-    // 적어도 하나의 건물 유형이 선택되고 적어도 하나의 거래 종류가 선택되어야 함
-    private fun enableNextButton(map:Map<Int,Int>) {
-        if(map.size == 4) {
-            binding.btnNext.usableButton()
-            //goToWriteHouseInfo()
-        } else {
-            binding.btnNext.unUseableButton()
-        }
     }
 
 }
