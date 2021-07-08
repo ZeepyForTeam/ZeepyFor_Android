@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="deposit_initial_values">
-        <item>20</item>
-        <item>60</item>
+        <item>2</item>
+        <item>6</item>
     </array>
 </resources>

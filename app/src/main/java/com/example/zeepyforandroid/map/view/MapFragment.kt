@@ -14,6 +14,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -31,6 +33,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     //private val ACCESS_FINE_LOCATION = 1000
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
+    private lateinit var animScale: Animation
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -43,12 +47,17 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        animScale = AnimationUtils.loadAnimation(context, R.anim.anim_scale)
+
         mapView = MapView(activity)
         mapViewContainer = view.findViewById(R.id.map_view_container)
         mapViewContainer.addView(mapView)
 
         setToolbar()
 
+        binding.fabMain.setOnClickListener(fabListener)
+        
+        // 마커 띄우기 테스트
         setMarker(37.5632424, 126.9834535, R.drawable.emoji_5_map)
         setMarker(37.5632500, 126.9836324, R.drawable.emoji_1_map)
 
@@ -60,6 +69,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     }
 
+    val fabListener = View.OnClickListener { view ->
+        when (view) {
+            binding.fabMain -> {
+                view.startAnimation(animScale)
+            }
+        }
+    }
+
     private fun setToolbar() {
         binding.mapToolbar.run {
             setTitle("지도로 검색하기")
@@ -69,6 +86,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
+    // 지도에 마커 띄우기
     private fun setMarker(lat: Double, lng: Double, resourceID: Int) {
         val marker = MapPOIItem()
         marker.apply {

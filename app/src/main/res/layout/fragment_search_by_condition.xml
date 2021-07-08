@@ -206,9 +206,12 @@
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:valueFrom="0"
-                    android:valueTo="100"
+                    android:valueTo="10"
+                    android:stepSize="1"
                     app:values="@array/deposit_initial_values"
-                    app:trackColor="@color/zeepy_yellow"
+                    app:tickVisible="false"
+                    app:trackColorInactive="@color/zeepy_yellow"
+                    app:trackColorActive="@color/zeepy_blue_75"
                     app:trackHeight="16dp"
                     app:thumbColor="@color/zeepy_blue_5f"
                     app:layout_constraintTop_toBottomOf="@id/tv_deposit_range"
@@ -217,6 +220,62 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_deposit_price_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/rs_deposit"
+                    app:layout_constraintStart_toStartOf="@id/rs_deposit"
+                    app:layout_constraintEnd_toEndOf="@id/rs_deposit"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="최소"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="1천만"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="5천만"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="최대"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_monthlypay"
@@ -227,7 +286,7 @@
                     android:textColor="@color/zeepy_blue_5f"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rs_deposit"
+                    app:layout_constraintTop_toBottomOf="@id/layout_deposit_price_range"
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="16dp"
                     android:visibility="gone"/>
@@ -254,17 +313,76 @@
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:valueFrom="0"
-                    android:valueTo="100"
+                    android:valueTo="10"
+                    android:stepSize="1"
                     app:values="@array/deposit_initial_values"
-                    app:trackColor="@color/zeepy_yellow"
                     app:trackHeight="16dp"
                     app:thumbColor="@color/zeepy_blue_5f"
+                    app:tickVisible="false"
+                    app:trackColorInactive="@color/zeepy_yellow"
+                    app:trackColorActive="@color/zeepy_blue_75"
                     app:layout_constraintTop_toBottomOf="@id/tv_monthlypay_range"
                     app:layout_constraintStart_toStartOf="@id/tv_monthlypay_range"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_monthly_price_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/rs_monthlypay"
+                    app:layout_constraintStart_toStartOf="@id/rs_monthlypay"
+                    app:layout_constraintEnd_toEndOf="@id/rs_monthlypay"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="최소"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="50만"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="100만"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="최대"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_furniture_option"

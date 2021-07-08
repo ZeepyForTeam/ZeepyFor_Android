@@ -19,4 +19,7 @@
     <string name="gathering">모집중</string>
     <string name="complete_gathering">모집완료</string>
     <string name="dummy_content_posting">저는 8,000원짜리 하나 시키려고 하는데 배달료가 아까워서요. 혹시 위메프에서 물건 시키시는 분 있으시면 같이 시켜요~ 3명만 받을게용. 수령 장소는 등촌1동주민센터 앞 예정이요</string>
+    <string name="deposit_price_range">%1$s,000만 ~ %2$s,000만</string>
+    <string name="deposit_price_from">%1$s,000만 부터</string>
+    <string name="deposit_price_to">%1$s,000만 까지</string>
 </resources>
