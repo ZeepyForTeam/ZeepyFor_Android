@@ -2,6 +2,7 @@ package com.example.zeepyforandroid.map.view
 
 import android.Manifest
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
@@ -9,13 +10,13 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -24,6 +25,8 @@ import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentMapBinding
+import com.example.zeepyforandroid.map.data.Building
+import com.example.zeepyforandroid.util.WidthResizeAnimation
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -33,7 +36,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     //private val ACCESS_FINE_LOCATION = 1000
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
-    private lateinit var animScale: Animation
+    private lateinit var resizeAnimation: WidthResizeAnimation
+    private var buildings = listOf<Building>()
+    private var markers = mutableListOf<MapPOIItem>()
+    private val eventListener = MarkerEventListener(context)
 
 
     override fun getFragmentBinding(
@@ -47,36 +53,63 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        animScale = AnimationUtils.loadAnimation(context, R.anim.anim_scale)
-
         mapView = MapView(activity)
-        mapViewContainer = view.findViewById(R.id.map_view_container)
+        mapViewContainer = binding.mapViewContainer
         mapViewContainer.addView(mapView)
+        mapView.setPOIItemEventListener(eventListener)
 
+
+        setOptionButton()
         setToolbar()
-
-        binding.fabMain.setOnClickListener(fabListener)
         
         // 마커 띄우기 테스트
-        setMarker(37.5632424, 126.9834535, R.drawable.emoji_5_map)
-        setMarker(37.5632500, 126.9836324, R.drawable.emoji_1_map)
+        setMarker(37.505834449999995, 126.96320847343215, R.drawable.emoji_5_map)
+        setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
 
-        if (checkLocationService()) {
-            permissionCheck()
-        } else {
-            Toast.makeText(activity, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
-        }
+//        if (checkLocationService()) {
+//            permissionCheck()
+//        } else {
+//            Toast.makeText(activity, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
+//        }
 
     }
 
-    val fabListener = View.OnClickListener { view ->
-        when (view) {
-            binding.fabMain -> {
-                view.startAnimation(animScale)
-            }
+    private fun setOptionButton() {
+        binding.optionBtn.setOnClickListener {
+            resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, 800, false)
+            resizeAnimation.duration = 600
+            Log.d("original widthhhhhhhh", resizeAnimation.originalWidth.toString())
+            Log.d("target widthhhhhhhh", resizeAnimation.targetWidth.toString())
+            binding.optionBtnLayout.startAnimation(resizeAnimation)
+            binding.optionBtn.visibility = View.GONE
+            Handler(Looper.getMainLooper()).postDelayed(object : Runnable {
+                override fun run() {
+                    binding.optionOne.visibility = View.VISIBLE
+                    binding.optionTwo.visibility = View.VISIBLE
+                    binding.optionThree.visibility = View.VISIBLE
+                    binding.optionFour.visibility = View.VISIBLE
+                    binding.optionFive.visibility = View.VISIBLE
+                }
+            },300)
+
+
+        }
+        binding.optionBtnLayout.setOnClickListener {
+            resizeAnimation = WidthResizeAnimation(it, 218, false)
+            resizeAnimation.duration = 600
+            Log.d("original widthhhhhhhh", resizeAnimation.originalWidth.toString())
+            Log.d("target widthhhhhhhh", resizeAnimation.targetWidth.toString())
+            it.startAnimation(resizeAnimation)
+            binding.optionBtn.visibility = View.VISIBLE
+            binding.optionOne.visibility = View.GONE
+            binding.optionTwo.visibility = View.GONE
+            binding.optionThree.visibility = View.GONE
+            binding.optionFour.visibility = View.GONE
+            binding.optionFive.visibility = View.GONE
         }
     }
 
+    //툴바 세팅
     private fun setToolbar() {
         binding.mapToolbar.run {
             setTitle("지도로 검색하기")
@@ -86,7 +119,42 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
-    // 지도에 마커 띄우기
+    //Add & Set markers from buildings
+    private fun setMarkersList() {
+        buildings.indices.forEach { index ->
+            markers.add(
+                MapPOIItem().apply {
+                    mapPoint = MapPoint.mapPointWithGeoCoord(buildings[index].latitude, buildings[index].longitude)
+                }
+            )
+        }
+    }
+
+    class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
+        override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
+            //TODO: BottomSheet 띄우기
+        }
+
+        override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
+        }
+
+        override fun onCalloutBalloonOfPOIItemTouched(
+            p0: MapView?,
+            p1: MapPOIItem?,
+            p2: MapPOIItem.CalloutBalloonButtonType?
+        ) {
+        }
+
+        override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
+        }
+
+    }
+
+    private fun setSelectedMarkerOverlay(index: Int) {
+
+    }
+
+    // 지도에 마커 띄우기 (테스트 용도)
     private fun setMarker(lat: Double, lng: Double, resourceID: Int) {
         val marker = MapPOIItem()
         marker.apply {
@@ -95,10 +163,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             markerType = MapPOIItem.MarkerType.CustomImage
             customImageResourceId = resourceID
             selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-            //customSelectedImageResourceId =
-            //isCustomImageAutoscale = false
-            //setCustomImageAnchor(0.5f, 1.0f)
+            customSelectedImageResourceId = R.drawable.icon_map_act
+            isCustomImageAutoscale = true
         }
+        //draw marker
         mapView.addPOIItem(marker)
     }
 
