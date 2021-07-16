@@ -162,9 +162,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             mapPoint = MapPoint.mapPointWithGeoCoord(lat, lng)
             markerType = MapPOIItem.MarkerType.CustomImage
             customImageResourceId = resourceID
-            selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-            customSelectedImageResourceId = R.drawable.icon_map_act
+            selectedMarkerType = MapPOIItem.MarkerType.RedPin
+            //customSelectedImageResourceId = R.drawable.icon_map_act //TODO: 이 이미지 사용했을 때 위치 오차가 발생
             isCustomImageAutoscale = true
+
         }
         //draw marker
         mapView.addPOIItem(marker)
