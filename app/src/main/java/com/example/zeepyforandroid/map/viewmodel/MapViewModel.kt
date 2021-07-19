@@ -16,6 +16,13 @@ class MapViewModel: ViewModel() {
     private val _markers = MutableLiveData<List<Building>>()
     val markers: LiveData<List<Building>> = _markers
 
+    private val _buildingId = MutableLiveData(-1)
+    val buildingId: LiveData<Int> = _buildingId
+
+    fun setMarkerClick(buildingId: Int) {
+        _buildingId.value = buildingId
+    }
+
     fun requestBuildingData() = viewModelScope.launch(Dispatchers.IO) {
         try {
             //TODO: RetrofitBuilder && postValue

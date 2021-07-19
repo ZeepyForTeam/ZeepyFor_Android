@@ -17,15 +17,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentMapBinding
 import com.example.zeepyforandroid.map.data.Building
+import com.example.zeepyforandroid.map.viewmodel.MapViewModel
 import com.example.zeepyforandroid.util.WidthResizeAnimation
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -37,6 +40,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
     private lateinit var resizeAnimation: WidthResizeAnimation
+    private val mapViewModel: MapViewModel by activityViewModels()
     private var buildings = listOf<Building>()
     private var markers = mutableListOf<MapPOIItem>()
     private val eventListener = MarkerEventListener(context)
@@ -56,8 +60,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         mapView = MapView(activity)
         mapViewContainer = binding.mapViewContainer
         mapViewContainer.addView(mapView)
-        mapView.setPOIItemEventListener(eventListener)
-
+        setMarkersObserver()
 
         setOptionButton()
         setToolbar()
@@ -72,6 +75,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 //            Toast.makeText(activity, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
 //        }
 
+    }
+
+    private fun setMarkersObserver() {
+        mapViewModel.markers.observe(viewLifecycleOwner) { markers ->
+            markers?.let {
+                this.buildings = markers
+                setMarkersList()
+                mapView.setPOIItemEventListener(eventListener)
+            }
+        }
     }
 
     private fun setOptionButton() {
@@ -119,6 +132,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
+
+
     //Add & Set markers from buildings
     private fun setMarkersList() {
         buildings.indices.forEach { index ->
@@ -130,9 +145,22 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
-    class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
+    inner class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
+        // Set marker detail visibility
+        private fun setMarkerDetailVisibility(index: Int) {
+            mapViewModel.setMarkerClick(buildings[index].id)
+        }
+
+        private fun setMarkerDetailAnimation() {
+            if (binding.layoutMarkerDetail.visibility != View.VISIBLE) {
+                binding.layoutMarkerDetail.startAnimation(
+                    AnimationUtils.loadAnimation(requireContext(), R.anim.map_marker_detail_vertical_translation)
+                )
+            }
+        }
+
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-            //TODO: BottomSheet 띄우기
+            //TODO: marker info layout 띄우기
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
