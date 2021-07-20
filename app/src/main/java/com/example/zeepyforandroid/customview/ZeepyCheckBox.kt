@@ -58,7 +58,7 @@ class ZeepyCheckBox @JvmOverloads constructor(
     }
 
     enum class CheckBoxType(val buttonType: Int, val background: Int, val textColor: Int?) {
-        DEFAULT_CHECK_BOX(1, R.drawable.selector_zeepy_chip, R.color.selector_deafult_rb_text),
+        DEFAULT_CHECK_BOX(1, R.drawable.selector_zeepy_chip, R.color.selector_default_rb_text),
         SECRET_COMMENT_CHECK_BOX(2, R.drawable.selector_checkbox_comment, null);
 
 

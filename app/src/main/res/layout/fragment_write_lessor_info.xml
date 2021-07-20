@@ -52,7 +52,7 @@
                 android:text="남"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textColor="@color/selector_deafult_rb_text" />
+                android:textColor="@color/selector_default_rb_text" />
 
             <RadioButton
                 android:id="@+id/toggle_women"
@@ -64,7 +64,7 @@
                 android:layout_marginStart="11dp"
                 android:textAlignment="center"
                 android:text="여"
-                android:textColor="@color/selector_deafult_rb_text" />
+                android:textColor="@color/selector_default_rb_text" />
 
         </RadioGroup>
 

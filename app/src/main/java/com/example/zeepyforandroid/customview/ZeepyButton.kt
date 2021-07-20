@@ -15,6 +15,8 @@ import com.example.zeepyforandroid.databinding.ViewZeepyButtonBinding
 
 class ZeepyButton: ConstraintLayout {
     private lateinit var binding: ViewZeepyButtonBinding
+    private var isActive: Boolean = false
+
 
     constructor(context: Context): super(context) {
         init()
@@ -65,5 +67,19 @@ class ZeepyButton: ConstraintLayout {
     fun setCommunityTheme() {
         binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_community)
         binding.tvButton.setTextColor(getColor(context, R.color.white))
+    }
+
+    fun setCommunityActiveButton() {
+        if(isActive) {
+            binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_community)
+            binding.tvButton.setTextColor(getColor(context, R.color.white))
+        } else {
+            binding.layoutButton.setBackgroundResource(R.drawable.button_community_inactive)
+            binding.tvButton.setTextColor(getColor(context, R.color.zeepy_gray_9a))
+        }
+    }
+
+    fun changeIsActivie(isActive: Boolean) {
+        this.isActive = isActive
     }
 }
