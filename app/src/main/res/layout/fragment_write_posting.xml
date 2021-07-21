@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.zeepyforandroid.community.WritePostingViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -41,7 +46,6 @@
                     app:layout_constraintTop_toBottomOf="@id/toolbar_write_posting"
                     app:layout_constraintStart_toStartOf="parent"/>
 
-
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_title"
                     android:layout_width="0dp"
@@ -50,6 +54,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@null"
                     android:paddingStart="12dp"
+                    android:text="@{viewModel.title}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -79,6 +84,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
+                    android:text="@{viewModel.productName}"
                     android:paddingStart="12dp"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
@@ -98,6 +104,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@null"
                     android:paddingStart="12dp"
+                    android:text="@{viewModel.productPrice}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -116,6 +123,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@null"
                     android:paddingStart="12dp"
+                    android:text="@{viewModel.purchaseSite}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -134,6 +142,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@null"
                     android:paddingStart="12dp"
+                    android:text="@{viewModel.dealMethod}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -163,7 +172,9 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="12dp"
                     android:background="@null"
+                    android:text="@{viewModel.targetCount}"
                     android:paddingStart="12dp"
+                    android:inputType="number"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
