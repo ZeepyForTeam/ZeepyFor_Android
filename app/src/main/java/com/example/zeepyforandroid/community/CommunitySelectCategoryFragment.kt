@@ -10,6 +10,7 @@ import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
+import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentCommunitySelectCategoryBinding
@@ -28,6 +29,7 @@ class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCateg
         setToolbar()
         setNextButton()
         setCategorySelectButton()
+        writePosting()
     }
 
     private fun setToolbar() {
@@ -67,6 +69,13 @@ class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCateg
                     setUnUsableButton()
                 }
             }
+
+        }
+    }
+
+    private fun writePosting() {
+        binding.btnNext.onClick {
+            requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_writePostingFragment)
         }
     }
 }

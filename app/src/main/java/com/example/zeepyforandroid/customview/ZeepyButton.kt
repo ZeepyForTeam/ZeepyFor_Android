@@ -69,7 +69,9 @@ class ZeepyButton: ConstraintLayout {
         binding.tvButton.setTextColor(getColor(context, R.color.zeepy_green_33))
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     fun setCommunityUsableButton() {
+        binding.root.setOnTouchListener { _, _ -> false }
         binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_community)
         binding.tvButton.setTextColor(getColor(context, R.color.white))
     }

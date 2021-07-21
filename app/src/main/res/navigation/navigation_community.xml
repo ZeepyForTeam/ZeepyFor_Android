@@ -20,4 +20,5 @@
         android:name="com.example.zeepyforandroid.community.CommunitySelectCategoryFragment"
         android:label="CommunitySelectCategoryFragment"
         tools:layout="@layout/fragment_community_select_category"/>
+
 </navigation>
