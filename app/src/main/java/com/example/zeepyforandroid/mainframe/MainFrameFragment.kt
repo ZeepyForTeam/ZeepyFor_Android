@@ -57,7 +57,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
                 when (it.itemId) {
                     R.id.homeFragment -> 0
                     R.id.lookAroundFragment -> 1
-                    R.id.communityFragment -> 2
+                    R.id.communityFrameFragment -> 2
                     R.id.myProfileFragment -> 3
                     else -> throw RuntimeException("error error")
                 }
@@ -70,7 +70,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
         binding.bottomNavigation.selectedItemId = when (pageIdx) {
             0 -> R.id.homeFragment
             1 -> R.id.lookAroundFragment
-            2 -> R.id.communityFragment
+            2 -> R.id.communityFrameFragment
             3 -> R.id.myProfileFragment
             else -> throw RuntimeException("Bottom Navigation Item Error")
         }

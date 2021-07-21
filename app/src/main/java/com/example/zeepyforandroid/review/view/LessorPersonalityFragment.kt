@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
@@ -41,14 +40,14 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            unUseableButton()
+            setUnUsableButton()
         }
     }
 
     private fun setLessorPersonalities() {
         binding.rvLessorCommunication.run {
             adapter = LessorPersonalityAdapter{
-                binding.btnNext.usableButton()
+                binding.btnNext.setUsableButton()
             }
             addItemDecoration(ItemDecoration(10,0))
         }

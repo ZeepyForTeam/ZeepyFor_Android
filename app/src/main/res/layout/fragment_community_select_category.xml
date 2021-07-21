@@ -40,11 +40,12 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/button_free_share"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:button="@null"
-                android:textColor="@color/selector_default_rb_text"
+                android:textColor="@color/selector_black_gray9a"
                 android:fontFamily="@font/nanum_square_round_extrabold"
                 android:textSize="16sp"
                 android:layout_gravity="center"
@@ -54,12 +55,13 @@
                 android:background="@drawable/selector_grayf4_green33_10dp"/>
 
             <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/button_group_purchase"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:button="@null"
                 android:text="공동구매"
-                android:textColor="@color/selector_default_rb_text"
+                android:textColor="@color/selector_black_gray9a"
                 android:fontFamily="@font/nanum_square_round_extrabold"
                 android:textSize="16sp"
                 android:layout_gravity="center"
@@ -68,11 +70,12 @@
                 android:background="@drawable/selector_grayf4_green33_10dp"/>
 
             <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/radiobutton_friends"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="동네 친구"
-                android:textColor="@color/selector_default_rb_text"
+                android:textColor="@color/selector_black_gray9a"
                 android:fontFamily="@font/nanum_square_round_extrabold"
                 android:textSize="16sp"
                 android:layout_gravity="center"
@@ -103,9 +106,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.972" />
-
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

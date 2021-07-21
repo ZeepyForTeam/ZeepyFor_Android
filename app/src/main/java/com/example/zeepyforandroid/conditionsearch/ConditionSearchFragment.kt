@@ -1,8 +1,6 @@
 package com.example.zeepyforandroid.conditionsearch
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +39,7 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            unUseableButton()
+            setUnUsableButton()
         }
     }
 
@@ -49,10 +47,10 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
     // TODO 언제 다음으로 버튼을 보이게 할 건지 조건을 줘야 함
     private fun enableNextButton(map:Map<Int,Int>) {
         if(map.size == 4) {
-            binding.btnNext.usableButton()
+            binding.btnNext.setUsableButton()
             //goToWriteHouseInfo()
         } else {
-            binding.btnNext.unUseableButton()
+            binding.btnNext.setUnUsableButton()
         }
     }
 

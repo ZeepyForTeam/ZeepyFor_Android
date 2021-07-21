@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.RadioGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
@@ -46,7 +44,7 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            unUseableButton()
+            setUnUsableButton()
         }
     }
 
@@ -66,9 +64,9 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     private fun enableButton() {
         viewModel.reviewOfLessor.observe(viewLifecycleOwner){
             if (viewModel.checkReviewOfLessor()) {
-                binding.btnNext.usableButton()
+                binding.btnNext.setUsableButton()
             } else {
-                binding.btnNext.unUseableButton()
+                binding.btnNext.setUnUsableButton()
             }
         }
     }

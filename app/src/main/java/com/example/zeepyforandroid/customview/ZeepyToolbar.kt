@@ -18,7 +18,7 @@ class ZeepyToolbar @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int=0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
-    private var binding: ViewZeepyToolbarBinding =
+    var binding: ViewZeepyToolbarBinding =
         ViewZeepyToolbarBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setTitle(title: String) {
@@ -71,7 +71,7 @@ class ZeepyToolbar @JvmOverloads constructor(
         }
     }
 
-    fun  setRightButton(drawable: Int, listener: OnClickListener) {
+    fun setRightButton(drawable: Int, listener: OnClickListener) {
         binding.buttonRight.apply {
             visibility = View.VISIBLE
             setBackgroundResource(drawable)

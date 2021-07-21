@@ -37,7 +37,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     private fun initView() {
         binding.btnNext.run {
             setText("다음으로")
-            unUseableButton()
+            setUnUsableButton()
             onClick {
                 goToWriteDetailAddress()
             }
@@ -50,7 +50,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
                 }
                 override fun select(item: AddressModel) {
                     viewModel.changeAddressSelected(item.address)
-                    binding.btnNext.usableButton()
+                    binding.btnNext.setUsableButton()
                 }
             })
             addItemDecoration(ItemDecoration(8, 0))

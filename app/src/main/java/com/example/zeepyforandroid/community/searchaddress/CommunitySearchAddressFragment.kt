@@ -1,13 +1,11 @@
 package com.example.zeepyforandroid.community.searchaddress
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
@@ -34,7 +32,7 @@ class CommunitySearchAddressFragment : BaseFragment<FragmentCommunitySearchAddre
     private fun initViewTheme() {
         binding.layoutSearchAddress.apply {
             btnNext.apply {
-                setCommunityTheme()
+                setCommunityUsableButton()
                 setText("다음으로")
             }
             etSearchAddress.apply {
