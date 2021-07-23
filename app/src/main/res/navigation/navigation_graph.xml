@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/mainFrameFragment">
+    app:startDestination="@id/singinFragment">
 
     <fragment
         android:id="@+id/mainFrameFragment"
@@ -37,23 +37,15 @@
     </fragment>
 
     <fragment
-        android:id="@+id/singInFragment"
-        android:name="com.example.zeepyforandroid.signin.SingInFragment"
+        android:id="@+id/singinFragment"
+        android:name="com.example.zeepyforandroid.signin.SigninFragment"
         android:label="fragment_sing_in"
-        tools:layout="@layout/fragment_sing_in" >
-        <action
-            android:id="@+id/action_singInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+        tools:layout="@layout/fragment_signin" >
         <action
             android:id="@+id/action_singInFragment_to_mainFrameFragment"
             app:destination="@id/mainFrameFragment" />
-    </fragment>
 
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.zeepyforandroid.signup.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+    </fragment>
 
     <fragment
         android:id="@+id/reviewSearchAddressFragment"
