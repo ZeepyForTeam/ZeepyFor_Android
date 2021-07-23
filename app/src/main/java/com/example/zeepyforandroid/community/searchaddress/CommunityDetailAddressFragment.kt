@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -50,7 +49,7 @@ class CommunityDetailAddressFragment : BaseFragment<FragmentCommunityDetailAddre
             }
             layoutCommunityDetailAddress.btnNext.apply {
                 setText("다음으로")
-                setCommunityTheme()
+                setCommunityUsableButton()
             }
             tvNotice.text = spannableString
         }

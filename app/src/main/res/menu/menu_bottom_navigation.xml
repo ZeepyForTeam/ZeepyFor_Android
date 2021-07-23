@@ -11,7 +11,7 @@
         android:title="lookAround"/>
 
     <item
-        android:id="@+id/communityFragment"
+        android:id="@+id/communityFrameFragment"
         android:icon="@drawable/ic_community"
         android:title="community"/>
 

@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
-import androidx.core.view.forEach
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -85,16 +83,16 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            unUseableButton()
+            setUnUsableButton()
         }
     }
 
     private fun enableNextButton(map:Map<Int,Int>) {
         if(map.size == 4) {
-            binding.btnNext.usableButton()
+            binding.btnNext.setUsableButton()
             goToWriteHouseInfo()
         } else {
-            binding.btnNext.unUseableButton()
+            binding.btnNext.setUnUsableButton()
         }
     }
 

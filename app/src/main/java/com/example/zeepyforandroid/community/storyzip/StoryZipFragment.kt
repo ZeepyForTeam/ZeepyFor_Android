@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.example.zeepyforandroid.databinding.FragmentStoryZipBinding
@@ -38,7 +39,7 @@ class StoryZipFragment : BaseFragment<FragmentStoryZipBinding>() {
                 val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(
                     it
                 )
-                findNavController().navigate(action)
+                requireParentFragment().requireParentFragment().requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
             addItemDecoration(ItemDecoration(8,0))
         }

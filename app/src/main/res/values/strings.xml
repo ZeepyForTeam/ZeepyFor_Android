@@ -19,6 +19,15 @@
     <string name="gathering">모집중</string>
     <string name="complete_gathering">모집완료</string>
     <string name="dummy_content_posting">저는 8,000원짜리 하나 시키려고 하는데 배달료가 아까워서요. 혹시 위메프에서 물건 시키시는 분 있으시면 같이 시켜요~ 3명만 받을게용. 수령 장소는 등촌1동주민센터 앞 예정이요</string>
+    <string name="community_select_category">글의 카테고리를\n선택해주세요</string>
+    <string name="input_title_write_posting">글의 제목을 입력해주세요.</string>
+    <string name="input_purchase_write_posting">구매정보 입력</string>
+    <string name="hint_product_price_write_posting">제품금액 (ex. 15,000원)</string>
+    <string name="hint_product_name_write_posting">제품명 (ex. 삼다수 1.5L)</string>
+    <string name="hint_purchase_site_write_posting">구매 장소 (ex. 쿠팡, 동네 슈퍼 등)</string>
+    <string name="hint_deal_method_write_posting">거래 방식 (ex. 택배/직거래/만남장소 등)</string>
+    <string name="collect_content_write_content">참여자에게 어떤 내용을 받을까요?</string>
+    <string name="hint_count_people_write_posting">ex. 3</string>
     <string name="deposit_price_range">%1$s,000만 ~ %2$s,000만</string>
     <string name="deposit_price_from">%1$s,000만 부터</string>
     <string name="deposit_price_to">%1$s,000만 까지</string>

@@ -5,25 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
-import com.example.zeepyforandroid.databinding.FragmentCommunityBinding
-import com.example.zeepyforandroid.mainframe.MainFrameFragmentDirections
+import com.example.zeepyforandroid.databinding.FragmentCommunityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CommunityFragment : BaseFragment<FragmentCommunityBinding>() {
+class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
     private val viewModel by activityViewModels<CommunityFrameViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentCommunityBinding {
-        return FragmentCommunityBinding.inflate(inflater, container, false)
+    ): FragmentCommunityMainBinding {
+        return FragmentCommunityMainBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,18 +36,18 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>() {
             setTitle("을지로 3가")
             setCommunityLocation()
             setRightButton(R.drawable.ic_btn_write) {
-
+                findNavController().navigate(R.id.action_communityMainFragment_to_communitySelectCategoryFragment)
             }
             setRightButtonMargin(32)
 
             setOnClickListener {
-                findNavController().navigate(R.id.action_mainFrameFragment_to_communitySearchAddressFragment)
+                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_communitySearchAddressFragment)
             }
         }
     }
 
     private fun initViewPager() {
-        binding.viewpagerCommunity.adapter = CommunityFrameAdapter(this@CommunityFragment)
+        binding.viewpagerCommunity.adapter = CommunityFrameAdapter(this@CommunityMainFragment)
         TabLayoutMediator(binding.tablayout, binding.viewpagerCommunity) {tab, pos ->
             tab.text = when(pos) {
                 0 -> TAB_NAME[0]

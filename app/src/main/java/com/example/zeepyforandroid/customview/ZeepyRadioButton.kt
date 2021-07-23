@@ -73,7 +73,7 @@ class ZeepyRadioButton @JvmOverloads constructor(
     }
 
     enum class RadioButtonType(val type:Int, val background:Int, val textColor: Int){
-        DEFAULT_RADIO_BUTTON(1, R.drawable.selector_zeepy_chip, R.color.selector_deafult_rb_text),
+        DEFAULT_RADIO_BUTTON(1, R.drawable.selector_zeepy_chip, R.color.selector_default_rb_text),
         REVIEW_GOOD(2, R.drawable.selector_good,R.color.selector_review_choice),
         REVIEW_SOSO(3, R.drawable.selector_soso, R.color.selector_review_choice),
         REVIEW_BAD(4, R.drawable.selector_dislike, R.color.selector_review_choice),

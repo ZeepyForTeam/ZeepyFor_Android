@@ -135,9 +135,9 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
                     else roomOptionCnt--
             }
             if (roomOptionCnt >= 1 && payOptionCnt >= 1)
-                binding.btnNext.usableButton()
+                binding.btnNext.setUsableButton()
             else
-                binding.btnNext.unUseableButton()
+                binding.btnNext.setUnUsableButton()
         }
     }
 
@@ -151,7 +151,7 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            unUseableButton()
+            setUnUsableButton()
         }
     }
 

@@ -13,13 +13,12 @@ import androidx.core.view.marginEnd
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ViewZeepyToolbarBinding
 
-class
-ZeepyToolbar @JvmOverloads constructor(
+class ZeepyToolbar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int=0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
-    private var binding: ViewZeepyToolbarBinding =
+    var binding: ViewZeepyToolbarBinding =
         ViewZeepyToolbarBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setTitle(title: String) {
@@ -72,7 +71,7 @@ ZeepyToolbar @JvmOverloads constructor(
         }
     }
 
-    fun  setRightButton(drawable: Int, listener: OnClickListener) {
+    fun setRightButton(drawable: Int, listener: OnClickListener) {
         binding.buttonRight.apply {
             visibility = View.VISIBLE
             setBackgroundResource(drawable)

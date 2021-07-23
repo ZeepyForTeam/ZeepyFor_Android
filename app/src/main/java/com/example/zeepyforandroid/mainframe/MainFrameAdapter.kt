@@ -2,7 +2,8 @@ package com.example.zeepyforandroid.mainframe
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.zeepyforandroid.community.frame.view.CommunityFragment
+import com.example.zeepyforandroid.community.CommunityFrameFragment
+import com.example.zeepyforandroid.community.frame.view.CommunityMainFragment
 import com.example.zeepyforandroid.home.HomeFragment
 import com.example.zeepyforandroid.lookaround.LookAroundFragment
 import com.example.zeepyforandroid.myprofile.MyProfileFragment
@@ -15,7 +16,7 @@ class MainFrameAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
         return when(position) {
             0 -> HomeFragment()
             1 -> LookAroundFragment()
-            2 -> CommunityFragment()
+            2 -> CommunityFrameFragment()
             3 -> MyProfileFragment()
             else -> throw RuntimeException("Error Fragment load")
         }
