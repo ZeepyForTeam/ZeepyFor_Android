@@ -33,4 +33,5 @@
     <string name="deposit_price_to">%1$s,000만 까지</string>
     <string name="input_id_login">아이디를 입력해주세요</string>
     <string name="input_password_login">비밀번호를 입력해주세요</string>
+    <string name="target_count_write_posting">%d</string>
 </resources>

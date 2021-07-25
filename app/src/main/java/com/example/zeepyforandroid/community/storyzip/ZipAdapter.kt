@@ -9,7 +9,7 @@ import com.example.zeepyforandroid.community.data.entity.PostingModel
 import com.example.zeepyforandroid.databinding.ItemStoryZipBinding
 import com.example.zeepyforandroid.util.DiffCallback
 
-class StoryZipAdapter(val listener: (PostingModel) -> Unit): ListAdapter<PostingModel, StoryZipAdapter.StoryZipViewHolder>(
+class ZipAdapter(val listener: (PostingModel) -> Unit): ListAdapter<PostingModel, ZipAdapter.StoryZipViewHolder>(
     DiffCallback<PostingModel>()
 ) {
 

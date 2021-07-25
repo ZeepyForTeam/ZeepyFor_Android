@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
-    private val viewModel by activityViewModels<CommunityFrameViewModel>()
+    private val viewModel by viewModels<CommunityFrameViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
