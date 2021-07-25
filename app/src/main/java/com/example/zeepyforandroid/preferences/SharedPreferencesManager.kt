@@ -1,16 +1,10 @@
-package com.example.zeepyforandroid.util
+package com.example.zeepyforandroid.preferences
 
-import android.content.Context
 import android.content.SharedPreferences
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
-import dagger.hilt.EntryPoint
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
-class SharedUtil @Inject constructor(
+class SharedPreferencesManager @Inject constructor(
     val encryptedSharedPreferences : SharedPreferences
 ) {
     fun <T> putSharedPref(key: String, value: T) = with(encryptedSharedPreferences.edit()) {
