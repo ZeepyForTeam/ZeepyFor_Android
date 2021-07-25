@@ -1,19 +1,17 @@
 package com.example.zeepyforandroid.community.postingdetail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.zeepyforandroid.community.data.entity.PostingModel
 import com.example.zeepyforandroid.community.data.remote.response.ResponsePosting
-import com.example.zeepyforandroid.util.SharedUtil
+import com.example.zeepyforandroid.preferences.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.w3c.dom.Comment
 import javax.inject.Inject
 
 @HiltViewModel
 class PostingDetailViewModel @Inject constructor(
-    private val sharedPrefs: SharedUtil
+    private val sharedPrefs: SharedPreferencesManager
 ): ViewModel() {
 
     private val _posting = MutableLiveData<PostingModel>()

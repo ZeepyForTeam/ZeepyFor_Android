@@ -10,10 +10,6 @@ import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedMod
 import com.example.zeepyforandroid.databinding.ItemCommentBinding
 import com.example.zeepyforandroid.util.DiffCallback
 import com.example.zeepyforandroid.util.ItemDecoration
-import com.example.zeepyforandroid.util.SharedUtil
-import dagger.hilt.EntryPoint
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel) : ListAdapter<CommentModel, CommentsAdapter.CommentsViewHolder>(
         DiffCallback<CommentModel>()

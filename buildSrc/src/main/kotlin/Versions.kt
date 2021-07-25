@@ -1,29 +1,33 @@
 object Versions {
-    const val kotlin_version = "1.5.0"
+    const val KOTLIN_VERSION = "1.5.0"
 
-    const val retrofit_version = "2.9.0"
-    const val okhttp_version = "4.9.0"
+    const val RETROFIT_VERSION = "2.9.0"
+    const val OKHTTP_VERSION = "4.9.0"
 
-    const val rxjava_version = "2.1.9"
-    const val rxandroid_version = "2.0.2"
+    const val RXJAVA_VERSION = "2.1.9"
+    const val RXANDROID_VERSION = "2.0.2"
 
-    const val room_version = "2.3.0-alpha04"
-    const val dagger_version = "2.35.1"
-    const val lorem_version = "2.1"
+    const val ROOM_VERSION = "2.3.0-alpha04"
+    const val DAGGER_VERSION = "2.35.1"
+    const val LOREM_VERSION = "2.1"
 
-    const val paging_version = "3.0.0"
+    const val PAGING_VERSION = "3.0.0"
 
-    const val glide_version = "4.12.0"
-    const val coil_version = "1.1.1"
+    const val GLIDE_VERSION = "4.12.0"
+    const val COIL_VERSION = "1.1.1"
 
-    const val navigation_version = "2.3.5"
-    const val fragment_ktx_version = "1.3.4"
-    const val activity_ktx_version = "1.2.3"
-    const val lifecycle_version = "2.3.1"
+    const val NAVIGATION_VERSION = "2.3.5"
+    const val FRAGMENT_VERSION = "1.3.4"
+    const val ACTIVITY_KTX_VERSION = "1.2.3"
+    const val LIFECYCLE_VERSION = "2.3.1"
 
-    const val annotations_version = "28.0.0"
+    const val ANNOTATIONS_VERSION = "28.0.0"
 
-    const val crypto_version = "1.0.0"
+    const val CRYPTO_VERSION = "1.0.0"
 
-    const val swipe_refresh_layout_version = "1.1.0"
+    const val SWIPE_REFRESH_LAYOUT_VERSION = "1.1.0"
+
+    const val KAKAO_SDK_USER_VERSION = "2.5.2"
+
+    const val KAKAO_USERMGMT_VERSION = "1.27.0"
 }

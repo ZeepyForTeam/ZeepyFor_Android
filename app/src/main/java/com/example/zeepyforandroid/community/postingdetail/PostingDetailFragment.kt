@@ -17,13 +17,13 @@ import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.example.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.example.zeepyforandroid.util.ItemDecoration
-import com.example.zeepyforandroid.util.SharedUtil
+import com.example.zeepyforandroid.preferences.SharedPreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
-    @Inject lateinit var prefs: SharedUtil
+    @Inject lateinit var prefs: SharedPreferencesManager
     private val viewModel by viewModels<PostingDetailViewModel>()
     private val args: PostingDetailFragmentArgs by navArgs()
 
