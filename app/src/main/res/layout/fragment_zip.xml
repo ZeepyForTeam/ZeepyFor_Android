@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".community.storyzip.StoryZipFragment"
+        tools:context=".community.storyzip.ZipFragment"
         xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
 
         <RadioGroup

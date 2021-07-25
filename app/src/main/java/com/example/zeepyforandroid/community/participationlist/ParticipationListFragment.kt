@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentParticipationListBinding
 
+@Deprecated("use Zip Fragment")
 class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,

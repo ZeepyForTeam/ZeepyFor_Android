@@ -172,7 +172,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="12dp"
                     android:background="@null"
-                    android:text="@{viewModel.targetCount}"
+                    android:text="@{viewModel.targetCount != null ? @string/target_count_write_posting(viewModel.targetCount) : ``}"
                     android:paddingStart="12dp"
                     android:inputType="number"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
