@@ -34,4 +34,8 @@
     <string name="input_id_login">아이디를 입력해주세요</string>
     <string name="input_password_login">비밀번호를 입력해주세요</string>
     <string name="target_count_write_posting">%d</string>
+    <string name="input_name_signup">이름을 입력해주세요</string>
+    <string name="input_password_check_signup">비밀번호를 다시 입력해주세요</string>
+    <string name="getting_info_to_email_signup">ZEEPY 서비스에 대한 소식을 이메일로 받아봅니다.</string>
+    <string name="input_email_signup">메일을 입력해주세요</string>
 </resources>
