@@ -1,14 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".signup.SignUpFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".signup.SignUpFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
 
-</FrameLayout>
+        <com.example.zeepyforandroid.customview.ZeepyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginStart="24dp"
+            android:text="이름"
+            android:layout_marginTop="31dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edittext_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:hint="@string/input_name_signup"
+            android:paddingStart="12dp"
+            android:textColor="@color/zeepy_black_3b"
+            android:textColorHint="@color/zeepy_gray_9a"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="1:0.12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="아이디"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/edittext_name"
+            app:layout_constraintStart_toStartOf="@id/edittext_name"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edittext_id"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:hint="@string/input_id_login"
+            android:paddingStart="12dp"
+            android:textColor="@color/zeepy_black_3b"
+            android:textColorHint="@color/zeepy_gray_9a"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="1:0.12"
+            app:layout_constraintEnd_toEndOf="@id/edittext_name"
+            app:layout_constraintStart_toStartOf="@id/edittext_name"
+            app:layout_constraintTop_toBottomOf="@id/textview_id" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="이메일"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/edittext_id"
+            app:layout_constraintStart_toStartOf="@id/edittext_id"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edittext_email"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:hint="@string/input_email_signup"
+            android:paddingStart="12dp"
+            android:textColor="@color/zeepy_black_3b"
+            android:textColorHint="@color/zeepy_gray_9a"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="1:0.12"
+            app:layout_constraintEnd_toEndOf="@id/edittext_id"
+            app:layout_constraintStart_toStartOf="@id/edittext_id"
+            app:layout_constraintTop_toBottomOf="@id/textview_email" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="비밀번호"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/edittext_email"
+            app:layout_constraintStart_toStartOf="@id/edittext_email"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edittext_password"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:hint="@string/input_password_login"
+            android:paddingStart="12dp"
+            android:textColor="@color/zeepy_black_3b"
+            android:textColorHint="@color/zeepy_gray_9a"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="1:0.12"
+            app:layout_constraintEnd_toEndOf="@id/edittext_email"
+            app:layout_constraintStart_toStartOf="@id/edittext_email"
+            app:layout_constraintTop_toBottomOf="@id/textview_password" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_password_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="비밀번호 확인"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/edittext_password"
+            app:layout_constraintStart_toStartOf="@id/edittext_password"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edittext_password_check"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:hint="@string/input_password_check_signup"
+            android:paddingStart="12dp"
+            android:textColor="@color/zeepy_black_3b"
+            android:textColorHint="@color/zeepy_gray_9a"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="1:0.12"
+            app:layout_constraintEnd_toEndOf="@id/edittext_password"
+            app:layout_constraintStart_toStartOf="@id/edittext_password"
+            app:layout_constraintTop_toBottomOf="@id/textview_password_check" />
+
+        <com.example.zeepyforandroid.customview.ZeepyCheckBox
+            android:id="@+id/checkbox_email_approve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            zeepy:button_type="3"
+            app:layout_constraintTop_toBottomOf="@id/edittext_password_check"
+            app:layout_constraintStart_toStartOf="@id/edittext_password_check"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_email_approve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="11sp"
+            android:text="@string/getting_info_to_email_signup"
+            app:layout_constraintTop_toTopOf="@id/checkbox_email_approve"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox_email_approve"
+            app:layout_constraintStart_toEndOf="@id/checkbox_email_approve"/>
+
+        <com.example.zeepyforandroid.customview.ZeepyCheckBox
+            android:id="@+id/checkbox_approve_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            zeepy:button_type="3"
+            app:layout_constraintTop_toBottomOf="@id/checkbox_email_approve"
+            app:layout_constraintStart_toStartOf="@id/checkbox_email_approve"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_approve_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="11sp"
+            android:text="@string/getting_info_to_email_signup"
+            app:layout_constraintTop_toTopOf="@id/checkbox_approve_terms"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox_approve_terms"
+            app:layout_constraintStart_toEndOf="@id/checkbox_approve_terms"/>
+
+        <com.example.zeepyforandroid.customview.ZeepyButton
+            android:id="@+id/button_signup"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="32dp"
+            app:layout_constraintDimensionRatio="1:0.16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="약관보기"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="11sp"
+            android:textColor="@color/zeepy_blue_5f"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/textview_approve_terms"
+            app:layout_constraintBottom_toBottomOf="@id/textview_approve_terms"
+            app:layout_constraintStart_toEndOf="@id/textview_approve_terms"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

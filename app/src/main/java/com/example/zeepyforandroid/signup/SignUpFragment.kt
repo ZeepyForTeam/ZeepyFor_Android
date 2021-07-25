@@ -6,18 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.zeepyforandroid.R
+import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.databinding.FragmentSignUpBinding
 
 
-class SignUpFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentSignUpBinding {
+        return FragmentSignUpBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setInitView()
+    }
+
+    private fun setInitView() {
+        binding.toolbar.setTitle("회원가입")
+        binding.buttonSignup.setText("완료")
     }
 }

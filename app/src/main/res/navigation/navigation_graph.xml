@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/mainFrameFragment">
+    app:startDestination="@id/signUpFragment">
 
     <fragment
         android:id="@+id/mainFrameFragment"
@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_writePostingFragment"
             app:destination="@id/writePostingFragment" />
+        <action
+            android:id="@+id/action_mainFrameFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
 
     </fragment>
 
@@ -103,5 +106,10 @@
         android:name="com.example.zeepyforandroid.community.WritePostingFragment"
         android:label="WritePostingFragment"
         tools:layout="@layout/fragment_write_posting"/>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.zeepyforandroid.signup.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up"/>
 
 </navigation>

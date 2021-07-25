@@ -26,11 +26,6 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         return FragmentZipBinding.inflate(inflater, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStoryZipRecyclerView()
