@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/mainFrameFragment">
+    app:startDestination="@id/signUpFragment">
 
     <fragment
         android:id="@+id/mainFrameFragment"
@@ -23,7 +23,6 @@
 
             android:id="@+id/action_mainFrameFragment_to_postingDetailFragment"
             app:destination="@id/postingDetailFragment" />
-
         <action
             android:id="@+id/action_mainFrameFragment_to_ConditionSearchFragment"
             app:destination="@+id/conditionsearchFragment"/>
@@ -40,9 +39,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/singinFragment"
+        android:id="@+id/signinFragment"
         android:name="com.example.zeepyforandroid.signin.SigninFragment"
-        android:label="fragment_sing_in"
+        android:label="fragment_sign_in"
         tools:layout="@layout/fragment_signin" >
         <action
             android:id="@+id/action_singInFragment_to_mainFrameFragment"
