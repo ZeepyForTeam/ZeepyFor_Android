@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <androidx.appcompat.widget.AppCompatTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/zeepy_black_3b"
+        android:textSize="14sp"
+        android:paddingVertical="4dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/nanum_square_round_bold"
+        tools:text="10"
+        xmlns:tools="http://schemas.android.com/tools"/>
+
+</layout>

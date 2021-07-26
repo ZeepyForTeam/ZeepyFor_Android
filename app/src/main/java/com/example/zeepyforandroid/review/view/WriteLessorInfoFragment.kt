@@ -49,7 +49,7 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     }
 
     private fun setSpinner() {
-        val spinnerAdapter = ArrayAdapter<Int>(requireContext(), android.R.layout.simple_list_item_1, ARRAY_AGE_GROUP)
+        val spinnerAdapter = ArrayAdapter<Int>(requireContext(), R.layout.item_spinner_age, ARRAY_AGE_GROUP)
         binding.spinnerAge.run {
             adapter = spinnerAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
