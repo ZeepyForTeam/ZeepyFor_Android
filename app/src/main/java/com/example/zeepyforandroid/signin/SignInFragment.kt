@@ -1,44 +1,53 @@
 package com.example.zeepyforandroid.signin
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.BuildConfig
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
-import com.example.zeepyforandroid.databinding.FragmentSigninBinding
+import com.example.zeepyforandroid.databinding.FragmentSignInBinding
+import com.example.zeepyforandroid.setText
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.KakaoSdkError
-import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
-import io.reactivex.Single
-import java.util.*
 
 
-class SigninFragment : BaseFragment<FragmentSigninBinding>() {
+class SignInFragment : BaseFragment<FragmentSignInBinding>() {
     private lateinit var mOAuthLoginInstance: OAuthLogin
-    private val viewModel by viewModels<SigninViewModel>()
+    private val viewModel by viewModels<SignInViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentSigninBinding {
-        return FragmentSigninBinding.inflate(inflater, container, false)
+    ): FragmentSignInBinding {
+        return FragmentSignInBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         initNaverOAuth()
         loginWithKAKAO()
+        setLoginButton()
+    }
+
+    private fun setLoginButton() {
+        binding.buttonLogin.apply{
+            setText("로그인")
+            onClick{
+
+            }
+        }
+
     }
 
     private fun initNaverOAuth() {
@@ -49,7 +58,6 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
     }
 
     private fun loginWithKAKAO() {
-
         binding.buttonLoginKakao.setOnClickListener {
            checkKakaoToken()
         }
@@ -90,7 +98,7 @@ class SigninFragment : BaseFragment<FragmentSigninBinding>() {
                 Log.e("access token", "${token.accessToken}")
                 Log.e("access token expire", "${token.accessTokenExpiresAt}")
                 Log.e("refresh token", "${token.refreshToken}")
-                findNavController().navigate(R.id.action_singInFragment_to_mainFrameFragment)
+                findNavController().navigate(R.id.action_signInFragment_to_mainFrameFragment)
             }
         }
 

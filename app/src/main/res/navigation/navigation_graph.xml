@@ -39,12 +39,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/signinFragment"
-        android:name="com.example.zeepyforandroid.signin.SigninFragment"
+        android:id="@+id/signInFragment"
+        android:name="com.example.zeepyforandroid.signin.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_signin" >
+        tools:layout="@layout/fragment_sign_in" >
         <action
-            android:id="@+id/action_singInFragment_to_mainFrameFragment"
+            android:id="@+id/action_signInFragment_to_mainFrameFragment"
             app:destination="@id/mainFrameFragment" />
 
     </fragment>

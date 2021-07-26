@@ -33,8 +33,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
 
     private fun setInitView() {
-        binding.toolbar.setTitle("회원가입")
-        binding.buttonSignup.setText("완료")
+        binding.toolbar.apply {
+            setTitle("회원가입")
+            setBackButton{
+
+            }
+        }
+        binding.buttonSignup.apply {
+            setText("완료")
+            onClick{
+
+            }
+        }
     }
 
     private fun checkPasswordCheckMatched() {

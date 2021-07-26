@@ -5,7 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".signin.SigninFragment">
+        tools:context=".signin.SignInFragment">
+
         <View
             android:id="@+id/view_login_background"
             android:layout_width="0dp"
@@ -81,6 +82,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:text="아이디 찾기"
+            android:textSize="10sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
             android:layout_marginTop="18dp"
             app:layout_constraintEnd_toStartOf="@+id/textview_find_password"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -92,7 +95,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:textSize="10sp"
             android:background="@null"
+            android:fontFamily="@font/nanum_square_round_extrabold"
             android:text="비밀번호 찾기"
             app:layout_constraintBottom_toBottomOf="@+id/textview_find_id"
             app:layout_constraintEnd_toStartOf="@+id/textview_signup"
@@ -107,6 +112,8 @@
             android:layout_marginStart="12dp"
             android:background="@null"
             android:text="회원가입"
+            android:textSize="10sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
             app:layout_constraintBottom_toBottomOf="@+id/textview_find_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textview_find_password"
@@ -150,7 +157,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/ic_button_kakao"
+            android:background="@drawable/ic_btn_kakao"
             app:layout_constraintDimensionRatio="1:0.16"
             app:layout_constraintTop_toBottomOf="@id/textview_sns_login"
             app:layout_constraintStart_toStartOf="@id/button_login"
@@ -163,49 +170,10 @@
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
             app:layout_constraintDimensionRatio="1:0.16"
-            android:src="@drawable/ic_naver_login"
+            android:foreground="@drawable/ic_btn_naver"
             app:layout_constraintTop_toBottomOf="@id/button_login_kakao"
             app:layout_constraintStart_toStartOf="@id/button_login"
             app:layout_constraintEnd_toEndOf="@id/button_login"/>
-
-
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/constraintlayout_button_naver_login"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_marginTop="12dp"-->
-<!--            app:layout_constraintDimensionRatio="1:0.16"-->
-<!--            android:background="@drawable/box_naver_login"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/button_login_kakao"-->
-<!--            app:layout_constraintStart_toStartOf="@id/button_login"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/button_login">-->
-
-<!--            <androidx.appcompat.widget.AppCompatImageView-->
-<!--                android:id="@+id/imageview_naver_logo"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                app:layout_constraintHeight_percent="0.7"-->
-<!--                app:layout_constraintDimensionRatio="1:1"-->
-<!--                android:background="@drawable/naver_logo"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-<!--            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="네이버 로그인"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintHorizontal_bias="0.44"-->
-<!--                android:fontFamily="@font/nanum_square_round_extrabold"-->
-<!--                app:layout_constraintStart_toEndOf="@id/imageview_naver_logo"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="@id/imageview_naver_logo"-->
-<!--                app:layout_constraintBottom_toBottomOf="@id/imageview_naver_logo"/>-->
-
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
