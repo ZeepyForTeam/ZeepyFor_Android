@@ -1,18 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".myprofile.MyProfileFragment">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="My Profile"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.example.zeepyforandroid.customview.ZeepyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_main_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_marginTop="19.5dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/myprofile_loggedout"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/linearlayout_myprofile_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_main_msg">
+
+            <CheckBox
+                android:id="@+id/cb_manage_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="주소 관리"
+                android:textAlignment="center"
+                android:fontFamily="@font/nanum_square_round_bold"
+                android:textSize="12sp"
+                android:button="@null"
+                android:drawableTop="@drawable/selector_option_3"
+                android:drawablePadding="8dp" />
+
+            <CheckBox
+                android:id="@+id/cb_manage_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="리뷰 관리"
+                android:textAlignment="center"
+                android:fontFamily="@font/nanum_square_round_bold"
+                android:textSize="12sp"
+                android:button="@null"
+                android:drawableTop="@drawable/selector_option_2"
+                android:drawablePadding="8dp"
+                android:layout_marginEnd="8dp"/>
+
+            <CheckBox
+                android:id="@+id/cb_cart_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="찜 목록"
+                android:textAlignment="center"
+                android:fontFamily="@font/nanum_square_round_bold"
+                android:textSize="12sp"
+                android:button="@null"
+                android:checked="false"
+                android:drawableTop="@drawable/selector_option_ready"
+                android:drawablePadding="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/linearlayout_myprofile_options"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40.5dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/zeepy_gray_f4"/>
+
+            <TextView
+                android:id="@+id/tv_settings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="환경설정"
+                android:fontFamily="@font/nanum_square_round_regular"
+                android:textSize="14sp"
+                android:textColor="@color/zeepy_black_3b"
+                android:paddingStart="24dp"
+                android:paddingTop="11.5dp"
+                android:paddingBottom="11.5dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/zeepy_gray_f4"/>
+
+            <TextView
+                android:id="@+id/tv_inquiry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="문의 및 의견 보내기"
+                android:fontFamily="@font/nanum_square_round_regular"
+                android:textSize="14sp"
+                android:textColor="@color/zeepy_black_3b"
+                android:paddingStart="24dp"
+                android:paddingTop="11.5dp"
+                android:paddingBottom="11.5dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/zeepy_gray_f4"/>
+
+            <TextView
+                android:id="@+id/tv_ziggys"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="지피의 지기들"
+                android:fontFamily="@font/nanum_square_round_regular"
+                android:textSize="14sp"
+                android:textColor="@color/zeepy_black_3b"
+                android:paddingStart="24dp"
+                android:paddingTop="11.5dp"
+                android:paddingBottom="11.5dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/zeepy_gray_f4"/>
+
+            <TextView
+                android:id="@+id/tv_current_version"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="현재 버전 1.1"
+                android:fontFamily="@font/nanum_square_round_regular"
+                android:textSize="14sp"
+                android:textColor="@color/zeepy_black_3b"
+                android:paddingStart="24dp"
+                android:paddingTop="11.5dp"
+                android:paddingBottom="11.5dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/zeepy_gray_f4"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

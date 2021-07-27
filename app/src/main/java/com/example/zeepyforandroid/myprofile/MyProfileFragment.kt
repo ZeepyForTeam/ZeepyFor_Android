@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.zeepyforandroid.R
+import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.databinding.FragmentMyProfileBinding
 
 
-class MyProfileFragment : Fragment() {
+class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_profile, container, false)
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMyProfileBinding {
+        return FragmentMyProfileBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
