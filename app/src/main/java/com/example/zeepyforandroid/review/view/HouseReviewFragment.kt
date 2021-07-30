@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
+import com.example.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.example.zeepyforandroid.databinding.FragmentHouseReviewBinding
 import com.example.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
 import com.example.zeepyforandroid.review.view.adapter.ReviewOptionAdapter
@@ -37,8 +38,6 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
         super.onViewCreated(view, savedInstanceState)
         viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
         Log.e(viewModel.toString(), viewModel.toString())
-
-
 
         setRoomTypeChoice()
         setReviewChoice()
@@ -75,7 +74,7 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
 
     private fun setOptionChoice() {
         binding.rvOption.run {
-            adapter = ReviewOptionAdapter()
+            adapter = ConditionOptionAdapter()
             addItemDecoration(ItemDecoration(8, 8))
         }
     }

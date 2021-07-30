@@ -23,14 +23,14 @@
             android:textColor="@color/zeepy_black_3b"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/group_select_sex"
+            app:layout_constraintEnd_toStartOf="@+id/group_select_gender"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.18"
             app:layout_constraintHorizontal_bias="0.0"/>
 
         <RadioGroup
-            android:id="@+id/group_select_sex"
+            android:id="@+id/group_select_gender"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:weightSum="2"
@@ -44,18 +44,18 @@
             app:layout_constraintHorizontal_bias="0.15">
 
             <RadioButton
-                android:id="@+id/toggle_man"
+                android:id="@+id/toggle_male"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:button="@color/colorTransparent"
                 android:background="@drawable/toggle_selector"
-                android:text="남"
+                android:text="@string/male"
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textColor="@color/selector_default_rb_text" />
 
             <RadioButton
-                android:id="@+id/toggle_women"
+                android:id="@+id/toggle_female"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -63,7 +63,7 @@
                 android:background="@drawable/toggle_selector"
                 android:layout_marginStart="11dp"
                 android:textAlignment="center"
-                android:text="여"
+                android:text="@string/female"
                 android:textColor="@color/selector_default_rb_text" />
 
         </RadioGroup>
@@ -76,12 +76,12 @@
             android:text="연령대"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_black_3b"
-            app:layout_constraintBottom_toBottomOf="@+id/group_select_sex"
+            app:layout_constraintBottom_toBottomOf="@+id/group_select_gender"
             app:layout_constraintEnd_toStartOf="@+id/spinner_age"
             app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/group_select_sex"
-            app:layout_constraintTop_toTopOf="@+id/group_select_sex" />
+            app:layout_constraintStart_toEndOf="@+id/group_select_gender"
+            app:layout_constraintTop_toTopOf="@+id/group_select_gender" />
 
         <Spinner
             android:id="@+id/spinner_age"

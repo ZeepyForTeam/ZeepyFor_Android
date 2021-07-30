@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
+import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemReviewOptionBinding
 import com.example.zeepyforandroid.review.data.entity.OptionModel
 
@@ -26,15 +27,15 @@ class ReviewOptionAdapter : RecyclerView.Adapter<ReviewOptionAdapter.ReviewOptio
 
     companion object {
         private val OPTION_LIST = listOf<OptionModel>(
-            OptionModel("에어컨"),
-            OptionModel("세탁기"),
-            OptionModel("침대"),
-            OptionModel("옷장"),
-            OptionModel("책상"),
-            OptionModel("냉장고"),
-            OptionModel("인덕션"),
-            OptionModel("가스레인지"),
-            OptionModel("전자레인지")
+            OptionModel(R.string.airconditional),
+            OptionModel(R.string.wasingmachine),
+            OptionModel(R.string.bed),
+            OptionModel(R.string.closet),
+            OptionModel(R.string.desk),
+            OptionModel(R.string.refridgerator),
+            OptionModel(R.string.induction),
+            OptionModel(R.string.burner),
+            OptionModel(R.string.microwave)
         )
     }
 

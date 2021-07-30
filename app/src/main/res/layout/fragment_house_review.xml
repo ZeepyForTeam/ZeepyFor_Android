@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+    </data>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -61,7 +67,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:text="1개"
+                        android:text="@string/roomcount_one"
                         zeepy:button_type="1" />
 
                     <com.example.zeepyforandroid.customview.ZeepyRadioButton
@@ -70,7 +76,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:text="2개"
+                        android:text="@string/roomcount_two"
                         zeepy:button_type="1" />
 
                     <com.example.zeepyforandroid.customview.ZeepyRadioButton
@@ -78,7 +84,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="3개 이상"
+                        android:text="@string/roomcount_threeormore"
                         zeepy:button_type="1" />
                 </RadioGroup>
 

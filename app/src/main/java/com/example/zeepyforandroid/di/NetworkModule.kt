@@ -31,13 +31,11 @@ object NetworkModule {
             .addInterceptor(loggingInterceptor)
             .build()
 
-        val interceptor = object : Interceptor {
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val request = chain.request()
-                    .newBuilder().addHeader("token", userPreferenceManager.getUserAccessToken())
-                    .build()
-                return chain.proceed(request)
-            }
+        val interceptor = Interceptor { chain ->
+            val request = chain.request()
+                .newBuilder().addHeader("token", userPreferenceManager.getUserAccessToken())
+                .build()
+            chain.proceed(request)
         }
         return baseClient.newBuilder().addNetworkInterceptor(interceptor).build()
     }

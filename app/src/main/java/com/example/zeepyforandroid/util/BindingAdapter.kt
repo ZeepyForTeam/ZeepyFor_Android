@@ -38,6 +38,15 @@ fun loadDrawable(imageView:ImageView, drawable: Int?) {
 fun ImageView.loadFromStorage(uri:Uri) {
     load(uri)
 }
+@BindingAdapter("compound_button_string_resource")
+fun CompoundButton.setTextWithStringResources(resourceId: Int) {
+    text = resources.getString(resourceId)
+}
+
+@BindingAdapter("text_with_string_resources")
+fun TextView.setTextWithStringResources(resourceId: Int) {
+    text = resources.getString(resourceId)
+}
 
 @BindingAdapter("android:text")
 fun setText(textView: TextView, content: MutableLiveData<String>?){
@@ -87,7 +96,6 @@ fun CheckBox.setOnChangedListener(checkChanged: InverseBindingListener) {
 fun getChecked(checkBox: CheckBox): Boolean{
     return checkBox.isChecked
 }
-
 
 @BindingAdapter("isSelected")
 fun setIsSelected(imageView: ImageView, isSelected: Boolean) {

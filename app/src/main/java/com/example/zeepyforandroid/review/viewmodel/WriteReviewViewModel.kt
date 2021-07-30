@@ -3,6 +3,8 @@ package com.example.zeepyforandroid.review.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.zeepyforandroid.eunm.CommunityTendency
+import com.example.zeepyforandroid.eunm.LessorAge
 import com.example.zeepyforandroid.review.data.entity.AddressList
 import com.example.zeepyforandroid.review.data.entity.AddressModel
 import com.example.zeepyforandroid.review.data.entity.PictureModel
@@ -17,6 +19,10 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val currentFragment: LiveData<ReviewNotice>
         get() = _currentFragment
 
+    private val _lessorPersonality = MutableLiveData<String>()
+    val lessorPersonality: LiveData<String>
+    get() = _lessorPersonality
+
     private val _houseListSearched = MutableLiveData<List<ReviewSearchAddressModel>>()
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
@@ -28,6 +34,14 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     private val _addressSelected = MutableLiveData<String>()
     val addressSelected: LiveData<String>
         get() = _addressSelected
+
+    private val _lessorGender = MutableLiveData<String>()
+    val lessorGender: LiveData<String>
+        get() = _lessorGender
+
+    private val _lessorAge = MutableLiveData<String>(LessorAge.TEN.age)
+    val lessorAge: LiveData<String>
+        get() = _lessorAge
 
     private val _housePictures = MutableLiveData<List<PictureModel>>()
     val pictures: LiveData<List<PictureModel>>
@@ -50,6 +64,14 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         _addressSearchQuery.value = query
     }
 
+    fun changeLessorGender(gender: String) {
+        _lessorGender.value = gender
+    }
+
+    fun changeLessorAge(age: String) {
+        _lessorAge.value = age
+    }
+
     fun changeHousePictures(pictures: List<PictureModel>) {
         _housePictures.value = pictures
     }
@@ -70,8 +92,18 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         _currentFragment.value = reviewNotice
     }
 
+    fun changeLessorPersonality(communityTendency: String) {
+        _lessorPersonality.value = communityTendency
+    }
+
+
+
     fun checkInputAddressQuery(): Boolean {
         return !addressSearchQuery.value.isNullOrEmpty()
+    }
+
+    fun postReviewToServer() {
+
     }
 
     //Todo: api 연결하면 더미데이터 지우고 Datasource - Repository pattern으로 바꾸기
