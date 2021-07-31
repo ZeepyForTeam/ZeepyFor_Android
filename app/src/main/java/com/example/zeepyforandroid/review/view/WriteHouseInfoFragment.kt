@@ -1,17 +1,18 @@
 package com.example.zeepyforandroid.review.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
 
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentWriteHouseInfoBinding
+import com.example.zeepyforandroid.eunm.TotalEvaluation.Companion.findTotalEvaluation
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ReviewNotice
 
@@ -30,8 +31,8 @@ class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
         viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
 
         setNextButton()
-        selectRadioSingleItem()
         goToLoadHousePicture()
+        selectTotalEvaluation()
     }
 
     private fun setNextButton() {
@@ -44,22 +45,17 @@ class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
         }
     }
 
-    private fun selectRadioSingleItem() {
-        binding.groupFinalReview.setOnCheckedChangeListener { group, checkId ->
-            when(checkId) {
-                binding.btnGood.id -> {
-                    binding.btnNoRecommendation.isChecked = false
-                    binding.btnRecommendation.isChecked = false
+    private fun selectTotalEvaluation() {
+        binding.groupFinalReview.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+                when(checkedId) {
+                    binding.btnGood.id -> viewModel.changeHouseTotalEvaluation(findTotalEvaluation(R.string.total_good))
+                    binding.btnRecommendation.id -> viewModel.changeHouseTotalEvaluation(findTotalEvaluation(R.string.total_recommendation))
+                    binding.btnNoRecommendation.id -> viewModel.changeHouseTotalEvaluation(findTotalEvaluation(R.string.total_no_recommendation))
                 }
-                binding.btnRecommendation.id -> {
-                    binding.btnNoRecommendation.isChecked = false
-                    binding.btnGood.isChecked = false
-                }
-                binding.btnNoRecommendation.id -> {
-                    binding.btnGood.isChecked = false
-                    binding.btnRecommendation.isChecked = false
-                }
+
+                Log.e("total evaluation", viewModel.houseTotalEvaluation.value.toString())
             }
-        }
+        })
     }
 }

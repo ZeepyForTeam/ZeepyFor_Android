@@ -10,9 +10,9 @@
     <string name="lessor_house_picture">집의 외부와 내부 사진을\n첨부해 주세요.</string>
     <string name="notice_review">*임대인을 향한 비방이나 너무 심한 욕설은 자제해주세요. T-T!</string>
     <string name="room_count">방의 개수는 몇 개인가요?</string>
-    <string name="final_good">다음에도 여기 살고 싶어요!</string>
-    <string name="final_recommendation">완전 추천해요!</string>
-    <string name="final_no_recommendation">그닥 추천하지 않아요.</string>
+    <string name="total_good">다음에도 여기 살고 싶어요!</string>
+    <string name="total_recommendation">완전 추천해요!</string>
+    <string name="total_no_recommendation">그닥 추천하지 않아요.</string>
     <string name="no_achievement">목표를 설정하지 않은 글이에요!</string>
     <string name="next">다음으로</string>
     <string name="limit_count_address">*최대 3개까지 등록 가능합니다.</string>

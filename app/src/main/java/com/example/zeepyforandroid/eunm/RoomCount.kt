@@ -9,7 +9,9 @@ enum class RoomCount(@StringRes val roomCount: Int) {
     TWO(R.string.roomcount_two),
     THREEORMORE(R.string.roomcount_threeormore);
 
-    fun findRoomCount(roomCount: Int): String {
-        return values().find { it.roomCount == roomCount }?.name ?: throw IllegalArgumentException("RoomCount Not Matched")
+    companion object {
+        fun findRoomCount(roomCount: Int): String {
+            return values().find { it.roomCount == roomCount }?.name ?: throw IllegalArgumentException("RoomCount Not Matched")
+        }
     }
 }

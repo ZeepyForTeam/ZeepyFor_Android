@@ -3,7 +3,6 @@ package com.example.zeepyforandroid.review.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zeepyforandroid.eunm.CommunityTendency
 import com.example.zeepyforandroid.eunm.LessorAge
 import com.example.zeepyforandroid.review.data.entity.AddressList
 import com.example.zeepyforandroid.review.data.entity.AddressModel
@@ -39,25 +38,44 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val lessorGender: LiveData<String>
         get() = _lessorGender
 
-    private val _lessorAge = MutableLiveData<String>(LessorAge.TEN.age)
-    val lessorAge: LiveData<String>
+    private val _lessorAge = MutableLiveData<Map<String, Int>>(mapOf(LessorAge.TEN.age to 0))
+    val lessorAge: LiveData<Map<String, Int>>
         get() = _lessorAge
+
+    private val _roomType = MutableLiveData<String>()
+    val roomType: LiveData<String>
+        get() = _roomType
 
     private val _housePictures = MutableLiveData<List<PictureModel>>()
     val pictures: LiveData<List<PictureModel>>
         get() = _housePictures
 
-    val reviewOfLessor = MutableLiveData<String>()
-
-    val detailAddress = MutableLiveData<String>()
     private val _addressSearchQuery = MutableLiveData<String>()
     val addressSearchQuery: LiveData<String>
         get() = _addressSearchQuery
 
+    private val _houseTotalEvaluation = MutableLiveData<String>()
+    val houseTotalEvaluation: LiveData<String>
+        get() = _houseTotalEvaluation
+
+    val ageArrayList = arrayListOf(10,20,30,40,50,60,70,80,90)
+
+    val checkedAge = MutableLiveData<Int>()
+    val reviewOfLessor = MutableLiveData<String>()
+    val detailAddress = MutableLiveData<String>()
     val sexChecked = MutableLiveData<Int>()
+    val reviewOfHouse = MutableLiveData<String>()
 
     init {
         setDummyAddress()
+    }
+
+    fun changeHouseTotalEvaluation(evaluation: String) {
+        _houseTotalEvaluation.value = evaluation
+    }
+
+    fun changeRoomType(type: String) {
+        _roomType.value = type
     }
 
     fun changeAddressSearchgQuery(query: String) {
@@ -68,7 +86,7 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         _lessorGender.value = gender
     }
 
-    fun changeLessorAge(age: String) {
+    fun changeLessorAge(age: Map<String, Int>) {
         _lessorAge.value = age
     }
 
@@ -76,8 +94,8 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         _housePictures.value = pictures
     }
 
-    fun checkReviewOfLessor(): Boolean {
-        return !reviewOfLessor.value.isNullOrEmpty()
+    fun checkInputEveryLessorInfo(): Boolean {
+        return !(reviewOfLessor.value.isNullOrEmpty() || lessorGender.value.isNullOrEmpty())
     }
 
     fun changeAddressSelected(address: String) {
@@ -95,8 +113,6 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     fun changeLessorPersonality(communityTendency: String) {
         _lessorPersonality.value = communityTendency
     }
-
-
 
     fun checkInputAddressQuery(): Boolean {
         return !addressSearchQuery.value.isNullOrEmpty()

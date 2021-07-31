@@ -16,7 +16,10 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
+import com.example.zeepyforandroid.customview.ZeepyCheckBox
+import com.example.zeepyforandroid.customview.ZeepyRadioButton
 import com.example.zeepyforandroid.databinding.FragmentHouseReviewBinding
+import com.example.zeepyforandroid.eunm.RoomCount.Companion.findRoomCount
 import com.example.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
 import com.example.zeepyforandroid.review.view.adapter.ReviewOptionAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
@@ -24,8 +27,8 @@ import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.util.ReviewNotice
 
-class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
-    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -58,14 +61,19 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
         notice?.visibility = View.GONE
 
         val span = binding.tvReviewNotice.text.toSpannable()
-        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
+        val typeface = Typeface.create(
+            ResourcesCompat.getFont(
+                requireContext(),
+                R.font.nanum_square_round_extrabold
+            ), Typeface.NORMAL
+        )
         span.setSpan(CustomTypefaceSpan(typeface), 0, 8, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
         span.setSpan(CustomTypefaceSpan(typeface), 15, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
     }
 
     private fun setReviewChoice() {
         binding.rvReviewChoice.run {
-            adapter = ReviewChoiceAdapter{
+            adapter = ReviewChoiceAdapter {
                 enableNextButton(it)
             }
             addItemDecoration(ItemDecoration(13, 0))
@@ -86,8 +94,8 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
         }
     }
 
-    private fun enableNextButton(map:Map<Int,Int>) {
-        if(map.size == 4) {
+    private fun enableNextButton(map: Map<Int, Int>) {
+        if (map.size == 4) {
             binding.btnNext.setUsableButton()
             goToWriteHouseInfo()
         } else {
@@ -97,13 +105,18 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>(){
 
     private fun setRoomTypeChoice() {
         binding.roomtypeGroup.setOnCheckedChangeListener { group, checkId ->
-
+            when(checkId) {
+                binding.radiobtnOneRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_one))
+                binding.radiobtnTwoRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_two))
+                binding.radiobtnThreeRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_threeormore))
+            }
         }
     }
 
     private fun goToWriteHouseInfo() {
         binding.btnNext.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_houseReviewFragment_to_writeHouseInfoFragment)
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_houseReviewFragment_to_writeHouseInfoFragment)
         }
     }
 }
