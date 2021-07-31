@@ -51,6 +51,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
     }
 
     private fun configureBottomNavigation() = binding.bottomNavigation.run {
+        itemIconTintList = null
         setOnNavigationItemSelectedListener {
             Log.e("pageIdx", viewModel.pageIdx.value.toString())
             viewModel.changePageIdx(
