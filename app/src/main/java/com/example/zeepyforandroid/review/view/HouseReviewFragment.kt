@@ -74,6 +74,9 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
     private fun setReviewChoice() {
         binding.rvReviewChoice.run {
             adapter = ReviewChoiceAdapter {
+                it.values.forEach{ evaluation ->
+                    Log.e("dfasdfasd", "${requireContext().getString(evaluation)} // ${it}")
+                }
                 enableNextButton(it)
             }
             addItemDecoration(ItemDecoration(13, 0))
@@ -110,6 +113,8 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
                 binding.radiobtnTwoRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_two))
                 binding.radiobtnThreeRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_threeormore))
             }
+            Log.e("roomtype", viewModel.roomType.value.toString())
+
         }
     }
 
