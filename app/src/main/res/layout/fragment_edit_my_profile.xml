@@ -83,6 +83,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <RelativeLayout
+            android:id="@+id/layout_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tv_password"
@@ -120,6 +121,29 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/layout_password"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="로그아웃"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_logout"
+            app:layout_constraintBottom_toBottomOf="@id/tv_logout"
+            app:layout_constraintStart_toEndOf="@id/tv_logout"
+            android:text="회원탈퇴"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:layout_marginStart="12dp"/>
 
 
 

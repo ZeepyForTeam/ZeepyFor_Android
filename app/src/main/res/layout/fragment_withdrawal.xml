@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.zeepyforandroid.customview.ZeepyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:text="유의사항"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="16sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_warning_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_warning"
+            app:layout_constraintStart_toStartOf="@id/tv_warning"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_gray_9a"
+            android:text="회원 탈퇴 전에 꼭 확인해주세요."
+            android:layout_marginTop="8dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_warning_msg"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="22dp"
+            android:paddingTop="22dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="22dp"
+            android:paddingBottom="22dp"
+            android:background="@drawable/box_grayf9_8dp">
+
+            <TextView
+                android:id="@+id/tv_warning_content1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="- ZEEPY 회원탈퇴 시 ZEEPY 서비스에서 탈퇴되며, 회원탈퇴 후 재가입하더라도 탈퇴 전의 회원정보, 게시글 및 목록, 찜 목록 등은 복구되지 않습니다."
+                android:textSize="14sp"
+                android:lineHeight="24sp"
+                android:fontFamily="@font/nanum_square_round_regular"
+                android:textColor="@color/zeepy_black_3b"/>
+
+            <TextView
+                android:id="@+id/tv_warning_content2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_warning_content1"
+                android:layout_marginTop="31dp"
+                android:text="ZEEPY 회원탈퇴 시 회원정보 및 서비스 이용기록은 모두 삭제되며, 삭제된 데이터는 복구가 불가능합니다. 다만 법령에 의하여 보관해야 하는 경우 또는 회원가입 남용, 서비스 부정사용 등을 위한 정보는 회원탈퇴 후에도 일정기간 보관됩니다."
+                android:textSize="14sp"
+                android:lineHeight="24sp"
+                android:fontFamily="@font/nanum_square_round_regular"
+                android:textColor="@color/zeepy_black_3b"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

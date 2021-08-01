@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.zeepyforandroid.base.BaseFragment
-import com.example.zeepyforandroid.databinding.FragmentEditMyProfileBinding
-import com.example.zeepyforandroid.databinding.FragmentMyProfileBinding
+import com.example.zeepyforandroid.databinding.FragmentWithdrawalBinding
 
-class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
+class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>() {
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentEditMyProfileBinding {
-        return FragmentEditMyProfileBinding.inflate(inflater, container, false)
+    ): FragmentWithdrawalBinding {
+        return FragmentWithdrawalBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
