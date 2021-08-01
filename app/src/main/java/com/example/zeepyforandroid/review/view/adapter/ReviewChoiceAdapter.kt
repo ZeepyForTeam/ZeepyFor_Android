@@ -9,9 +9,9 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemReviewChoiceBinding
 import com.example.zeepyforandroid.review.data.entity.ReviewChoiceModel
 
-class ReviewChoiceAdapter(val listener: (Map<Int,Int>)-> Unit) : RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoiceViewHolder>() {
+class ReviewChoiceAdapter(val listener: (Map<String,Int>)-> Unit) : RecyclerView.Adapter<ReviewChoiceAdapter.ReviewChoiceViewHolder>() {
 
-    var checkedListMap = mutableMapOf<Int,Int>()
+    var checkedListMap = mutableMapOf<String,Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewChoiceViewHolder {
         val binding = ItemReviewChoiceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,9 +24,9 @@ class ReviewChoiceAdapter(val listener: (Map<Int,Int>)-> Unit) : RecyclerView.Ad
         holder.binding.apply {
             groupChoice.setOnCheckedChangeListener { group , checkId ->
                 when(checkId) {
-                    btnLike.id -> checkedListMap[position] = R.string.review_good
-                    btnSoso.id -> checkedListMap[position] = R.string.review_soso
-                    btnDislike.id -> checkedListMap[position] = R.string.review_bad
+                    btnLike.id -> checkedListMap[item.key] = R.string.review_good
+                    btnSoso.id -> checkedListMap[item.key] = R.string.review_soso
+                    btnDislike.id -> checkedListMap[item.key] = R.string.review_bad
                 }
                 Log.e("map list", checkedListMap.values.toString())
                 listener(checkedListMap)
@@ -38,10 +38,10 @@ class ReviewChoiceAdapter(val listener: (Map<Int,Int>)-> Unit) : RecyclerView.Ad
 
     companion object {
         private val REVIEW_ITEM = listOf<ReviewChoiceModel>(
-            ReviewChoiceModel("방음"),
-            ReviewChoiceModel("해충"),
-            ReviewChoiceModel("채광"),
-            ReviewChoiceModel("수압")
+            ReviewChoiceModel("방음", "soundInsulation"),
+            ReviewChoiceModel("해충", "pest"),
+            ReviewChoiceModel("채광", "lightning"),
+            ReviewChoiceModel("수압","waterPressure")
         )
     }
 

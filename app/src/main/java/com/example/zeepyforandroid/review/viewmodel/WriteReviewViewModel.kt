@@ -58,6 +58,10 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val houseTotalEvaluation: LiveData<String>
         get() = _houseTotalEvaluation
 
+    private val _reviewPreference = MutableLiveData(mutableMapOf<String, String>())
+    val reviewPreference: LiveData<MutableMap<String, String>>
+        get() = _reviewPreference
+
     val ageArrayList = arrayListOf(10,20,30,40,50,60,70,80,90)
 
     val checkedAge = MutableLiveData<Int>()
@@ -68,6 +72,10 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
 
     init {
         setDummyAddress()
+    }
+
+    fun addReviewPreference(key: String, value: String) {
+        _reviewPreference.value?.set(key, value)
     }
 
     fun changeHouseTotalEvaluation(evaluation: String) {

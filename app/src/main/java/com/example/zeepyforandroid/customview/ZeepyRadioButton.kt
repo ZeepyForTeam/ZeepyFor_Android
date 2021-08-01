@@ -36,10 +36,10 @@ class ZeepyRadioButton @JvmOverloads constructor(
         changeTextColor()
         changeFontFamily()
         setOnClickListener {}
-        setOnCheckedChangeListener()
+        attachCheckedChangeListener()
     }
 
-    private fun setOnCheckedChangeListener() {
+    private fun attachCheckedChangeListener() {
         setOnCheckedChangeListener { _, _ ->
             changeFontFamily()
         }

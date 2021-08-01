@@ -16,12 +16,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
-import com.example.zeepyforandroid.customview.ZeepyCheckBox
-import com.example.zeepyforandroid.customview.ZeepyRadioButton
 import com.example.zeepyforandroid.databinding.FragmentHouseReviewBinding
 import com.example.zeepyforandroid.eunm.RoomCount.Companion.findRoomCount
 import com.example.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
-import com.example.zeepyforandroid.review.view.adapter.ReviewOptionAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ItemDecoration
@@ -73,13 +70,27 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
 
     private fun setReviewChoice() {
         binding.rvReviewChoice.run {
-            adapter = ReviewChoiceAdapter {
-                it.values.forEach{ evaluation ->
-                    Log.e("dfasdfasd", "${requireContext().getString(evaluation)} // ${it}")
+            adapter = ReviewChoiceAdapter { map ->
+                map.forEach { evaluation ->
+                    viewModel.addReviewPreference(evaluation.key, requireContext().getString(evaluation.value))
+                    Log.e("evaluation", "${evaluation.key} // ${requireContext().getString(evaluation.value)}")
+                    Log.e("viewModel evaluation", "${viewModel.reviewPreference.value}")
                 }
-                enableNextButton(it)
+                viewModel.reviewPreference.value?.let { enableNextButton(it) }
             }
             addItemDecoration(ItemDecoration(13, 0))
+        }
+    }
+
+    private fun setRoomTypeChoice() {
+        binding.roomtypeGroup.setOnCheckedChangeListener { group, checkId ->
+            when(checkId) {
+                binding.radiobtnOneRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_one))
+                binding.radiobtnTwoRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_two))
+                binding.radiobtnThreeRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_threeormore))
+            }
+            viewModel.reviewPreference.value?.let { enableNextButton(it) }
+            Log.e("roomtype", viewModel.roomType.value.toString())
         }
     }
 
@@ -97,24 +108,13 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
         }
     }
 
-    private fun enableNextButton(map: Map<Int, Int>) {
-        if (map.size == 4) {
+
+    private fun enableNextButton(map: Map<String, String>) {
+        if (map.size == 4 && !viewModel.roomType.value.isNullOrEmpty()) {
             binding.btnNext.setUsableButton()
             goToWriteHouseInfo()
         } else {
             binding.btnNext.setUnUsableButton()
-        }
-    }
-
-    private fun setRoomTypeChoice() {
-        binding.roomtypeGroup.setOnCheckedChangeListener { group, checkId ->
-            when(checkId) {
-                binding.radiobtnOneRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_one))
-                binding.radiobtnTwoRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_two))
-                binding.radiobtnThreeRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_threeormore))
-            }
-            Log.e("roomtype", viewModel.roomType.value.toString())
-
         }
     }
 
