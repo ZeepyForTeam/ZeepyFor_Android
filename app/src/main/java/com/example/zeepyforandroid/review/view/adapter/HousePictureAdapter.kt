@@ -25,7 +25,7 @@ class HousePictureAdapter: ListAdapter<PictureModel, HousePictureAdapter.HousePi
 
     class HousePictureViewHolder(val binding: ItemPictureBinding): RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: PictureModel) {
-            binding.picture.load(item.image?.toFile())
+            binding.picture.load(item.image)
         }
     }
 }
