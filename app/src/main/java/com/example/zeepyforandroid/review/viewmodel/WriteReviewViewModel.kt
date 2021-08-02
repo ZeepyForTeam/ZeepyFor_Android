@@ -1,19 +1,26 @@
 package com.example.zeepyforandroid.review.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.zeepyforandroid.eunm.LessorAge
+import com.example.zeepyforandroid.review.PostReviewController
+import com.example.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.example.zeepyforandroid.review.data.entity.AddressList
 import com.example.zeepyforandroid.review.data.entity.AddressModel
 import com.example.zeepyforandroid.review.data.entity.PictureModel
 import com.example.zeepyforandroid.review.data.entity.ReviewSearchAddressModel
 import com.example.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class WriteReviewViewModel @Inject constructor() : ViewModel() {
+class WriteReviewViewModel @Inject constructor(
+    private val postReviewController: PostReviewController
+) : ViewModel() {
     private val _currentFragment = MutableLiveData<ReviewNotice>()
     val currentFragment: LiveData<ReviewNotice>
         get() = _currentFragment
@@ -38,7 +45,7 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val lessorGender: LiveData<String>
         get() = _lessorGender
 
-    private val _lessorAge = MutableLiveData<Map<String, Int>>(mapOf(LessorAge.TEN.age to 0))
+    private val _lessorAge = MutableLiveData(mapOf(LessorAge.TEN.age to 0))
     val lessorAge: LiveData<Map<String, Int>>
         get() = _lessorAge
 
@@ -46,9 +53,13 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     val roomType: LiveData<String>
         get() = _roomType
 
-    private val _housePictures = MutableLiveData<List<PictureModel>>()
-    val pictures: LiveData<List<PictureModel>>
-        get() = _housePictures
+    private val _houseBitmapImages = MutableLiveData<List<PictureModel>>()
+    val bitmapImages: LiveData<List<PictureModel>>
+        get() = _houseBitmapImages
+
+    private val _houseURLImages = MutableLiveData<List<String>>()
+    val houseURLImages: LiveData<List<String>>
+        get() = _houseURLImages
 
     private val _addressSearchQuery = MutableLiveData<String>()
     val addressSearchQuery: LiveData<String>
@@ -65,8 +76,6 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     private val _selectedOptionList = MutableLiveData<MutableList<String>>(mutableListOf())
     val selectedOptionList: LiveData<MutableList<String>>
         get() = _selectedOptionList
-
-    val ageArrayList = arrayListOf(10,20,30,40,50,60,70,80,90)
 
     val checkedAge = MutableLiveData<Int>()
     val reviewOfLessor = MutableLiveData<String>()
@@ -111,7 +120,7 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
     }
 
     fun changeHousePictures(pictures: List<PictureModel>) {
-        _housePictures.value = pictures
+        _houseBitmapImages.value = pictures
     }
 
     fun checkInputEveryLessorInfo(): Boolean {
@@ -142,8 +151,35 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         return (reviewOfHouse.value.isNullOrEmpty() || houseTotalEvaluation.value.isNullOrEmpty())
     }
 
+    //Todo: 유저 api 및 주소, 빌딩id api 연결되면 수정
+    @SuppressLint("CheckResult")
     fun postReviewToServer() {
+        postReviewController.postReview(
+            RequestWriteReview(
+                "",
+                313,
+                lessorPersonality.value!!,
+                selectedOptionList.value!!,
+                houseURLImages.value!!,
+                lessorAge.value!!.keys.first(),
+                lessorGender.value!!,
+                reviewOfLessor.value!!,
+                reviewPreference.value!!["lightning"]!!,
+                reviewPreference.value!!["pest"]!!,
+                reviewOfHouse.value!!,
+                roomType.value!!,
+                reviewPreference.value!!["soundInsulation"]!!,
+                reviewPreference.value!!["totalEvaluation"]!!,
+                0,
+                reviewPreference.value!!["waterPressure"]!!,
+            )
+        ).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
 
+            }, {
+
+            })
     }
 
     //Todo: api 연결하면 더미데이터 지우고 Datasource - Repository pattern으로 바꾸기

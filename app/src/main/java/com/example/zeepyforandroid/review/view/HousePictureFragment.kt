@@ -98,7 +98,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
                 val bitmap = uri.asBitmap(requireContext().contentResolver)
                 pictures.add(PictureModel(bitmap))
                 viewModel.changeHousePictures(pictures)
-                Log.e("pictures", "${viewModel.pictures.value}")
+                Log.e("pictures", "${viewModel.bitmapImages.value}")
             }
         }
 
@@ -107,7 +107,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
             if (isSaved) {
                 pictures.add(PictureModel(pictureUri.asBitmap(requireContext().contentResolver)))
                 viewModel.changeHousePictures(pictures)
-                Log.e("pictures", "${viewModel.pictures.value}")
+                Log.e("pictures", "${viewModel.bitmapImages.value}")
 
             }
         }
@@ -127,16 +127,16 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     private fun stagePictures() {
-        viewModel.pictures.observe(viewLifecycleOwner) {
+        viewModel.bitmapImages.observe(viewLifecycleOwner) {
             (binding.rvHousePictures.adapter as HousePictureAdapter).apply {
-                submitList(viewModel.pictures.value?.toList())
+                submitList(viewModel.bitmapImages.value?.toList())
             }
             changeVisibility()
         }
     }
 
     private fun changeVisibility() {
-        if (viewModel.pictures.value.isNullOrEmpty()) {
+        if (viewModel.bitmapImages.value.isNullOrEmpty()) {
             binding.tvUploadImages.visibility = View.GONE
             binding.rvHousePictures.visibility = View.GONE
         } else {

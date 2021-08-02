@@ -1,4 +1,4 @@
-package com.example.zeepyforandroid.review.data
+package com.example.zeepyforandroid.review.data.dto
 
 import androidx.annotation.StringRes
 import com.example.zeepyforandroid.R
@@ -22,8 +22,4 @@ data class RequestWriteReview(
     val totalEvaluation: String,
     val user: Int,
     val waterPressure: String
-) {
-
-
-
-}
+)
