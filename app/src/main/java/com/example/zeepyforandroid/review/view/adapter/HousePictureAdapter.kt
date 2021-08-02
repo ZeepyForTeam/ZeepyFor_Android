@@ -2,6 +2,7 @@ package com.example.zeepyforandroid.review.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toFile
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -24,7 +25,7 @@ class HousePictureAdapter: ListAdapter<PictureModel, HousePictureAdapter.HousePi
 
     class HousePictureViewHolder(val binding: ItemPictureBinding): RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: PictureModel) {
-            binding.picture.load(item.image)
+            binding.picture.load(item.image?.toFile())
         }
     }
 }

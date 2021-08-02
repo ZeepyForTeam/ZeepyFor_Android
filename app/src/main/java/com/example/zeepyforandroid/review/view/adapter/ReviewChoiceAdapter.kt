@@ -22,7 +22,7 @@ class ReviewChoiceAdapter(val listener: (Map<String,Int>)-> Unit) : RecyclerView
         val item = REVIEW_ITEM[position]
         holder.binding.setVariable(BR.data, item)
         holder.binding.apply {
-            groupChoice.setOnCheckedChangeListener { group , checkId ->
+            groupChoice.setOnCheckedChangeListener { _ , checkId ->
                 when(checkId) {
                     btnLike.id -> checkedListMap[item.key] = R.string.review_good
                     btnSoso.id -> checkedListMap[item.key] = R.string.review_soso

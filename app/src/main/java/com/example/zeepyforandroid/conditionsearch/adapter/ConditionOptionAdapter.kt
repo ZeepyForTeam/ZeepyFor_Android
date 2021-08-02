@@ -8,7 +8,13 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.ItemReviewOptionBinding
 import com.example.zeepyforandroid.review.data.entity.OptionModel
 
-class ConditionOptionAdapter : RecyclerView.Adapter<ConditionOptionAdapter.ConditionOptionViewHolder>() {
+class ConditionOptionAdapter(val listener: SelectOptionInterface): RecyclerView.Adapter<ConditionOptionAdapter.ConditionOptionViewHolder>() {
+
+    interface SelectOptionInterface {
+        fun select(option: Int)
+        fun unselect(option: Int)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConditionOptionViewHolder {
         val binding = ItemReviewOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ConditionOptionViewHolder(binding)
@@ -17,6 +23,13 @@ class ConditionOptionAdapter : RecyclerView.Adapter<ConditionOptionAdapter.Condi
     override fun onBindViewHolder(holder: ConditionOptionViewHolder, position: Int) {
         val item = OPTION_LIST[position]
         holder.binding.setVariable(BR.data, item)
+        holder.binding.checkbox.setOnCheckedChangeListener{ _, isChecked ->
+            if (isChecked) {
+                listener.select(item.option)
+            } else {
+                listener.unselect(item.option)
+            }
+        }
     }
 
     override fun getItemCount() = OPTION_LIST.size

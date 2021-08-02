@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.example.zeepyforandroid.R
 import java.lang.IllegalArgumentException
 
-enum class Furnitures(@StringRes val furniture: Int) {
+enum class Options(@StringRes val furniture: Int) {
     AIRCONDITIONAL(R.string.airconditional),
     WASHINGMACHINE(R.string.wasingmachine),
     BED(R.string.bed),
@@ -16,8 +16,8 @@ enum class Furnitures(@StringRes val furniture: Int) {
     MICROWAVE(R.string.microwave);
 
     companion object {
-        fun findFurniture(furniture: Int): Int {
-            return values().find { it.furniture == furniture }?.furniture ?: throw IllegalArgumentException("Furniture Not Found")
+        fun findOptions(furniture: Int): String {
+            return values().find { it.furniture == furniture }?.name ?: throw IllegalArgumentException("Furniture Not Found")
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.zeepyforandroid.mainframe
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
@@ -10,6 +11,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.databinding.FragmentMainFrameBinding
+import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.RuntimeException
 
@@ -52,10 +55,11 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
 
     private fun configureBottomNavigation() = binding.bottomNavigation.run {
         itemIconTintList = null
-        setOnNavigationItemSelectedListener {
+
+        setOnItemSelectedListener { item ->
             Log.e("pageIdx", viewModel.pageIdx.value.toString())
             viewModel.changePageIdx(
-                when (it.itemId) {
+                when (item.itemId) {
                     R.id.homeFragment -> 0
                     R.id.lookAroundFragment -> 1
                     R.id.communityFrameFragment -> 2

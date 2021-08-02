@@ -20,7 +20,7 @@ import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ReviewNotice
 
 class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
-    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

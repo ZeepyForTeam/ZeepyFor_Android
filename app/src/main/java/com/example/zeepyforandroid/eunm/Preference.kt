@@ -9,7 +9,9 @@ enum class Preference(@StringRes val prefer: Int) {
     PROPER(R.string.review_soso),
     BAD(R.string.review_bad);
 
-    fun findPrefer(prefer: Int): Int {
-        return values().find { it.prefer == prefer }?.prefer ?: throw IllegalArgumentException("Prefer Not Matched")
+    companion object{
+        fun findPreference(prefer: Int): String {
+            return values().find { it.prefer == prefer }?.name ?: throw IllegalArgumentException("Prefer Not Matched")
+        }
     }
 }

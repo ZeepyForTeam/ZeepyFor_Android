@@ -143,7 +143,15 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
 
     private fun setOptionChoice() {
         binding.rvFurnitureOption.run {
-            adapter = ConditionOptionAdapter()
+            adapter = ConditionOptionAdapter(object : ConditionOptionAdapter.SelectOptionInterface {
+                override fun select(option: Int) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun unselect(option: Int) {
+                    TODO("Not yet implemented")
+                }
+            })
             addItemDecoration(ItemDecoration(8, 8))
         }
     }

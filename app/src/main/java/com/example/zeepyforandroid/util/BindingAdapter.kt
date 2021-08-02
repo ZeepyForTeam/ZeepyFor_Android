@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toFile
 import androidx.core.view.forEach
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -15,10 +16,11 @@ import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.FontType
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.ShapeAppearanceModel
+import java.io.File
 
 @BindingAdapter("loadUrl")
-fun loadUrl(imageView:ImageView, url: String?) {
-    if (url == null){
+fun loadUrl(imageView: ImageView, url: String?) {
+    if (url == null) {
         imageView.load(R.drawable.ic_launcher_background)
     } else {
         imageView.load(url)
@@ -26,7 +28,7 @@ fun loadUrl(imageView:ImageView, url: String?) {
 }
 
 @BindingAdapter("loadDrawable")
-fun loadDrawable(imageView:ImageView, drawable: Int?) {
+fun loadDrawable(imageView: ImageView, drawable: Int?) {
     if (drawable == null) {
         imageView.load(R.drawable.ic_launcher_background)
     } else {
@@ -35,9 +37,15 @@ fun loadDrawable(imageView:ImageView, drawable: Int?) {
 }
 
 @BindingAdapter("load_uri")
-fun ImageView.loadFromStorage(uri:Uri) {
+fun ImageView.loadFromStorage(uri: Uri) {
     load(uri)
 }
+
+@BindingAdapter("load_file")
+fun ImageView.loadFileFromStorage(uri: Uri) {
+    load(uri.toFile())
+}
+
 @BindingAdapter("compound_button_string_resource")
 fun CompoundButton.setTextWithStringResources(resourceId: Int) {
     text = resources.getString(resourceId)
@@ -49,7 +57,7 @@ fun TextView.setTextWithStringResources(resourceId: Int) {
 }
 
 @BindingAdapter("android:text")
-fun setText(textView: TextView, content: MutableLiveData<String>?){
+fun setText(textView: TextView, content: MutableLiveData<String>?) {
     if (content == null) {
         textView.text = ""
     } else {
@@ -64,7 +72,7 @@ fun getText(editText: EditText): String {
 
 @BindingAdapter("textAttrChanged")
 fun setTextWatcher(editText: EditText, textAttrChanged: InverseBindingListener) {
-    editText.addTextChangedListener(object : TextWatcher{
+    editText.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -76,7 +84,7 @@ fun setTextWatcher(editText: EditText, textAttrChanged: InverseBindingListener) 
 }
 
 @BindingAdapter("android:checked")
-fun setChecked(checkBox: CheckBox, isChecked: MutableLiveData<Boolean>?){
+fun setChecked(checkBox: CheckBox, isChecked: MutableLiveData<Boolean>?) {
     if (isChecked == null) {
         checkBox.isChecked = false
     } else {
@@ -93,7 +101,7 @@ fun CheckBox.setOnChangedListener(checkChanged: InverseBindingListener) {
 }
 
 @InverseBindingAdapter(attribute = "android:checked", event = "checkChanged")
-fun getChecked(checkBox: CheckBox): Boolean{
+fun getChecked(checkBox: CheckBox): Boolean {
     return checkBox.isChecked
 }
 
@@ -103,7 +111,7 @@ fun setIsSelected(imageView: ImageView, isSelected: Boolean) {
 }
 
 @BindingAdapter("font")
-fun TextView.font(type: FontType){
+fun TextView.font(type: FontType) {
     try {
         typeface = ResourcesCompat.getFont(context, type.fontRes)
     } catch (e: Exception) {
@@ -112,7 +120,7 @@ fun TextView.font(type: FontType){
 }
 
 @BindingAdapter("load_shapeableimage")
-fun ShapeableImageView.loadShapeableImage(url:String?){
+fun ShapeableImageView.loadShapeableImage(url: String?) {
     load(url)
 }
 

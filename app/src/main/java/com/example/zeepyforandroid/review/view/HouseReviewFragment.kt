@@ -17,6 +17,8 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.example.zeepyforandroid.databinding.FragmentHouseReviewBinding
+import com.example.zeepyforandroid.eunm.Options.Companion.findOptions
+import com.example.zeepyforandroid.eunm.Preference.Companion.findPreference
 import com.example.zeepyforandroid.eunm.RoomCount.Companion.findRoomCount
 import com.example.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
@@ -72,9 +74,8 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
         binding.rvReviewChoice.run {
             adapter = ReviewChoiceAdapter { map ->
                 map.forEach { evaluation ->
-                    viewModel.addReviewPreference(evaluation.key, requireContext().getString(evaluation.value))
-                    Log.e("evaluation", "${evaluation.key} // ${requireContext().getString(evaluation.value)}")
-                    Log.e("viewModel evaluation", "${viewModel.reviewPreference.value}")
+                    viewModel.addReviewPreference(evaluation.key, findPreference(evaluation.value))
+                    Log.e("viewModel evaluation", "${findPreference(evaluation.value)}")
                 }
                 viewModel.reviewPreference.value?.let { enableNextButton(it) }
             }
@@ -96,7 +97,18 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
 
     private fun setOptionChoice() {
         binding.rvOption.run {
-            adapter = ConditionOptionAdapter()
+            adapter = ConditionOptionAdapter(object : ConditionOptionAdapter.SelectOptionInterface {
+                override fun select(option: Int) {
+                    viewModel.selectOption(findOptions(option))
+                    Log.e("option", "${viewModel.selectedOptionList.value}")
+                }
+
+                override fun unselect(option: Int) {
+                    viewModel.unselectOption(findOptions(option))
+                    Log.e("option", "${viewModel.selectedOptionList.value}")
+
+                }
+            })
             addItemDecoration(ItemDecoration(8, 8))
         }
     }
