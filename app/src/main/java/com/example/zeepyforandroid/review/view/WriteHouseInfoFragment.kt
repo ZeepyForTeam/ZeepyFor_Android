@@ -17,8 +17,8 @@ import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ReviewNotice
 
 class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
-    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
-  
+    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -28,34 +28,56 @@ class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
 
         setNextButton()
-        goToLoadHousePicture()
         selectTotalEvaluation()
+        enableNextButton()
     }
 
     private fun setNextButton() {
-        binding.btnNext.setText("다음으로")
-    }
+        binding.btnNext.run {
+            setText("다음으로")
+            setUnUsableButton()
+            setOnClickListener {
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_writeHouseInfoFragment_to_housePictureFragment)
 
-    private fun goToLoadHousePicture() {
-        binding.btnNext.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_writeHouseInfoFragment_to_housePictureFragment)
+            }
         }
     }
 
     private fun selectTotalEvaluation() {
-        binding.groupFinalReview.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
-            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                when(checkedId) {
-                    binding.btnGood.id -> viewModel.changeHouseTotalEvaluation(findTotalEvaluation(R.string.total_good))
-                    binding.btnRecommendation.id -> viewModel.changeHouseTotalEvaluation(findTotalEvaluation(R.string.total_recommendation))
-                    binding.btnNoRecommendation.id -> viewModel.changeHouseTotalEvaluation(findTotalEvaluation(R.string.total_no_recommendation))
-                }
-
-                Log.e("total evaluation", viewModel.houseTotalEvaluation.value.toString())
+        binding.groupFinalReview.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                binding.btnGood.id -> viewModel.changeHouseTotalEvaluation(findTotalEvaluation(R.string.total_good))
+                binding.btnRecommendation.id -> viewModel.changeHouseTotalEvaluation(
+                    findTotalEvaluation(R.string.total_recommendation)
+                )
+                binding.btnNoRecommendation.id -> viewModel.changeHouseTotalEvaluation(
+                    findTotalEvaluation(R.string.total_no_recommendation)
+                )
             }
-        })
+        }
+    }
+
+    private fun enableNextButton() {
+        viewModel.reviewOfHouse.observe(viewLifecycleOwner) {
+            checkInputALL()
+        }
+        viewModel.houseTotalEvaluation.observe(viewLifecycleOwner) {
+            checkInputALL()
+        }
+    }
+
+    private fun checkInputALL() {
+        if (viewModel.checkTotalHouseReviewEmpty()) {
+            binding.btnNext.setUnUsableButton()
+        } else {
+            binding.btnNext.setUsableButton()
+        }
     }
 }

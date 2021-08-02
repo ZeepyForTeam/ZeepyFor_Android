@@ -138,6 +138,10 @@ class WriteReviewViewModel @Inject constructor() : ViewModel() {
         return !addressSearchQuery.value.isNullOrEmpty()
     }
 
+    fun checkTotalHouseReviewEmpty(): Boolean {
+        return (reviewOfHouse.value.isNullOrEmpty() || houseTotalEvaluation.value.isNullOrEmpty())
+    }
+
     fun postReviewToServer() {
 
     }

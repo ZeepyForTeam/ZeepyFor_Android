@@ -5,6 +5,7 @@
             name="viewModel"
             type="com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +14,7 @@
         tools:context=".review.view.WriteHouseInfoFragment"
         xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_detail_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,8 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.05" />
 
-
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_detail_house_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -35,7 +35,7 @@
             android:layout_marginHorizontal="16dp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:gravity="top"
-            android:text="@{viewModel.reviewOfHouse}"
+            android:text="@={viewModel.reviewOfHouse}"
             android:paddingHorizontal="6dp"
             android:paddingVertical="6dp"
             android:textCursorDrawable="@drawable/cursor"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_info"
             app:layout_constraintVertical_bias="0.03" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_final_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
