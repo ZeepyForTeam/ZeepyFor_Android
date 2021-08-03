@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.zeepyforandroid.customview.ZeepyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_alarm_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:text="알림설정"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="16sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_alarm_settings_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알림을 설정하려면 설정을 변경해주세요."
+            android:textSize="12sp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/tv_alarm_settings"
+            app:layout_constraintStart_toStartOf="@id/tv_alarm_settings"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_alarm_settings_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="변경하기"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_yellow_ef"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintTop_toTopOf="@id/tv_alarm_settings_msg"
+            app:layout_constraintBottom_toBottomOf="@id/tv_alarm_settings_msg"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toBottomOf="@id/tv_alarm_settings_msg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="27.5dp"/>
+
+        <TextView
+            android:id="@+id/tv_marketing_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            android:text="마케팅 정보 수신 동의"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="16sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="19.5dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_marketing_agree_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ZEEPY의 소식을 가장 먼저 만나보실 수 있어요."
+            android:textSize="12sp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/tv_marketing_agree"
+            app:layout_constraintStart_toStartOf="@id/tv_marketing_agree"
+            android:layout_marginTop="12dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_marketing_agree_msg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:paddingVertical="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="메일 수신동의"
+                android:fontFamily="@font/nanum_square_round_bold"
+                android:textSize="12sp"
+                android:textColor="@color/zeepy_black_3b"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"/>
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                style="@style/SwitchButtonStyle"/>
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

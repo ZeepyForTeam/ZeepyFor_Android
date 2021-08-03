@@ -34,4 +34,10 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="SwitchButtonStyle">
+        <item name="background">@color/zeepy_yellow_ef</item>
+        <item name="android:paddingHorizontal">2.7dp</item>
+        <item name="android:paddingVertical">9.3dp</item>
+    </style>
+
 </resources>

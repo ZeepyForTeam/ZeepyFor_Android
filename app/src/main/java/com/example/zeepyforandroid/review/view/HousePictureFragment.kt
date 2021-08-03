@@ -28,7 +28,6 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     private val pictures = mutableListOf<PictureModel>()
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
 
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
