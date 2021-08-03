@@ -31,8 +31,16 @@ class ZeepyCheckBox @JvmOverloads constructor(
         textAlignment = TEXT_ALIGNMENT_CENTER
         gravity = Gravity.CENTER_VERTICAL
         setOnClickListener { }
+        attachCheckedChangeLister()
+        changeTextColor()
         setBackground()
         setFontFamily()
+    }
+
+    private fun attachCheckedChangeLister() {
+        setOnCheckedChangeListener { _, _ ->
+            changeTextColor()
+        }
     }
 
     private fun setBackground() {
@@ -46,7 +54,7 @@ class ZeepyCheckBox @JvmOverloads constructor(
         )
     }
 
-    fun setTextColor() {
+    fun changeTextColor() {
         setTextColor(
             CheckBoxType.findCheckBoxType(buttonType).textColor?.let {
                 ContextCompat.getColorStateList(

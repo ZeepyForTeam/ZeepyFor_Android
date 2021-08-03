@@ -24,6 +24,7 @@ android {
         buildConfigField "String", "NAVER_CLIENT_ID", properties['naver_client_id']
         buildConfigField "String", "NAVER_CLIENT_SECRET_ID", properties['naver_client_secret_id']
         buildConfigField "String", "KAKAO_APP_KEY", properties['kakao_app_key_string']
+        buildConfigField "String", "BASE_URL", properties['base_url']
 
         resValue "string", "KAKAO_NATVIE_APP_KEY", properties['kakao_native_app_key']
         resValue "string", "KAKAO_APP_KEY", properties['kakao_app_key']

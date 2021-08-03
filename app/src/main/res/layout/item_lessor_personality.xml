@@ -34,7 +34,7 @@
             android:layout_height="0dp"
             android:textSize="14sp"
             android:paddingVertical="6dp"
-            android:text="@{data.personality}"
+            text_with_string_resources="@{data.personality}"
             android:paddingLeft="12dp"
             font="@{data.selected ? fontType.FONT_EXTRABOLD : fontType.FONT_REGULAR}"
             android:gravity="center_vertical"
