@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,19 +17,21 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentHousePictureBinding
+import com.example.zeepyforandroid.myprofile.data.MyReviewData
 import com.example.zeepyforandroid.review.data.entity.PictureModel
 import com.example.zeepyforandroid.review.view.adapter.HousePictureAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.util.ReviewNotice
 import java.io.File
-import java.util.*
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     private lateinit var pictureUri: Uri
     private val pictures = mutableListOf<PictureModel>()
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
-
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

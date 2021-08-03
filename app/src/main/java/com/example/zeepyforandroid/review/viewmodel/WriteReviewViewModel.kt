@@ -3,6 +3,7 @@ package com.example.zeepyforandroid.review.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.zeepyforandroid.myprofile.data.MyReviewData
 import com.example.zeepyforandroid.review.data.entity.AddressList
 import com.example.zeepyforandroid.review.data.entity.AddressModel
 import com.example.zeepyforandroid.review.data.entity.PictureModel

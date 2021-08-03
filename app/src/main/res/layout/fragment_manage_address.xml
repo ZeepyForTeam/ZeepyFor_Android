@@ -71,6 +71,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_address_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"

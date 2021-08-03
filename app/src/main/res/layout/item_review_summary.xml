@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.zeepyforandroid.myprofile.data.MyReviewData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_grayf9_8dp"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="12dp">
+
+        <TextView
+            android:id="@+id/tv_building_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="14sp"
+            android:text="@{item.buildingName}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_datetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_gray_9a"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="10sp"
+            android:text="@{item.dateTime}"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_building_name"
+            app:layout_constraintStart_toEndOf="@id/tv_building_name" />
+
+        <TextView
+            android:id="@+id/tv_building_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_yellow_ef"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:text="임대인"
+            app:layout_constraintStart_toStartOf="@id/tv_building_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_building_name"
+            android:layout_marginTop="9dp"/>
+
+        <TextView
+            android:id="@+id/tv_building_owner_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.lessorReview}"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toTopOf="@id/tv_building_owner"
+            app:layout_constraintBottom_toBottomOf="@id/tv_building_owner"
+            app:layout_constraintStart_toEndOf="@id/tv_building_owner"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_lessor_communication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_yellow_ef"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:text="임대인 소통성향"
+            app:layout_constraintStart_toStartOf="@id/tv_building_owner"
+            app:layout_constraintTop_toBottomOf="@id/tv_building_owner"
+            android:layout_marginTop="9dp"/>
+
+        <TextView
+            android:id="@+id/tv_lessor_communication_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.lessorCommunicationStyle}"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toTopOf="@id/tv_lessor_communication"
+            app:layout_constraintBottom_toBottomOf="@id/tv_lessor_communication"
+            app:layout_constraintStart_toEndOf="@id/tv_lessor_communication"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_house"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_yellow_ef"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:text="집"
+            app:layout_constraintStart_toStartOf="@id/tv_lessor_communication"
+            app:layout_constraintTop_toBottomOf="@id/tv_lessor_communication"
+            android:layout_marginTop="9dp"/>
+
+        <TextView
+            android:id="@+id/tv_house_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.houseReview.toString()}"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toTopOf="@id/tv_house"
+            app:layout_constraintBottom_toBottomOf="@id/tv_house"
+            app:layout_constraintStart_toEndOf="@id/tv_house"
+            android:layout_marginStart="8dp"/>
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

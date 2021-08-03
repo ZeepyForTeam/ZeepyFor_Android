@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            android:text="내가 작성한 리뷰"
+            android:text="내가 찜한 자취방"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="16sp"
             android:textColor="@color/zeepy_black_3b"
@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="24dp"
-            tools:listitem="@layout/item_review_summary"
+            tools:listitem="@layout/item_result_house"
             tools:itemCount="3"/>
 
 
