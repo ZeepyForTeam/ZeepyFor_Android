@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentLessorPersonalityBinding
+import com.example.zeepyforandroid.eunm.CommunityTendency.Companion.findTendency
 import com.example.zeepyforandroid.review.view.adapter.LessorPersonalityAdapter
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.ItemDecoration
@@ -46,8 +47,10 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
 
     private fun setLessorPersonalities() {
         binding.rvLessorCommunication.run {
-            adapter = LessorPersonalityAdapter{
+            adapter = LessorPersonalityAdapter(requireContext()){
                 binding.btnNext.setUsableButton()
+                viewModel.changeLessorPersonality(findTendency(it))
+                viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
             }
             addItemDecoration(ItemDecoration(10,0))
         }

@@ -15,6 +15,7 @@
             android:paddingVertical="18dp"
             android:clipToPadding="false"
             tools:itemCount="5"
+            android:nestedScrollingEnabled="false"
             android:layout_marginHorizontal="16dp"
             tools:listitem="@layout/item_lessor_personality"
             android:background="@drawable/box_grayf4_8dp"

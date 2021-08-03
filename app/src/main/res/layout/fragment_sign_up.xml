@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.zeepyforandroid.signup.SignUpViewModel" />
+        <variable
+            name="view"
+            type="android.view.View" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -163,6 +171,30 @@
             app:layout_constraintEnd_toEndOf="@id/edittext_password"
             app:layout_constraintStart_toStartOf="@id/edittext_password"
             app:layout_constraintTop_toBottomOf="@id/textview_password_check" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageview_password_matched"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/check"
+            android:layout_marginEnd="16dp"
+            android:visibility="@{viewModel.isPasswordMatched() == true ? view.VISIBLE : view.GONE}"
+            app:layout_constraintTop_toTopOf="@id/edittext_password_check"
+            app:layout_constraintBottom_toBottomOf="@id/edittext_password_check"
+            app:layout_constraintEnd_toEndOf="@id/edittext_password_check"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_doesnt_match_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/doesnt_match_password"
+            android:textColor="@color/zeepy_red_fb"
+            android:textSize="10sp"
+            android:visibility="@{viewModel.isPasswordMatched() == true ? view.GONE : view.VISIBLE}"
+            android:fontFamily="@font/nanum_square_round_bold"
+            app:layout_constraintTop_toTopOf="@id/textview_password_check"
+            app:layout_constraintBottom_toBottomOf="@id/textview_password_check"
+            app:layout_constraintEnd_toEndOf="@id/edittext_password_check"/>
 
         <com.example.zeepyforandroid.customview.ZeepyCheckBox
             android:id="@+id/checkbox_email_approve"

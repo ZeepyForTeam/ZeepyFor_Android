@@ -11,7 +11,7 @@ import com.example.zeepyforandroid.BuildConfig
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 
-class SigninViewModel(application: Application): AndroidViewModel(application) {
+class SignInViewModel(application: Application): AndroidViewModel(application) {
     private val _accessToken = MutableLiveData<String>()
     val accessToken: LiveData<String>
         get() = _accessToken

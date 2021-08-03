@@ -19,7 +19,7 @@
             android:layout_height="48dp"
             android:textSize="14sp"
             zeepy:button_type="1"
-            android:text="@{data.option}"
+            compound_button_string_resource="@{data.option}"
             tools:text="zeepy button"/>
 
     </FrameLayout>

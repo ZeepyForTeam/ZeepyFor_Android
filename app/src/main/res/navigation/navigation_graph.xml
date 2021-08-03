@@ -23,7 +23,6 @@
 
             android:id="@+id/action_mainFrameFragment_to_postingDetailFragment"
             app:destination="@id/postingDetailFragment" />
-
         <action
             android:id="@+id/action_mainFrameFragment_to_ConditionSearchFragment"
             app:destination="@+id/conditionsearchFragment"/>
@@ -40,12 +39,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/singinFragment"
-        android:name="com.example.zeepyforandroid.signin.SigninFragment"
-        android:label="fragment_sing_in"
-        tools:layout="@layout/fragment_signin" >
+        android:id="@+id/signInFragment"
+        android:name="com.example.zeepyforandroid.signin.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
         <action
-            android:id="@+id/action_singInFragment_to_mainFrameFragment"
+            android:id="@+id/action_signInFragment_to_mainFrameFragment"
             app:destination="@id/mainFrameFragment" />
 
     </fragment>
