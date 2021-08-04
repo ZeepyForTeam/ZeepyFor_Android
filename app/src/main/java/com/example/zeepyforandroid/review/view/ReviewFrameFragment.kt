@@ -19,7 +19,9 @@ import com.example.zeepyforandroid.databinding.FragmentReviewFrameBinding
 import com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.example.zeepyforandroid.util.CustomTypefaceSpan
 import com.example.zeepyforandroid.util.ReviewNotice
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>()
     private lateinit var navController: NavController
@@ -33,7 +35,6 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e(viewModel.toString(), viewModel.toString())
 
 
         val navHostFragment = childFragmentManager.findFragmentById(R.id.review_nav_host_fragment) as NavHostFragment

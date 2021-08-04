@@ -2,7 +2,8 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zeepy= "http://schemas.android.com/apk/res/com.example.zeepyforandroid">
 
     <data>
         <variable
@@ -17,7 +18,6 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:zeepy= "http://schemas.android.com/apk/res/com.example.zeepyforandroid"
         tools:context=".community.postingdetail.PostingDetailFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout

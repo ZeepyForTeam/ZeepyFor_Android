@@ -9,7 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentHomeBinding
+import com.example.zeepyforandroid.util.ItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun getFragmentBinding(
@@ -24,7 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         setToolbar()
         writeReview()
-
+        setFilterList()
     }
 
     private fun setToolbar() {
@@ -39,6 +42,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             setOnClickListener {
                 requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_communitySearchAddressFragment)
             }
+        }
+    }
+
+    private fun setFilterList() {
+        binding.recyclerviewFilter.run {
+            adapter = HomeFilterAdapter()
+            (adapter as HomeFilterAdapter).notifyDataSetChanged()
+            addItemDecoration(ItemDecoration(0, 8))
         }
     }
 
