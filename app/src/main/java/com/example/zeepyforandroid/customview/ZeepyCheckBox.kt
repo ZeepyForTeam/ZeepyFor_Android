@@ -54,7 +54,7 @@ class ZeepyCheckBox @JvmOverloads constructor(
         )
     }
 
-    fun changeTextColor() {
+    private fun changeTextColor() {
         setTextColor(
             CheckBoxType.findCheckBoxType(buttonType).textColor?.let {
                 ContextCompat.getColorStateList(
