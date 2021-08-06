@@ -62,4 +62,12 @@
     <string name="microwave">전자레인지</string>
     <string name="male">남</string>
     <string name="female">여</string>
+    <string name="open_location_info_home">서울 강북, 세종 지역 오픈!</string>
+    <string name="write_review_home">자취방 후기 작성하기</string>
+    <string name="filter_building_home">성향에 맞는 자취방을 고르자!</string>
+    <string name="select_community_posting_type_home">우리 동네 자취생 다모았ZIP</string>
+    <string name="group_purchase">공동구매</string>
+    <string name="freeshare">무료나눔</string>
+    <string name="friends">동네친구</string>
+    <string name="filter_all_home">유형 모두 보기</string>
 </resources>

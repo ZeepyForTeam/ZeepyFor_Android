@@ -68,6 +68,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:hint="@string/input_password_login"
             android:paddingStart="12dp"
+            android:inputType="textPassword"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="14sp"

@@ -59,6 +59,6 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
     }
 
     companion object {
-        private val TAB_NAME = listOf("이야기ZIP", "참여목록")
+        private val TAB_NAME = listOf("이야기ZIP", "나의ZIP")
     }
 }
