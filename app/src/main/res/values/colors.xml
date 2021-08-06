@@ -31,5 +31,6 @@
     <color name="zeepy_yellow_ef">#efb40d</color>
     <color name="zeepy_red_fb">#fb8f78</color>
     <color name="zeepy_black28">#282828</color>
+    <color name="zeepy_gray_3300">#33000000</color>
 
 </resources>

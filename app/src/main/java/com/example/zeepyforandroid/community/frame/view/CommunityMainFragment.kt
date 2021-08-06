@@ -41,9 +41,12 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             }
             setRightButtonMargin(32)
 
-            setOnClickListener {
-                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_communitySearchAddressFragment)
+            binding.textviewToolbar.setOnClickListener {
+                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
             }
+//            setOnClickListener {
+//                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+//            }
         }
     }
 

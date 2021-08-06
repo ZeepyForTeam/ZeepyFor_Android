@@ -27,4 +27,6 @@ class CommunityFrameFragment: BaseFragment<FragmentCommunityFrameBinding>() {
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment_community) as NavHostFragment
         navController = navHostFragment.navController
     }
+
+
 }
