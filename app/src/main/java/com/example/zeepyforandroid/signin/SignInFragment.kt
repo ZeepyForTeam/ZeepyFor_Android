@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.BuildConfig
 import com.example.zeepyforandroid.R
@@ -34,20 +35,25 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         initNaverOAuth()
         loginWithKAKAO()
         setLoginButton()
+        goToSignUp()
     }
 
     private fun setLoginButton() {
         binding.buttonLogin.apply{
             setText("로그인")
             onClick{
-
+                findNavController().navigate(R.id.action_signInFragment_to_mainFrameFragment)
             }
         }
+    }
 
+    private fun goToSignUp() {
+        binding.textviewSignup.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        }
     }
 
     private fun initNaverOAuth() {
