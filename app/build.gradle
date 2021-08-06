@@ -131,4 +131,8 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:${Versions.KAKAO_SDK_USER_VERSION}"
     implementation "com.kakao.sdk:v2-talk:2.5.2"
 
+    //Spinner BottomSheet & Android Design Support
+    implementation "com.github.tiper:MaterialSpinner:${Versions.MATERIAL_SPINNER_VERSION}"
+    implementation "com.android.support:design:${Versions.ANDROID_DESIGN_VERSION}"
+
 }
