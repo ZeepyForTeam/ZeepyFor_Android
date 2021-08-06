@@ -44,9 +44,6 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             binding.textviewToolbar.setOnClickListener {
                 requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
             }
-//            setOnClickListener {
-//                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
-//            }
         }
     }
 
