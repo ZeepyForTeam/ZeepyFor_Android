@@ -1,12 +1,10 @@
 package com.example.zeepyforandroid.community.frame.viewmodel
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.zeepyforandroid.base.BaseViewModel
-import com.example.zeepyforandroid.community.data.entity.PostingModel
+import com.example.zeepyforandroid.community.data.entity.PostingListModel
 import com.example.zeepyforandroid.community.data.repository.PostingListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,8 +15,8 @@ import javax.inject.Inject
 class CommunityFrameViewModel @Inject constructor(
     private val postingListRepository: PostingListRepository
 ): BaseViewModel() {
-    private val _postingList = MutableLiveData<List<PostingModel>>()
-    val postingList: LiveData<List<PostingModel>>
+    private val _postingList = MutableLiveData<List<PostingListModel>>()
+    val postingList: LiveData<List<PostingListModel>>
         get() = _postingList
 
     private val _searchAddressQuery = MutableLiveData<String>()
@@ -28,7 +26,6 @@ class CommunityFrameViewModel @Inject constructor(
     private val _detailAddress = MutableLiveData<String>()
     val detailAddress: LiveData<String>
         get() = _detailAddress
-
 
     fun changeSearchAddressQuery(address: String) {
         _searchAddressQuery.value = address
@@ -41,7 +38,7 @@ class CommunityFrameViewModel @Inject constructor(
     @SuppressLint("CheckResult")
     fun getPostingList() {
         addDisposable(
-            postingListRepository.getPostingList()
+            postingListRepository.getPostingList("", "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -51,5 +48,4 @@ class CommunityFrameViewModel @Inject constructor(
                 })
         )
     }
-
 }

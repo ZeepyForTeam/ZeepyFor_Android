@@ -1,11 +1,6 @@
 package com.example.zeepyforandroid.community.data.entity
 
-import android.os.Parcelable
-import com.example.zeepyforandroid.community.postingdetail.CommentModel
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
-data class PostingModel(
+data class PostingDetailModel(
     val writerUserIdx: Int,
     val imageWriter: String,
     val nameWriter: String,
@@ -17,4 +12,4 @@ data class PostingModel(
     val picturesPosting: List<UrlPictureModel>,
     val isSetAchievement: Boolean,
     val comments: MutableList<CommentModel>?
-):Parcelable
+)

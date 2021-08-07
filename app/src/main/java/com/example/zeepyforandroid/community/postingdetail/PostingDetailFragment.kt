@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
-import androidx.core.text.color
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -85,7 +84,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     }
 
     private fun changePostingDatas() {
-        viewModel.posting.observe(viewLifecycleOwner) {
+        viewModel.postingDetail.observe(viewLifecycleOwner) {
             (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
             viewModel.changeIsGroupPurchase()
             viewModel.changeCommentList(it.comments)
@@ -126,7 +125,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                 adapter = CommentsAdapter(
                     CommentAuthenticatedModel(
                         prefs.getSharedPrefs("userIdx", -1),
-                        viewModel.posting.value?.writerUserIdx,
+                        viewModel.postingDetail.value?.writerUserIdx,
                         null
                     )
                 )

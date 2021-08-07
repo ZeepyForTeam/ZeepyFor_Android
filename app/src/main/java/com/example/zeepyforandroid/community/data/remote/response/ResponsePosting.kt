@@ -1,9 +1,9 @@
 package com.example.zeepyforandroid.community.data.remote.response
 
-import com.example.zeepyforandroid.community.data.entity.PostingModel
+import com.example.zeepyforandroid.community.data.entity.PostingDetailModel
 import com.example.zeepyforandroid.community.data.entity.UrlPictureModel
 import com.example.zeepyforandroid.community.data.remote.response.ResponsePosting.PostingType.Companion.toPostingType
-import com.example.zeepyforandroid.community.postingdetail.CommentModel
+import com.example.zeepyforandroid.community.data.entity.CommentModel
 import java.lang.IllegalArgumentException
 
 //Fixme: 서버 api나오면 변경하기
@@ -21,8 +21,8 @@ data class ResponsePosting(
     val achievementRate: Int,
     val comments: List<CommentModel>?
 ) {
-    fun toPostingModel(): PostingModel =
-        PostingModel(
+    fun toPostingModel(): PostingDetailModel =
+        PostingDetailModel(
             writerUserIdx,
             imageWriter,
             nameWriter,

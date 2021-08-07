@@ -5,7 +5,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.community.postingdetail.CommentModel" />
+            type="com.example.zeepyforandroid.community.data.entity.CommentModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -79,7 +79,7 @@
 
         <argument
             android:name="postingModel"
-            app:argType="com.example.zeepyforandroid.community.data.entity.PostingModel"/>
+            app:argType="com.example.zeepyforandroid.community.data.entity.PostingListModel"/>
 
     </fragment>
 
