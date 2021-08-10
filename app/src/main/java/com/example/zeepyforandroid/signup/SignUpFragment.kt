@@ -30,6 +30,22 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         showNickNameRepetitionNotice()
     }
 
+    private fun setInitView() {
+        binding.toolbar.apply {
+            setTitle("회원가입")
+            setBackButton{
+
+            }
+        }
+        binding.buttonSignup.apply {
+            setText("완료")
+            setUnUsableButton()
+            onClick{
+
+            }
+        }
+    }
+
     private fun showEmailRepetitionNotice() {
         viewModel.isEmailRepetition.observe(viewLifecycleOwner) { isRepetition ->
             binding.textviewEmailRepetition.run {
@@ -52,21 +68,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                 }
             }
 
-        }
-    }
-
-    private fun setInitView() {
-        binding.toolbar.apply {
-            setTitle("회원가입")
-            setBackButton{
-
-            }
-        }
-        binding.buttonSignup.apply {
-            setText("완료")
-            onClick{
-
-            }
         }
     }
 }
