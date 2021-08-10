@@ -1,21 +1,27 @@
-package com.example.zeepyforandroid.community.data.remote.data
+package com.example.zeepyforandroid.community.data.remote.datasource
 
+import com.example.zeepyforandroid.community.data.entity.CommentModel
+import com.example.zeepyforandroid.community.data.entity.NestedCommentModel
 import com.example.zeepyforandroid.community.data.entity.UrlPictureModel
 import com.example.zeepyforandroid.community.data.remote.response.ResponsePosting
-import com.example.zeepyforandroid.community.postingdetail.CommentModel
-import com.example.zeepyforandroid.community.postingdetail.NestedCommentModel
+import com.example.zeepyforandroid.network.ZeepyApiService
 import io.reactivex.Single
+import javax.inject.Inject
 import kotlin.random.Random
 
-class PostingListDataSourceImpl : PostingListDataSource {
-    override fun getPosting(): Single<List<ResponsePosting>> = Single.just(
+class PostingListDataSourceImpl @Inject constructor(
+    private val zeepyApiService: ZeepyApiService
+): PostingListDataSource {
+//    override fun getPosting(address: String, communityType: String): Single<List<ResponsePostingList>> =
+//        zeepyApiService.getPostingList(address, communityType)
+  override fun getPosting(address: String, communityType: String): Single<List<ResponsePosting>> = Single.just(
         listOf(
             ResponsePosting(
                 1,
                 "https://github.com/SONPYEONGHWA.png",
                 "zzangu99",
                 "10분전",
-                1,
+                "JOINTPURCHASE",
                 "Community 만드는 중입니다~~",
                 "치킨, 피자, 짜장면, 탕수육, 떡볶이, 삼겹살, 스테이크, 파스타, 라면, 갈비, 회, 조개구이, 매운탕, 보쌈, 족발",
                 true,
@@ -72,7 +78,7 @@ class PostingListDataSourceImpl : PostingListDataSource {
                 "https://github.com/SONPYEONGHWA.png",
                 "zzangu99",
                 "15분전",
-                1,
+                "FREESHARING",
                 "이것이 커뮤니티다!!!!",
                 "5월 29일 10시반 한사랑 산악회 인왕산 등반. 꽃도보고 맑은 공기도 마시고 열정 열정 열정",
                 true,

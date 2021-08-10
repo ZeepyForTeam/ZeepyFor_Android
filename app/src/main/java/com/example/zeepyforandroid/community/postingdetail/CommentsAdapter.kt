@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zeepyforandroid.BR
 import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
+import com.example.zeepyforandroid.community.data.entity.CommentModel
 import com.example.zeepyforandroid.databinding.ItemCommentBinding
 import com.example.zeepyforandroid.util.DiffCallback
 import com.example.zeepyforandroid.util.ItemDecoration

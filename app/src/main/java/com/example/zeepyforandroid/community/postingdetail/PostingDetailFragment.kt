@@ -16,8 +16,8 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.example.zeepyforandroid.databinding.FragmentPostingDetailBinding
-import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.preferences.SharedPreferencesManager
+import com.example.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -85,15 +85,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     }
 
     private fun changePostingDatas() {
-        viewModel.posting.observe(viewLifecycleOwner) {
+        viewModel.postingDetail.observe(viewLifecycleOwner) {
             (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
             viewModel.changeIsGroupPurchase()
             viewModel.changeCommentList(it.comments)
-            if(it.isSetAchievement) {
-                binding.layoutAchievement.background = null
-            } else {
-                binding.layoutAchievement.setBackgroundResource(R.drawable.box_grayf4_8dp)
-            }
         }
     }
 
@@ -126,7 +121,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                 adapter = CommentsAdapter(
                     CommentAuthenticatedModel(
                         prefs.getSharedPrefs("userIdx", -1),
-                        viewModel.posting.value?.writerUserIdx,
+                        viewModel.postingDetail.value?.writerUserIdx,
                         null
                     )
                 )

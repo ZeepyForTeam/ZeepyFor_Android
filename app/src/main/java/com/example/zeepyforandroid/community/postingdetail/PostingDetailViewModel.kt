@@ -3,7 +3,8 @@ package com.example.zeepyforandroid.community.postingdetail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zeepyforandroid.community.data.entity.PostingModel
+import com.example.zeepyforandroid.community.data.entity.CommentModel
+import com.example.zeepyforandroid.community.data.entity.PostingDetailModel
 import com.example.zeepyforandroid.community.data.remote.response.ResponsePosting
 import com.example.zeepyforandroid.preferences.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +14,8 @@ import javax.inject.Inject
 class PostingDetailViewModel @Inject constructor(
     private val sharedPrefs: SharedPreferencesManager
 ): ViewModel() {
-
-    private val _posting = MutableLiveData<PostingModel>()
-    val posting: LiveData<PostingModel>
+    private val _posting = MutableLiveData<PostingDetailModel>()
+    val postingDetail: LiveData<PostingDetailModel>
         get() = _posting
 
     private val _commentList = MutableLiveData<List<CommentModel>>()
@@ -38,12 +38,12 @@ class PostingDetailViewModel @Inject constructor(
 
 
 
-    fun changePosting(postingSelected: PostingModel) {
-        _posting.value = postingSelected
+    fun changePosting(postingDetailSelected: PostingDetailModel) {
+        _posting.value = postingDetailSelected
     }
 
     fun changeIsGroupPurchase() {
-        _isGroupPurchase.value = ResponsePosting.PostingType.GROUP_PURCHASE.tag == posting.value?.typePosting
+        _isGroupPurchase.value = ResponsePosting.PostingType.JOINTPURCHASE.tag == postingDetail.value?.typePosting
     }
 
     fun changeCommentList(comments: MutableList<CommentModel>?) {

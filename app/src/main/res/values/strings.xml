@@ -70,4 +70,7 @@
     <string name="freeshare">무료나눔</string>
     <string name="friends">동네친구</string>
     <string name="filter_all_home">유형 모두 보기</string>
+    <string name="group_purchasing_community">공동 구매</string>
+    <string name="free_sharing_community">나눔하기</string>
+    <string name="friend_community">동네 친구</string>
 </resources>

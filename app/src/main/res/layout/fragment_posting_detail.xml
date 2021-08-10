@@ -71,7 +71,7 @@
                         android:id="@+id/iv_picture_writer"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        load_shapeableimage="@{viewModel.posting.imageWriter}"
+                        load_shapeableimage="@{viewModel.postingDetail.imageWriter}"
                         android:layout_marginTop="15dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/paris"
@@ -90,7 +90,7 @@
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/nanum_square_round_bold"
                         android:textSize="12sp"
-                        android:text="@{viewModel.posting.nameWriter.toString()}"
+                        android:text="@{viewModel.postingDetail.nameWriter.toString()}"
                         android:textColor="@color/zeepy_black_3b"
                         app:layout_constraintTop_toTopOf="@id/iv_picture_writer"
                         app:layout_constraintBottom_toBottomOf="@id/iv_picture_writer"
@@ -104,7 +104,7 @@
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/nanum_square_round_regular"
                         android:textSize="12sp"
-                        android:text="@{viewModel.posting.postingTime}"
+                        android:text="@{viewModel.postingDetail.postingTime}"
                         android:textColor="@color/zeepy_gray_9a"
                         app:layout_constraintTop_toTopOf="@id/tv_nickname"
                         app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
@@ -116,7 +116,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/tag_posting"
-                        android:text="@{viewModel.posting.typePosting}"
+                        android:text="@{viewModel.postingDetail.typePosting}"
                         android:textColor="@color/white"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:textSize="12sp"
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:textSize="16sp"
-                        android:text="@{viewModel.posting.titlePosting}"
+                        android:text="@{viewModel.postingDetail.titlePosting}"
                         android:layout_marginTop="24dp"
                         app:layout_constraintHorizontal_bias="0.0"
                         android:textColor="@color/zeepy_black_3b"
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_square_round_regular"
                         android:textSize="12sp"
-                        android:text="@{viewModel.posting.contentPosting}"
+                        android:text="@{viewModel.postingDetail.contentPosting}"
                         android:layout_marginTop="22dp"
                         android:textColor="@color/zeepy_black_3b"
                         android:lineSpacingExtra="8sp"
@@ -202,19 +202,19 @@
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end">
 
-                        <TextView
-                            android:id="@+id/tv_no_achievement"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/no_achievement"
-                            android:textColor="@color/zeepy_black_3b"
-                            android:fontFamily="@font/nanum_square_round_bold"
-                            android:textSize="12sp"
-                            android:visibility="@{viewModel.posting.setAchievement ? view.GONE : view.VISIBLE}"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+<!--                        <TextView-->
+<!--                            android:id="@+id/tv_no_achievement"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/no_achievement"-->
+<!--                            android:textColor="@color/zeepy_black_3b"-->
+<!--                            android:fontFamily="@font/nanum_square_round_bold"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:visibility="@{viewModel.isGroupPurchase() ? view.GONE : view.VISIBLE}"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"/>-->
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_rate_achievement"
@@ -227,7 +227,6 @@
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="7dp"
                             android:gravity="center_vertical"
-                            android:visibility="@{viewModel.posting.setAchievement ? view.VISIBLE : view.GONE}"
                             android:background="@drawable/background_achievement_rate"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"/>
@@ -239,7 +238,6 @@
                             android:layout_height="wrap_content"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
-                            android:visibility="@{viewModel.posting.setAchievement ? view.VISIBLE : view.GONE}"
                             android:progress="50"
                             android:layout_marginTop="12dp"
                             app:layout_constraintTop_toBottomOf="@id/tv_rate_achievement"
@@ -254,7 +252,6 @@
                             android:layout_marginTop="12dp"
                             android:textColor="@color/zeepy_black_3b"
                             android:fontFamily="@font/nanum_square_round_extrabold"
-                            android:visibility="@{viewModel.posting.setAchievement ? view.VISIBLE : view.GONE}"
                             android:text="0원"
                             app:layout_constraintTop_toBottomOf="@id/progressbar_achievement"
                             app:layout_constraintStart_toStartOf="@id/progressbar_achievement"/>
@@ -266,7 +263,6 @@
                             android:textSize="10sp"
                             android:textColor="@color/zeepy_black_3b"
                             android:fontFamily="@font/nanum_square_round_extrabold"
-                            android:visibility="@{viewModel.posting.setAchievement ? view.VISIBLE : view.GONE}"
                             android:text="50000원"
                             app:layout_constraintTop_toTopOf="@id/tv_start_count"
                             app:layout_constraintEnd_toEndOf="@id/progressbar_achievement"/>
