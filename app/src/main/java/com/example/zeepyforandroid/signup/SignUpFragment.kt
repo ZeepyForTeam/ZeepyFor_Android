@@ -1,20 +1,17 @@
 package com.example.zeepyforandroid.signup
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.viewModels
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentSignUpBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     private val viewModel by viewModels<SignUpViewModel>()
-    private val passwordEditTexts by lazy { listOf<EditText>(binding.edittextPassword, binding.edittextPasswordCheck) }
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -29,7 +26,33 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         setInitView()
-        checkPasswordCheckMatched()
+        showEmailRepetitionNotice()
+        showNickNameRepetitionNotice()
+    }
+
+    private fun showEmailRepetitionNotice() {
+        viewModel.isEmailRepetition.observe(viewLifecycleOwner) { isRepetition ->
+            binding.textviewEmailRepetition.run {
+                visibility = if (isRepetition) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+        }
+    }
+
+    private fun showNickNameRepetitionNotice() {
+        viewModel.isNickNameRepetition.observe(viewLifecycleOwner) { isRepetition ->
+            binding.textviewNicknameRepetition.run {
+                visibility = if (isRepetition) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+
+        }
     }
 
     private fun setInitView() {
@@ -46,29 +69,4 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             }
         }
     }
-
-    private fun checkPasswordCheckMatched() {
-        passwordEditTexts.forEach { edittext ->
-            edittext.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-                    checkPassword()
-                }
-            })
-        }
-    }
-
-    private fun checkPassword() {
-        if (passwordEditTexts[0].text.toString() == passwordEditTexts[1].text.toString()) {
-            if(passwordEditTexts.all { !it.text.isNullOrEmpty() }) {
-                viewModel.changeIsPasswordMatched(true)
-            } else {
-                viewModel.changeIsPasswordMatched(false)
-            }
-        } else {
-            viewModel.changeIsPasswordMatched(false)
-        }
-    }
-
 }

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.example.zeepyforandroid.signup.SignUpViewModel" />
+
         <variable
             name="view"
             type="android.view.View" />
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".signup.SignUpFragment"
-        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+        tools:context=".signup.SignUpFragment">
 
         <com.example.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
@@ -46,6 +48,7 @@
             android:background="@drawable/box_grayf7_8dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:hint="@string/input_name_signup"
+            android:text="@={viewModel.name}"
             android:paddingStart="12dp"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
@@ -56,33 +59,65 @@
             app:layout_constraintTop_toBottomOf="@id/textview_name" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textview_id"
+            android:id="@+id/textview_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="아이디"
+            android:text="닉네임"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
             app:layout_constraintTop_toBottomOf="@id/edittext_name"
             app:layout_constraintStart_toStartOf="@id/edittext_name"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_nickname_repetition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="@string/nickname_repetition_signup"
+            android:textColor="@color/zeepy_red_fb"
+            android:visibility="gone"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_nickname"
+            app:layout_constraintEnd_toEndOf="@+id/button_check_nickname_repetition"
+            app:layout_constraintTop_toTopOf="@id/textview_nickname" />
+
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edittext_id"
+            android:id="@+id/edittext_nickname"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/box_grayf7_8dp"
             android:fontFamily="@font/nanum_square_round_bold"
-            android:hint="@string/input_id_login"
+            android:hint="@string/input_nickname_signup"
             android:paddingStart="12dp"
+            android:text="@={viewModel.nickname}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="12sp"
-            app:layout_constraintDimensionRatio="1:0.12"
+            app:layout_constraintWidth_percent="0.71"
+            app:layout_constraintDimensionRatio="1:0.152"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toEndOf="@id/edittext_name"
             app:layout_constraintStart_toStartOf="@id/edittext_name"
-            app:layout_constraintTop_toBottomOf="@id/textview_id" />
+            app:layout_constraintTop_toBottomOf="@id/textview_nickname" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_check_nickname_repetition"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="@string/check_repetition_signup"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:onClick="@{() -> viewModel.checkNickNameRepetition()}"
+            app:layout_constraintBottom_toBottomOf="@id/edittext_nickname"
+            app:layout_constraintEnd_toEndOf="@id/edittext_name"
+            app:layout_constraintStart_toEndOf="@id/edittext_nickname"
+            app:layout_constraintTop_toTopOf="@id/edittext_nickname" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -94,14 +129,28 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
-            app:layout_constraintTop_toBottomOf="@id/edittext_id"
-            app:layout_constraintStart_toStartOf="@id/edittext_id"/>
+            app:layout_constraintTop_toBottomOf="@id/edittext_nickname"
+            app:layout_constraintStart_toStartOf="@id/edittext_nickname"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_email_repetition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="@string/email_repetition_signup"
+            android:textColor="@color/zeepy_red_fb"
+            android:visibility="gone"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_email"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_name"
+            app:layout_constraintTop_toTopOf="@id/textview_email" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edittext_email"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
+            android:text="@={viewModel.email}"
             android:background="@drawable/box_grayf7_8dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:hint="@string/input_email_signup"
@@ -109,10 +158,26 @@
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="12sp"
-            app:layout_constraintDimensionRatio="1:0.12"
-            app:layout_constraintEnd_toEndOf="@id/edittext_id"
-            app:layout_constraintStart_toStartOf="@id/edittext_id"
+            app:layout_constraintDimensionRatio="1:0.152"
+            app:layout_constraintEnd_toEndOf="@id/edittext_nickname"
+            app:layout_constraintStart_toStartOf="@id/edittext_nickname"
             app:layout_constraintTop_toBottomOf="@id/textview_email" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_check_email_repetition"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/box_grayf7_8dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="@string/check_repetition_signup"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:onClick="@{() -> viewModel.checkEmailRepetition()}"
+            app:layout_constraintBottom_toBottomOf="@id/edittext_email"
+            app:layout_constraintEnd_toEndOf="@id/textview_email_repetition"
+            app:layout_constraintStart_toEndOf="@id/edittext_email"
+            app:layout_constraintTop_toTopOf="@id/edittext_email" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_password"
@@ -126,6 +191,19 @@
             app:layout_constraintTop_toBottomOf="@id/edittext_email"
             app:layout_constraintStart_toStartOf="@id/edittext_email"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_under_eight_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="@string/input_password_upper_eight_signup"
+            android:textColor="@color/zeepy_red_fb"
+            android:textSize="10sp"
+            android:visibility="@{viewModel.password.length() >= 8 ? view.GONE : view.VISIBLE }"
+            app:layout_constraintBottom_toBottomOf="@id/textview_password"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_password"
+            app:layout_constraintTop_toTopOf="@id/textview_password" />
+
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edittext_password"
             android:layout_width="0dp"
@@ -133,14 +211,15 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/box_grayf7_8dp"
             android:fontFamily="@font/nanum_square_round_bold"
-            android:hint="@string/input_password_login"
-            android:paddingStart="12dp"
+            android:hint="@string/input_password_signup"
             android:inputType="textPassword"
+            android:paddingStart="12dp"
+            android:text="@={viewModel.password}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="12sp"
             app:layout_constraintDimensionRatio="1:0.12"
-            app:layout_constraintEnd_toEndOf="@id/edittext_email"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_name"
             app:layout_constraintStart_toStartOf="@id/edittext_email"
             app:layout_constraintTop_toBottomOf="@id/textview_password" />
 
@@ -166,6 +245,7 @@
             android:hint="@string/input_password_check_signup"
             android:inputType="textPassword"
             android:paddingStart="12dp"
+            android:text="@={viewModel.passwordCheck}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="12sp"
@@ -180,7 +260,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/check"
             android:layout_marginEnd="16dp"
-            android:visibility="@{viewModel.isPasswordMatched() == true ? view.VISIBLE : view.GONE}"
+            android:visibility="@{viewModel.password.equals(viewModel.passwordCheck) &amp;&amp; viewModel.password.empty == false ? view.VISIBLE : view.GONE}"
             app:layout_constraintTop_toTopOf="@id/edittext_password_check"
             app:layout_constraintBottom_toBottomOf="@id/edittext_password_check"
             app:layout_constraintEnd_toEndOf="@id/edittext_password_check"/>
@@ -192,14 +272,14 @@
             android:text="@string/doesnt_match_password"
             android:textColor="@color/zeepy_red_fb"
             android:textSize="10sp"
-            android:visibility="@{viewModel.isPasswordMatched() == true ? view.GONE : view.VISIBLE}"
+            android:visibility="@{viewModel.password.equals(viewModel.passwordCheck) ? view.GONE : view.VISIBLE}"
             android:fontFamily="@font/nanum_square_round_bold"
             app:layout_constraintTop_toTopOf="@id/textview_password_check"
             app:layout_constraintBottom_toBottomOf="@id/textview_password_check"
             app:layout_constraintEnd_toEndOf="@id/edittext_password_check"/>
 
         <com.example.zeepyforandroid.customview.ZeepyCheckBox
-            android:id="@+id/checkbox_email_approve"
+            android:id="@+id/checkbox_terms_approve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -208,29 +288,29 @@
             app:layout_constraintStart_toStartOf="@id/edittext_password_check"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textview_email_approve"
+            android:id="@+id/textview_terms_approve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="11sp"
-            android:text="@string/getting_info_to_email_signup"
-            app:layout_constraintTop_toTopOf="@id/checkbox_email_approve"
-            app:layout_constraintBottom_toBottomOf="@id/checkbox_email_approve"
-            app:layout_constraintStart_toEndOf="@id/checkbox_email_approve"/>
+            android:text="@string/approve_zeepy_terms_signup"
+            app:layout_constraintTop_toTopOf="@id/checkbox_terms_approve"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox_terms_approve"
+            app:layout_constraintStart_toEndOf="@id/checkbox_terms_approve"/>
 
         <com.example.zeepyforandroid.customview.ZeepyCheckBox
-            android:id="@+id/checkbox_approve_terms"
+            android:id="@+id/checkbox_approve_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             zeepy:button_type="3"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_email_approve"
-            app:layout_constraintStart_toStartOf="@id/checkbox_email_approve"/>
+            app:layout_constraintTop_toBottomOf="@id/checkbox_terms_approve"
+            app:layout_constraintStart_toStartOf="@id/checkbox_terms_approve"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textview_approve_terms"
+            android:id="@+id/textview_approve_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -238,9 +318,9 @@
             android:textColor="@color/zeepy_black_3b"
             android:textSize="11sp"
             android:text="@string/getting_info_to_email_signup"
-            app:layout_constraintTop_toTopOf="@id/checkbox_approve_terms"
-            app:layout_constraintBottom_toBottomOf="@id/checkbox_approve_terms"
-            app:layout_constraintStart_toEndOf="@id/checkbox_approve_terms"/>
+            app:layout_constraintTop_toTopOf="@id/checkbox_approve_email"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox_approve_email"
+            app:layout_constraintStart_toEndOf="@id/checkbox_approve_email"/>
 
         <com.example.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/button_signup"
@@ -254,16 +334,17 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_show_terms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="약관보기"
-            android:fontFamily="@font/nanum_square_round_bold"
-            android:textSize="11sp"
-            android:textColor="@color/zeepy_blue_5f"
             android:layout_marginStart="4dp"
-            app:layout_constraintTop_toTopOf="@id/textview_approve_terms"
-            app:layout_constraintBottom_toBottomOf="@id/textview_approve_terms"
-            app:layout_constraintStart_toEndOf="@id/textview_approve_terms"/>
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="약관보기"
+            android:textColor="@color/zeepy_blue_5f"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_terms_approve"
+            app:layout_constraintStart_toEndOf="@+id/textview_terms_approve"
+            app:layout_constraintTop_toTopOf="@id/textview_terms_approve" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
