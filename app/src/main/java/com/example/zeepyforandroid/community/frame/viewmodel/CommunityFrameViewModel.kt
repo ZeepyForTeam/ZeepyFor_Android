@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.zeepyforandroid.base.BaseViewModel
-import com.example.zeepyforandroid.community.data.entity.PostingListModel
+import com.example.zeepyforandroid.community.data.entity.PostingDetailModel
 import com.example.zeepyforandroid.community.data.repository.PostingListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,8 +15,8 @@ import javax.inject.Inject
 class CommunityFrameViewModel @Inject constructor(
     private val postingListRepository: PostingListRepository
 ): BaseViewModel() {
-    private val _postingList = MutableLiveData<List<PostingListModel>>()
-    val postingList: LiveData<List<PostingListModel>>
+    private val _postingList = MutableLiveData<List<PostingDetailModel>>()
+    val postingList: LiveData<List<PostingDetailModel>>
         get() = _postingList
 
     private val _searchAddressQuery = MutableLiveData<String>()

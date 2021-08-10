@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.databinding.FragmentCommunityFrameBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CommunityFrameFragment: BaseFragment<FragmentCommunityFrameBinding>() {
     private lateinit var navController: NavController
 

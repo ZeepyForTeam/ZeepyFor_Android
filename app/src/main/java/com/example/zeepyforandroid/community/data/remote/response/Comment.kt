@@ -8,6 +8,6 @@ data class Comment(
     val isParticipation: Boolean,
     val isSecret: Boolean,
     val subComments: List<Comment>?,
-    val superCommentId: Int,
+    val superCommentId: Int?,
     val writer: Writer
 )

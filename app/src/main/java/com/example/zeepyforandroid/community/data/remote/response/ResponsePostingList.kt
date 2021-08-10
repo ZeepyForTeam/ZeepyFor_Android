@@ -22,10 +22,20 @@ data class ResponsePostingList(
 ) {
     fun toPostingListModel(): PostingListModel =
         PostingListModel(
-            communityCategory,
-            isCompleted,
-            title,
-            content,
-            createdTime
+            postingId = id,
+            postingType = communityCategory,
+            title = title,
+            content = content,
+            imageList = imageUrls,
+            comments = comments,
+            writerId = user.id,
+            writerName = user.name,
+            writerImage = user.profileImage,
+            productName = productName,
+            sharingMethod = sharingMethod,
+            targetNumberOfPeople = targetNumberOfPeople,
+            time = createdTime,
+            isCompleted = isCompleted,
+            isLiked = isLiked
         )
 }

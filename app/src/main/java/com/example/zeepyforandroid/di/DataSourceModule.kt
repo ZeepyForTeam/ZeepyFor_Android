@@ -1,7 +1,8 @@
 package com.example.zeepyforandroid.di
 
-import com.example.zeepyforandroid.community.data.remote.data.PostingListDataSource
-import com.example.zeepyforandroid.community.data.remote.data.PostingListDataSourceImpl
+import com.example.zeepyforandroid.community.data.remote.datasource.PostingListDataSource
+import com.example.zeepyforandroid.community.data.remote.datasource.PostingListDataSourceImpl
+import com.example.zeepyforandroid.network.ZeepyApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 object DataSourceModule {
     @Provides
     @Singleton
-    fun providePostingListDataSource(): PostingListDataSource = PostingListDataSourceImpl()
+    fun providePostingListDataSource(zeepyApiService: ZeepyApiService): PostingListDataSource = PostingListDataSourceImpl(zeepyApiService)
 
 //    @Provides
 //    @Singleton

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
+import androidx.core.text.color
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,8 +16,8 @@ import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.base.BaseFragment
 import com.example.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.example.zeepyforandroid.databinding.FragmentPostingDetailBinding
-import com.example.zeepyforandroid.util.ItemDecoration
 import com.example.zeepyforandroid.preferences.SharedPreferencesManager
+import com.example.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -88,11 +89,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
             (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
             viewModel.changeIsGroupPurchase()
             viewModel.changeCommentList(it.comments)
-            if(it.isSetAchievement) {
-                binding.layoutAchievement.background = null
-            } else {
-                binding.layoutAchievement.setBackgroundResource(R.drawable.box_grayf4_8dp)
-            }
         }
     }
 

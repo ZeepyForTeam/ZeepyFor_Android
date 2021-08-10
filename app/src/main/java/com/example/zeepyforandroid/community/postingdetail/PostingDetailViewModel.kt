@@ -14,7 +14,6 @@ import javax.inject.Inject
 class PostingDetailViewModel @Inject constructor(
     private val sharedPrefs: SharedPreferencesManager
 ): ViewModel() {
-
     private val _posting = MutableLiveData<PostingDetailModel>()
     val postingDetail: LiveData<PostingDetailModel>
         get() = _posting
@@ -44,7 +43,7 @@ class PostingDetailViewModel @Inject constructor(
     }
 
     fun changeIsGroupPurchase() {
-        _isGroupPurchase.value = ResponsePosting.PostingType.GROUP_PURCHASE.tag == postingDetail.value?.typePosting
+        _isGroupPurchase.value = ResponsePosting.PostingType.JOINTPURCHASE.tag == postingDetail.value?.typePosting
     }
 
     fun changeCommentList(comments: MutableList<CommentModel>?) {

@@ -1,5 +1,9 @@
 package com.example.zeepyforandroid.community.data.entity
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class PostingDetailModel(
     val writerUserIdx: Int,
     val imageWriter: String,
@@ -12,4 +16,4 @@ data class PostingDetailModel(
     val picturesPosting: List<UrlPictureModel>,
     val isSetAchievement: Boolean,
     val comments: MutableList<CommentModel>?
-)
+): Parcelable
