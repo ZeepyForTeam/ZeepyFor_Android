@@ -4,16 +4,16 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.community.data.entity.CollectContentModel" />
+            type="com.zeepy.zeepyforandroid.community.data.entity.CollectContentModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:zeepy= "http://schemas.android.com/apk/res/com.example.zeepyforandroid"
+        xmlns:zeepy= "http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.example.zeepyforandroid.customview.ZeepyCheckBox
+        <com.zeepy.zeepyforandroid.customview.ZeepyCheckBox
             android:id="@+id/checkbox_collect_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
