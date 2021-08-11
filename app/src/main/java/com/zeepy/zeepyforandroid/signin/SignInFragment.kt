@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.BuildConfig
@@ -18,8 +19,11 @@ import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SignInFragment : BaseFragment<FragmentSignInBinding>() {
     private lateinit var mOAuthLoginInstance: OAuthLogin
     private val viewModel by viewModels<SignInViewModel>()
@@ -33,18 +37,21 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         initNaverOAuth()
         loginWithKAKAO()
         setLoginButton()
         goToSignUp()
+        loginZEEPY()
     }
 
     private fun setLoginButton() {
         binding.buttonLogin.apply{
             setText("로그인")
-            onClick{
-                findNavController().navigate(R.id.action_signInFragment_to_mainFrameFragment)
+            onClick {
+                viewModel.signIn()
             }
         }
     }
@@ -52,6 +59,16 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
     private fun goToSignUp() {
         binding.textviewSignup.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        }
+    }
+
+    private fun loginZEEPY() {
+        viewModel.loginSuccess.observe(viewLifecycleOwner) { success ->
+            if(success) {
+                findNavController().navigate(R.id.action_signInFragment_to_mainFrameFragment)
+            } else {
+                Toast.makeText(requireContext(), "사용자를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

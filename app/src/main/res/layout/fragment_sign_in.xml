@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.signin.SignInViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -53,6 +59,7 @@
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="14sp"
+            android:text="@={viewModel.email}"
             app:layout_constraintDimensionRatio="1:0.16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +79,7 @@
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="14sp"
+            android:text="@={viewModel.password}"
             app:layout_constraintDimensionRatio="1:0.16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
