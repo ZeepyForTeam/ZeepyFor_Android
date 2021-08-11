@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/lessorPersonalityFragment"
-        android:name="com.example.zeepyforandroid.review.view.LessorPersonalityFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.LessorPersonalityFragment"
         android:label="LessorPersonalityFragment"
         tools:layout="@layout/fragment_lessor_personality">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.SelectAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.SelectAddressFragment"
         android:label="SelectAddressFragment"
         tools:layout="@layout/fragment_select_address">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.SearchAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.SearchAddressFragment"
         android:label="SearchAddressFragment"
         tools:layout="@layout/fragment_search_address">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/writeDetailAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.WriteDetailAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.WriteDetailAddressFragment"
         android:label="WriteDetailAddressFragment"
         tools:layout="@layout/fragment_write_detail_address">
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/writeLessorInfoFragment"
-        android:name="com.example.zeepyforandroid.review.view.WriteLessorInfoFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.WriteLessorInfoFragment"
         android:label="WriteLessorInfoFragment"
         tools:layout="@layout/fragment_write_lessor_info">
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/houseReviewFragment"
-        android:name="com.example.zeepyforandroid.review.view.HouseReviewFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.HouseReviewFragment"
         android:label="HouseReviewFragment"
         tools:layout="@layout/fragment_house_review">
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/writeHouseInfoFragment"
-        android:name="com.example.zeepyforandroid.review.view.WriteHouseInfoFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.WriteHouseInfoFragment"
         android:label="WriteHouseInfoFragment"
         tools:layout="@layout/fragment_write_house_info">
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/housePictureFragment"
-        android:name="com.example.zeepyforandroid.review.view.HousePictureFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.HousePictureFragment"
         android:label="HousePictureFragment"
         tools:layout="@layout/fragment_house_picture">
     </fragment>

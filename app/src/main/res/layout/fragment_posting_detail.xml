@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:zeepy= "http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+    xmlns:zeepy= "http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.zeepyforandroid.community.postingdetail.PostingDetailViewModel" />
+            type="com.zeepy.zeepyforandroid.community.postingdetail.PostingDetailViewModel" />
         <variable
             name="view"
             type="android.view.View" />
@@ -59,7 +59,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
-                    <com.example.zeepyforandroid.customview.ZeepyToolbar
+                    <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -269,7 +269,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.example.zeepyforandroid.customview.ZeepyButton
+                    <com.zeepy.zeepyforandroid.customview.ZeepyButton
                         android:id="@+id/btn_participation"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -316,7 +316,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <com.example.zeepyforandroid.customview.ZeepyCheckBox
+                <com.zeepy.zeepyforandroid.customview.ZeepyCheckBox
                     android:id="@+id/checkbox_secret"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

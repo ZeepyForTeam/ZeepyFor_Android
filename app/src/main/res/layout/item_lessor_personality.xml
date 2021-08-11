@@ -3,10 +3,10 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.entity.LessorPersonalityModel" />
+            type="com.zeepy.zeepyforandroid.review.data.entity.LessorPersonalityModel" />
         <variable
             name="fontType"
-            type="com.example.zeepyforandroid.util.FontType" />
+            type="com.zeepy.zeepyforandroid.util.FontType" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.entity.AddressModel" />
+            type="com.zeepy.zeepyforandroid.review.data.entity.AddressModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

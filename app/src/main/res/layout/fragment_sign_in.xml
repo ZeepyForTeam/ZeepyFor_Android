@@ -120,7 +120,7 @@
             app:layout_constraintStart_toEndOf="@+id/textview_find_password"
             app:layout_constraintTop_toTopOf="@+id/textview_find_password" />
 
-        <com.example.zeepyforandroid.customview.ZeepyButton
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/button_login"
             android:layout_width="0dp"
             android:layout_height="0dp"

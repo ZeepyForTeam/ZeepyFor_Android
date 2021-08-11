@@ -7,7 +7,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".community.frame.view.CommunityMainFragment">
 
-        <com.example.zeepyforandroid.customview.ZeepyToolbar
+        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.example.zeepyforandroid.customview.NestedScrollableHost
+        <com.zeepy.zeepyforandroid.customview.NestedScrollableHost
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/tablayout"
@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />
 
-        </com.example.zeepyforandroid.customview.NestedScrollableHost>
+        </com.zeepy.zeepyforandroid.customview.NestedScrollableHost>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

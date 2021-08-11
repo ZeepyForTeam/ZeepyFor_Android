@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.entity.ReviewChoiceModel" />
+            type="com.zeepy.zeepyforandroid.review.data.entity.ReviewChoiceModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
         <TextView
             android:id="@+id/tv_item"
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/btn_like"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -45,7 +45,7 @@
                 android:layout_height="match_parent"
                 zeepy:button_type="2" />
 
-            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/btn_soso"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -54,7 +54,7 @@
                 android:layout_height="match_parent"
                 zeepy:button_type="3" />
 
-            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/btn_dislike"
                 android:layout_width="0dp"
                 android:layout_weight="1"

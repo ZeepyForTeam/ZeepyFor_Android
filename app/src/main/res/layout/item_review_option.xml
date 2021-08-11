@@ -4,15 +4,15 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.entity.OptionModel" />
+            type="com.zeepy.zeepyforandroid.review.data.entity.OptionModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
-        <com.example.zeepyforandroid.customview.ZeepyCheckBox
+        <com.zeepy.zeepyforandroid.customview.ZeepyCheckBox
             android:id="@+id/checkbox"
             android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"

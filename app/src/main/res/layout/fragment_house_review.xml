@@ -7,14 +7,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+            type="com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".review.view.HouseReviewFragment"
-        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_count_room">
 
-                    <com.example.zeepyforandroid.customview.ZeepyRadioButton
+                    <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                         android:id="@+id/radiobtn_one_room"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -70,7 +70,7 @@
                         android:text="@string/roomcount_one"
                         zeepy:button_type="1" />
 
-                    <com.example.zeepyforandroid.customview.ZeepyRadioButton
+                    <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                         android:id="@+id/radiobtn_two_room"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -79,7 +79,7 @@
                         android:text="@string/roomcount_two"
                         zeepy:button_type="1" />
 
-                    <com.example.zeepyforandroid.customview.ZeepyRadioButton
+                    <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                         android:id="@+id/radiobtn_three_room"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -151,7 +151,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <com.example.zeepyforandroid.customview.ZeepyButton
+                <com.zeepy.zeepyforandroid.customview.ZeepyButton
                     android:id="@+id/btn_next"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

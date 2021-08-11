@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFrameFragment"
-        android:name="com.example.zeepyforandroid.mainframe.MainFrameFragment"
+        android:name="com.zeepy.zeepyforandroid.mainframe.MainFrameFragment"
         android:label="fragment_main_frame"
         tools:layout="@layout/fragment_main_frame" >
         <action
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.zeepyforandroid.signin.SignInFragment"
+        android:name="com.zeepy.zeepyforandroid.signin.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -55,43 +55,43 @@
 
     <fragment
         android:id="@+id/reviewSearchAddressFragment"
-        android:name="com.example.zeepyforandroid.review.view.ReviewSearchAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.ReviewSearchAddressFragment"
         android:label="fragment_review_search_address"
         tools:layout="@layout/fragment_review_search_address"/>
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.zeepyforandroid.map.view.MapFragment"
+        android:name="com.zeepy.zeepyforandroid.map.view.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map"/>
 
     <fragment
         android:id="@+id/reviewFrameFragment"
-        android:name="com.example.zeepyforandroid.review.view.ReviewFrameFragment"
+        android:name="com.zeepy.zeepyforandroid.review.view.ReviewFrameFragment"
         android:label="ReviewFrameFragment"
         tools:layout="@layout/fragment_review_frame"/>
 
     <fragment
         android:id="@+id/postingDetailFragment"
-        android:name="com.example.zeepyforandroid.community.postingdetail.PostingDetailFragment"
+        android:name="com.zeepy.zeepyforandroid.community.postingdetail.PostingDetailFragment"
         android:label="PostingDetailFragment"
         tools:layout="@layout/fragment_posting_detail">
 
         <argument
             android:name="postingModel"
-            app:argType="com.example.zeepyforandroid.community.data.entity.PostingDetailModel"/>
+            app:argType="com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel"/>
 
     </fragment>
 
     <fragment
         android:id="@+id/conditionsearchFragment"
-        android:name="com.example.zeepyforandroid.conditionsearch.ConditionSearchFragment"
+        android:name="com.zeepy.zeepyforandroid.conditionsearch.ConditionSearchFragment"
         android:label="ConditionSearchFragment"
         tools:layout="@layout/fragment_search_by_condition"/>
 
     <fragment
         android:id="@+id/communitySearchAddressFragment"
-        android:name="com.example.zeepyforandroid.community.searchaddress.CommunitySearchAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.community.searchaddress.CommunitySearchAddressFragment"
         android:label="CommunitySearchAddressFragment"
         tools:layout="@layout/fragment_community_search_address">
         <action
@@ -101,23 +101,23 @@
 
     <fragment
         android:id="@+id/communityDetailAddressFragment"
-        android:name="com.example.zeepyforandroid.community.searchaddress.CommunityDetailAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.community.searchaddress.CommunityDetailAddressFragment"
         android:label="CommunityDetailAddressFragment"
         tools:layout="@layout/fragment_community_detail_address"/>
     <fragment
         android:id="@+id/writePostingFragment"
-        android:name="com.example.zeepyforandroid.community.WritePostingFragment"
+        android:name="com.zeepy.zeepyforandroid.community.WritePostingFragment"
         android:label="WritePostingFragment"
         tools:layout="@layout/fragment_write_posting"/>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.zeepyforandroid.signup.SignUpFragment"
+        android:name="com.zeepy.zeepyforandroid.signup.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up"/>
 
     <fragment
         android:id="@+id/changeAddressFragment"
-        android:name="com.example.zeepyforandroid.ChangeAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.ChangeAddressFragment"
         android:label="ChangeAddressFragment"
         tools:layout="@layout/fragment_change_address"/>
 
