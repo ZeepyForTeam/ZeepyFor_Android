@@ -1,19 +1,31 @@
 package com.zeepy.zeepyforandroid.home
 
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.Point
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHomeBinding
+import com.zeepy.zeepyforandroid.databinding.ZeepyDialogBinding
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+    @Inject lateinit var userPreferenceManager: UserPreferenceManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -34,14 +46,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.toolbar.apply {
             setTitle("을지로 3가")
             setCommunityLocation()
-            setRightButton(R.drawable.ic_btn_write) {
-                findNavController().navigate(R.id.action_communityMainFragment_to_communitySelectCategoryFragment)
-            }
-            setRightButtonMargin(32)
-
 
             binding.textviewToolbar.setOnClickListener {
-                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+                if(userPreferenceManager.fetchUserAccessToken().isNullOrEmpty()) {
+                    showLoginDialog()
+                } else {
+                    requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+                }
             }
         }
     }
@@ -58,5 +69,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.buttonWriteReview.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_mainFrameFragment_to_reviewFrameFragment)
         }
+    }
+
+    private fun showLoginDialog() {
+        val loginDialog = ZeepyDialogBuilder(resources.getString(R.string.login_notice_message),null)
+
+        loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "삭제")
+            .setRightButton(R.drawable.box_blue_59_8dp, "좋았어, 로그인하기!")
+            .setButtonHorizontalWeight(0.287f, 0.712f)
+            .build()
+            .show(childFragmentManager, this@HomeFragment.tag)
     }
 }
