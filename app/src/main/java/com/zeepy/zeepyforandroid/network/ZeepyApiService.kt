@@ -2,6 +2,8 @@ package com.zeepy.zeepyforandroid.network
 
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
+import com.zeepy.zeepyforandroid.signin.RequestLogin
+import com.zeepy.zeepyforandroid.signin.ResponseLogin
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.Body
@@ -21,4 +23,7 @@ interface ZeepyApiService {
 
     @GET("/api/community")
     fun getPostingList(@Query("address") address: String, @Query("communityType") communityType: String?): Single<List<ResponsePostingList>>
+
+    @POST("/api/auth/login")
+    fun signin(@Body requestLogin: RequestLogin): Single<ResponseLogin>
 }
