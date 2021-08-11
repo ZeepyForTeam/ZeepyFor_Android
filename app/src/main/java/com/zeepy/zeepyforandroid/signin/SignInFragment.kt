@@ -65,7 +65,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
     private fun loginZEEPY() {
         viewModel.loginSuccess.observe(viewLifecycleOwner) { success ->
             if(success) {
-                findNavController().navigate(R.id.action_signInFragment_to_mainFrameFragment)
+                findNavController().popBackStack()
             } else {
                 Toast.makeText(requireContext(), "사용자를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -120,7 +120,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
                 Log.e("access token", "${token.accessToken}")
                 Log.e("access token expire", "${token.accessTokenExpiresAt}")
                 Log.e("refresh token", "${token.refreshToken}")
-                findNavController().navigate(R.id.action_signInFragment_to_mainFrameFragment)
+                findNavController().popBackStack()
             }
         }
 

@@ -15,6 +15,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHomeBinding
 import com.zeepy.zeepyforandroid.databinding.ZeepyDialogBinding
@@ -77,6 +79,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "삭제")
             .setRightButton(R.drawable.box_blue_59_8dp, "좋았어, 로그인하기!")
             .setButtonHorizontalWeight(0.287f, 0.712f)
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                    dialog.dismiss()
+                }
+            })
             .build()
             .show(childFragmentManager, this@HomeFragment.tag)
     }

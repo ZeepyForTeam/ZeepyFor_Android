@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_changeAddressFragment"
             app:destination="@id/changeAddressFragment" />
+        <action
+            android:id="@+id/action_mainFrameFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
 
     </fragment>
 
@@ -42,10 +45,6 @@
         android:name="com.zeepy.zeepyforandroid.signin.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
-        <action
-            android:id="@+id/action_signInFragment_to_mainFrameFragment"
-            app:destination="@id/mainFrameFragment"
-            app:popUpToInclusive="true"/>
 
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
@@ -109,6 +108,7 @@
         android:name="com.zeepy.zeepyforandroid.community.WritePostingFragment"
         android:label="WritePostingFragment"
         tools:layout="@layout/fragment_write_posting"/>
+
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.zeepy.zeepyforandroid.signup.SignUpFragment"
