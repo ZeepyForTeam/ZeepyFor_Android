@@ -20,7 +20,8 @@ class ZeepyDialog(
     private val rightButtonText: String? = "취소",
     private val weightRightButton: Float? = 0.5f,
     private val weightLeftButton: Float? = 0.5f,
-    private val reverseTextColor: Boolean? = false
+    private val reverseTextColor: Boolean? = false,
+    private val dialogClickListener: DialogClickListener?
 ) : DialogFragment() {
     private lateinit var binding: ZeepyDialogBinding
 
@@ -31,10 +32,8 @@ class ZeepyDialog(
     ): View? {
         binding = ZeepyDialogBinding.inflate(inflater, container, false)
         initView()
-
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-
         return binding.root
 
     }
@@ -42,6 +41,7 @@ class ZeepyDialog(
     override fun onResume() {
         super.onResume()
         getDeviceSize()
+        attachClickListener()
     }
 
     //defaultDisplay Deprecated로 인한 Version 처리
@@ -113,6 +113,15 @@ class ZeepyDialog(
                     layoutParams.weight = weightRightButton
                 }
             }
+        }
+    }
+
+    private fun attachClickListener() {
+        binding.textviewLeftButton.setOnClickListener {
+            dialogClickListener?.clickLeftButton(this)
+        }
+        binding.textviewRightButton.setOnClickListener {
+            dialogClickListener?.clickRightButton(this)
         }
     }
 

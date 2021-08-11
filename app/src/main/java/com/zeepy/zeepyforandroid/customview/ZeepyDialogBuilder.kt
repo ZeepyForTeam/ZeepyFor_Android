@@ -11,6 +11,7 @@ class ZeepyDialogBuilder(
     private var rightButtonText: String? = null
     private var weightLeftButton: Float? = null
     private var weightRightButton: Float? = null
+    private var dialogClickListener: DialogClickListener? = null
 
     fun build(): ZeepyDialog {
         return ZeepyDialog(
@@ -22,7 +23,8 @@ class ZeepyDialogBuilder(
             rightButtonText,
             weightLeftButton,
             weightRightButton,
-            reverseTextColor
+            reverseTextColor,
+            dialogClickListener
         )
     }
 
@@ -46,6 +48,11 @@ class ZeepyDialogBuilder(
     fun setButtonHorizontalWeight(left: Float, right: Float): ZeepyDialogBuilder {
         this.weightLeftButton = left
         this.weightRightButton = right
+        return this
+    }
+
+    fun setDialogClickListener(dialogClickListener: DialogClickListener): ZeepyDialogBuilder {
+        this.dialogClickListener = dialogClickListener
         return this
     }
 
