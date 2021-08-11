@@ -31,7 +31,8 @@ class ZeepyDialog(
         savedInstanceState: Bundle?
     ): View? {
         binding = ZeepyDialogBinding.inflate(inflater, container, false)
-        initView()
+        initDialogText()
+        setButtons()
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return binding.root
@@ -41,6 +42,7 @@ class ZeepyDialog(
     override fun onResume() {
         super.onResume()
         getDeviceSize()
+
         attachClickListener()
     }
 
@@ -74,27 +76,28 @@ class ZeepyDialog(
     }
 
 
-    private fun initView() {
+    private fun initDialogText() {
         binding.textviewTitle.text = title
         binding.textviewLeftButton.text = leftButtonText
         binding.textviewRightButton.text = rightButtonText
 
-        if (content.isNullOrEmpty()) {
-            binding.textviewContent.visibility = View.GONE
-        } else {
-            binding.textviewContent.run {
+        binding.textviewContent.run {
+            if (content.isNullOrEmpty()) {
+                visibility = View.GONE
+            } else {
                 text = content
                 visibility = View.VISIBLE
             }
         }
-
         if (reverseTextColor == true) {
             binding.run {
                 textviewLeftButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                 textviewRightButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             }
         }
+    }
 
+    private fun setButtons() {
         if (leftButtonDrawable != null) {
             binding.textviewLeftButton.run {
                 background = ContextCompat.getDrawable(requireContext(), leftButtonDrawable)
@@ -124,5 +127,4 @@ class ZeepyDialog(
             dialogClickListener?.clickRightButton(this)
         }
     }
-
 }
