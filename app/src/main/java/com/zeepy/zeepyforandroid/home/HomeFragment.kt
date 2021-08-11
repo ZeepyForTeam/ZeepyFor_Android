@@ -46,17 +46,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.toolbar.apply {
             setTitle("을지로 3가")
             setCommunityLocation()
-            setRightButton(R.drawable.ic_btn_write) {
+
+            binding.textviewToolbar.setOnClickListener {
                 if(userPreferenceManager.fetchUserAccessToken().isNullOrEmpty()) {
                     showLoginDialog()
                 } else {
-                    findNavController().navigate(R.id.action_communityMainFragment_to_communitySelectCategoryFragment)
+                    requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
                 }
-            }
-            setRightButtonMargin(32)
-
-            binding.textviewToolbar.setOnClickListener {
-                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
             }
         }
     }
@@ -78,8 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun showLoginDialog() {
         val loginDialog = ZeepyDialogBuilder(resources.getString(R.string.login_notice_message),null)
 
-        loginDialog
-            .setLeftButton(R.drawable.box_grayf9_8dp, "삭제")
+        loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "삭제")
             .setRightButton(R.drawable.box_blue_59_8dp, "좋았어, 로그인하기!")
             .setButtonHorizontalWeight(0.287f, 0.712f)
             .build()

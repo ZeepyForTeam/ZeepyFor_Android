@@ -7,7 +7,6 @@ import android.util.DisplayMetrics
 import android.view.*
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.databinding.ZeepyDialogBinding
