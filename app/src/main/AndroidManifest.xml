@@ -33,8 +33,7 @@
         </provider>
 
         <activity
-            android:name=".mainframe.MainActivity"
-            android:windowSoftInputMode="stateVisible">
+            android:name=".mainframe.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

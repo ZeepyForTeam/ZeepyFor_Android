@@ -3,6 +3,7 @@ package com.example.zeepyforandroid.review.data.dto
 import androidx.annotation.StringRes
 import com.example.zeepyforandroid.R
 import com.example.zeepyforandroid.application.ZeepyApplication
+import com.google.gson.annotations.SerializedName
 import java.lang.IllegalArgumentException
 
 data class RequestWriteReview(

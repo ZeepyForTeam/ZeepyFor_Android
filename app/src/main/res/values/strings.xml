@@ -32,12 +32,12 @@
     <string name="deposit_price_from">%1$s,000만 부터</string>
     <string name="deposit_price_to">%1$s,000만 까지</string>
     <string name="input_id_login">아이디를 입력해주세요</string>
-    <string name="input_password_login">비밀번호를 입력해주세요</string>
+    <string name="input_password_signup">8~16자의 비밀번호를 입력해주세요</string>
     <string name="target_count_write_posting">%d</string>
     <string name="input_name_signup">이름을 입력해주세요</string>
     <string name="input_password_check_signup">비밀번호를 다시 입력해주세요</string>
-    <string name="getting_info_to_email_signup">ZEEPY 서비스에 대한 소식을 이메일로 받아봅니다.</string>
-    <string name="input_email_signup">메일을 입력해주세요</string>
+    <string name="getting_info_to_email_signup">ZEEPY 서비스에 대한 소식을 이메일로 받아봅니다. (선택)</string>
+    <string name="input_email_signup">이메일ID를 입력해주세요</string>
     <string name="myprofile_loggedout">로그인을\n완료해주세요.</string>
     <string name="doesnt_match_password">비밀번호가 일치하지 않습니다.</string>
     <string name="lessor_business">칼 같은 우리 사이, 비즈니스형</string>
@@ -73,4 +73,11 @@
     <string name="group_purchasing_community">공동 구매</string>
     <string name="free_sharing_community">나눔하기</string>
     <string name="friend_community">동네 친구</string>
+    <string name="input_nickname_signup">사용하실 닉네임을 입력해주세요</string>
+    <string name="input_password_upper_eight_signup">최소 8글자 이상의 비밀번호를 입력해주세요.</string>
+    <string name="email_repetition_signup">이미 가입된 이메일입니다.</string>
+    <string name="nickname_repetition_signup">이미 존재하는 닉네임입니다.</string>
+    <string name="check_repetition_signup">중복확인</string>
+    <string name="approve_zeepy_terms_signup">ZEEPY에서 제공하는 서비스 약관에 동의합니다. (필수)</string>
+    <string name="input_password_login">비밀번호를 입력해주세요</string>
 </resources>
