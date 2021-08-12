@@ -15,4 +15,13 @@
         <item>70</item>
         <item>80</item>
     </string-array>
+
+    <string-array name="lessor_personality_array">
+        <item>전체</item>
+        <item>칼 같은 우리 사이, 비즈니스형</item>
+        <item>따뜻해 녹아내리는 중! 친절형</item>
+        <item>자유롭게만 살아다오, 방목형</item>
+        <item>겉은 바삭 속은 촉촉! 츤데레형</item>
+        <item>할말은 많지만 하지 않을래요 :(</item>
+    </string-array>
 </resources>

@@ -88,37 +88,37 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     }
 
     private fun setOptionButton() {
-        binding.optionBtn.setOnClickListener {
-            resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, 800, false)
+        binding.optionBtnLayout.optionBtn.setOnClickListener {
+            resizeAnimation = WidthResizeAnimation(it, 800, false)
             resizeAnimation.duration = 600
             Log.d("original widthhhhhhhh", resizeAnimation.originalWidth.toString())
             Log.d("target widthhhhhhhh", resizeAnimation.targetWidth.toString())
-            binding.optionBtnLayout.startAnimation(resizeAnimation)
-            binding.optionBtn.visibility = View.GONE
+            it.startAnimation(resizeAnimation)
+            it.visibility = View.GONE
             Handler(Looper.getMainLooper()).postDelayed(object : Runnable {
                 override fun run() {
-                    binding.optionOne.visibility = View.VISIBLE
-                    binding.optionTwo.visibility = View.VISIBLE
-                    binding.optionThree.visibility = View.VISIBLE
-                    binding.optionFour.visibility = View.VISIBLE
-                    binding.optionFive.visibility = View.VISIBLE
+                    binding.optionBtnLayout.optionOne.visibility = View.VISIBLE
+                    binding.optionBtnLayout.optionTwo.visibility = View.VISIBLE
+                    binding.optionBtnLayout.optionThree.visibility = View.VISIBLE
+                    binding.optionBtnLayout.optionFour.visibility = View.VISIBLE
+                    binding.optionBtnLayout.optionFive.visibility = View.VISIBLE
                 }
             },300)
 
 
         }
-        binding.optionBtnLayout.setOnClickListener {
+        binding.optionBtnLayout.optionBtn.setOnClickListener {
             resizeAnimation = WidthResizeAnimation(it, 218, false)
             resizeAnimation.duration = 600
             Log.d("original widthhhhhhhh", resizeAnimation.originalWidth.toString())
             Log.d("target widthhhhhhhh", resizeAnimation.targetWidth.toString())
             it.startAnimation(resizeAnimation)
-            binding.optionBtn.visibility = View.VISIBLE
-            binding.optionOne.visibility = View.GONE
-            binding.optionTwo.visibility = View.GONE
-            binding.optionThree.visibility = View.GONE
-            binding.optionFour.visibility = View.GONE
-            binding.optionFive.visibility = View.GONE
+            binding.optionBtnLayout.optionBtn.visibility = View.VISIBLE
+            binding.optionBtnLayout.optionOne.visibility = View.GONE
+            binding.optionBtnLayout.optionTwo.visibility = View.GONE
+            binding.optionBtnLayout.optionThree.visibility = View.GONE
+            binding.optionBtnLayout.optionFour.visibility = View.GONE
+            binding.optionBtnLayout.optionFive.visibility = View.GONE
         }
     }
 

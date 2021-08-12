@@ -10,7 +10,7 @@
         tools:context=".lookaround.LookAroundFragment">
 
         <com.example.zeepyforandroid.customview.ZeepyToolbar
-            android:id="@+id/map_toolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -22,39 +22,42 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_menu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/map_toolbar"
+            android:layout_height="28dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:paddingVertical="8dp">
+            android:layout_marginTop="8dp">
 
-            <Spinner
+            <com.example.zeepyforandroid.customview.MaterialSpinner
                 android:id="@+id/spinner_lessor_personality"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nanum_square_round_bold"
-                android:background="@drawable/box_spinner_white"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                style="@style/AppTheme.Widget.Design.TextInputLayout"
+                app:srcCompat="@drawable/spinner_arrow"
                 android:text="전체"
+                android:paddingEnd="-7dp"
                 android:textSize="12sp"
-                android:spinnerMode="dropdown"
-                style="@style/SpinnerColor"
-                android:gravity="center_vertical"
-                app:layout_constraintWidth_percent="0.12"
+                app:hintEnabled="false"
+                android:gravity="center"
+                app:spinnerMode="bottomsheet"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginStart="16dp" />
 
             <HorizontalScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 app:layout_constraintStart_toEndOf="@id/spinner_lessor_personality"
-                app:layout_constraintTop_toTopOf="spinner_lessor_personality"
-                app:layout_constraintBottom_toBottomOf="spinner_lessor_personality"
-                android:layout_marginStart="4dp">
+                app:layout_constraintTop_toTopOf="@id/spinner_lessor_personality"
+                app:layout_constraintBottom_toBottomOf="@id/spinner_lessor_personality"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:scrollbars="none"
+                android:layout_marginStart="4dp"
+                app:layout_constrainedWidth="true">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
@@ -68,7 +71,9 @@
                         android:textColor="@color/zeepy_black_3b"
                         android:textSize="12sp"
                         android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp" />
+                        android:background="@drawable/selector_grayf4_blue59_16dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="7dp"/>
 
                     <CheckBox
                         android:id="@+id/cb_good_sound_insulation"
@@ -81,7 +86,9 @@
                         android:textColor="@color/zeepy_black_3b"
                         android:textSize="12sp"
                         android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp" />
+                        android:background="@drawable/selector_grayf4_blue59_16dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="7dp"/>
 
                     <CheckBox
                         android:id="@+id/cb_good_pest"
@@ -94,7 +101,9 @@
                         android:textColor="@color/zeepy_black_3b"
                         android:textSize="12sp"
                         android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp" />
+                        android:background="@drawable/selector_grayf4_blue59_16dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="7dp"/>
 
                     <CheckBox
                         android:id="@+id/cb_good_sunlight"
@@ -107,7 +116,9 @@
                         android:textColor="@color/zeepy_black_3b"
                         android:textSize="12sp"
                         android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp" />
+                        android:background="@drawable/selector_grayf4_blue59_16dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="7dp"/>
 
                     <CheckBox
                         android:id="@+id/cb_good_water_pressure"
@@ -120,17 +131,22 @@
                         android:textColor="@color/zeepy_black_3b"
                         android:textSize="12sp"
                         android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp" />
+                        android:background="@drawable/selector_grayf4_blue59_16dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="7dp"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
 
             </HorizontalScrollView>
 
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_review_list"
+            android:id="@+id/rv_building_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -139,9 +155,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_menu"
-            android:layout_marginTop="24dp"
-            tools:listitem="@layout/item_result_house"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_lookaround_building"
             tools:itemCount="3"/>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

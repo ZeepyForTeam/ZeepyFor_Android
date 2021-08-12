@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="data"
+            type="com.example.zeepyforandroid.lookaround.data.entity.LookAroundBuildingSummaryModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_grayf4_8dp">
+
+        <TextView
+            android:id="@+id/textview_name_house"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
+            android:text="@{data.buildingName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.07"
+            app:layout_constraintTop_toTopOf="@id/cardview_image_house"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="금성 토성빌"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_image_house"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="6dp"
+            android:layout_marginVertical="12dp"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.28">
+
+            <ImageView
+                android:id="@+id/imageview_house"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                loadUrl="@{data.buildingPicture}"
+                android:scaleType="fitXY"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/textview_personality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_blue_5f"
+            android:textSize="12sp"
+            android:text="집주인 성향"
+            app:layout_constraintVertical_bias="0.18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/textview_name_house"
+            app:layout_constraintTop_toBottomOf="@id/textview_name_house" />
+
+        <TextView
+            android:id="@+id/textview_personality_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:text="@{data.personalityReview}"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_personality"
+            app:layout_constraintStart_toStartOf="@+id/textview_building_review"
+            app:layout_constraintTop_toTopOf="@id/textview_personality"
+            app:layout_constraintVertical_bias="0.1"
+            tools:text="비즈니스형" />
+
+
+        <TextView
+            android:id="@+id/textview_building"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_blue_5f"
+            android:textSize="12sp"
+            android:text="건물 평가"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/textview_personality"
+            app:layout_constraintTop_toBottomOf="@id/textview_personality_review" />
+
+
+        <TextView
+            android:id="@+id/textview_building_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:text="@{data.buildingReview}"
+            android:layout_marginStart="15dp"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintBottom_toBottomOf="@id/textview_building"
+            app:layout_constraintStart_toEndOf="@id/textview_building"
+            app:layout_constraintTop_toTopOf="@id/textview_building"
+            tools:text="여기서 살고싶어 여기" />
+
+
+        <TextView
+            android:id="@+id/textview_building_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:text="@{data.buildingType}"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/textview_building"
+            app:layout_constraintTop_toBottomOf="@id/textview_building"
+            tools:text="빌라"/>
+
+        <TextView
+            android:id="@+id/textview_room_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:text="@{data.roomType}"
+            android:layout_marginStart="7dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_building_type"
+            app:layout_constraintStart_toEndOf="@id/textview_building_type"
+            app:layout_constraintTop_toTopOf="@id/textview_building_type"
+            tools:text="투룸"/>
+
+        <TextView
+            android:id="@+id/textview_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="12sp"
+            android:text="@{data.floor}"
+            android:layout_marginStart="7dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_room_type"
+            app:layout_constraintStart_toEndOf="@id/textview_room_type"
+            app:layout_constraintTop_toTopOf="@id/textview_room_type"
+            tools:text="3층"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

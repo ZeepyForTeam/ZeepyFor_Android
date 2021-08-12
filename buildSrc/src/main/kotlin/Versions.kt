@@ -31,7 +31,5 @@ object Versions {
 
     const val KAKAO_USERMGMT_VERSION = "1.27.0"
 
-    const val MATERIAL_SPINNER_VERSION = "1.4.2"
-
     const val ANDROID_DESIGN_VERSION = "28.0.0"
 }

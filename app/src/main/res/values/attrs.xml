@@ -5,4 +5,22 @@
         <attr name="button_type" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="MaterialSpinner">
+        <attr name="android:enabled" />
+        <attr name="android:focusable" />
+        <attr name="android:focusableInTouchMode" />
+        <attr name="android:prompt" />
+        <attr name="android:src" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="android:text" />
+        <attr name="android:gravity" />
+        <attr name="srcCompat" />
+        <attr name="spinnerMode" format="enum">
+            <enum name="dialog" value="0" />
+            <enum name="dropdown" value="1" />
+            <enum name="bottomsheet" value="2" />
+        </attr>
+    </declare-styleable>
+
 </resources>

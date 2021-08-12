@@ -119,7 +119,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.SWIPE_REFRESH_LAYOUT_VERSION}"
 
     //Kakao map
-    compile files('libs/libDaumMapAndroid.jar')
+    implementation files('libs/libDaumMapAndroid.jar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation files('libs/libDaumMapAndroid.jar')
 
@@ -130,9 +130,4 @@ dependencies {
     implementation group: project.kakao_sdk_group, name: 'usermgmt', version: project.kakao_sdk_version
     implementation "com.kakao.sdk:v2-user:${Versions.KAKAO_SDK_USER_VERSION}"
     implementation "com.kakao.sdk:v2-talk:2.5.2"
-
-    //Spinner BottomSheet & Android Design Support
-    implementation "com.github.tiper:MaterialSpinner:${Versions.MATERIAL_SPINNER_VERSION}"
-    implementation "com.android.support:design:${Versions.ANDROID_DESIGN_VERSION}"
-
 }

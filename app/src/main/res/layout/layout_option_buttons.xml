@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout
+        android:layout_width="83dp"
+        android:layout_height="76dp"
+        android:orientation="horizontal"
+        android:background="@drawable/map_floating_button"
+        android:gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <Button
+            android:id="@+id/option_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="소통유형별"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="9sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:gravity="center|bottom"
+            android:background="@drawable/map_floating_button"
+            app:backgroundTint="@null"
+            android:stateListAnimator="@null"/>
+
+        <LinearLayout
+            android:id="@+id/option_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/emoji_1_map"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비즈니스형"
+                android:textSize="10sp"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:textColor="@color/zeepy_black_3b"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/option_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/emoji_1_map"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="친절형"
+                android:textSize="10sp"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:textColor="@color/zeepy_black_3b"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/option_three"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/emoji_1_map"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="방목형"
+                android:textSize="10sp"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:textColor="@color/zeepy_black_3b"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/option_four"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/emoji_1_map"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="츤데레형"
+                android:textSize="10sp"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:textColor="@color/zeepy_black_3b"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/option_five"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/emoji_1_map"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="할말하않"
+                android:textSize="10sp"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:textColor="@color/zeepy_black_3b"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
