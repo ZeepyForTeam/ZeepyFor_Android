@@ -3,10 +3,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        //jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN_VERSION}"
         classpath "com.google.dagger:hilt-android-gradle-plugin:${Versions.DAGGER_VERSION}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.NAVIGATION_VERSION}"

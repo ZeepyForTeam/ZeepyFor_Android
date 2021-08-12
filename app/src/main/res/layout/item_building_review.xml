@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_grayf9_5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021.04.01 13:32"
+            android:textSize="10sp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_reviewer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서울쥐김자랑 님의 후기"
+            android:textSize="18sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_blue_5f"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_summary_lessor_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="임대인 리뷰"
+            android:textColor="@color/zeepy_blue_59"
+            android:textSize="14sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/tv_reviewer_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_reviewer_name"
+            android:layout_marginTop="18dp"/>
+
+        <TextView
+            android:id="@+id/tv_lessor_review_one_liner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_summary_lessor_review"
+            app:layout_constraintBottom_toBottomOf="@id/tv_summary_lessor_review"
+            app:layout_constraintStart_toEndOf="@id/tv_summary_lessor_review"
+            android:background="@drawable/box_grayba_8dp"
+            android:text="30대 남자로 보여요."
+            android:textSize="10sp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textColor="@color/zeepy_black_3b"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_lessor_review_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_summary_lessor_review"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:lineSpacingExtra="6dp"/>
+
+        <TextView
+            android:id="@+id/tv_house_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="집 리뷰"
+            android:textColor="@color/zeepy_blue_59"
+            android:textSize="14sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/tv_lessor_review_msg"
+            app:layout_constraintTop_toBottomOf="@id/tv_lessor_review_msg"
+            android:layout_marginTop="18dp"/>
+
+        <TextView
+            android:id="@+id/tv_sound_insulation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="방음"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/tv_house_review"
+            app:layout_constraintTop_toBottomOf="@id/tv_house_review"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_sound_insulation_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@id/tv_sound_insulation"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sound_insulation"
+            app:layout_constraintStart_toEndOf="@id/tv_sound_insulation"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_pest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="해충"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toEndOf="@id/tv_sound_insulation_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_sound_insulation_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sound_insulation_rating"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_pest_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@+id/tv_pest"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pest"
+            app:layout_constraintStart_toEndOf="@+id/tv_pest"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_sunlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채광"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toEndOf="@id/tv_pest_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_pest_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_pest_rating"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_sunlight_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@+id/tv_sunlight"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sunlight"
+            app:layout_constraintStart_toEndOf="@+id/tv_sunlight"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_waterpressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수압"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toEndOf="@id/tv_sunlight_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_sunlight_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sunlight_rating"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_waterpressure_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@+id/tv_waterpressure"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_waterpressure"
+            app:layout_constraintStart_toEndOf="@+id/tv_waterpressure"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_house_review_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~임대인진짜최고에요~"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sound_insulation"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:lineSpacingExtra="6dp"/>
+
+        <TextView
+            android:id="@+id/tv_overall_evaluation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="종합 평가"
+            android:textColor="@color/zeepy_blue_59"
+            android:textSize="14sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/tv_house_review_msg"
+            app:layout_constraintTop_toBottomOf="@id/tv_house_review_msg"
+            android:layout_marginTop="18dp"/>
+
+        <TextView
+            android:id="@+id/tv_overall_evaluation_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!"
+            android:textSize="12sp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_overall_evaluation"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:lineSpacingExtra="6dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="리뷰 전체보기 >"
+            android:textSize="10sp"
+            android:textColor="@color/zeepy_gray_9a"
+            android:fontFamily="@font/nanum_square_round_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_overall_evaluation_msg"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"/>
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

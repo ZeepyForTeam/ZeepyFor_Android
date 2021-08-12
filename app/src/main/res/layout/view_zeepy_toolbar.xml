@@ -78,5 +78,15 @@
             app:layout_constraintTop_toTopOf="@id/textview_toolbar"
             app:layout_constraintBottom_toBottomOf="@id/textview_toolbar" />
 
+        <ImageButton
+            android:id="@+id/button_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/button_right"
+            app:layout_constraintTop_toTopOf="@id/button_right"
+            app:layout_constraintBottom_toBottomOf="@id/button_right"
+            android:visibility="gone"
+            android:background="@null"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

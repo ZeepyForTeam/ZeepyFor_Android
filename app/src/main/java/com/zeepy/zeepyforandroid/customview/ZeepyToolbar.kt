@@ -77,6 +77,16 @@ class ZeepyToolbar @JvmOverloads constructor(
         }
     }
 
+    fun setRightButton2(drawable: Int, listener: OnClickListener) {
+        binding.buttonRight2.apply {
+            visibility = View.VISIBLE
+            setBackgroundResource(drawable)
+            setOnClickListener {
+                listener.onClick(this@ZeepyToolbar)
+            }
+        }
+    }
+
     fun setRightButtonMargin(margin: Int) {
         val rightButton = binding.buttonRight.layoutParams as ConstraintLayout.LayoutParams
         rightButton.marginEnd = margin
