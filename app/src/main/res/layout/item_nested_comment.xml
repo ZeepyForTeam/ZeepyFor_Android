@@ -4,7 +4,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.community.postingdetail.NestedCommentModel" />
+            type="com.zeepy.zeepyforandroid.community.data.entity.NestedCommentModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

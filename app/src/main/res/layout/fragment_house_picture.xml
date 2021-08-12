@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+            type="com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
         <variable
             name="view"
             type="android.view.View" />
@@ -153,7 +153,7 @@
             app:layout_constraintStart_toStartOf="@id/btn_register"
             app:layout_constraintEnd_toEndOf="@id/btn_register"/>
 
-        <com.example.zeepyforandroid.customview.ZeepyButton
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_register"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

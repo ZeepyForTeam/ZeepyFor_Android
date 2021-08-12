@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".community.storyzip.ZipFragment"
-        xmlns:zeepy="http://schemas.android.com/apk/res/com.example.zeepyforandroid">
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
         <RadioGroup
             android:id="@+id/radiogroup_tag"
@@ -18,7 +18,7 @@
             app:layout_constraintStart_toStartOf="@id/rv_storyzip"
             app:layout_constraintEnd_toEndOf="@id/rv_storyzip">
 
-            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/rb_tag_everything"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:paddingHorizontal="10dp"
                 zeepy:button_type="10"/>
 
-            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/rb_tab_group_purchase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:layout_marginStart="10dp"
                 zeepy:button_type="10"/>
 
-            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/rb_tag_free_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:layout_marginStart="8dp"
                 zeepy:button_type="10"/>
 
-            <com.example.zeepyforandroid.customview.ZeepyRadioButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/rb_tag_friends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

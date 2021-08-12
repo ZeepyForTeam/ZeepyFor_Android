@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         tools:context=".conditionsearch.ConditionSearchFragment">
 
-        <com.example.zeepyforandroid.customview.ZeepyToolbar
+        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/condition_search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -422,7 +422,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <com.example.zeepyforandroid.customview.ZeepyButton
+                <com.zeepy.zeepyforandroid.customview.ZeepyButton
                     android:id="@+id/btn_next"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

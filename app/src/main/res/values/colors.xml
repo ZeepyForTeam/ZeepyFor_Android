@@ -28,11 +28,14 @@
     <color name="zeepy_green_33">#33d49f</color>
     <color name="zeepy_gray_f9">#f9f9f9</color>
     <color name="zeepy_lightgray_e0">#e0e0e0</color>
+    <color name="zeepy_lightgray_d7">#d7d7d7</color>
+
     <color name="zeepy_gray_bd">#bdbdbd</color>
     <color name="zeepy_lightgray_fb">#fbfbfb</color>
     <color name="zeepy_yellow_ef">#efb40d</color>
     <color name="zeepy_yellow_ff">#ffecb4</color>
     <color name="zeepy_red_fb">#fb8f78</color>
     <color name="zeepy_black28">#282828</color>
+    <color name="zeepy_gray_3300">#33000000</color>
 
 </resources>

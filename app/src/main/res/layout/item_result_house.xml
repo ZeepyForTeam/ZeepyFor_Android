@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.review.data.entity.ReviewSearchAddressModel" />
+            type="com.zeepy.zeepyforandroid.review.data.entity.ReviewSearchAddressModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

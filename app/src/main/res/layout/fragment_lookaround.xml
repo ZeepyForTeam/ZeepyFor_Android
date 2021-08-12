@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         tools:context=".lookaround.LookAroundFragment">
 
-        <com.example.zeepyforandroid.customview.ZeepyToolbar
+        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp">
 
-            <com.example.zeepyforandroid.customview.MaterialSpinner
+            <com.zeepy.zeepyforandroid.customview.MaterialSpinner
                 android:id="@+id/spinner_lessor_personality"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

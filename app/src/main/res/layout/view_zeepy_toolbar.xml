@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_extrabold"
             app:layout_constraintTop_toTopOf="parent"

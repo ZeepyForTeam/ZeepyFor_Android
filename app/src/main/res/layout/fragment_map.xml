@@ -9,7 +9,7 @@
 
         <variable
             name="mapViewModel"
-            type="com.example.zeepyforandroid.map.viewmodel.MapViewModel"/>
+            type="com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         tools:context=".map.view.MapFragment">
 
-        <com.example.zeepyforandroid.customview.ZeepyToolbar
+        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/map_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_begin="176dp"/>
 
-            <com.example.zeepyforandroid.customview.ZeepyButton
+            <com.zeepy.zeepyforandroid.customview.ZeepyButton
                 android:id="@+id/btn_goto_review"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

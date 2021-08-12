@@ -63,7 +63,7 @@
             android:layout_height="1dp"
             android:background="@color/zeepy_gray_f4" />
 
-        <com.example.zeepyforandroid.customview.ZeepyButton
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/et_search_address"

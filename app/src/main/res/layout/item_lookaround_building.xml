@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.zeepyforandroid.lookaround.data.entity.LookAroundBuildingSummaryModel" />
+            type="com.zeepy.zeepyforandroid.lookaround.data.entity.LookAroundBuildingSummaryModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

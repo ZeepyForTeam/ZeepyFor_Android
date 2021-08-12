@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         tools:context=".lookaround.LookAroundFragment">
 
-        <com.example.zeepyforandroid.customview.ZeepyToolbar
+        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

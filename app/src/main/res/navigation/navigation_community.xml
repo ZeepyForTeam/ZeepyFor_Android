@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/communityMainFragment"
-        android:name="com.example.zeepyforandroid.community.frame.view.CommunityMainFragment"
+        android:name="com.zeepy.zeepyforandroid.community.frame.view.CommunityMainFragment"
         android:label="CommunityMainFragment"
         tools:layout="@layout/fragment_community_main">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/communitySelectCategoryFragment"
-        android:name="com.example.zeepyforandroid.community.CommunitySelectCategoryFragment"
+        android:name="com.zeepy.zeepyforandroid.community.CommunitySelectCategoryFragment"
         android:label="CommunitySelectCategoryFragment"
         tools:layout="@layout/fragment_community_select_category"/>
 

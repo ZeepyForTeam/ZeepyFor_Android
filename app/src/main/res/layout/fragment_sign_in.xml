@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.signin.SignInViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -41,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@id/view_login_background" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edittext_id"
+            android:id="@+id/edittext_nickname"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="32dp"
@@ -53,6 +59,7 @@
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="14sp"
+            android:text="@={viewModel.email}"
             app:layout_constraintDimensionRatio="1:0.16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,10 +79,11 @@
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="14sp"
+            android:text="@={viewModel.password}"
             app:layout_constraintDimensionRatio="1:0.16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edittext_id" />
+            app:layout_constraintTop_toBottomOf="@id/edittext_nickname" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_find_id"
@@ -120,7 +128,7 @@
             app:layout_constraintStart_toEndOf="@+id/textview_find_password"
             app:layout_constraintTop_toTopOf="@+id/textview_find_password" />
 
-        <com.example.zeepyforandroid.customview.ZeepyButton
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/button_login"
             android:layout_width="0dp"
             android:layout_height="0dp"
