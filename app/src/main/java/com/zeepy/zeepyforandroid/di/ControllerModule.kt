@@ -1,6 +1,8 @@
 package com.zeepy.zeepyforandroid.di
 
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
+import com.zeepy.zeepyforandroid.qualifier.UnAuthService
+import com.zeepy.zeepyforandroid.qualifier.ZeepyService
 import com.zeepy.zeepyforandroid.review.PostReviewController
 import com.zeepy.zeepyforandroid.review.PostReviewControllerImpl
 import com.zeepy.zeepyforandroid.signin.SignInController
@@ -18,13 +20,13 @@ import javax.inject.Singleton
 object ControllerModule {
     @Provides
     @Singleton
-    fun providePostReviewController(zeepyApiService: ZeepyApiService):PostReviewController = PostReviewControllerImpl(zeepyApiService)
+    fun providePostReviewController(@ZeepyService zeepyApiService: ZeepyApiService): PostReviewController = PostReviewControllerImpl(zeepyApiService)
 
     @Provides
     @Singleton
-    fun provideSignUpController(zeepyApiService: ZeepyApiService): SignUpController = SignUpControllerImpl(zeepyApiService)
+    fun provideSignUpController(@UnAuthService zeepyApiService: ZeepyApiService): SignUpController = SignUpControllerImpl(zeepyApiService)
 
     @Provides
     @Singleton
-    fun provideSignInController(zeepyApiService: ZeepyApiService): SignInController = SignInControllerImpl(zeepyApiService)
+    fun provideSignInController(@UnAuthService zeepyApiService: ZeepyApiService): SignInController = SignInControllerImpl(zeepyApiService)
 }

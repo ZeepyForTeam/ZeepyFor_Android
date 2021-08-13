@@ -42,7 +42,6 @@ class ZeepyDialog(
     override fun onResume() {
         super.onResume()
         getDeviceSize()
-
         attachClickListener()
     }
 
