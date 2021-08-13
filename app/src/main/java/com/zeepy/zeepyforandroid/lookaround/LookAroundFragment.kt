@@ -29,7 +29,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
         setToolbar()
         initRecyclerView()
-        setBottomSheet()
+        setSpinner()
     }
 
     private val itemSelectedListener by lazy {
@@ -70,17 +70,18 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     }
 
     private fun initRecyclerView() {
-        buildingListAdapter = LookAroundListAdapter()
+        buildingListAdapter = LookAroundListAdapter {
+            val action =
+        }
         binding.rvBuildingList.run {
             adapter = buildingListAdapter
             addItemDecoration(ItemDecoration(10, 0))
         }
     }
 
-    private fun setBottomSheet() {
+    private fun setSpinner() {
         ArrayAdapter.createFromResource(requireActivity(), R.array.lessor_personality_array, R.layout.item_lookaround_spinner).let {
             it.setDropDownViewResource(R.layout.item_lookaround_spinner_dropdown)
-
             binding.spinnerLessorPersonality.apply {
                 adapter = it
                 onItemSelectedListener = itemSelectedListener
