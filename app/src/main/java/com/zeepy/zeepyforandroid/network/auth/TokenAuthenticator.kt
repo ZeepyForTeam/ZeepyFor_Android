@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.network.auth
 import com.kakao.sdk.network.ApiFactory
 import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.di.NetworkModule
+import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
-    private val authApiService: AuthApiService,
+    private val authApiService: ZeepyApiService,
     private val userPreferenceManager: UserPreferenceManager
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {

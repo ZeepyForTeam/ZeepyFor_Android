@@ -16,6 +16,18 @@ import retrofit2.http.Query
 
 interface ZeepyApiService {
 
+    @POST("/api/user/redundancy/email")
+    fun checkEmailRepetition(@Body email: String): Completable
+
+    @POST("/api/user/redundancy/nickname")
+    fun checkNickNamRepetition(@Body nickname: String): Completable
+
+    @POST("/api/auth/login")
+    fun signin(@Body requestLogin: RequestLogin): Single<ResponseAuthDTO>
+
+    @POST("/api/auth/reissue")
+    fun fetchAccessToken(@Body reIssueReqDto: RequestTokenDTO): Response<ResponseAuthDTO>
+
     @POST("/api/review")
     fun writeReview(@Body reviewDto: RequestWriteReview): Completable
 
