@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.network
 
+import com.zeepy.zeepyforandroid.address.ResponseAddressDTO
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
@@ -33,5 +34,8 @@ interface ZeepyApiService {
 
     @GET("/api/community")
     fun getPostingList(@Query("address") address: String, @Query("communityType") communityType: String?): Single<List<ResponsePostingList>>
+
+    @GET("/api/user/address")
+    fun getAddressList(): Single<List<ResponseAddressDTO>>
 
 }
