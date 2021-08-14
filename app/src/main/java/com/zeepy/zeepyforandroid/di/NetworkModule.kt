@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.di
 
 
 import com.zeepy.zeepyforandroid.BuildConfig
+import com.zeepy.zeepyforandroid.address.AddressDataSource
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.network.auth.*
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
@@ -29,13 +30,14 @@ object NetworkModule {
     @Provides
     @Singleton
     @ZeepyOkHttp
-    fun provideZeepyOkHttpClientBuilder(@UnAuthService zeepyApiService: ZeepyApiService, userPreferenceManager: UserPreferenceManager): OkHttpClient {
+    fun provideZeepyOkHttpClientBuilder(authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
-            .authenticator(TokenAuthenticator(zeepyApiService, userPreferenceManager))
+            .addInterceptor(authInterceptor)
+//            .authenticator(TokenAuthenticator(zeepyApiService, userPreferenceManager))
             .build()
     }
 
@@ -85,4 +87,8 @@ object NetworkModule {
     @Singleton
     @UnAuthService
     fun provideUnAuthApiService(@UnAuthRetrofit retrofit: Retrofit): ZeepyApiService = retrofit.create(ZeepyApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(tokenController: TokenController, userPreferenceManager: UserPreferenceManager): AuthInterceptor = AuthInterceptor(tokenController, userPreferenceManager)
 }

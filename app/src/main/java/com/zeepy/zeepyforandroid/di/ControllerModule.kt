@@ -1,6 +1,9 @@
 package com.zeepy.zeepyforandroid.di
 
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
+import com.zeepy.zeepyforandroid.network.auth.TokenController
+import com.zeepy.zeepyforandroid.network.auth.TokenControllerImpl
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.qualifier.UnAuthService
 import com.zeepy.zeepyforandroid.qualifier.ZeepyService
 import com.zeepy.zeepyforandroid.review.PostReviewController
@@ -29,4 +32,8 @@ object ControllerModule {
     @Provides
     @Singleton
     fun provideSignInController(@UnAuthService zeepyApiService: ZeepyApiService): SignInController = SignInControllerImpl(zeepyApiService)
+
+    @Provides
+    @Singleton
+    fun provideAuthController(@UnAuthService zeepyApiService: ZeepyApiService, userPreferenceManager: UserPreferenceManager): TokenController = TokenControllerImpl(zeepyApiService, userPreferenceManager)
 }

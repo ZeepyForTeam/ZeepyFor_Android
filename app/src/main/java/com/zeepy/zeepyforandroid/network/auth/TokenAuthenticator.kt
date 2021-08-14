@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.network.auth
 
+import android.util.Log
 import com.kakao.sdk.network.ApiFactory
 import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.di.NetworkModule
@@ -18,15 +19,21 @@ class TokenAuthenticator @Inject constructor(
     private val userPreferenceManager: UserPreferenceManager
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        return if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
-            val updatedToken = getNewToken()
-            updatedToken?.let {
-                response.request.newBuilder().header("token", it)
-                    .build()
-            }
+        if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            Log.e("unauth", userPreferenceManager.fetchUserAccessToken())
+            return response.request.newBuilder().addHeader("X-AUTH-TOKEN", getNewToken().toString()).build()
+
+//            val updatedToken = getNewToken()
+//            updatedToken?.let {
+//                return response.request.newBuilder().header("X-AUTH-TOKEN", it)
+//                    .build()
+//            }
+
         } else {
-            return null
-//            response.request.newBuilder().header("token", userPreferenceManager.fetchUserAccessToken()).build()
+//            return null
+            Log.e("auth", userPreferenceManager.fetchUserAccessToken())
+
+            return response.request.newBuilder().addHeader("X-AUTH-TOKEN", userPreferenceManager.fetchUserAccessToken()).build()
         }
     }
 
