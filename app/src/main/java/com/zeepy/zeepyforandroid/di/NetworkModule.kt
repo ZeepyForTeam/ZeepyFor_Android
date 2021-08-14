@@ -90,5 +90,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(@UnAuthRetrofit retrofit: Retrofit, userPreferenceManager: UserPreferenceManager): AuthInterceptor = AuthInterceptor(retrofit, userPreferenceManager)
+    fun provideAuthInterceptor(tokenController: TokenController, userPreferenceManager: UserPreferenceManager): AuthInterceptor = AuthInterceptor(tokenController, userPreferenceManager)
 }
