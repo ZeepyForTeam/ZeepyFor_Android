@@ -41,6 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         viewModel.getAddressList()
         setToolbar()
@@ -50,7 +51,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            setTitle("을지로 3가")
+            viewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
+                setTitle(address)
+            }
+
             setCommunityLocation()
 
             binding.textviewToolbar.setOnClickListener {
