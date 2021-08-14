@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
+    private val retrofit: Retrofit,
     private val userPreferenceManager: UserPreferenceManager
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -28,11 +29,6 @@ class AuthInterceptor @Inject constructor(
         val response = chain.proceed(request)
 
         if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
             val zeepyApiService = retrofit.create(ZeepyApiService::class.java)
 
             val tokenRefreshed = zeepyApiService.fetchAccessToken(
