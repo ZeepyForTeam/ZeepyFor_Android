@@ -33,7 +33,8 @@ class ZeepyDialogBuilder(
         return this
     }
 
-    fun setLeftButton(leftButtonDrawable:Int, leftButtonText: String): ZeepyDialogBuilder {
+    fun
+            setLeftButton(leftButtonDrawable:Int, leftButtonText: String): ZeepyDialogBuilder {
         this.leftButtonDrawable = leftButtonDrawable
         this.leftButtonText = leftButtonText
         return this

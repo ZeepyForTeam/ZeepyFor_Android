@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.signin
+package com.zeepy.zeepyforandroid.signin.dto
 
 data class RequestLogin(
     val email: String,

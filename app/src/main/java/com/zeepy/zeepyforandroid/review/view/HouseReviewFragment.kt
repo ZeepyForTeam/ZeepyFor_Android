@@ -38,8 +38,6 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
-        Log.e(viewModel.toString(), viewModel.toString())
 
         setRoomTypeChoice()
         setReviewChoice()

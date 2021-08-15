@@ -1,10 +1,8 @@
 package com.zeepy.zeepyforandroid.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.zeepy.zeepyforandroid.address.AddressDataSource
-import com.zeepy.zeepyforandroid.address.AddressEntity
+import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.address.ResponseAddressListDTO
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

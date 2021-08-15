@@ -1,6 +1,7 @@
-package com.zeepy.zeepyforandroid.network.auth
+package com.zeepy.zeepyforandroid.network.auth.controller
 
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
+import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager

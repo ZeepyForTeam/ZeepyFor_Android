@@ -30,7 +30,6 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         binding.viewModel = viewModel
         Log.e(viewModel.toString(), viewModel.toString())
 
-        viewModel.changeCurrentFragment(ReviewNotice.WRITE_DETAIL_ADDRESS)
         initView()
         enableButton()
         goToCheckLessorPersonality()

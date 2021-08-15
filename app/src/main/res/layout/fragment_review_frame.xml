@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -14,22 +19,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_review_notice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:bufferType="spannable"
-                    android:fontFamily="@font/nanum_square_round_regular"
-                    android:text=""
-                    android:lineSpacingExtra="8dp"
-                    android:textColor="@color/zeepy_blue_5f"
-                    android:textSize="24sp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintStart_toStartOf="@id/review_nav_host_fragment"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar"
-                    tools:text="@string/select_address"/>
-
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/review_nav_host_fragment"
                     android:layout_width="0dp"
@@ -37,7 +26,7 @@
                     android:name="androidx.navigation.fragment.NavHostFragment"
                     app:defaultNavHost="true"
                     app:navGraph="@navigation/navigation_review"
-                    app:layout_constraintTop_toBottomOf="@id/tv_review_notice"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>

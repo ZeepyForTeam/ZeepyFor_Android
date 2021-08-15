@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid
+package com.zeepy.zeepyforandroid.address
 
 import android.os.Bundle
 import android.view.LayoutInflater

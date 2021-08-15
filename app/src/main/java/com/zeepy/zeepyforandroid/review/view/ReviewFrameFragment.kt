@@ -32,12 +32,12 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.viewModel = viewModel
 
         val navHostFragment = childFragmentManager.findFragmentById(R.id.review_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         setToolbar()
-        changeToolbar()
+//        changeToolbar()
     }
 
     private fun setToolbar() {
@@ -54,19 +54,19 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
         }
     }
 
-    private fun changeToolbar() {
-        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
-
-        viewModel.currentFragment.observe(viewLifecycleOwner){ reviewNotice ->
-            binding.tvReviewNotice.apply {
-                text = getString(reviewNotice.text)
-                visibility = View.VISIBLE
-                reviewNotice.map.forEach{
-                    text.toSpannable().setSpan(CustomTypefaceSpan(typeface),it.key,it.value,Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-                }
-            }
-        }
-    }
+//    private fun changeToolbar() {
+//        val typeface = Typeface.create(ResourcesCompat.getFont(requireContext(),R.font.nanum_square_round_extrabold),Typeface.NORMAL)
+//
+//        viewModel.currentFragment.observe(viewLifecycleOwner){ reviewNotice ->
+//            binding.tvReviewNotice.apply {
+//                text = getString(reviewNotice.text)
+//                visibility = View.VISIBLE
+//                reviewNotice.map.forEach{
+//                    text.toSpannable().setSpan(CustomTypefaceSpan(typeface),it.key,it.value,Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+//                }
+//            }
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

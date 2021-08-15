@@ -2,9 +2,9 @@ package com.zeepy.zeepyforandroid.di
 
 
 import com.zeepy.zeepyforandroid.BuildConfig
-import com.zeepy.zeepyforandroid.address.AddressDataSource
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.network.auth.*
+import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.qualifier.*
 import dagger.Module
@@ -37,7 +37,6 @@ object NetworkModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
-//            .authenticator(TokenAuthenticator(zeepyApiService, userPreferenceManager))
             .build()
     }
 

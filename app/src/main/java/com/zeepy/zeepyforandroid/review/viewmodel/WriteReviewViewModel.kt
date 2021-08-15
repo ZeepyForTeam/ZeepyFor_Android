@@ -21,10 +21,6 @@ import javax.inject.Inject
 class WriteReviewViewModel @Inject constructor(
     private val postReviewController: PostReviewController
 ) : ViewModel() {
-    private val _currentFragment = MutableLiveData<ReviewNotice>()
-    val currentFragment: LiveData<ReviewNotice>
-        get() = _currentFragment
-
     private val _lessorPersonality = MutableLiveData<String>()
     val lessorPersonality: LiveData<String>
     get() = _lessorPersonality
@@ -133,10 +129,6 @@ class WriteReviewViewModel @Inject constructor(
 
     fun checkEmptyDetailAddress(): Boolean {
         return detailAddress.value.isNullOrEmpty()
-    }
-
-    fun changeCurrentFragment(reviewNotice: ReviewNotice) {
-        _currentFragment.value = reviewNotice
     }
 
     fun changeLessorPersonality(communityTendency: String) {

@@ -32,7 +32,6 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        viewModel.changeCurrentFragment(ReviewNotice.WRITE_LESSOR_DETAIL)
 
         setSpinner()
         setNextButton()

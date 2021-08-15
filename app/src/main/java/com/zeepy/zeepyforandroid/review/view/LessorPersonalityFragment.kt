@@ -30,9 +30,7 @@ class LessorPersonalityFragment : BaseFragment<FragmentLessorPersonalityBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e(viewModel.toString(), viewModel.toString())
 
-        viewModel.changeCurrentFragment(ReviewNotice.CHECK_LESSOR_PERSONALITY)
         setNextButton()
         setLessorPersonalities()
         goToWriteDetailLessorInfo()

@@ -1,12 +1,11 @@
 package com.zeepy.zeepyforandroid.network
 
-import com.zeepy.zeepyforandroid.address.AddressEntity
 import com.zeepy.zeepyforandroid.address.ResponseAddressListDTO
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
-import com.zeepy.zeepyforandroid.signin.RequestLogin
+import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response

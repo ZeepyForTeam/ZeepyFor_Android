@@ -6,19 +6,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".review.view.SelectAddressFragment">
+        tools:context=".review.view.SelectAddressFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
-        <TextView
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/reviewSpannableTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_address"
+            android:layout_marginTop="16dp"
+            zeepy:start="0"
+            zeepy:end="8"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintStart_toStartOf="@+id/rv_address_list"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_address_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintVertical_bias="0.1"
             android:text="현재 등록된 주소"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/rv_address_list"
-            app:layout_constraintStart_toStartOf="@id/rv_address_list" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/rv_address_list"
+            app:layout_constraintTop_toBottomOf="@+id/reviewSpannableTextView" />
 
         <TextView
             android:id="@+id/tv_register_address"
@@ -36,14 +51,15 @@
             android:id="@+id/rv_address_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_address_list"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="16dp"
             tools:itemCount="3"
             tools:listitem="@layout/item_address" />
 

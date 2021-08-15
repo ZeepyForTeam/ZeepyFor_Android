@@ -4,8 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="fragment"
+            type="com.zeepy.zeepyforandroid.review.view.HousePictureFragment" />
+
+        <variable
             name="viewModel"
             type="com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+
         <variable
             name="view"
             type="android.view.View" />

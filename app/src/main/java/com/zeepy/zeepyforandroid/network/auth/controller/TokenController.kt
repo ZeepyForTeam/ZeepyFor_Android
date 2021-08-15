@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.network.auth
+package com.zeepy.zeepyforandroid.network.auth.controller
 
 import retrofit2.Call
 

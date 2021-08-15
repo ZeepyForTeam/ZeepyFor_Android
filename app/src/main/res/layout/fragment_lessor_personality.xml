@@ -4,7 +4,22 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".review.view.LessorPersonalityFragment">
+        tools:context=".review.view.LessorPersonalityFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
+
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/reviewSpannableTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lessor_personality"
+            android:layout_marginTop="16dp"
+            zeepy:start="0"
+            zeepy:end="3"
+            zeepy:second_start="5"
+            zeepy:second_end="10"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintStart_toStartOf="@+id/rv_lessor_communication"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_lessor_communication"

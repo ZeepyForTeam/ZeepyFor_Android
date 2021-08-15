@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.signup
+package com.zeepy.zeepyforandroid.signup.controller
 
 import io.reactivex.Completable
 

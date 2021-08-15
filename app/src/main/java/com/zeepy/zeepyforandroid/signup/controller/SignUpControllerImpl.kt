@@ -1,6 +1,7 @@
-package com.zeepy.zeepyforandroid.signup
+package com.zeepy.zeepyforandroid.signup.controller
 
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
+import com.zeepy.zeepyforandroid.signup.controller.SignUpController
 import io.reactivex.Completable
 import javax.inject.Inject
 

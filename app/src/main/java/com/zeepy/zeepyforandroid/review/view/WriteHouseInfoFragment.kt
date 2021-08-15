@@ -28,7 +28,6 @@ class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
 
         setNextButton()
         selectTotalEvaluation()

@@ -13,7 +13,11 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHousePictureBinding
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.review.view.adapter.HousePictureAdapter
@@ -38,7 +42,6 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.changeCurrentFragment(ReviewNotice.LOAD_HOUSE_PICTURE)
 
         setPictureList()
         setRegisterButton()
@@ -145,9 +148,28 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     private fun completeUpload() {
+        binding.btnRegister.setOnClickListener { showReviewRegisterDialog() }
+        binding.tvSkip.setOnClickListener { showReviewRegisterDialog() }
+    }
+
+    fun showReviewRegisterDialog() {
         val parent = (parentFragment as NavHostFragment).parentFragment
-        binding.btnRegister.setOnClickListener { parent?.findNavController()?.popBackStack() }
-        binding.tvSkip.setOnClickListener { parent?.findNavController()?.popBackStack() }
+        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", false)
+            .setContent(resources.getString(R.string.write_review_notice_message))
+            .setLeftButton(R.drawable.box_grayf9_8dp,"취소")
+            .setRightButton(R.drawable.box_blue_59_8dp,"확인")
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    parent?.findNavController()?.popBackStack()
+                    dialog.dismiss()
+                }
+
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    parent?.findNavController()?.popBackStack()
+                    dialog.dismiss()
+                }
+            }).build()
+        registerReviewDialog.show(childFragmentManager, this.tag)
     }
 
     companion object {
