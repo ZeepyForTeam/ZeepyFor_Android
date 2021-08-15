@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
@@ -27,6 +28,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+    private val viewModel by viewModels<HomeViewModel>()
     @Inject lateinit var userPreferenceManager: UserPreferenceManager
 
     override fun getFragmentBinding(
@@ -38,7 +40,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
+        viewModel.getAddressList()
         setToolbar()
         writeReview()
         setFilterList()
@@ -46,7 +51,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            setTitle("을지로 3가")
+            viewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
+                setTitle(address)
+            }
+
             setCommunityLocation()
 
             binding.textviewToolbar.setOnClickListener {
