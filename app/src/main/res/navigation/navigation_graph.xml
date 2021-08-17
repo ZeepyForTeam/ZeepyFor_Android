@@ -5,11 +5,13 @@
     android:id="@+id/navigation_graph"
     app:startDestination="@id/mainFrameFragment">
 
+
     <fragment
         android:id="@+id/mainFrameFragment"
         android:name="com.zeepy.zeepyforandroid.mainframe.MainFrameFragment"
         android:label="fragment_main_frame"
         tools:layout="@layout/fragment_main_frame" >
+
         <action
             android:id="@+id/action_mainFrameFragment_to_reviewSearchAddressFragment"
             app:destination="@id/reviewSearchAddressFragment" />
@@ -37,6 +39,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_mainFrameFragment_to_navigation_review"
+            app:destination="@id/navigation_review" />
 
     </fragment>
 
@@ -68,7 +73,14 @@
         android:id="@+id/reviewFrameFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.ReviewFrameFragment"
         android:label="ReviewFrameFragment"
-        tools:layout="@layout/fragment_review_frame"/>
+        tools:layout="@layout/fragment_review_frame">
+        <argument
+            android:name="isAddressRegisterd"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/postingDetailFragment"

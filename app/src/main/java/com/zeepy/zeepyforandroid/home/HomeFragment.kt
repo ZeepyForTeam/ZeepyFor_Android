@@ -11,8 +11,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -21,6 +25,7 @@ import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHomeBinding
 import com.zeepy.zeepyforandroid.databinding.ZeepyDialogBinding
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,16 +57,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setToolbar() {
         binding.toolbar.apply {
             viewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
-                setTitle(address)
+                if (address.isNullOrEmpty()) {
+                    setTitle("주소 등록하기")
+                } else {
+                    setTitle(address)
+                }
             }
 
             setCommunityLocation()
 
             binding.textviewToolbar.setOnClickListener {
-                if(userPreferenceManager.fetchUserAccessToken().isNullOrEmpty()) {
-                    showLoginDialog()
-                } else {
+                if(userPreferenceManager.fetchIsAlreadyLogin()) {
                     requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+                } else {
+                    showLoginDialog()
                 }
             }
         }
@@ -77,7 +86,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun writeReview() {
         binding.buttonWriteReview.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_mainFrameFragment_to_reviewFrameFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                action.isAddressRegisterd = viewModel.addressList.value?.addresses.isNullOrEmpty()
+                findNavController().navigate(action)
+            } else {
+                showLoginDialog()
+            }
         }
     }
 

@@ -33,7 +33,6 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
 
         setNextButton()
         setEnableButton()
-        invisibleNotice()
         goToWriteDetailAddress()
     }
 
@@ -41,12 +40,6 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
         binding.layoutSearchAddress.btnNext.run {
             setText("다음으로")
         }
-    }
-
-    private fun invisibleNotice() {
-        val parent = (parentFragment as NavHostFragment).parentFragment
-        val notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
-        notice?.visibility = View.GONE
     }
 
     private fun setEnableButton() {

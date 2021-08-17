@@ -48,12 +48,12 @@ class AddressAdapter(private val context: Context, val listener: ClickListener):
         if (position == selectedPosition){
             holder.binding.apply {
                 root.setBackgroundResource(R.drawable.box_address_selected)
-                tvAddress.typeface = changeFontFamily(R.font.nanum_square_round_extrabold)
+                textviewAddress.typeface = changeFontFamily(R.font.nanum_square_round_extrabold)
             }
         } else {
             holder.binding.apply {
                 root.setBackgroundResource(R.drawable.box_address)
-                tvAddress.typeface = changeFontFamily(R.font.nanum_square_round_regular)
+                textviewAddress.typeface = changeFontFamily(R.font.nanum_square_round_regular)
             }
         }
     }

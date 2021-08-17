@@ -49,12 +49,20 @@ class SignInViewModel @Inject constructor(
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    userPreferenceManager.saveUserAccessToken(response.accessToken)
-                    userPreferenceManager.saveUserRefreshToken(response.refreshToken)
-                    _loginSuccess.postValue(true)
+                    if (response != null) {
+                        userPreferenceManager.run {
+                            _loginSuccess.postValue(true)
+                            saveIsAlreadyLogin(true)
+                            saveUserAccessToken(response.accessToken)
+                            saveUserRefreshToken(response.refreshToken)
+                        }
+                    }
                 }, {
                     it.printStackTrace()
-                    _loginSuccess.postValue(false)
+                    userPreferenceManager.run {
+                        _loginSuccess.postValue(false)
+                        saveIsAlreadyLogin(false)
+                    }
                 })
         )
     }

@@ -31,26 +31,13 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         Log.e(viewModel.toString(), viewModel.toString())
 
         initView()
-        enableButton()
         goToCheckLessorPersonality()
 
     }
 
     private fun initView(){
-        binding.layoutDetailAddress.tvAddress.text = viewModel.addressSearchQuery.value
         binding.layoutDetailAddress.btnNext.run {
             setText("다음으로")
-        }
-    }
-
-    private fun enableButton() {
-        viewModel.detailAddress.observe(viewLifecycleOwner){
-//            if (!viewModel.checkEmptyDetailAddress()) {
-//                binding.btnNext.usableButton()
-//                goToCheckLessorPersonality()
-//            } else {
-//                binding.btnNext.unUseableButton()
-//            }
         }
     }
 
@@ -62,7 +49,6 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
     override fun onStop() {
         super.onStop()
-//        viewModel.addressSearchQuery.value = null
         binding.layoutDetailAddress.etAddressDetail.text.clear()
     }
 }

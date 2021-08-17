@@ -18,7 +18,7 @@ class HomeViewModel @Inject constructor(
     val addressList: LiveData<ResponseAddressListDTO>
         get() = _addressList
 
-    private val _selectedAddress = MutableLiveData<String>()
+    private val _selectedAddress = MutableLiveData<String>("")
     val selectedAddress: LiveData<String>
         get() = _selectedAddress
 
@@ -28,8 +28,11 @@ class HomeViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _addressList.postValue(it)
-                    _selectedAddress.postValue(it.addresses.first().cityDistinct)
+                    if(!it.addresses.isNullOrEmpty()) {
+                        _addressList.postValue(it)
+                        _selectedAddress.postValue(it.addresses.first().cityDistinct)
+                    }
+
                 }, {
                     it.printStackTrace()
                 })

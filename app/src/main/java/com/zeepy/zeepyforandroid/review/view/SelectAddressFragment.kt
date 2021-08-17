@@ -30,7 +30,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         initView()
         setDatas()
         goToSearchAddress()
-
     }
 
     private fun initView() {
@@ -63,7 +62,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun goToWriteDetailAddress() {
-        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_lessorPersonalityFragment)
+        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_writeDetailAddressFragment)
     }
 
     private fun goToSearchAddress() {

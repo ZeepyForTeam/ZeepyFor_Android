@@ -44,7 +44,6 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
         setOptionChoice()
         setNextButton()
         goToWriteHouseInfo()
-        setTopNotice()
     }
 
     override fun onResume() {
@@ -52,28 +51,11 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
         binding.roomtypeGroup.clearCheck()
     }
 
-    private fun setTopNotice() {
-        val parent = (parentFragment as NavHostFragment).parentFragment
-        val notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
-        notice?.visibility = View.GONE
-
-        val span = binding.tvReviewNotice.text.toSpannable()
-        val typeface = Typeface.create(
-            ResourcesCompat.getFont(
-                requireContext(),
-                R.font.nanum_square_round_extrabold
-            ), Typeface.NORMAL
-        )
-        span.setSpan(CustomTypefaceSpan(typeface), 0, 8, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-        span.setSpan(CustomTypefaceSpan(typeface), 15, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-    }
-
     private fun setReviewChoice() {
         binding.rvReviewChoice.run {
             adapter = ReviewChoiceAdapter { map ->
                 map.forEach { evaluation ->
                     viewModel.addReviewPreference(evaluation.key, findPreference(evaluation.value))
-                    Log.e("viewModel evaluation", "${findPreference(evaluation.value)}")
                 }
                 viewModel.reviewPreference.value?.let { enableNextButton(it) }
             }
@@ -89,7 +71,6 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
                 binding.radiobtnThreeRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_threeormore))
             }
             viewModel.reviewPreference.value?.let { enableNextButton(it) }
-            Log.e("roomtype", viewModel.roomType.value.toString())
         }
     }
 
@@ -98,13 +79,10 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
             adapter = ConditionOptionAdapter(object : ConditionOptionAdapter.SelectOptionInterface {
                 override fun select(option: Int) {
                     viewModel.selectOption(findOptions(option))
-                    Log.e("option", "${viewModel.selectedOptionList.value}")
                 }
 
                 override fun unselect(option: Int) {
                     viewModel.unselectOption(findOptions(option))
-                    Log.e("option", "${viewModel.selectedOptionList.value}")
-
                 }
             })
             addItemDecoration(ItemDecoration(8, 8))
