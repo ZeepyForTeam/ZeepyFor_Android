@@ -12,8 +12,11 @@ import androidx.navigation.fragment.NavHostFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentSearchAddressBinding
+import com.zeepy.zeepyforandroid.review.view.adapter.SearchAddressAdapter
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
 
@@ -31,34 +34,29 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
 
         Log.e(viewModel.toString(), viewModel.toString())
 
-        setNextButton()
-        setEnableButton()
         goToWriteDetailAddress()
+        attachSearchAddressAdapter()
+        searchBuildingAddress()
     }
 
-    private fun setNextButton(){
-        binding.layoutSearchAddress.btnNext.run {
-            setText("다음으로")
+    private fun attachSearchAddressAdapter() {
+        binding.layoutSearchAddress.recyclerviewResult.adapter = SearchAddressAdapter()
+        viewModel.resultSearchedAddress.observe(viewLifecycleOwner) {
+            (binding.layoutSearchAddress.recyclerviewResult.adapter as SearchAddressAdapter).submitList(it)
         }
     }
 
-    private fun setEnableButton() {
-        viewModel.addressSearchQuery.observe(viewLifecycleOwner){
-//            binding.layoutSearchAddress.btnNext.apply {
-//                if(viewModel.checkInputAddressQuery()) {
-//                    usableButton()
-//                    goToWriteDetailAddress()
-//                } else {
-//                    unUseableButton()
-//                }
-//            }
+    private fun searchBuildingAddress() {
+        binding.layoutSearchAddress.buttonSearch.setOnClickListener {
+            Log.e("query", "${binding.layoutSearchAddress.etSearchAddress.text}")
+            viewModel.searchBuildingAddress(binding.layoutSearchAddress.etSearchAddress.text.toString())
         }
     }
 
     private fun goToWriteDetailAddress() {
-        binding.layoutSearchAddress.btnNext.setOnClickListener{
-            viewModel.changeAddressSearchgQuery(binding.layoutSearchAddress.etSearchAddress.text.toString())
-            Navigation.findNavController(binding.root).navigate(R.id.action_searchAddressFragment_to_writeDetailAddressFragment)
-        }
+//        binding.layoutSearchAddress.btnNext.setOnClickListener{
+//            viewModel.changeAddressSearchgQuery(binding.layoutSearchAddress.etSearchAddress.text.toString())
+//            Navigation.findNavController(binding.root).navigate(R.id.action_searchAddressFragment_to_writeDetailAddressFragment)
+//        }
     }
 }

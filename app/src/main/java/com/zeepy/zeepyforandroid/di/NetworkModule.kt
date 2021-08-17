@@ -36,6 +36,7 @@ object NetworkModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
+//            .authenticator(Authenticator(zeepyApiService, userPreferenceManager))
             .addInterceptor(authInterceptor)
             .build()
     }
@@ -86,6 +87,10 @@ object NetworkModule {
     @Singleton
     @UnAuthService
     fun provideUnAuthApiService(@UnAuthRetrofit retrofit: Retrofit): ZeepyApiService = retrofit.create(ZeepyApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAuthenticator(@UnAuthService zeepyApiService: ZeepyApiService, userPreferenceManager: UserPreferenceManager): Authenticator = Authenticator(zeepyApiService, userPreferenceManager)
 
     @Provides
     @Singleton

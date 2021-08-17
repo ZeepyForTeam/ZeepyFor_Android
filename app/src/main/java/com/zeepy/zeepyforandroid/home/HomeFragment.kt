@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
         viewModel.getAddressList()
         setToolbar()
         writeReview()

@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.address.AddressEntity
+import com.zeepy.zeepyforandroid.address.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.controller.AddressController
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
@@ -16,6 +17,7 @@ import com.zeepy.zeepyforandroid.review.PostReviewController
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.review.data.entity.ReviewSearchAddressModel
+import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +29,8 @@ class WriteReviewViewModel @Inject constructor(
     private val addressController: AddressController,
     private val addressDataSource: AddressDataSource,
     private val postReviewController: PostReviewController,
-    private val zeepyLocalRepository: ZeepyLocalRepository
+    private val zeepyLocalRepository: ZeepyLocalRepository,
+    private val searchAddressListRepository: SearchAddressListRepository
 ) : BaseViewModel() {
     private val _addressListRegistered = MutableLiveData<MutableList<LocalAddressEntity>>(mutableListOf())
     val addressListRegistered: LiveData<MutableList<LocalAddressEntity>>
@@ -88,6 +91,10 @@ class WriteReviewViewModel @Inject constructor(
     private val _selectedOptionList = MutableLiveData<MutableList<String>>(mutableListOf())
     val selectedOptionList: LiveData<MutableList<String>>
         get() = _selectedOptionList
+
+    private val _resultSearchedAddress = MutableLiveData<List<SearchAddressListModel>>()
+    val resultSearchedAddress: LiveData<List<SearchAddressListModel>>
+        get() = _resultSearchedAddress
 
     val checkedAge = MutableLiveData<Int>()
     val reviewOfLessor = MutableLiveData<String>()
@@ -260,6 +267,20 @@ class WriteReviewViewModel @Inject constructor(
                     it.printStackTrace()
                     Log.e("delete failed", "fucking!!")
 
+                })
+        )
+    }
+
+    fun searchBuildingAddress(address: String) {
+        addDisposable(
+            searchAddressListRepository.searchBuildingAddressList(address)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    _resultSearchedAddress.postValue(response)
+                    Log.e("result", "${resultSearchedAddress.value}")
+                }, {
+                    it.printStackTrace()
                 })
         )
     }
