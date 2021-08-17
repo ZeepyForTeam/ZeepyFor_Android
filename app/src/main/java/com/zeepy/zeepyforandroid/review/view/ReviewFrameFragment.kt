@@ -55,7 +55,6 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
     }
 
     private fun checkIsAddressRegistered() {
-        Log.e("args", "${args.isAddressRegisterd}")
         if (args.isAddressRegisterd) {
             navController.navigate(R.id.action_selectAddressFragment_to_searchAddressFragment,
                 null,

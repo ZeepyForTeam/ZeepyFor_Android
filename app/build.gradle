@@ -77,6 +77,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${Versions.RETROFIT_VERSION}"
     implementation "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT_VERSION}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${Versions.RETROFIT_VERSION}"
+    implementation "com.google.code.gson:gson:${Versions.GSON_VERSION}"
+
 
     //OkHttp Logging Interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_VERSION}"
@@ -85,9 +87,11 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${Versions.RXJAVA_VERSION}"
     implementation "io.reactivex.rxjava2:rxandroid:${Versions.RXANDROID_VERSION}"
 
-    //Glide
-    implementation "com.github.bumptech.glide:glide:${Versions.GLIDE_VERSION}"
-    kapt "com.github.bumptech.glide:compiler:${Versions.GLIDE_VERSION}"
+    //Room Library
+    implementation "androidx.room:room-runtime:${Versions.ROOM_VERSION}"
+    kapt "androidx.room:room-compiler:${Versions.ROOM_VERSION}"
+    implementation "androidx.room:room-rxjava2:${Versions.ROOM_VERSION}"
+    implementation "androidx.room:room-ktx:${Versions.ROOM_VERSION}"
 
     // LoremIpsum
     implementation("com.thedeanda:lorem:${Versions.LOREM_VERSION}")

@@ -3,15 +3,16 @@ package com.zeepy.zeepyforandroid.review.viewmodel
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
+import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.eunm.LessorAge
+import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.review.PostReviewController
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.review.data.entity.AddressList
 import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.review.data.entity.ReviewSearchAddressModel
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,8 +20,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
-    private val postReviewController: PostReviewController
-) : ViewModel() {
+    private val postReviewController: PostReviewController,
+    private val zeepyLocalRepository: ZeepyLocalRepository
+) : BaseViewModel() {
+
+    private val _addressListRegistered = MutableLiveData<List<LocalAddressEntity>>(listOf())
+    val addressListRegistered: LiveData<List<LocalAddressEntity>>
+        get() = _addressListRegistered
+
     private val _lessorPersonality = MutableLiveData<String>()
     val lessorPersonality: LiveData<String>
     get() = _lessorPersonality
@@ -80,7 +87,7 @@ class WriteReviewViewModel @Inject constructor(
     val reviewOfHouse = MutableLiveData<String>()
 
     init {
-        setDummyAddress()
+        getAddress()
     }
 
     fun selectOption(option: String){
@@ -174,27 +181,34 @@ class WriteReviewViewModel @Inject constructor(
             })
     }
 
-    //Todo: api 연결하면 더미데이터 지우고 Datasource - Repository pattern으로 바꾸기
-    private fun setDummyAddress() {
-        val dummy = AddressList()
-        dummy.apply {
-            add(
-                AddressModel(
-                    "서울특별시 마포구 망원로 48-1"
+    private fun getAddress() {
+        addDisposable(
+            zeepyLocalRepository.getAddressList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _addressListRegistered.postValue(it)
+                    setRegisteredAddressList(it)
+                }, {
+                    it.printStackTrace()
+                })
+        )
+
+    }
+
+    private fun setRegisteredAddressList(localAddresses: List<LocalAddressEntity>) {
+        val addressList = AddressList()
+
+        addressList.apply {
+            localAddresses.forEach {
+                add(
+                    AddressModel(
+                        "${it.cityDistinct} ${it.primaryAddress}"
+                    )
                 )
-            )
-            add(
-                AddressModel(
-                    "서울특별시 강남구 신사동 56-1"
-                )
-            )
-            add(
-                AddressModel(
-                    "서울특별시 서대문구 연희동 26-8"
-                )
-            )
+            }
         }
-        _addressList.value = dummy
+        _addressList.value = addressList
     }
 
     fun deleteAddress(addressModel: AddressModel) {

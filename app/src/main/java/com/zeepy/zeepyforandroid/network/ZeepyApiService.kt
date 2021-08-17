@@ -1,6 +1,6 @@
 package com.zeepy.zeepyforandroid.network
 
-import com.zeepy.zeepyforandroid.address.ResponseAddressListDTO
+import com.zeepy.zeepyforandroid.address.dto.ResponseAddressListDTO
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO

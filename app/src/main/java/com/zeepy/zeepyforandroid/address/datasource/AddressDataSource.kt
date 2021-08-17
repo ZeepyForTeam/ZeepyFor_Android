@@ -1,6 +1,6 @@
 package com.zeepy.zeepyforandroid.address.datasource
 
-import com.zeepy.zeepyforandroid.address.ResponseAddressListDTO
+import com.zeepy.zeepyforandroid.address.dto.ResponseAddressListDTO
 import io.reactivex.Single
 
 interface AddressDataSource {
