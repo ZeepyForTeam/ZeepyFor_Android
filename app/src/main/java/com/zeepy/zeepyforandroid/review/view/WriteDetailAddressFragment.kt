@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavArgs
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteDetailAddressBinding
@@ -16,6 +18,7 @@ import com.zeepy.zeepyforandroid.util.ReviewNotice
 
 class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+    private val args: WriteDetailAddressFragmentArgs by navArgs()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -28,7 +31,12 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        Log.e(viewModel.toString(), viewModel.toString())
+        if (args != null) {
+            binding.layoutDetailAddress.apply {
+                this.textviewCityDistinct.text = args.selectedAddress.cityDistinct
+                this.textviewPrimaryAddress.text = args.selectedAddress.primaryAddress
+            }
+        }
 
         initView()
         goToCheckLessorPersonality()

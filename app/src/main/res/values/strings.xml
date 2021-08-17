@@ -82,4 +82,5 @@
     <string name="input_password_login">비밀번호를 입력해주세요</string>
     <string name="write_review_notice_message">*리뷰 등록 후에는 수정하거나 삭제하실 수\n없으니 글 작성에 유의해주세요.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.</string>
     <string name="login_notice_message">기능 제한 없이 ZEEPY의\n모든 기능을 즐겨보세요!</string>
+    <string name="address_citydistinct_primary">%s %s</string>
 </resources>

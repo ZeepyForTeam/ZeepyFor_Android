@@ -36,12 +36,8 @@ class WriteReviewViewModel @Inject constructor(
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
 
-    private val _addressList = MutableLiveData<AddressList>()
-    val addressList: LiveData<AddressList>
-        get() = _addressList
-
-    private val _addressSelected = MutableLiveData<String>()
-    val addressSelected: LiveData<String>
+    private val _addressSelected = MutableLiveData<LocalAddressEntity>()
+    val addressSelected: LiveData<LocalAddressEntity>
         get() = _addressSelected
 
     private val _lessorGender = MutableLiveData<String>()
@@ -130,7 +126,7 @@ class WriteReviewViewModel @Inject constructor(
         return !(reviewOfLessor.value.isNullOrEmpty() || lessorGender.value.isNullOrEmpty())
     }
 
-    fun changeAddressSelected(address: String) {
+    fun changeAddressSelected(address: LocalAddressEntity) {
         _addressSelected.value = address
     }
 
@@ -188,7 +184,6 @@ class WriteReviewViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     _addressListRegistered.postValue(it)
-                    setRegisteredAddressList(it)
                 }, {
                     it.printStackTrace()
                 })
@@ -196,22 +191,8 @@ class WriteReviewViewModel @Inject constructor(
 
     }
 
-    private fun setRegisteredAddressList(localAddresses: List<LocalAddressEntity>) {
-        val addressList = AddressList()
+    fun deleteAddress(address: LocalAddressEntity) {
 
-        addressList.apply {
-            localAddresses.forEach {
-                add(
-                    AddressModel(
-                        "${it.cityDistinct} ${it.primaryAddress}"
-                    )
-                )
-            }
-        }
-        _addressList.value = addressList
-    }
-
-    fun deleteAddress(addressModel: AddressModel) {
-        _addressList.value?.remove(addressModel)
+//        _addressList.value?.remove(address)
     }
 }

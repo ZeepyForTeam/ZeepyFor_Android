@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentManageAddressBinding
 import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
@@ -31,11 +32,11 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     private fun initView() {
         binding.rvAddressList.run {
             adapter = AddressAdapter(requireContext(), object : AddressAdapter.ClickListener{
-                override fun delete(item: AddressModel) {
+                override fun delete(item: LocalAddressEntity) {
                     viewModel.deleteAddress(item)
                 }
-                override fun select(item: AddressModel) {
-                    viewModel.changeAddressSelected(item.address)
+                override fun select(item: LocalAddressEntity) {
+                    viewModel.changeAddressSelected(item)
                 }
             })
             addItemDecoration(ItemDecoration(8, 0))
@@ -43,8 +44,8 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     }
 
     private fun setDatas() {
-        viewModel.addressList.observe(viewLifecycleOwner){
-            (binding.rvAddressList.adapter as AddressAdapter).submitList(viewModel.addressList.value)
+        viewModel.addressListRegistered.observe(viewLifecycleOwner){
+            (binding.rvAddressList.adapter as AddressAdapter).submitList(it)
         }
     }
 }

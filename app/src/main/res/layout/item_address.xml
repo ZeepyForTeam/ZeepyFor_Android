@@ -5,7 +5,7 @@
     <data>
         <variable
             name="data"
-            type="com.zeepy.zeepyforandroid.review.data.entity.AddressModel" />
+            type="com.zeepy.zeepyforandroid.address.LocalAddressEntity" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:textSize="14sp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:includeFontPadding="false"
-            android:text="@{data.address}"
+            android:text="@{@string/address_citydistinct_primary(data.cityDistinct, data.primaryAddress)}"
             android:layout_marginVertical="16dp"
             android:textColor="@color/zeepy_black_3b"
             app:layout_constraintHorizontal_bias="0.07"

@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_writeDetailAddressFragment_to_lessorPersonalityFragment"
             app:destination="@id/lessorPersonalityFragment" />
+        <argument android:name="selectedAddress"
+            app:argType="com.zeepy.zeepyforandroid.address.LocalAddressEntity"/>
+
     </fragment>
 
     <fragment
