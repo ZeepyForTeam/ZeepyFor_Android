@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.address.AddressEntity
-import com.zeepy.zeepyforandroid.address.SearchAddressListRepository
+import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.controller.AddressController
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
@@ -36,14 +36,6 @@ class WriteReviewViewModel @Inject constructor(
     val addressListRegistered: LiveData<MutableList<LocalAddressEntity>>
         get() = _addressListRegistered
 
-    private val _thirdDetailAddress = MutableLiveData<String>()
-    val thirdDetailAddress: LiveData<String>
-        get() = _thirdDetailAddress
-
-    private val _writableAddress = MutableLiveData<Boolean>()
-    val writableAddress: LiveData<Boolean>
-        get() = _writableAddress
-
     private val _lessorPersonality = MutableLiveData<String>()
     val lessorPersonality: LiveData<String>
     get() = _lessorPersonality
@@ -55,6 +47,15 @@ class WriteReviewViewModel @Inject constructor(
     private val _addressSelected = MutableLiveData<LocalAddressEntity>()
     val addressSelected: LiveData<LocalAddressEntity>
         get() = _addressSelected
+
+    //Todo: User getAddress 모델 바뀌면 변경
+    private val _reviewSelectedAddress = MutableLiveData<SearchAddressListModel>()
+    val reviewSelectedAddress: LiveData<SearchAddressListModel>
+        get() = _reviewSelectedAddress
+
+    private val _selectedBuildingId = MutableLiveData<Int>()
+    val selectedBuildingId: LiveData<Int>
+        get() = _selectedBuildingId
 
     private val _lessorGender = MutableLiveData<String>()
     val lessorGender: LiveData<String>
@@ -106,8 +107,12 @@ class WriteReviewViewModel @Inject constructor(
         getAddress()
     }
 
-    fun changeThirdDetailAddress(detailAddress: String) {
-        _thirdDetailAddress.value = detailAddress
+    fun changeSelectedBuildingId(id: Int) {
+        _selectedBuildingId.value = id
+    }
+
+    fun changeSelectedReviewAddress(address: SearchAddressListModel) {
+        _reviewSelectedAddress.value = address
     }
 
     fun selectOption(option: String){
@@ -175,8 +180,8 @@ class WriteReviewViewModel @Inject constructor(
     fun postReviewToServer() {
         postReviewController.postReview(
             RequestWriteReview(
-                "",
-                313,
+                "서울특별시 동대문구 용두동 39-808 엘림 309호",
+                1,
                 lessorPersonality.value!!,
                 selectedOptionList.value!!,
                 houseURLImages.value!!,
@@ -214,20 +219,20 @@ class WriteReviewViewModel @Inject constructor(
         )
     }
 
-    fun fetchBuildingInfo() {
-        addDisposable(
-            addressDataSource.fetchBuildgingInfoByAddress(
-                "${addressSelected.value!!.cityDistinct} ${addressSelected.value!!.primaryAddress}"
-            ).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    _writableAddress.postValue(true)
-                }, {
-                    it.printStackTrace()
-                    _writableAddress.postValue(false)
-                })
-        )
-    }
+//    fun fetchBuildingInfo() {
+//        addDisposable(
+//            addressDataSource.fetchBuildgingInfoByAddress(
+//                "${addressSelected.value!!.cityDistinct} ${addressSelected.value!!.primaryAddress}"
+//            ).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    _writableAddress.postValue(true)
+//                }, {
+//                    it.printStackTrace()
+//                    _writableAddress.postValue(false)
+//                })
+//        )
+//    }
 
     fun deleteAddress(address: LocalAddressEntity) {
         _addressListRegistered.value?.remove(address)

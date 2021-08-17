@@ -16,6 +16,7 @@ data class SearchBuildingAddressDTO(
 ) {
     fun toSearchAddressListModel() =
         SearchAddressListModel(
+            id,
             shortAddress,
             shortNumberAddress,
             shortRoadNameAddress

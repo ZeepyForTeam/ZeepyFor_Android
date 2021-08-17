@@ -1,6 +1,8 @@
 package com.zeepy.zeepyforandroid.review.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +11,12 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavArgs
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteDetailAddressBinding
+import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.zeepy.zeepyforandroid.util.ReviewNotice
 
@@ -39,7 +43,7 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
         initView()
         goToCheckLessorPersonality()
-
+        enableNextButton()
     }
 
     private fun initView(){
@@ -50,18 +54,24 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
     private fun goToCheckLessorPersonality(){
         binding.layoutDetailAddress.btnNext.setOnClickListener {
-            viewModel.changeThirdDetailAddress(binding.layoutDetailAddress.etAddressDetail.text.toString())
-            viewModel.fetchBuildingInfo()
-
-            viewModel.writableAddress.observe(viewLifecycleOwner) { isWritable ->
-                if (isWritable) {
-                    Navigation.findNavController(binding.root).navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
-                } else {
-                    Toast.makeText(requireContext(), "fucking address not registered", Toast.LENGTH_SHORT).show()
-                }
-            }
+            findNavController().navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
         }
     }
+
+    private fun enableNextButton() {
+        binding.layoutDetailAddress.etAddressDetail.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    binding.layoutDetailAddress.btnNext.setUnUsableButton()
+                } else {
+                    binding.layoutDetailAddress.btnNext.setUsableButton()
+                }
+            }
+        })
+    }
+
 
 
     override fun onStop() {

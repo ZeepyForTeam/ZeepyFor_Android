@@ -1,7 +1,7 @@
 package com.zeepy.zeepyforandroid.di
 
-import com.zeepy.zeepyforandroid.address.SearchAddressListRepository
-import com.zeepy.zeepyforandroid.address.SearchAddressListRepositoryImpl
+import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
+import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepositoryImpl
 import com.zeepy.zeepyforandroid.address.datasource.NotAuthSearchAddressDataSource
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSource
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository

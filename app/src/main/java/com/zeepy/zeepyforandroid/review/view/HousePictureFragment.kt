@@ -165,6 +165,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
                 }
 
                 override fun clickRightButton(dialog: ZeepyDialog) {
+                    viewModel.postReviewToServer()
                     parent?.findNavController()?.popBackStack()
                     dialog.dismiss()
                 }

@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.address
+package com.zeepy.zeepyforandroid.address.repository
 
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import io.reactivex.Single
