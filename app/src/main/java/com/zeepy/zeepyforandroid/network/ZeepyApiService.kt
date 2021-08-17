@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.network
 
+import com.zeepy.zeepyforandroid.address.AddressEntity
 import com.zeepy.zeepyforandroid.address.dto.ResponseAddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
@@ -10,10 +11,7 @@ import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ZeepyApiService {
 
@@ -41,4 +39,6 @@ interface ZeepyApiService {
     @GET("/api/buildings/address")
     fun getBuildingByAddress(@Query ("address") address: String): Single<ResponseBuildingInfoDTO>
 
+    @POST("/api/user/address")
+    fun deleteAddress(@Body addresses: ResponseAddressListDTO): Completable
 }

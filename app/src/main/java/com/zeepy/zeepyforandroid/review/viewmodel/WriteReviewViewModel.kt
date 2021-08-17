@@ -1,32 +1,36 @@
 package com.zeepy.zeepyforandroid.review.viewmodel
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.zeepy.zeepyforandroid.address.AddressEntity
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
+import com.zeepy.zeepyforandroid.address.controller.AddressController
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
+import com.zeepy.zeepyforandroid.address.dto.ResponseAddressListDTO
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.eunm.LessorAge
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.review.PostReviewController
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
-import com.zeepy.zeepyforandroid.review.data.entity.AddressList
-import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.review.data.entity.ReviewSearchAddressModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
+    private val addressController: AddressController,
     private val addressDataSource: AddressDataSource,
     private val postReviewController: PostReviewController,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
-    private val _addressListRegistered = MutableLiveData<List<LocalAddressEntity>>(listOf())
-    val addressListRegistered: LiveData<List<LocalAddressEntity>>
+    private val _addressListRegistered = MutableLiveData<MutableList<LocalAddressEntity>>(mutableListOf())
+    val addressListRegistered: LiveData<MutableList<LocalAddressEntity>>
         get() = _addressListRegistered
 
     private val _thirdDetailAddress = MutableLiveData<String>()
@@ -196,7 +200,7 @@ class WriteReviewViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _addressListRegistered.postValue(it)
+                    _addressListRegistered.postValue(it as MutableList<LocalAddressEntity>)
                 }, {
                     it.printStackTrace()
                 })
@@ -219,7 +223,44 @@ class WriteReviewViewModel @Inject constructor(
     }
 
     fun deleteAddress(address: LocalAddressEntity) {
+        _addressListRegistered.value?.remove(address)
 
-//        _addressList.value?.remove(address)
+        val addressDTO = addressListRegistered.value?.map {
+            AddressEntity(it.cityDistinct, "", it.primaryAddress)
+        }
+        val requestAddresses = addressDTO?.let {
+            ResponseAddressListDTO(
+                it
+            )
+        }
+
+        if (addressDTO != null) {
+            addDisposable(
+                addressController.deleteAddress(requestAddresses!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        deleteAddressFromLocal(address)
+                    }, {
+                        it.printStackTrace()
+                    })
+            )
+        }
+    }
+
+    private fun deleteAddressFromLocal(address: LocalAddressEntity) {
+        addDisposable(
+            Observable.fromCallable{
+                zeepyLocalRepository.deleteAddress(address)
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("delete success", "yes!!")
+                }, {
+                    it.printStackTrace()
+                    Log.e("delete failed", "fucking!!")
+
+                })
+        )
     }
 }

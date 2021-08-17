@@ -1,9 +1,6 @@
 package com.zeepy.zeepyforandroid.localdata
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -15,4 +12,7 @@ interface ZeepyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllAddress(addressList: List<LocalAddressEntity>)
+
+    @Delete
+    fun deleteAddress(address: LocalAddressEntity)
 }
