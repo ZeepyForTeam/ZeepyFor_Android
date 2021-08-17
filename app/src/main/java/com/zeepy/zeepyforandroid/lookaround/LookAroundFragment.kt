@@ -7,15 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.MaterialSpinner
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
+import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
-    private lateinit var buildingListAdapter: LookAroundListAdapter
+    private val viewModel by viewModels<LookAroundViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -27,9 +33,12 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("parentparent fragment is what?", requireParentFragment().parentFragment.toString())
+
         setToolbar()
         initRecyclerView()
         setSpinner()
+        updateBuildings()
     }
 
     private val itemSelectedListener by lazy {
@@ -52,7 +61,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     }
 
     private fun setToolbar() {
-        binding.toolbar.run {
+        binding.toolbar.apply {
             setTitle("둘러보기")
             setRightButton(R.drawable.btn_map) {
                 Navigation.findNavController(binding.root)
@@ -70,11 +79,13 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     }
 
     private fun initRecyclerView() {
-        buildingListAdapter = LookAroundListAdapter {
-            val action =
-        }
-        binding.rvBuildingList.run {
-            adapter = buildingListAdapter
+        binding.rvBuildingList.apply {
+            adapter = LookAroundListAdapter {
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToBuildingDetailFragment(
+                    it
+                )
+                requireParentFragment().requireParentFragment().findNavController().navigate(action)
+            }
             addItemDecoration(ItemDecoration(10, 0))
         }
     }
@@ -89,6 +100,13 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                     Log.v("MaterialSpinner", "onFocusChange hasFocus=$hasFocus")
                 }
             }
+        }
+    }
+
+    private fun updateBuildings() {
+        viewModel.buildingList.observe(viewLifecycleOwner) {
+            (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it)
+            // TODO: 주소가 등록되지 않았을 경우 OR 조회되는 주소가 하나도 없을 경우 뷰 처리 어떻게?
         }
     }
 

@@ -24,9 +24,4 @@ object DataSourceModule {
     @Singleton
     fun provideAddressDataSource(@ZeepyService zeepyApiService: ZeepyApiService): AddressDataSource = AddressDataSourceImpl(zeepyApiService)
 
-//    @Provides
-//    @Singleton
-//    fun provideGeocodingDataSource(naverApiService: NaverApiService) : GeocodingDataSource {
-//        return GeocodingRepository(naverApiService)
-//    }
 }

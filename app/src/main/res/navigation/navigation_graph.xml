@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_mainFrameFragment_to_buildingDetailFragment"
+            app:destination="@id/buildingDetailFragment"/>
 
     </fragment>
 
@@ -120,5 +123,16 @@
         android:name="com.zeepy.zeepyforandroid.ChangeAddressFragment"
         android:label="ChangeAddressFragment"
         tools:layout="@layout/fragment_change_address"/>
+
+    <fragment
+        android:id="@+id/buildingDetailFragment"
+        android:name="com.zeepy.zeepyforandroid.lookaround.BuildingDetailFragment"
+        android:label="BuildingDetailFragment"
+        tools:layout="@layout/fragment_building_detail">
+
+        <argument
+            android:name="buildingSummaryModel"
+            app:argType="com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel"/>
+    </fragment>
 
 </navigation>

@@ -4,6 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.conditionsearch.ConditionSearchViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,6 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="원룸"
+                        android:checked="@={viewModel.searchEntry.buildingTypes[viewModel.ONEROOM].checked}"
                         android:textAlignment="center"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:button="@null"
@@ -71,6 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="투룸"
+                        android:checked="@={viewModel.searchEntry.buildingTypes[viewModel.TWOROOM].checked}"
                         android:textAlignment="center"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:button="@null"
@@ -83,10 +94,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="오피스텔"
+                        android:checked="@={viewModel.searchEntry.buildingTypes[viewModel.OFFICETEL].checked}"
                         android:textAlignment="center"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:button="@null"
-                        android:checked="false"
                         android:drawableTop="@drawable/selector_option_ready"
                         android:drawablePadding="8dp"/>
 
@@ -122,6 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="월세"
+                        android:checked="@={viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked}"
                         android:textAlignment="center"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:button="@null"
@@ -134,6 +146,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="전세"
+                        android:checked="@={viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked}"
                         android:textAlignment="center"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:button="@null"
@@ -147,10 +160,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:text="매매"
+                        android:checked="@={viewModel.searchEntry.tradeTypes[viewModel.TRADE].checked}"
                         android:textAlignment="center"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:button="@null"
-                        android:drawableTop="@drawable/selector_option_3"
+                        android:drawableTop="@drawable/selector_option_ready"
                         android:drawablePadding="8dp"/>
 
 
@@ -168,7 +182,7 @@
                     app:layout_constraintTop_toBottomOf="@id/linearlayout_tradetype"
                     android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
-                    android:visibility="gone"/>
+                    android:visibility="@{(viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked || viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked) ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:id="@+id/tv_deposit"
@@ -182,7 +196,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_price"
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="16dp"
-                    android:visibility="gone"/>
+                    android:visibility="@{(viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked || viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked) ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:id="@+id/tv_deposit_range"
@@ -199,7 +213,7 @@
                     android:paddingLeft="8dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:visibility="gone"/>
+                    android:visibility="@{(viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked || viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked) ? View.VISIBLE : View.GONE}"/>
 
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/rs_deposit"
@@ -219,7 +233,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:visibility="gone"/>
+                    android:visibility="@{(viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked || viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked) ? View.VISIBLE : View.GONE}"/>
 
                 <LinearLayout
                     android:id="@+id/layout_deposit_price_range"
@@ -234,7 +248,7 @@
                     android:layout_marginEnd="16dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:visibility="gone">
+                    android:visibility="@{(viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked || viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked) ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -289,7 +303,7 @@
                     app:layout_constraintTop_toBottomOf="@id/layout_deposit_price_range"
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="16dp"
-                    android:visibility="gone"/>
+                    android:visibility="@{viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:id="@+id/tv_monthlypay_range"
@@ -306,7 +320,7 @@
                     android:paddingLeft="8dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:visibility="gone"/>
+                    android:visibility="@{viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked ? View.VISIBLE : View.GONE}"/>
 
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/rs_monthlypay"
@@ -326,7 +340,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:visibility="gone"/>
+                    android:visibility="@{viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked ? View.VISIBLE : View.GONE}"/>
 
                 <LinearLayout
                     android:id="@+id/layout_monthly_price_range"
@@ -341,7 +355,7 @@
                     android:layout_marginEnd="16dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:visibility="gone">
+                    android:visibility="@{viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="wrap_content"

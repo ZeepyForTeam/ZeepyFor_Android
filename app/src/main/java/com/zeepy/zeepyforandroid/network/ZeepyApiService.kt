@@ -37,5 +37,4 @@ interface ZeepyApiService {
 
     @GET("/api/user/address")
     fun getAddressList(): Single<ResponseAddressListDTO>
-
 }
