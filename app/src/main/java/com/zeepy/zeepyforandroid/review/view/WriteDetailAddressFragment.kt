@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavArgs
 import androidx.navigation.Navigation
@@ -31,11 +32,9 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        if (args != null) {
-            binding.layoutDetailAddress.apply {
-                this.textviewCityDistinct.text = args.selectedAddress.cityDistinct
-                this.textviewPrimaryAddress.text = args.selectedAddress.primaryAddress
-            }
+        binding.layoutDetailAddress.apply {
+            this.textviewCityDistinct.text = args.selectedAddress.cityDistinct
+            this.textviewPrimaryAddress.text = args.selectedAddress.primaryAddress
         }
 
         initView()
@@ -51,9 +50,19 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
     private fun goToCheckLessorPersonality(){
         binding.layoutDetailAddress.btnNext.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
+            viewModel.changeThirdDetailAddress(binding.layoutDetailAddress.etAddressDetail.text.toString())
+            viewModel.fetchBuildingInfo()
+
+            viewModel.writableAddress.observe(viewLifecycleOwner) { isWritable ->
+                if (isWritable) {
+                    Navigation.findNavController(binding.root).navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
+                } else {
+                    Toast.makeText(requireContext(), "fucking address not registered", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
+
 
     override fun onStop() {
         super.onStop()

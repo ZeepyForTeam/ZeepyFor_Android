@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
+import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.eunm.LessorAge
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
@@ -20,13 +21,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
+    private val addressDataSource: AddressDataSource,
     private val postReviewController: PostReviewController,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
-
     private val _addressListRegistered = MutableLiveData<List<LocalAddressEntity>>(listOf())
     val addressListRegistered: LiveData<List<LocalAddressEntity>>
         get() = _addressListRegistered
+
+    private val _thirdDetailAddress = MutableLiveData<String>()
+    val thirdDetailAddress: LiveData<String>
+        get() = _thirdDetailAddress
+
+    private val _writableAddress = MutableLiveData<Boolean>()
+    val writableAddress: LiveData<Boolean>
+        get() = _writableAddress
 
     private val _lessorPersonality = MutableLiveData<String>()
     val lessorPersonality: LiveData<String>
@@ -84,6 +93,10 @@ class WriteReviewViewModel @Inject constructor(
 
     init {
         getAddress()
+    }
+
+    fun changeThirdDetailAddress(detailAddress: String) {
+        _thirdDetailAddress.value = detailAddress
     }
 
     fun selectOption(option: String){
@@ -188,7 +201,21 @@ class WriteReviewViewModel @Inject constructor(
                     it.printStackTrace()
                 })
         )
+    }
 
+    fun fetchBuildingInfo() {
+        addDisposable(
+            addressDataSource.fetchBuildgingInfoByAddress(
+                "${addressSelected.value!!.cityDistinct} ${addressSelected.value!!.primaryAddress}"
+            ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _writableAddress.postValue(true)
+                }, {
+                    it.printStackTrace()
+                    _writableAddress.postValue(false)
+                })
+        )
     }
 
     fun deleteAddress(address: LocalAddressEntity) {
