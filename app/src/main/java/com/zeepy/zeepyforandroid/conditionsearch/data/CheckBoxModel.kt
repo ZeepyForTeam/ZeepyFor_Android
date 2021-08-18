@@ -9,15 +9,21 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class CheckBoxModel(
-    private var _checked : Boolean = true
+    private var _id : Int,
+    private var _checked : Boolean
 ): BaseObservable(), Parcelable {
     @get:Bindable
     var checked: Boolean
         get() = _checked
         set(value) {
-            Log.e("changed checkbox", value.toString())
             _checked = value
             notifyPropertyChanged(BR.checked)
         }
-
+    @get:Bindable
+    var id: Int
+        get() = _id
+        set(value) {
+            _id = value
+            notifyPropertyChanged(BR.id)
+        }
 }

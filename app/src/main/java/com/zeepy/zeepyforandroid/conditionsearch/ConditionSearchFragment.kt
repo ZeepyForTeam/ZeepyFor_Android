@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
+import androidx.databinding.Observable
 import androidx.fragment.app.viewModels
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -13,15 +13,16 @@ import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.zeepy.zeepyforandroid.databinding.FragmentSearchByConditionBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.google.android.material.slider.RangeSlider
+import com.zeepy.zeepyforandroid.conditionsearch.data.CheckBoxModel
+import com.zeepy.zeepyforandroid.eunm.Options
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>(){
 
     private val viewModel by viewModels<ConditionSearchViewModel>()
-
-    private var roomOptionCnt = 0;
-    private var payOptionCnt = 0;
+    private var buildingTypesCounter = 2
+    private var tradeTypesCounter = 2
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -41,6 +42,42 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         setNextButton()
         removeSliderPadding()
 
+        viewModel.getBuildingTypesObservable()?.let {
+            setCheckboxCheckedChangeListener(it)
+        }
+        viewModel.getTradeTypesObservable()?.let {
+            setCheckboxCheckedChangeListener(it)
+        }
+
+    }
+
+    private fun setCheckboxCheckedChangeListener(checkboxCollection: Collection<CheckBoxModel>) {
+        checkboxCollection.forEach {
+            it.addOnPropertyChangedCallback(object: Observable.OnPropertyChangedCallback() {
+                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                    if (it.checked) {
+                        if (it.id == 1 || it.id == 2) {
+                            buildingTypesCounter++
+                        } else {
+                            tradeTypesCounter++
+                        }
+                    } else {
+                        if (it.id == 1 || it.id == 2) {
+                            buildingTypesCounter--
+                        } else {
+                            tradeTypesCounter--
+                        }
+                    }
+                    if (buildingTypesCounter >= 3 && tradeTypesCounter >= 2) {
+                        binding.btnNext.setUsableButton()
+                    } else {
+                        binding.btnNext.setUnUsableButton()
+                    }
+                    Log.e("what is tradeTypesCounter", tradeTypesCounter.toString())
+                    Log.e("What is buildingTypesCounter", buildingTypesCounter.toString())
+                }
+            })
+        }
     }
 
     private fun setRangeSliderOnChangeListener() {
@@ -81,11 +118,11 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         binding.rvFurnitureOption.run {
             adapter = ConditionOptionAdapter(object : ConditionOptionAdapter.SelectOptionInterface {
                 override fun select(option: Int) {
-                    TODO("Not yet implemented")
+                    viewModel.selectOption(Options.findOptions(option))
                 }
 
                 override fun unselect(option: Int) {
-                    TODO("Not yet implemented")
+                    viewModel.unselectOption(Options.findOptions(option))
                 }
             })
             addItemDecoration(ItemDecoration(8, 8))
@@ -95,7 +132,7 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            setUnUsableButton()
+            setUsableButton()
         }
     }
 
@@ -103,5 +140,4 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         binding.rsDeposit.setPadding(0, 0, 0, 0)
         binding.rsMonthlypay.setPadding(0, 0, 0, 0)
     }
-
 }
