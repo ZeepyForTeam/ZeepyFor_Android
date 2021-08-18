@@ -13,7 +13,7 @@ import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.zeepy.zeepyforandroid.databinding.FragmentSearchByConditionBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.google.android.material.slider.RangeSlider
-import com.zeepy.zeepyforandroid.conditionsearch.data.CheckBoxModel
+import com.zeepy.zeepyforandroid.conditionsearch.data.RadioButtonModel
 import com.zeepy.zeepyforandroid.eunm.Options
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,8 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>(){
 
     private val viewModel by viewModels<ConditionSearchViewModel>()
-    private var buildingTypesCounter = 2
-    private var tradeTypesCounter = 2
+    private var buildingTypesChecked: Boolean = false
+    private var tradeTypesChecked: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -51,30 +51,29 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
 
     }
 
-    private fun setCheckboxCheckedChangeListener(checkboxCollection: Collection<CheckBoxModel>) {
+    //FIXME: 초기 선택 여부에 따라서 btnNext 세팅이 필요 없을 수도 있음
+    private fun setCheckboxCheckedChangeListener(checkboxCollection: Collection<RadioButtonModel>) {
         checkboxCollection.forEach {
             it.addOnPropertyChangedCallback(object: Observable.OnPropertyChangedCallback() {
                 override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                     if (it.checked) {
-                        if (it.id == 1 || it.id == 2) {
-                            buildingTypesCounter++
+                        if (it.id == 1 || it.id == 2 || it.id == 3) {
+                            buildingTypesChecked = true
                         } else {
-                            tradeTypesCounter++
+                            tradeTypesChecked = true
                         }
                     } else {
-                        if (it.id == 1 || it.id == 2) {
-                            buildingTypesCounter--
+                        if (it.id == 1 || it.id == 2 || it.id == 3) {
+                            buildingTypesChecked = true
                         } else {
-                            tradeTypesCounter--
+                            tradeTypesChecked = true
                         }
                     }
-                    if (buildingTypesCounter >= 3 && tradeTypesCounter >= 2) {
+                    if (buildingTypesChecked && tradeTypesChecked) {
                         binding.btnNext.setUsableButton()
                     } else {
                         binding.btnNext.setUnUsableButton()
                     }
-                    Log.e("what is tradeTypesCounter", tradeTypesCounter.toString())
-                    Log.e("What is buildingTypesCounter", buildingTypesCounter.toString())
                 }
             })
         }

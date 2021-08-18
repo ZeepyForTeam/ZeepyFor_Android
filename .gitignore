@@ -139,6 +139,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Metadata created after successful build.
+/app/release/output-metadata.json
+
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar

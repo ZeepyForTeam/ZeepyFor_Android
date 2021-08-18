@@ -1,14 +1,13 @@
 package com.zeepy.zeepyforandroid.conditionsearch
 
 import android.util.Log
-import android.widget.CheckBox
 import androidx.databinding.BaseObservable
 import androidx.databinding.Observable
 import androidx.databinding.Observable.OnPropertyChangedCallback
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zeepy.zeepyforandroid.conditionsearch.data.CheckBoxModel
+import com.zeepy.zeepyforandroid.conditionsearch.data.RadioButtonModel
 import com.zeepy.zeepyforandroid.conditionsearch.data.SearchEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -28,11 +27,11 @@ class ConditionSearchViewModel @Inject constructor(): ViewModel() {
         _searchEntry.value = emptyEntry
     }
 
-    fun getBuildingTypesObservable(): Collection<CheckBoxModel>? {
+    fun getBuildingTypesObservable(): Collection<RadioButtonModel>? {
         return searchEntry.value?.buildingTypes?.values
     }
 
-    fun getTradeTypesObservable(): Collection<CheckBoxModel>? {
+    fun getTradeTypesObservable(): Collection<RadioButtonModel>? {
         return searchEntry.value?.tradeTypes?.values
     }
 
@@ -50,10 +49,10 @@ class ConditionSearchViewModel @Inject constructor(): ViewModel() {
     private val emptyEntry: SearchEntry
         get() {
             val buildingTypes = mutableMapOf(
-                ONEROOM to CheckBoxModel(1, true), TWOROOM to CheckBoxModel(2, true), OFFICETEL to CheckBoxModel(3, false)
+                ALL to RadioButtonModel(1, true), MULTIHOUSEHOLD to RadioButtonModel(2, false), OFFICETEL to RadioButtonModel(3, false)
             )
             val tradeTypes = mutableMapOf(
-                MONTHLYPAYMENT to CheckBoxModel(4, true), DEPOSITPAYMENT to CheckBoxModel(5, true), TRADE to CheckBoxModel(6, false)
+                ALL to RadioButtonModel(4, true), MONTHLYPAYMENT to RadioButtonModel(5, false), DEPOSITPAYMENT to RadioButtonModel(6, false), TRADE to RadioButtonModel(7, false)
             )
             return SearchEntry(buildingTypes, tradeTypes, 0, 0, 0, 0)
         }
@@ -61,8 +60,8 @@ class ConditionSearchViewModel @Inject constructor(): ViewModel() {
 
 
     companion object {
-        const val ONEROOM = "Oneroom"
-        const val TWOROOM = "Tworoom"
+        const val ALL = "All"
+        const val MULTIHOUSEHOLD = "MultiHousehold"
         const val OFFICETEL = "Officetel"
         const val MONTHLYPAYMENT = "MonthlyPayment"
         const val DEPOSITPAYMENT = "DepositPayment"

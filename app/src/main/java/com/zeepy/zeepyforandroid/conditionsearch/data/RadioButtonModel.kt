@@ -8,7 +8,7 @@ import com.zeepy.zeepyforandroid.BR
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CheckBoxModel(
+data class RadioButtonModel(
     private var _id : Int,
     private var _checked : Boolean
 ): BaseObservable(), Parcelable {

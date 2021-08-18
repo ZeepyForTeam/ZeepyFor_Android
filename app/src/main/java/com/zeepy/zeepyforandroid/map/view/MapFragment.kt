@@ -29,10 +29,12 @@ import com.zeepy.zeepyforandroid.databinding.FragmentMapBinding
 import com.zeepy.zeepyforandroid.map.data.Building
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
 import com.zeepy.zeepyforandroid.util.WidthResizeAnimation
+import dagger.hilt.android.AndroidEntryPoint
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 
+@AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     //private val ACCESS_FINE_LOCATION = 1000
@@ -68,11 +70,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         setMarker(37.505834449999995, 126.96320847343215, R.drawable.emoji_5_map)
         setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
 
-//        if (checkLocationService()) {
-//            permissionCheck()
-//        } else {
-//            Toast.makeText(activity, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
-//        }
 
     }
 
@@ -189,82 +186,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             mapPoint = MapPoint.mapPointWithGeoCoord(lat, lng)
             markerType = MapPOIItem.MarkerType.CustomImage
             customImageResourceId = resourceID
-            selectedMarkerType = MapPOIItem.MarkerType.RedPin
-            //customSelectedImageResourceId = R.drawable.icon_map_act //TODO: 이 이미지 사용했을 때 위치 오차가 발생
+            selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+            customSelectedImageResourceId = R.drawable.icon_map_act //FIXME: 이 이미지 사용했을 때 위치 오차가 발생
             isCustomImageAutoscale = true
 
         }
         //draw marker
         mapView.addPOIItem(marker)
-    }
-
-
-    // 위치 권한 확인
-    private fun permissionCheck() {
-        val preference = requireActivity().getPreferences(MODE_PRIVATE)
-        val isFirstCheck = preference.getBoolean("isFirstPermissionCheck", true)
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // 권한이 없는 상태
-            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // 권한 거절 (다시 한 번 물어봄)
-                val builder = AlertDialog.Builder(requireActivity())
-                builder.setMessage("현재 위치를 확인하시려면 위치 권한을 허용해주세요.")
-                builder.setPositiveButton("확인") { dialog, which ->
-                    requestMultiplePermissions.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
-                }
-                builder.setNegativeButton("취소") { dialog, which ->
-
-                }
-                builder.show()
-            } else {
-                if (isFirstCheck) {
-                    // 최초 권한 요청
-                    preference.edit().putBoolean("isFirstPermissionCheck", false).apply()
-                    requestMultiplePermissions.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
-                } else {
-                    // 다시 묻지 않음 클릭 (앱 정보 화면으로 이동)
-                    val builder = AlertDialog.Builder(requireActivity())
-                    builder.setMessage("현재 위치를 확인하시려면 설정에서 위치 권한을 허용해주세요.")
-                    builder.setPositiveButton("설정으로 이동") { dialog, which ->
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + activity?.packageName))
-                        startActivity(intent)
-                    }
-                    builder.setNegativeButton("취소") { dialog, which ->
-
-                    }
-                    builder.show()
-                }
-            }
-        } else {
-            // 권한이 있는 상태
-            startTracking()
-        }
-    }
-
-    //위치 권환 요청
-    private val requestMultiplePermissions =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            permissions.entries.forEach {
-                Log.d(TAG, "${it.key} = ${it.value}")
-            }
-            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
-                Log.d(TAG, "Permission granted")
-                startTracking()
-            } else {
-                Log.d(TAG, "Permission not granted")
-                permissionCheck()
-            }
-        }
-
-    // GPS가 켜져있는지 확인
-    private fun checkLocationService(): Boolean {
-        val locationManager = context?.getSystemService(LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-    }
-
-    // 위치추적 시작
-    private fun startTracking() {
-        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
     }
 
 
