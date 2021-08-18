@@ -75,9 +75,10 @@
         android:label="ReviewFrameFragment"
         tools:layout="@layout/fragment_review_frame">
         <argument
-            android:name="isAddressRegisterd"
+            android:name="isJustRegisterAddress"
             app:argType="boolean"
             android:defaultValue="false" />
+
     </fragment>
 
 

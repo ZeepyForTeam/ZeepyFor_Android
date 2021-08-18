@@ -36,6 +36,7 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
         binding.layoutDetailAddress.apply {
             this.textviewCityDistinct.text = args.selectedAddress.cityDistinct
             this.textviewPrimaryAddress.text = args.selectedAddress.primaryAddress
@@ -44,17 +45,38 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         initView()
         goToCheckLessorPersonality()
         enableNextButton()
+        hideDetailAddressBox()
     }
 
     private fun initView(){
         binding.layoutDetailAddress.btnNext.run {
-            setText("다음으로")
+            if(viewModel.isJustRegisterAddress.value == true) {
+                setText("등록완료")
+            } else {
+                setText("다음으로")
+            }
+        }
+    }
+
+    private fun hideDetailAddressBox() {
+        binding.layoutDetailAddress.etAddressDetail.run {
+            if(viewModel.isJustRegisterAddress.value == true) {
+               visibility = View.GONE
+            } else {
+                visibility = View.VISIBLE
+
+            }
         }
     }
 
     private fun goToCheckLessorPersonality(){
         binding.layoutDetailAddress.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
+            if (viewModel.isJustRegisterAddress.value == true) {
+                requireParentFragment().requireParentFragment().findNavController().popBackStack()
+            } else {
+                findNavController().navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
+
+            }
         }
     }
 
@@ -72,10 +94,8 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
         })
     }
 
-
-
     override fun onStop() {
         super.onStop()
-        binding.layoutDetailAddress.etAddressDetail.text.clear()
+        binding.layoutDetailAddress.etAddressDetail.text?.clear()
     }
 }

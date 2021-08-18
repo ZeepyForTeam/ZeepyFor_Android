@@ -41,7 +41,7 @@
             app:layout_constraintStart_toStartOf="@id/textview_city_distinct"
             app:layout_constraintEnd_toEndOf="@id/textview_city_distinct" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_address_detail"
             android:layout_width="0dp"
             android:layout_height="0dp"

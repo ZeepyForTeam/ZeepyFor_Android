@@ -32,6 +32,10 @@ class WriteReviewViewModel @Inject constructor(
     private val zeepyLocalRepository: ZeepyLocalRepository,
     private val searchAddressListRepository: SearchAddressListRepository
 ) : BaseViewModel() {
+    private val _isJustRegisterAddress = MutableLiveData<Boolean>(false)
+    val isJustRegisterAddress: LiveData<Boolean>
+        get() = _isJustRegisterAddress
+
     private val _addressListRegistered = MutableLiveData<MutableList<LocalAddressEntity>>(mutableListOf())
     val addressListRegistered: LiveData<MutableList<LocalAddressEntity>>
         get() = _addressListRegistered
@@ -113,6 +117,10 @@ class WriteReviewViewModel @Inject constructor(
 
     fun changeSelectedReviewAddress(address: SearchAddressListModel) {
         _reviewSelectedAddress.value = address
+    }
+
+    fun changeIsJustRegisterAddress(boolean: Boolean) {
+        _isJustRegisterAddress.value = boolean
     }
 
     fun selectOption(option: String){

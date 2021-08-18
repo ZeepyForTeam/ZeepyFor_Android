@@ -37,8 +37,8 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
         val navHostFragment = childFragmentManager.findFragmentById(R.id.review_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        viewModel.changeIsJustRegisterAddress(args.isJustRegisterAddress)
         setToolbar()
-        checkIsAddressRegistered()
     }
 
     private fun setToolbar() {
@@ -51,16 +51,6 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
                     Navigation.findNavController(binding.root).popBackStack()
                 }
             }
-        }
-    }
-
-    private fun checkIsAddressRegistered() {
-        if (args.isAddressRegisterd) {
-            navController.navigate(R.id.action_selectAddressFragment_to_searchAddressFragment,
-                null,
-                NavOptions.Builder().setPopUpTo(R.id.selectAddressFragment, true)
-                    .build()
-            )
         }
     }
 

@@ -30,7 +30,7 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     }
 
     private fun initView() {
-        binding.rvAddressList.run {
+        binding.recyclerviewAddressList.run {
             adapter = AddressAdapter(requireContext(), object : AddressAdapter.ClickListener{
                 override fun delete(item: LocalAddressEntity) {
                     viewModel.deleteAddress(item)
@@ -45,7 +45,7 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
 
     private fun setDatas() {
         viewModel.addressListRegistered.observe(viewLifecycleOwner){
-            (binding.rvAddressList.adapter as AddressAdapter).submitList(it)
+            (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it)
         }
     }
 }

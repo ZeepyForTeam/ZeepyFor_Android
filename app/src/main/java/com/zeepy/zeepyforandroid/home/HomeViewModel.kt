@@ -28,6 +28,10 @@ class HomeViewModel @Inject constructor(
     val selectedAddress: LiveData<String>
         get() = _selectedAddress
 
+    init {
+        getAddressList()
+    }
+
     fun getAddressList() {
         addDisposable(
             addressDataSource.fetchAddressList()

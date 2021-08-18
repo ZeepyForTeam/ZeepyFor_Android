@@ -30,6 +30,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         initView()
         setDatas()
         goToSearchAddress()
@@ -44,7 +47,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
             }
         }
 
-        binding.rvAddressList.run {
+        binding.recyclerviewAddressList.run {
             adapter = AddressAdapter(requireContext(), object : AddressAdapter.ClickListener{
                 override fun delete(item: LocalAddressEntity) {
                     viewModel.deleteAddress(item)
@@ -60,8 +63,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     private fun setDatas() {
         viewModel.addressListRegistered.observe(viewLifecycleOwner){
-            Log.e("address", "$it")
-            (binding.rvAddressList.adapter as AddressAdapter).submitList(it)
+            (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it)
         }
     }
 
@@ -72,6 +74,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     private fun goToSearchAddress() {
         binding.tvRegisterAddress.setOnClickListener {
+            findNavController().navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
+        }
+        binding.textviewRegisterAddressNoAddress.setOnClickListener {
             findNavController().navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
         }
     }

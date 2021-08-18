@@ -50,10 +50,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.viewModel = viewModel
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
-        viewModel.getAddressList()
+
         setToolbar()
         writeReview()
         setFilterList()
+        changeAddress()
     }
 
     private fun setToolbar() {
@@ -65,15 +66,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     setTitle(address)
                 }
             }
-
             setCommunityLocation()
 
-            binding.textviewToolbar.setOnClickListener {
-                if(userPreferenceManager.fetchIsAlreadyLogin()) {
-                    requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+        }
+    }
+
+    private fun changeAddress() {
+        binding.toolbar.binding.textviewToolbar.setOnClickListener {
+            if(userPreferenceManager.fetchIsAlreadyLogin()) {
+                Log.e("address", "${viewModel.addressList.value?.addresses}")
+                if(viewModel.addressList.value?.addresses.isNullOrEmpty()) {
+                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                    action.isJustRegisterAddress = true
+                    findNavController().navigate(action)
                 } else {
-                    showLoginDialog()
+                    requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
                 }
+            } else {
+                showLoginDialog()
             }
         }
     }
@@ -90,7 +100,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.buttonWriteReview.setOnClickListener {
             if (userPreferenceManager.fetchIsAlreadyLogin()) {
                 val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
-                action.isAddressRegisterd = viewModel.addressList.value?.addresses.isNullOrEmpty()
+                action.isJustRegisterAddress = false
                 findNavController().navigate(action)
             } else {
                 showLoginDialog()
