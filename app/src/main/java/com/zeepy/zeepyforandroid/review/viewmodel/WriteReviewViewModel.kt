@@ -36,7 +36,7 @@ class WriteReviewViewModel @Inject constructor(
     val addressListRegistered: LiveData<MutableList<LocalAddressEntity>>
         get() = _addressListRegistered
 
-    private val _lessorPersonality = MutableLiveData<String>()
+    private val _lessorPersonality = MutableLiveData<String>("")
     val lessorPersonality: LiveData<String>
     get() = _lessorPersonality
 
@@ -73,7 +73,7 @@ class WriteReviewViewModel @Inject constructor(
     val bitmapImages: LiveData<List<PictureModel>>
         get() = _houseBitmapImages
 
-    private val _houseURLImages = MutableLiveData<List<String>>()
+    private val _houseURLImages = MutableLiveData<List<String>>(listOf())
     val houseURLImages: LiveData<List<String>>
         get() = _houseURLImages
 
@@ -193,8 +193,7 @@ class WriteReviewViewModel @Inject constructor(
                 reviewOfHouse.value!!,
                 roomType.value!!,
                 reviewPreference.value!!["soundInsulation"]!!,
-                reviewPreference.value!!["totalEvaluation"]!!,
-                0,
+                houseTotalEvaluation.value!!,
                 reviewPreference.value!!["waterPressure"]!!,
             )
         ).subscribeOn(Schedulers.io())

@@ -15,6 +15,5 @@ data class RequestWriteReview(
     val roomCount: String,
     val soundInsulation: String,
     val totalEvaluation: String,
-    val user: Int,
     val waterPressure: String
 )
