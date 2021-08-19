@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
@@ -59,7 +60,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 } else {
                     selectedAddress?.let { setTitle(it.cityDistinct) }
                 }
-
             }
         }
     }
@@ -72,7 +72,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)
                 } else {
-                    requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+                    val unselectedAddress= viewModel.addressList.value?.filter { !it.isAddressCheck }!!.toTypedArray()
+                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(unselectedAddress)
+                    requireParentFragment().requireParentFragment().findNavController().navigate(action)
                 }
             } else {
                 showLoginDialog()

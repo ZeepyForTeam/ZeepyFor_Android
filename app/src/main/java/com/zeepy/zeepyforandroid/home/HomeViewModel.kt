@@ -62,7 +62,6 @@ class HomeViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ addressList ->
                     _addressList.postValue(addressList)
-                    Log.e("local addresses", "$addressList")
                 }, {
                     it.printStackTrace()
                 })

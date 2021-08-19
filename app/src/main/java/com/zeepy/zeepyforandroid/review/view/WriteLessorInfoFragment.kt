@@ -61,10 +61,8 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
                 binding.toggleMale.id -> viewModel.changeLessorGender(findGender(R.string.male))
                 binding.toggleFemale.id -> viewModel.changeLessorGender(findGender(R.string.female))
             }
-            Log.e("gender", viewModel.lessorGender.value.toString())
             viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
         }
-
     }
 
     private fun setSpinner() {
@@ -74,10 +72,6 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
                 onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         viewModel.changeLessorAge(mapOf(findLessorAge((view as AppCompatTextView).text.toString()) to position))
-                        Log.e("gender", viewModel.lessorGender.value.toString())
-                        viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
-                        Log.e("age", viewModel.lessorAge.value.toString())
-
                     }
                     override fun onNothingSelected(p0: AdapterView<*>?) {}
                 }
