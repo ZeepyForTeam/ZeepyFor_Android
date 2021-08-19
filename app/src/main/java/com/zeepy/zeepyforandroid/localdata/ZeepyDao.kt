@@ -13,6 +13,9 @@ interface ZeepyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllAddress(addressList: List<LocalAddressEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAddress(address: LocalAddressEntity)
+
     @Delete
     fun deleteAddress(address: LocalAddressEntity)
 }

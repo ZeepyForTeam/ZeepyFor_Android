@@ -3,10 +3,9 @@ package com.zeepy.zeepyforandroid.home
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.zeepy.zeepyforandroid.address.AddressEntity
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
-import com.zeepy.zeepyforandroid.address.dto.ResponseAddressListDTO
+import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +19,8 @@ class HomeViewModel @Inject constructor(
     private val addressDataSource: AddressDataSource,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
-    private val _addressList = MutableLiveData<ResponseAddressListDTO>()
-    val addressList: LiveData<ResponseAddressListDTO>
+    private val _addressList = MutableLiveData<AddressListDTO>()
+    val addressList: LiveData<AddressListDTO>
         get() = _addressList
 
     private val _selectedAddress = MutableLiveData<String>("")
@@ -39,13 +38,7 @@ class HomeViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     if (!response.addresses.isNullOrEmpty()) {
-                        insertAddressListToLocal(
-                            response.addresses.map { address ->
-                                LocalAddressEntity(
-                                    address.cityDistinct,
-                                    address.primaryAddress
-                                )
-                            })
+                        insertAddressListToLocal(response.addresses.map { it.toLocalAddressEntity() })
                         _addressList.postValue(response)
                         _selectedAddress.postValue(response.addresses.first().cityDistinct)
                     }

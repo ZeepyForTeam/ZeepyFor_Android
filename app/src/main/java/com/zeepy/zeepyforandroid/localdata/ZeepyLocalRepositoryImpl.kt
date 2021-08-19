@@ -13,6 +13,9 @@ class ZeepyLocalRepositoryImpl @Inject constructor(
     override fun insertAllAddress(addressList: List<LocalAddressEntity>) =
         zeepyLocalDatabase.getzeepyDao().insertAllAddress(addressList)
 
+    override fun insertAddress(address: LocalAddressEntity) =
+        zeepyLocalDatabase.getzeepyDao().insertAddress(address)
+
     override fun deleteAddress(address: LocalAddressEntity) =
         zeepyLocalDatabase.getzeepyDao().deleteAddress(address)
 }

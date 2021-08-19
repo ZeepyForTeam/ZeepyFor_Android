@@ -25,7 +25,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView2"
+                android:id="@+id/textview_address_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanum_square_round_bold"
@@ -33,13 +33,13 @@
                 android:textSize="12sp"
                 android:visibility="gone"
                 android:layout_marginBottom="14dp"
-                app:layout_constraintBottom_toTopOf="@+id/appCompatTextView"
+                app:layout_constraintBottom_toTopOf="@+id/textview_change_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="이촌동 2가" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView"
+                android:id="@+id/textview_address_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanum_square_round_bold"
@@ -47,13 +47,13 @@
                 android:textSize="12sp"
                 android:visibility="gone"
                 android:layout_marginBottom="14dp"
-                app:layout_constraintBottom_toTopOf="@+id/appCompatTextView3"
+                app:layout_constraintBottom_toTopOf="@+id/textview_change_address"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
+                app:layout_constraintTop_toBottomOf="@+id/textview_address_first"
                 tools:text="이촌동 2가" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView3"
+                android:id="@+id/textview_change_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanum_square_round_extrabold"
@@ -63,7 +63,7 @@
                 android:layout_marginBottom="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/textview_address_second" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.address
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -12,4 +13,11 @@ data class LocalAddressEntity(
     val cityDistinct: String,
     @ColumnInfo(name = "primaryAddress")
     val primaryAddress: String
-): Parcelable
+): Parcelable {
+    fun toAddressListDTO(): AddressEntity =
+        AddressEntity(
+            cityDistinct,
+            "",
+            primaryAddress
+        )
+}

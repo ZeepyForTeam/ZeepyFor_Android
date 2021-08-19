@@ -14,10 +14,9 @@ import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteLessorInfoBinding
-import com.zeepy.zeepyforandroid.eunm.LessorAge.Companion.findLessorAge
-import com.zeepy.zeepyforandroid.eunm.LessorGender.Companion.findGender
+import com.zeepy.zeepyforandroid.enum.LessorAge.Companion.findLessorAge
+import com.zeepy.zeepyforandroid.enum.LessorGender.Companion.findGender
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 
 class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })

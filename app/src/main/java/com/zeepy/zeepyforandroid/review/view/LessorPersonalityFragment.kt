@@ -10,11 +10,10 @@ import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentLessorPersonalityBinding
-import com.zeepy.zeepyforandroid.eunm.CommunityTendency.Companion.findTendency
+import com.zeepy.zeepyforandroid.enum.CommunityTendency.Companion.findTendency
 import com.zeepy.zeepyforandroid.review.view.adapter.LessorPersonalityAdapter
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

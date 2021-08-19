@@ -96,6 +96,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
                         }
                         else {
                             //기타 에러
+
                         }
                     }
                     else{
@@ -126,7 +127,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>() {
 
         UserApiClient.instance.run {
             if(isKakaoTalkLoginAvailable(requireContext())) {
-                loginWithKakaoAccount(requireContext(), callback = callback)
+                loginWithKakaoTalk(requireContext(), callback = callback)
             } else {
                 loginWithKakaoAccount(requireContext(), callback = callback)
             }

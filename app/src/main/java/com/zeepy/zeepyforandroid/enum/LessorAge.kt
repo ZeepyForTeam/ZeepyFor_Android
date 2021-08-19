@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.eunm
+package com.zeepy.zeepyforandroid.enum
 
 import java.lang.IllegalArgumentException
 

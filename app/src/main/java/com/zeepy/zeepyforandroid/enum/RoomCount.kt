@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.eunm
+package com.zeepy.zeepyforandroid.enum
 
 import androidx.annotation.StringRes
 import com.zeepy.zeepyforandroid.R

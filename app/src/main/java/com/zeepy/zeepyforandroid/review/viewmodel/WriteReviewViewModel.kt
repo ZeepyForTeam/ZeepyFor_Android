@@ -9,9 +9,9 @@ import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.controller.AddressController
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
-import com.zeepy.zeepyforandroid.address.dto.ResponseAddressListDTO
+import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.base.BaseViewModel
-import com.zeepy.zeepyforandroid.eunm.LessorAge
+import com.zeepy.zeepyforandroid.enum.LessorAge
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.review.PostReviewController
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
@@ -247,15 +247,16 @@ class WriteReviewViewModel @Inject constructor(
         val addressDTO = addressListRegistered.value?.map {
             AddressEntity(it.cityDistinct, "", it.primaryAddress)
         }
+
         val requestAddresses = addressDTO?.let {
-            ResponseAddressListDTO(
+            AddressListDTO(
                 it
             )
         }
 
         if (addressDTO != null) {
             addDisposable(
-                addressController.deleteAddress(requestAddresses!!)
+                addressController.addAddress(requestAddresses!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -265,6 +266,31 @@ class WriteReviewViewModel @Inject constructor(
                     })
             )
         }
+    }
+
+    fun addAddress(address: AddressEntity) {
+        _addressListRegistered.value?.add(address.toLocalAddressEntity())
+
+        val requestAddress = _addressListRegistered.value?.map {
+            it.toAddressListDTO()
+        }?.let {
+            AddressListDTO(
+                it
+            )
+        }
+
+        addDisposable(
+            addressController.addAddress(requestAddress!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    insertAddressToLocal(address.toLocalAddressEntity())
+                    Log.e("insert all", "insert all")
+                }, {
+                    it.printStackTrace()
+                    Log.e("insert failed", "insert failed")
+                })
+        )
     }
 
     private fun deleteAddressFromLocal(address: LocalAddressEntity) {
@@ -279,6 +305,21 @@ class WriteReviewViewModel @Inject constructor(
                     it.printStackTrace()
                     Log.e("delete failed", "fucking!!")
 
+                })
+        )
+    }
+
+    private fun insertAddressToLocal(address: LocalAddressEntity) {
+        addDisposable(
+            Observable.fromCallable{
+                zeepyLocalRepository.insertAddress(address)
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("insert success", "yes!!")
+                }, {
+                    it.printStackTrace()
+                    Log.e("insert failed", "fucking!!")
                 })
         )
     }

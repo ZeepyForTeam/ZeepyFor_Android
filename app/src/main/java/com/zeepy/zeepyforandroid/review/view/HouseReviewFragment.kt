@@ -1,30 +1,21 @@
 package com.zeepy.zeepyforandroid.review.view
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spanned
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.toSpannable
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.zeepy.zeepyforandroid.databinding.FragmentHouseReviewBinding
-import com.zeepy.zeepyforandroid.eunm.Options.Companion.findOptions
-import com.zeepy.zeepyforandroid.eunm.Preference.Companion.findPreference
-import com.zeepy.zeepyforandroid.eunm.RoomCount.Companion.findRoomCount
+import com.zeepy.zeepyforandroid.enum.Options.Companion.findOptions
+import com.zeepy.zeepyforandroid.enum.Preference.Companion.findPreference
+import com.zeepy.zeepyforandroid.enum.RoomCount.Companion.findRoomCount
 import com.zeepy.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.zeepy.zeepyforandroid.util.CustomTypefaceSpan
 import com.zeepy.zeepyforandroid.util.ItemDecoration
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 
 class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })

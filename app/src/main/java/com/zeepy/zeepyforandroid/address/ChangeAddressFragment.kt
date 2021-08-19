@@ -18,7 +18,16 @@ class ChangeAddressFragment: BaseFragment<FragmentChangeAddressBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        goToChangeAddress()
         exit()
+    }
+
+    private fun goToChangeAddress() {
+        binding.textviewChangeAddress.setOnClickListener {
+            val action = ChangeAddressFragmentDirections.actionChangeAddressFragmentToReviewFrameFragment()
+            action.isJustRegisterAddress = true
+            findNavController().navigate(action)
+        }
     }
 
     private fun exit() {

@@ -44,6 +44,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAddressList()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -59,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun setToolbar() {
         binding.toolbar.apply {
+            setCommunityLocation()
             viewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
                 if (address.isNullOrEmpty()) {
                     setTitle("주소 등록하기")
@@ -66,15 +72,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     setTitle(address)
                 }
             }
-            setCommunityLocation()
-
         }
     }
 
     private fun changeAddress() {
         binding.toolbar.binding.textviewToolbar.setOnClickListener {
             if(userPreferenceManager.fetchIsAlreadyLogin()) {
-                Log.e("address", "${viewModel.addressList.value?.addresses}")
                 if(viewModel.addressList.value?.addresses.isNullOrEmpty()) {
                     val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
                     action.isJustRegisterAddress = true

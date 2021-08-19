@@ -43,7 +43,12 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
 
     private fun setToolbar() {
         binding.toolbar.run {
-            setTitle("리뷰작성")
+            if(viewModel.isJustRegisterAddress.value == true) {
+                setTitle("주소관리")
+            } else {
+                setTitle("리뷰작성")
+            }
+
             setBackButton{
                 if (navController.previousBackStackEntry != null) {
                     navController.popBackStack()

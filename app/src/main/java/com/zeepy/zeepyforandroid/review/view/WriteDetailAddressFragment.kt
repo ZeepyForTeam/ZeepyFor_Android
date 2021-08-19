@@ -14,6 +14,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.AddressEntity
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteDetailAddressBinding
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
@@ -60,11 +62,10 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
     private fun hideDetailAddressBox() {
         binding.layoutDetailAddress.etAddressDetail.run {
-            if(viewModel.isJustRegisterAddress.value == true) {
-               visibility = View.GONE
+            visibility = if (viewModel.isJustRegisterAddress.value != true) {
+                View.VISIBLE
             } else {
-                visibility = View.VISIBLE
-
+                View.GONE
             }
         }
     }
@@ -72,10 +73,10 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
     private fun goToCheckLessorPersonality(){
         binding.layoutDetailAddress.btnNext.setOnClickListener {
             if (viewModel.isJustRegisterAddress.value == true) {
+                viewModel.addAddress(args.selectedAddress.toAddressListDTO())
                 requireParentFragment().requireParentFragment().findNavController().popBackStack()
             } else {
                 findNavController().navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
-
             }
         }
     }
