@@ -48,14 +48,13 @@ class WriteReviewViewModel @Inject constructor(
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
 
+    private val _fullReviewAddress = MutableLiveData<String>()
+    val fullReviewAddress: LiveData<String>
+        get() = _fullReviewAddress
+
     private val _addressSelected = MutableLiveData<LocalAddressEntity>()
     val addressSelected: LiveData<LocalAddressEntity>
         get() = _addressSelected
-
-    //Todo: User getAddress 모델 바뀌면 변경
-    private val _reviewSelectedAddress = MutableLiveData<SearchAddressListModel>()
-    val reviewSelectedAddress: LiveData<SearchAddressListModel>
-        get() = _reviewSelectedAddress
 
     private val _selectedBuildingId = MutableLiveData<Int>()
     val selectedBuildingId: LiveData<Int>
@@ -111,12 +110,12 @@ class WriteReviewViewModel @Inject constructor(
         getAddress()
     }
 
-    fun changeSelectedBuildingId(id: Int) {
-        _selectedBuildingId.value = id
+    fun changeFullReviewAddress(fullAddress: String) {
+        _fullReviewAddress.value = fullAddress
     }
 
-    fun changeSelectedReviewAddress(address: SearchAddressListModel) {
-        _reviewSelectedAddress.value = address
+    fun changeSelectedBuildingId(id: Int) {
+        _selectedBuildingId.value = id
     }
 
     fun changeIsJustRegisterAddress(boolean: Boolean) {
@@ -167,16 +166,8 @@ class WriteReviewViewModel @Inject constructor(
         _addressSelected.value = address
     }
 
-    fun checkEmptyDetailAddress(): Boolean {
-        return detailAddress.value.isNullOrEmpty()
-    }
-
     fun changeLessorPersonality(communityTendency: String) {
         _lessorPersonality.value = communityTendency
-    }
-
-    fun checkInputAddressQuery(): Boolean {
-        return !addressSearchQuery.value.isNullOrEmpty()
     }
 
     fun checkTotalHouseReviewEmpty(): Boolean {
@@ -188,8 +179,8 @@ class WriteReviewViewModel @Inject constructor(
     fun postReviewToServer() {
         postReviewController.postReview(
             RequestWriteReview(
-                "서울특별시 동대문구 용두동 39-808 엘림 309호",
-                1,
+                fullReviewAddress.value!!,
+                selectedBuildingId.value!!,
                 lessorPersonality.value!!,
                 selectedOptionList.value!!,
                 houseURLImages.value!!,
@@ -288,7 +279,6 @@ class WriteReviewViewModel @Inject constructor(
                     Log.e("insert all", "insert all")
                 }, {
                     it.printStackTrace()
-                    Log.e("insert failed", "insert failed")
                 })
         )
     }
@@ -303,8 +293,6 @@ class WriteReviewViewModel @Inject constructor(
                     Log.e("delete success", "yes!!")
                 }, {
                     it.printStackTrace()
-                    Log.e("delete failed", "fucking!!")
-
                 })
         )
     }
@@ -319,7 +307,6 @@ class WriteReviewViewModel @Inject constructor(
                     Log.e("insert success", "yes!!")
                 }, {
                     it.printStackTrace()
-                    Log.e("insert failed", "fucking!!")
                 })
         )
     }
@@ -331,23 +318,22 @@ class WriteReviewViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     _resultSearchedAddress.postValue(response)
-                    Log.e("result", "${resultSearchedAddress.value}")
                 }, {
                     it.printStackTrace()
                 })
         )
     }
+
     fun getBuildingId() {
-        Log.e("address", "${addressSelected.value?.cityDistinct} ${addressSelected.value?.primaryAddress}")
         addDisposable(
             addressDataSource.fetchBuildgingInfoByAddress(
                 "${addressSelected.value?.cityDistinct} ${addressSelected.value?.primaryAddress}"
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Log.e("success", "success")
+                    _selectedBuildingId.postValue(it.id)
                 }, {
-                    Log.e("fail", "fail")
+                    it.printStackTrace()
                 })
         )
     }

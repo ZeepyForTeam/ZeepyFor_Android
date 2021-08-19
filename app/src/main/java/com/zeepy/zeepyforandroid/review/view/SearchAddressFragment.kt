@@ -42,7 +42,8 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
     private fun attachSearchAddressAdapter() {
         binding.layoutSearchAddress.recyclerviewResult.adapter = SearchAddressAdapter(object : SearchAddressAdapter.SelectAddressInterface{
             override fun selectAddress(address: SearchAddressListModel) {
-                val addressEntity = LocalAddressEntity(address.cityDistinct, false, address.primaryAddress, )
+                viewModel.changeSelectedBuildingId(address.id)
+                val addressEntity = LocalAddressEntity(address.cityDistinct, false, address.primaryAddress)
                 val action = SearchAddressFragmentDirections.actionSearchAddressFragmentToWriteDetailAddressFragment(addressEntity)
                 findNavController().navigate(action)
             }

@@ -51,7 +51,6 @@ class HomeViewModel @Inject constructor(
                 }, {
                     fetchAddressListFromLocal()
                     it.printStackTrace()
-                    Log.e("fail", "fail")
                 })
         )
     }

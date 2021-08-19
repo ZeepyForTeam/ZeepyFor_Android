@@ -14,7 +14,6 @@ data class LocalAddressEntity(
     val isAddressCheck: Boolean,
     @ColumnInfo(name = "primaryAddress")
     val primaryAddress: String
-
 ): Parcelable {
     fun toAddressListDTO(): AddressEntity =
         AddressEntity(

@@ -38,7 +38,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
-
         writeReview()
         setFilterList()
         changeAddress()
@@ -49,7 +48,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.getAddressListFromServer()
         setToolbar()
     }
-
 
     private fun setToolbar() {
         binding.toolbar.apply {

@@ -46,7 +46,6 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
 
         setSpinner()
         binding.groupSelectGender.clearCheck()
-
     }
 
     private fun setNextButton() {
@@ -57,16 +56,14 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     }
 
     private fun selectGender() {
-        binding.groupSelectGender.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
-            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                when(checkedId) {
-                    binding.toggleMale.id -> viewModel.changeLessorGender(findGender(R.string.male))
-                    binding.toggleFemale.id -> viewModel.changeLessorGender(requireContext().getString(R.string.female))
-                }
-                Log.e("gender", viewModel.lessorGender.value.toString())
-                viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
+        binding.groupSelectGender.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                binding.toggleMale.id -> viewModel.changeLessorGender(findGender(R.string.male))
+                binding.toggleFemale.id -> viewModel.changeLessorGender(findGender(R.string.female))
             }
-        })
+            Log.e("gender", viewModel.lessorGender.value.toString())
+            viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
+        }
 
     }
 

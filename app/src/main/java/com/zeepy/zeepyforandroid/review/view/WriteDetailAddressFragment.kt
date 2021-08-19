@@ -76,6 +76,8 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
                 viewModel.addAddress(args.selectedAddress.toAddressListDTO())
                 requireParentFragment().requireParentFragment().findNavController().popBackStack()
             } else {
+                val fullAddress = "${args.selectedAddress.cityDistinct} ${args.selectedAddress.primaryAddress} ${binding.layoutDetailAddress.etAddressDetail.text}"
+                viewModel.changeFullReviewAddress(fullAddress)
                 findNavController().navigate(R.id.action_writeDetailAddressFragment_to_lessorPersonalityFragment)
             }
         }

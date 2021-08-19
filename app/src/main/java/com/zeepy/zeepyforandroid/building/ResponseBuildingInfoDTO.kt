@@ -2,7 +2,7 @@ package com.zeepy.zeepyforandroid.building
 
 import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 
-data class ResponseBuildingDTO(
+data class ResponseBuildingInfoDTO(
     val apartmentName: String,
     val areaCode: Int,
     val buildYear: Int,
@@ -12,8 +12,8 @@ data class ResponseBuildingDTO(
     val fullNumberAddress: String,
     val fullRoadNameAddress: String,
     val id: Int,
-    val latitude: Int,
-    val longitude: Int,
+    val latitude: Double,
+    val longitude: Double,
     val reviews: List<ResponseReviewDTO>,
     val shortAddress: String,
     val shortNumberAddress: String,
