@@ -1,8 +1,8 @@
 package com.zeepy.zeepyforandroid.network
 
 import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
-import com.zeepy.zeepyforandroid.address.dto.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
+import com.zeepy.zeepyforandroid.building.ResponseBuildingDTO
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
@@ -37,11 +37,12 @@ interface ZeepyApiService {
     fun getAddressList(): Single<AddressListDTO>
 
     @GET("/api/buildings/address")
-    fun getBuildingByAddress(@Query ("address") address: String): Single<ResponseBuildingInfoDTO>
+    fun getBuildingByAddress(@Query ("address") address: String): Single<ResponseBuildingDTO>
 
-    @POST("/api/user/address")
+    @PUT("/api/user/address")
     fun addAddress(@Body addresses: AddressListDTO): Completable
 
     @GET("/api/buildings/addresses")
     fun searchBuildingAddress(@Query ("address")address: String): Single<ResponseSearchBuildingAddressDTO>
+
 }

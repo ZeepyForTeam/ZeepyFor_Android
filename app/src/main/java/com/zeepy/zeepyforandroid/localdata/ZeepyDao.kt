@@ -8,7 +8,7 @@ import io.reactivex.Single
 @Dao
 interface ZeepyDao {
     @Query("SELECT * FROM address_table")
-    fun getAddressList(): Maybe<List<LocalAddressEntity>>
+    fun fetchAddressList(): Maybe<List<LocalAddressEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllAddress(addressList: List<LocalAddressEntity>)

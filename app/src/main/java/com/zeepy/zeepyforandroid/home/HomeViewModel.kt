@@ -19,19 +19,11 @@ class HomeViewModel @Inject constructor(
     private val addressDataSource: AddressDataSource,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
-    private val _addressList = MutableLiveData<AddressListDTO>()
-    val addressList: LiveData<AddressListDTO>
+    private val _addressList = MutableLiveData<List<LocalAddressEntity>>()
+    val addressList: LiveData<List<LocalAddressEntity>>
         get() = _addressList
 
-    private val _selectedAddress = MutableLiveData<String>("")
-    val selectedAddress: LiveData<String>
-        get() = _selectedAddress
-
-    init {
-        getAddressList()
-    }
-
-    fun getAddressList() {
+    fun getAddressListFromServer() {
         addDisposable(
             addressDataSource.fetchAddressList()
                 .subscribeOn(Schedulers.io())
@@ -39,10 +31,9 @@ class HomeViewModel @Inject constructor(
                 .subscribe({ response ->
                     if (!response.addresses.isNullOrEmpty()) {
                         insertAddressListToLocal(response.addresses.map { it.toLocalAddressEntity() })
-                        _addressList.postValue(response)
-                        _selectedAddress.postValue(response.addresses.first().cityDistinct)
+                    } else {
+                        fetchAddressListFromLocal()
                     }
-
                 }, {
                     it.printStackTrace()
                 })
@@ -56,11 +47,25 @@ class HomeViewModel @Inject constructor(
             }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                           Log.e("success", "success")
+                    fetchAddressListFromLocal()
                 }, {
+                    fetchAddressListFromLocal()
                     it.printStackTrace()
                     Log.e("fail", "fail")
+                })
+        )
+    }
 
+    fun fetchAddressListFromLocal() {
+        addDisposable(
+            zeepyLocalRepository.fetchAddressList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ addressList ->
+                    _addressList.postValue(addressList)
+                    Log.e("local addresses", "$addressList")
+                }, {
+                    it.printStackTrace()
                 })
         )
     }

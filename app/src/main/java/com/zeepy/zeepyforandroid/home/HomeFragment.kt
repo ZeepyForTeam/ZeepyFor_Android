@@ -1,23 +1,11 @@
 package com.zeepy.zeepyforandroid.home
 
-import android.content.Context
-import android.content.res.Resources
-import android.graphics.Point
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDeepLink
-import androidx.navigation.NavDeepLinkBuilder
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -25,7 +13,6 @@ import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHomeBinding
-import com.zeepy.zeepyforandroid.databinding.ZeepyDialogBinding
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
@@ -44,11 +31,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAddressList()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -56,21 +38,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
-        setToolbar()
+
         writeReview()
         setFilterList()
         changeAddress()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAddressListFromServer()
+        setToolbar()
+    }
+
+
     private fun setToolbar() {
         binding.toolbar.apply {
             setCommunityLocation()
-            viewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
-                if (address.isNullOrEmpty()) {
+            viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
+                val selectedAddress = addresses.find { it.isAddressCheck }
+                if(addresses.isNullOrEmpty()) {
                     setTitle("주소 등록하기")
                 } else {
-                    setTitle(address)
+                    selectedAddress?.let { setTitle(it.cityDistinct) }
                 }
+
             }
         }
     }
@@ -78,7 +69,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun changeAddress() {
         binding.toolbar.binding.textviewToolbar.setOnClickListener {
             if(userPreferenceManager.fetchIsAlreadyLogin()) {
-                if(viewModel.addressList.value?.addresses.isNullOrEmpty()) {
+                if(viewModel.addressList.value.isNullOrEmpty()) {
                     val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)

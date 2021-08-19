@@ -133,7 +133,9 @@
         tools:layout="@layout/fragment_change_address">
         <action
             android:id="@+id/action_changeAddressFragment_to_reviewFrameFragment"
-            app:destination="@id/reviewFrameFragment" />
+            app:destination="@id/reviewFrameFragment"
+            app:popUpTo="@id/mainFrameFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
 
 </navigation>

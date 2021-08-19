@@ -11,13 +11,16 @@ import kotlinx.android.parcel.Parcelize
 data class LocalAddressEntity(
     @ColumnInfo(name = "cityDistinct")
     val cityDistinct: String,
+    val isAddressCheck: Boolean,
     @ColumnInfo(name = "primaryAddress")
     val primaryAddress: String
+
 ): Parcelable {
     fun toAddressListDTO(): AddressEntity =
         AddressEntity(
             cityDistinct,
-            "",
+            isAddressCheck,
             primaryAddress
+
         )
 }

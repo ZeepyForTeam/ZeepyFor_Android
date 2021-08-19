@@ -31,7 +31,7 @@ class WriteReviewViewModel @Inject constructor(
     private val postReviewController: PostReviewController,
     private val zeepyLocalRepository: ZeepyLocalRepository,
     private val searchAddressListRepository: SearchAddressListRepository
-) : BaseViewModel() {
+    ) : BaseViewModel() {
     private val _isJustRegisterAddress = MutableLiveData<Boolean>(false)
     val isJustRegisterAddress: LiveData<Boolean>
         get() = _isJustRegisterAddress
@@ -215,7 +215,7 @@ class WriteReviewViewModel @Inject constructor(
 
     private fun getAddress() {
         addDisposable(
-            zeepyLocalRepository.getAddressList()
+            zeepyLocalRepository.fetchAddressList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -245,7 +245,7 @@ class WriteReviewViewModel @Inject constructor(
         _addressListRegistered.value?.remove(address)
 
         val addressDTO = addressListRegistered.value?.map {
-            AddressEntity(it.cityDistinct, "", it.primaryAddress)
+            AddressEntity(it.cityDistinct, it.isAddressCheck, it.primaryAddress)
         }
 
         val requestAddresses = addressDTO?.let {
@@ -334,6 +334,20 @@ class WriteReviewViewModel @Inject constructor(
                     Log.e("result", "${resultSearchedAddress.value}")
                 }, {
                     it.printStackTrace()
+                })
+        )
+    }
+    fun getBuildingId() {
+        Log.e("address", "${addressSelected.value?.cityDistinct} ${addressSelected.value?.primaryAddress}")
+        addDisposable(
+            addressDataSource.fetchBuildgingInfoByAddress(
+                "${addressSelected.value?.cityDistinct} ${addressSelected.value?.primaryAddress}"
+            ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("success", "success")
+                }, {
+                    Log.e("fail", "fail")
                 })
         )
     }

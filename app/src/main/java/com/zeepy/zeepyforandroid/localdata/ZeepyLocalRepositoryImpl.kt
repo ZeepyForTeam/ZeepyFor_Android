@@ -7,8 +7,8 @@ import javax.inject.Inject
 class ZeepyLocalRepositoryImpl @Inject constructor(
     private val zeepyLocalDatabase: ZeepyDatabase
 ) : ZeepyLocalRepository {
-    override fun getAddressList(): Maybe<List<LocalAddressEntity>> =
-        zeepyLocalDatabase.getzeepyDao().getAddressList()
+    override fun fetchAddressList(): Maybe<List<LocalAddressEntity>> =
+        zeepyLocalDatabase.getzeepyDao().fetchAddressList()
 
     override fun insertAllAddress(addressList: List<LocalAddressEntity>) =
         zeepyLocalDatabase.getzeepyDao().insertAllAddress(addressList)

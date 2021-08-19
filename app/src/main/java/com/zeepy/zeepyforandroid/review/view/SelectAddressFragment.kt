@@ -36,6 +36,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         initView()
         setDatas()
         goToSearchAddress()
+        getBuildingId()
     }
 
     private fun initView() {
@@ -64,6 +65,12 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     private fun setDatas() {
         viewModel.addressListRegistered.observe(viewLifecycleOwner){
             (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it)
+        }
+    }
+
+    private fun getBuildingId() {
+        viewModel.addressSelected.observe(viewLifecycleOwner) {
+            viewModel.getBuildingId()
         }
     }
 
