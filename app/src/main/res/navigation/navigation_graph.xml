@@ -132,7 +132,7 @@
         android:label="ChangeAddressFragment"
         tools:layout="@layout/fragment_change_address">
 
-        <argument android:name="unSelectedAddress"
+        <argument android:name="addressList"
             app:argType="com.zeepy.zeepyforandroid.address.LocalAddressEntity[]"/>
 
         <action

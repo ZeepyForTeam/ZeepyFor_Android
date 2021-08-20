@@ -72,8 +72,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)
                 } else {
-                    val unselectedAddress= viewModel.addressList.value?.filter { !it.isAddressCheck }!!.toTypedArray()
-                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(unselectedAddress)
+                    val selectedAddress= viewModel.addressList.value!!.toTypedArray()
+                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(selectedAddress)
                     requireParentFragment().requireParentFragment().findNavController().navigate(action)
                 }
             } else {
@@ -112,7 +112,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
                     dialog.dismiss()
                 }
-
                 override fun clickRightButton(dialog: ZeepyDialog) {
                     findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
                     dialog.dismiss()

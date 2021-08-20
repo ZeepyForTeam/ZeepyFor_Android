@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(
     private val addressDataSource: AddressDataSource,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
-    private val _addressList = MutableLiveData<List<LocalAddressEntity>>()
+    private val _addressList = MutableLiveData<List<LocalAddressEntity>>(mutableListOf())
     val addressList: LiveData<List<LocalAddressEntity>>
         get() = _addressList
 
