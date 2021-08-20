@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_address">후기를 남길 집을\n선택해주세요.</string>
-    <string name="write_detail_address">상세주소를\n입력해주세요.</string>
+    <string name="is_house_right_to_write_review">후기를 작성할 집이\n이 곳이 맞나요?</string>
     <string name="lessor_personality">임대인의 소통 성향은\n어땠나요?</string>
     <string name="lessor_detail_info">임대인에 대해\n조금 더 알려주세요!</string>
     <string name="house_condition">집에 대한 정보를\n조금 더 알려주세요!</string>
@@ -82,4 +82,7 @@
     <string name="input_password_login">비밀번호를 입력해주세요</string>
     <string name="write_review_notice_message">*리뷰 등록 후에는 수정하거나 삭제하실 수\n없으니 글 작성에 유의해주세요.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.</string>
     <string name="login_notice_message">기능 제한 없이 ZEEPY의\n모든 기능을 즐겨보세요!</string>
+    <string name="address_citydistinct_primary">%s %s</string>
+    <string name="no_address_not_yet">아직 등록된 주소가요 없어요 :(</string>
+    <string name="goto_register_address">직접 등록하기</string>
 </resources>

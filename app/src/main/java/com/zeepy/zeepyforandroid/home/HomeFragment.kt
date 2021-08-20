@@ -1,26 +1,20 @@
 package com.zeepy.zeepyforandroid.home
 
-import android.content.Context
-import android.content.res.Resources
-import android.graphics.Point
 import android.os.Bundle
-import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHomeBinding
-import com.zeepy.zeepyforandroid.databinding.ZeepyDialogBinding
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,26 +37,47 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.getAddressList()
-        setToolbar()
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
+
         writeReview()
         setFilterList()
+        changeAddress()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAddressListFromServer()
+        setToolbar()
     }
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            viewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
-                setTitle(address)
-            }
-
             setCommunityLocation()
-
-            binding.textviewToolbar.setOnClickListener {
-                if(userPreferenceManager.fetchUserAccessToken().isNullOrEmpty()) {
-                    showLoginDialog()
+            viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
+                val selectedAddress = addresses.find { it.isAddressCheck }
+                if(addresses.isNullOrEmpty()) {
+                    setTitle("주소 등록하기")
                 } else {
-                    requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+                    selectedAddress?.let { setTitle(it.cityDistinct) }
                 }
+            }
+        }
+    }
+
+    private fun changeAddress() {
+        binding.toolbar.binding.textviewToolbar.setOnClickListener {
+            if(userPreferenceManager.fetchIsAlreadyLogin()) {
+                if(viewModel.addressList.value.isNullOrEmpty()) {
+                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                    action.isJustRegisterAddress = true
+                    findNavController().navigate(action)
+                } else {
+                    val selectedAddress= viewModel.addressList.value!!.toTypedArray()
+                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(selectedAddress)
+                    requireParentFragment().requireParentFragment().findNavController().navigate(action)
+                }
+            } else {
+                showLoginDialog()
             }
         }
     }
@@ -77,7 +92,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun writeReview() {
         binding.buttonWriteReview.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_mainFrameFragment_to_reviewFrameFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                action.isJustRegisterAddress = false
+                findNavController().navigate(action)
+            } else {
+                showLoginDialog()
+            }
         }
     }
 
@@ -91,7 +112,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
                     dialog.dismiss()
                 }
-
                 override fun clickRightButton(dialog: ZeepyDialog) {
                     findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
                     dialog.dismiss()

@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="@color/zeepy_black_3b"
+                    android:textColor="@color/zeepy_blue_59"
                     android:fontFamily="@font/nanum_square_round_extrabold"
                     android:textSize="14sp"
                     android:background="@drawable/box_grayf9_8dp"

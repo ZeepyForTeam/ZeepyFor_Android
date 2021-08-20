@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -12,7 +13,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".review.view.WriteLessorInfoFragment">
+        tools:context=".review.view.WriteLessorInfoFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
+
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/reviewSpannableTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:text="@string/lessor_detail_info"
+            app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
+            app:layout_constraintTop_toTopOf="parent"
+            zeepy:end="3"
+            zeepy:second_end="19"
+            zeepy:second_start="13"
+            zeepy:start="0" />
 
         <TextView
             android:id="@+id/tv_sex"
@@ -24,10 +39,10 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/group_select_gender"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.18"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintTop_toBottomOf="@+id/reviewSpannableTextView"
+            app:layout_constraintVertical_bias="0.072" />
 
         <RadioGroup
             android:id="@+id/group_select_gender"

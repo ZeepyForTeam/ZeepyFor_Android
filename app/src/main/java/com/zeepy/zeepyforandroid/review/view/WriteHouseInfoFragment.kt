@@ -9,9 +9,8 @@ import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteHouseInfoBinding
-import com.zeepy.zeepyforandroid.eunm.TotalEvaluation.Companion.findTotalEvaluation
+import com.zeepy.zeepyforandroid.enum.TotalEvaluation.Companion.findTotalEvaluation
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 
 class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
@@ -28,7 +27,6 @@ class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
 
         setNextButton()
         selectTotalEvaluation()

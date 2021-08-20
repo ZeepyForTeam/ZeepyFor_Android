@@ -1,31 +1,46 @@
 package com.zeepy.zeepyforandroid.review.viewmodel
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.zeepy.zeepyforandroid.eunm.LessorAge
+import com.zeepy.zeepyforandroid.address.AddressEntity
+import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
+import com.zeepy.zeepyforandroid.address.controller.AddressController
+import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
+import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
+import com.zeepy.zeepyforandroid.base.BaseViewModel
+import com.zeepy.zeepyforandroid.enum.LessorAge
+import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.review.PostReviewController
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
-import com.zeepy.zeepyforandroid.review.data.entity.AddressList
-import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.review.data.entity.ReviewSearchAddressModel
-import com.zeepy.zeepyforandroid.util.ReviewNotice
+import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
 class WriteReviewViewModel @Inject constructor(
-    private val postReviewController: PostReviewController
-) : ViewModel() {
-    private val _currentFragment = MutableLiveData<ReviewNotice>()
-    val currentFragment: LiveData<ReviewNotice>
-        get() = _currentFragment
+    private val addressController: AddressController,
+    private val addressDataSource: AddressDataSource,
+    private val postReviewController: PostReviewController,
+    private val zeepyLocalRepository: ZeepyLocalRepository,
+    private val searchAddressListRepository: SearchAddressListRepository
+    ) : BaseViewModel() {
+    private val _isJustRegisterAddress = MutableLiveData<Boolean>(false)
+    val isJustRegisterAddress: LiveData<Boolean>
+        get() = _isJustRegisterAddress
 
-    private val _lessorPersonality = MutableLiveData<String>()
+    private val _addressListRegistered = MutableLiveData<MutableList<LocalAddressEntity>>(mutableListOf())
+    val addressListRegistered: LiveData<MutableList<LocalAddressEntity>>
+        get() = _addressListRegistered
+
+    private val _lessorPersonality = MutableLiveData<String>("")
     val lessorPersonality: LiveData<String>
     get() = _lessorPersonality
 
@@ -33,13 +48,17 @@ class WriteReviewViewModel @Inject constructor(
     val houseListSearched: LiveData<List<ReviewSearchAddressModel>>
         get() = _houseListSearched
 
-    private val _addressList = MutableLiveData<AddressList>()
-    val addressList: LiveData<AddressList>
-        get() = _addressList
+    private val _fullReviewAddress = MutableLiveData<String>()
+    val fullReviewAddress: LiveData<String>
+        get() = _fullReviewAddress
 
-    private val _addressSelected = MutableLiveData<String>()
-    val addressSelected: LiveData<String>
+    private val _addressSelected = MutableLiveData<LocalAddressEntity>()
+    val addressSelected: LiveData<LocalAddressEntity>
         get() = _addressSelected
+
+    private val _selectedBuildingId = MutableLiveData<Int>()
+    val selectedBuildingId: LiveData<Int>
+        get() = _selectedBuildingId
 
     private val _lessorGender = MutableLiveData<String>()
     val lessorGender: LiveData<String>
@@ -57,7 +76,7 @@ class WriteReviewViewModel @Inject constructor(
     val bitmapImages: LiveData<List<PictureModel>>
         get() = _houseBitmapImages
 
-    private val _houseURLImages = MutableLiveData<List<String>>()
+    private val _houseURLImages = MutableLiveData<List<String>>(listOf())
     val houseURLImages: LiveData<List<String>>
         get() = _houseURLImages
 
@@ -77,6 +96,10 @@ class WriteReviewViewModel @Inject constructor(
     val selectedOptionList: LiveData<MutableList<String>>
         get() = _selectedOptionList
 
+    private val _resultSearchedAddress = MutableLiveData<List<SearchAddressListModel>>()
+    val resultSearchedAddress: LiveData<List<SearchAddressListModel>>
+        get() = _resultSearchedAddress
+
     val checkedAge = MutableLiveData<Int>()
     val reviewOfLessor = MutableLiveData<String>()
     val detailAddress = MutableLiveData<String>()
@@ -84,7 +107,19 @@ class WriteReviewViewModel @Inject constructor(
     val reviewOfHouse = MutableLiveData<String>()
 
     init {
-        setDummyAddress()
+        getAddress()
+    }
+
+    fun changeFullReviewAddress(fullAddress: String) {
+        _fullReviewAddress.value = fullAddress
+    }
+
+    fun changeSelectedBuildingId(id: Int) {
+        _selectedBuildingId.value = id
+    }
+
+    fun changeIsJustRegisterAddress(boolean: Boolean) {
+        _isJustRegisterAddress.value = boolean
     }
 
     fun selectOption(option: String){
@@ -127,24 +162,12 @@ class WriteReviewViewModel @Inject constructor(
         return !(reviewOfLessor.value.isNullOrEmpty() || lessorGender.value.isNullOrEmpty())
     }
 
-    fun changeAddressSelected(address: String) {
+    fun changeAddressSelected(address: LocalAddressEntity) {
         _addressSelected.value = address
-    }
-
-    fun checkEmptyDetailAddress(): Boolean {
-        return detailAddress.value.isNullOrEmpty()
-    }
-
-    fun changeCurrentFragment(reviewNotice: ReviewNotice) {
-        _currentFragment.value = reviewNotice
     }
 
     fun changeLessorPersonality(communityTendency: String) {
         _lessorPersonality.value = communityTendency
-    }
-
-    fun checkInputAddressQuery(): Boolean {
-        return !addressSearchQuery.value.isNullOrEmpty()
     }
 
     fun checkTotalHouseReviewEmpty(): Boolean {
@@ -156,8 +179,8 @@ class WriteReviewViewModel @Inject constructor(
     fun postReviewToServer() {
         postReviewController.postReview(
             RequestWriteReview(
-                "",
-                313,
+                fullReviewAddress.value!!,
+                selectedBuildingId.value!!,
                 lessorPersonality.value!!,
                 selectedOptionList.value!!,
                 houseURLImages.value!!,
@@ -169,8 +192,7 @@ class WriteReviewViewModel @Inject constructor(
                 reviewOfHouse.value!!,
                 roomType.value!!,
                 reviewPreference.value!!["soundInsulation"]!!,
-                reviewPreference.value!!["totalEvaluation"]!!,
-                0,
+                houseTotalEvaluation.value!!,
                 reviewPreference.value!!["waterPressure"]!!,
             )
         ).subscribeOn(Schedulers.io())
@@ -182,30 +204,137 @@ class WriteReviewViewModel @Inject constructor(
             })
     }
 
-    //Todo: api 연결하면 더미데이터 지우고 Datasource - Repository pattern으로 바꾸기
-    private fun setDummyAddress() {
-        val dummy = AddressList()
-        dummy.apply {
-            add(
-                AddressModel(
-                    "서울특별시 마포구 망원로 48-1"
-                )
-            )
-            add(
-                AddressModel(
-                    "서울특별시 강남구 신사동 56-1"
-                )
-            )
-            add(
-                AddressModel(
-                    "서울특별시 서대문구 연희동 26-8"
-                )
-            )
-        }
-        _addressList.value = dummy
+    private fun getAddress() {
+        addDisposable(
+            zeepyLocalRepository.fetchAddressList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _addressListRegistered.postValue(it as MutableList<LocalAddressEntity>)
+                }, {
+                    it.printStackTrace()
+                })
+        )
     }
 
-    fun deleteAddress(addressModel: AddressModel) {
-        _addressList.value?.remove(addressModel)
+//    fun fetchBuildingInfo() {
+//        addDisposable(
+//            addressDataSource.fetchBuildgingInfoByAddress(
+//                "${addressSelected.value!!.cityDistinct} ${addressSelected.value!!.primaryAddress}"
+//            ).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    _writableAddress.postValue(true)
+//                }, {
+//                    it.printStackTrace()
+//                    _writableAddress.postValue(false)
+//                })
+//        )
+//    }
+
+    fun deleteAddress(address: LocalAddressEntity) {
+        _addressListRegistered.value?.remove(address)
+
+        val addressDTO = addressListRegistered.value?.map {
+            AddressEntity(it.cityDistinct, it.isAddressCheck, it.primaryAddress)
+        }
+
+        val requestAddresses = addressDTO?.let {
+            AddressListDTO(
+                it
+            )
+        }
+
+        if (addressDTO != null) {
+            addDisposable(
+                addressController.addAddress(requestAddresses!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        deleteAddressFromLocal(address)
+                    }, {
+                        it.printStackTrace()
+                    })
+            )
+        }
+    }
+
+    fun addAddress(address: AddressEntity) {
+        _addressListRegistered.value?.add(address.toLocalAddressEntity())
+
+        val requestAddress = _addressListRegistered.value?.map {
+            it.toAddressListDTO()
+        }?.let {
+            AddressListDTO(
+                it
+            )
+        }
+
+        addDisposable(
+            addressController.addAddress(requestAddress!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    insertAddressToLocal(address.toLocalAddressEntity())
+                    Log.e("insert all", "insert all")
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    private fun deleteAddressFromLocal(address: LocalAddressEntity) {
+        addDisposable(
+            Observable.fromCallable{
+                zeepyLocalRepository.deleteAddress(address)
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("delete success", "yes!!")
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    private fun insertAddressToLocal(address: LocalAddressEntity) {
+        addDisposable(
+            Observable.fromCallable{
+                zeepyLocalRepository.insertAddress(address)
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("insert success", "yes!!")
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun searchBuildingAddress(address: String) {
+        addDisposable(
+            searchAddressListRepository.searchBuildingAddressList(address)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    _resultSearchedAddress.postValue(response)
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun getBuildingId() {
+        addDisposable(
+            addressDataSource.fetchBuildgingInfoByAddress(
+                "${addressSelected.value?.cityDistinct} ${addressSelected.value?.primaryAddress}"
+            ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _selectedBuildingId.postValue(it.id)
+                }, {
+                    it.printStackTrace()
+                })
+        )
     }
 }

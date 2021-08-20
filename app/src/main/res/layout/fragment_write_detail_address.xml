@@ -9,14 +9,27 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".review.view.WriteDetailAddressFragment">
+        tools:context=".review.view.WriteDetailAddressFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
+
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/spannabletextview_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/is_house_right_to_write_review"
+            zeepy:start="0"
+            zeepy:end="9"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <include
             android:id="@+id/layout_detail_address"
             layout="@layout/layout_detail_address"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/spannabletextview_notice"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

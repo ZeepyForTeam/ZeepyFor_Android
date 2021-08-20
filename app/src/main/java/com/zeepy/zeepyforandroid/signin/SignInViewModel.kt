@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.signin.controller.SignInController
+import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -47,12 +49,20 @@ class SignInViewModel @Inject constructor(
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    userPreferenceManager.saveUserAccessToken(response.accessToken)
-                    userPreferenceManager.saveUserRefreshToken(response.refreshToken)
-                    _loginSuccess.postValue(true)
+                    if (response != null) {
+                        userPreferenceManager.run {
+                            _loginSuccess.postValue(true)
+                            saveIsAlreadyLogin(true)
+                            saveUserAccessToken(response.accessToken)
+                            saveUserRefreshToken(response.refreshToken)
+                        }
+                    }
                 }, {
                     it.printStackTrace()
-                    _loginSuccess.postValue(false)
+                    userPreferenceManager.run {
+                        _loginSuccess.postValue(false)
+                        saveIsAlreadyLogin(false)
+                    }
                 })
         )
     }

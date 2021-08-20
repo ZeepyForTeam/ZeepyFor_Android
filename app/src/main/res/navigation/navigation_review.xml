@@ -14,6 +14,7 @@
             android:id="@+id/action_lessorPersonalityFragment_to_writeLessorInfoFragment"
             app:destination="@id/writeLessorInfoFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/selectAddressFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.SelectAddressFragment"
@@ -25,16 +26,26 @@
         <action
             android:id="@+id/action_selectAddressFragment_to_lessorPersonalityFragment"
             app:destination="@id/lessorPersonalityFragment" />
+        <action
+            android:id="@+id/action_selectAddressFragment_to_writeDetailAddressFragment"
+            app:destination="@id/writeDetailAddressFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/searchAddressFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.SearchAddressFragment"
         android:label="SearchAddressFragment"
         tools:layout="@layout/fragment_search_address">
+
+        <deepLink android:id="@+id/searchFragmentDeepLink"
+            app:uri="myapp://search"/>
+
         <action
             android:id="@+id/action_searchAddressFragment_to_writeDetailAddressFragment"
             app:destination="@id/writeDetailAddressFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/writeDetailAddressFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.WriteDetailAddressFragment"
@@ -43,7 +54,11 @@
         <action
             android:id="@+id/action_writeDetailAddressFragment_to_lessorPersonalityFragment"
             app:destination="@id/lessorPersonalityFragment" />
+        <argument android:name="selectedAddress"
+            app:argType="com.zeepy.zeepyforandroid.address.LocalAddressEntity"/>
+
     </fragment>
+
     <fragment
         android:id="@+id/writeLessorInfoFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.WriteLessorInfoFragment"
@@ -53,6 +68,7 @@
             android:id="@+id/action_writeLessorInfoFragment_to_houseReviewFragment"
             app:destination="@id/houseReviewFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/houseReviewFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.HouseReviewFragment"
@@ -62,6 +78,7 @@
             android:id="@+id/action_houseReviewFragment_to_writeHouseInfoFragment"
             app:destination="@id/writeHouseInfoFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/writeHouseInfoFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.WriteHouseInfoFragment"
@@ -71,6 +88,7 @@
             android:id="@+id/action_writeHouseInfoFragment_to_housePictureFragment"
             app:destination="@id/housePictureFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/housePictureFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.HousePictureFragment"
