@@ -21,6 +21,7 @@ class ZeepyDialog(
     private val weightRightButton: Float? = 0.5f,
     private val weightLeftButton: Float? = 0.5f,
     private val isCommunityTheme: Boolean? = false,
+    private val singleButton: Boolean? = false,
     private val dialogClickListener: DialogClickListener?
 ) : DialogFragment() {
     private lateinit var binding: ZeepyDialogBinding
@@ -33,6 +34,7 @@ class ZeepyDialog(
         binding = ZeepyDialogBinding.inflate(inflater, container, false)
         initDialogText()
         setButtons()
+        setSingleButton()
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return binding.root
@@ -71,9 +73,11 @@ class ZeepyDialog(
     private fun setDialogSize(deviceWidth: Int, deviceHeight:Int) {
         val params = dialog?.window?.attributes
         params?.width = (deviceWidth*0.8).toInt()
+        if(singleButton == true) {
+            params?.height = (deviceHeight*0.235).toInt()
+        }
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
-
 
     private fun initDialogText() {
         binding.textviewTitle.text = title
@@ -118,12 +122,22 @@ class ZeepyDialog(
         }
     }
 
+    private fun setSingleButton() {
+        if (singleButton == true) {
+            binding.linearlayoutButtonBothSide.visibility = View.GONE
+            binding.textviewSinglebutton.visibility =View.VISIBLE
+        }
+    }
+
     private fun attachClickListener() {
         binding.textviewLeftButton.setOnClickListener {
             dialogClickListener?.clickLeftButton(this)
         }
         binding.textviewRightButton.setOnClickListener {
             dialogClickListener?.clickRightButton(this)
+        }
+        binding.textviewSinglebutton.setOnClickListener {
+            dialogClickListener?.clickLeftButton(this)
         }
     }
 }

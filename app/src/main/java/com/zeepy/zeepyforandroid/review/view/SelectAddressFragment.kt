@@ -11,6 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentSelectAddressBinding
 import com.zeepy.zeepyforandroid.review.view.adapter.AddressAdapter
 import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
@@ -62,6 +65,10 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         }
     }
 
+    private fun showDeleteDialog() {
+        
+    }
+
     private fun setDatas() {
         viewModel.addressListRegistered.observe(viewLifecycleOwner){
             (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it)
@@ -75,13 +82,29 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun goToWriteDetailAddress() {
-        val action = SelectAddressFragmentDirections.actionSelectAddressFragmentToWriteDetailAddressFragment(viewModel.addressSelected.value!!)
-        findNavController().navigate(action)
+        viewModel.addressListRegistered.value?.let { addresses ->
+            val action = SelectAddressFragmentDirections.actionSelectAddressFragmentToWriteDetailAddressFragment(viewModel.addressSelected.value!!)
+            findNavController().navigate(action)
+        }
     }
 
     private fun goToSearchAddress() {
         binding.tvRegisterAddress.setOnClickListener {
-            findNavController().navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
+            viewModel.addressListRegistered.value?.let { addresses ->
+                if (addresses.count() >= 3) {
+                    ZeepyDialogBuilder("최대 3개의 주소까지\n등록이 가능해요!",false)
+                        .setSingleButton(true)
+                        .setDialogClickListener(object : DialogClickListener{
+                            override fun clickLeftButton(dialog: ZeepyDialog) {
+                                dialog.dismiss()
+                            }
+                            override fun clickRightButton(dialog: ZeepyDialog) {}
+                        })
+                        .build().show(childFragmentManager,this.tag)
+                } else {
+                    findNavController().navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
+                }
+            }
         }
         binding.textviewRegisterAddressNoAddress.setOnClickListener {
             findNavController().navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
