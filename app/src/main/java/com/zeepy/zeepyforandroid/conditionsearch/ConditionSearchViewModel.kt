@@ -27,14 +27,6 @@ class ConditionSearchViewModel @Inject constructor(): ViewModel() {
         _searchEntry.value = emptyEntry
     }
 
-    fun getBuildingTypesObservable(): Collection<RadioButtonModel>? {
-        return searchEntry.value?.buildingTypes?.values
-    }
-
-    fun getTradeTypesObservable(): Collection<RadioButtonModel>? {
-        return searchEntry.value?.tradeTypes?.values
-    }
-
     fun selectOption(option: String){
         _selectedOptionList.value?.add(option)
     }
@@ -68,19 +60,21 @@ class ConditionSearchViewModel @Inject constructor(): ViewModel() {
         const val TRADE = "Trade"
     }
 
+    /**
+     * 커스텀 라이브데이터 클래스 BaseObservable 상속
+     * Property 변경도 observe할 수 있음
+     */
     inner class CustomMutableLiveData<T : BaseObservable?> : MutableLiveData<T?>() {
         override fun setValue(value: T?) {
             super.setValue(value)
 
             //listen to property changes
             value?.addOnPropertyChangedCallback(callback)
-            Log.e("what is value here?", value.toString())
         }
 
         var callback: OnPropertyChangedCallback = object : OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable, propertyId: Int) {
                 //Trigger LiveData observer on change of any property in object
-                Log.e("onPropertyChanged Triggered?", "yes")
                 value = value
             }
         }

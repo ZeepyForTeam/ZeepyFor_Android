@@ -37,7 +37,6 @@ import net.daum.mf.map.api.MapView
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>() {
 
-    //private val ACCESS_FINE_LOCATION = 1000
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
     private lateinit var resizeAnimation: WidthResizeAnimation
@@ -157,6 +156,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
             //TODO: marker info layout 띄우기
+            p1?.setCustomImageAnchor(0.5F, 1F)
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
@@ -189,6 +189,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             selectedMarkerType = MapPOIItem.MarkerType.CustomImage
             customSelectedImageResourceId = R.drawable.icon_map_act //FIXME: 이 이미지 사용했을 때 위치 오차가 발생
             isCustomImageAutoscale = true
+            setCustomImageAnchor(0.5F, 0.5F)
 
         }
         //draw marker
