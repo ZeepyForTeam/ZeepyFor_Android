@@ -54,7 +54,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         binding.recyclerviewAddressList.run {
             adapter = AddressAdapter(requireContext(), object : AddressAdapter.ClickListener{
                 override fun delete(item: LocalAddressEntity) {
-                    viewModel.deleteAddress(item)
+                    showDeleteAddressDialog(item)
                 }
                 override fun select(item: LocalAddressEntity) {
                     viewModel.changeAddressSelected(item)
@@ -65,8 +65,23 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         }
     }
 
-    private fun showDeleteDialog() {
-        
+    private fun showDeleteAddressDialog(address: LocalAddressEntity) {
+        val deleteAddressDialog = ZeepyDialogBuilder("정말 삭제하시겠습니까?", false)
+            .setLeftButton(R.drawable.box_grayf9_8dp,"삭제")
+            .setRightButton(R.drawable.box_blue_59_8dp, "취소")
+            .setDialogClickListener(object : DialogClickListener{
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    viewModel.deleteAddress(address)
+                    dialog.dismiss()
+                }
+
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+            })
+            .build()
+
+        deleteAddressDialog.show(childFragmentManager, this.tag)
     }
 
     private fun setDatas() {
