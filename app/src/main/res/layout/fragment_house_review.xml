@@ -23,19 +23,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_review_notice"
+                <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+                    android:id="@+id/spannabletextview_notice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:bufferType="spannable"
-                    android:lineSpacingExtra="8dp"
-                    android:fontFamily="@font/nanum_square_round_regular"
+                    android:layout_marginTop="19dp"
                     android:text="@string/house_condition"
-                    android:textColor="@color/zeepy_blue_5f"
-                    android:textSize="24sp"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintStart_toStartOf="@id/roomtype_group"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    zeepy:start="0"
+                    zeepy:end="8"
+                    zeepy:second_start="15"
+                    zeepy:second_end="21"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_count_room"/>
 
                 <TextView
                     android:id="@+id/tv_count_room"
@@ -47,7 +46,7 @@
                     android:textSize="14sp"
                     android:layout_marginTop="36dp"
                     app:layout_constraintStart_toStartOf="@id/roomtype_group"
-                    app:layout_constraintTop_toBottomOf="@id/tv_review_notice" />
+                    app:layout_constraintTop_toBottomOf="@id/spannabletextview_notice" />
 
                 <RadioGroup
                     android:id="@+id/roomtype_group"

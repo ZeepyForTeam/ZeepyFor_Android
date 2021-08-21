@@ -14,6 +14,19 @@
         tools:context=".review.view.WriteHouseInfoFragment"
         xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/spannabletextview_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:text="@string/house_condition"
+            zeepy:start="0"
+            zeepy:end="8"
+            zeepy:second_start="15"
+            zeepy:second_end="21"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_detail_info"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_detail_info"
             android:layout_width="wrap_content"
@@ -22,7 +35,7 @@
             android:text="상세리뷰"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="16sp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spannabletextview_notice"
             app:layout_constraintStart_toStartOf="@id/et_detail_house_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.05" />

@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.review.view.adapter
 
 import android.content.Context
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
@@ -10,15 +11,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.BR
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.databinding.ItemAddressBinding
-import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
 import kotlin.properties.Delegates
 
-class AddressAdapter(private val context: Context, val listener: ClickListener): ListAdapter<AddressModel, AddressAdapter.AddressViewHolder>(diffCallback) {
-
+class AddressAdapter(private val context: Context, val listener: ClickListener): ListAdapter<LocalAddressEntity, AddressAdapter.AddressViewHolder>(diffCallback) {
     interface ClickListener{
-        fun delete(item: AddressModel)
-        fun select(item: AddressModel)
+        fun delete(item: LocalAddressEntity)
+        fun select(item: LocalAddressEntity)
     }
 
     private var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
@@ -35,6 +35,8 @@ class AddressAdapter(private val context: Context, val listener: ClickListener):
 
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
         val item = getItem(position)
+
+        Log.e("item", "${item.primaryAddress}")
         holder.binding.setVariable(BR.data, item)
         holder.binding.btnDelete.setOnClickListener {
             listener.delete(item)
@@ -48,12 +50,12 @@ class AddressAdapter(private val context: Context, val listener: ClickListener):
         if (position == selectedPosition){
             holder.binding.apply {
                 root.setBackgroundResource(R.drawable.box_address_selected)
-                tvAddress.typeface = changeFontFamily(R.font.nanum_square_round_extrabold)
+                textviewAddress.typeface = changeFontFamily(R.font.nanum_square_round_extrabold)
             }
         } else {
             holder.binding.apply {
                 root.setBackgroundResource(R.drawable.box_address)
-                tvAddress.typeface = changeFontFamily(R.font.nanum_square_round_regular)
+                textviewAddress.typeface = changeFontFamily(R.font.nanum_square_round_regular)
             }
         }
     }
@@ -63,12 +65,12 @@ class AddressAdapter(private val context: Context, val listener: ClickListener):
     }
 
     companion object{
-        val diffCallback = object : DiffUtil.ItemCallback<AddressModel>(){
-            override fun areItemsTheSame(oldItem: AddressModel, newItem: AddressModel): Boolean {
+        val diffCallback = object : DiffUtil.ItemCallback<LocalAddressEntity>(){
+            override fun areItemsTheSame(oldItem: LocalAddressEntity, newItem: LocalAddressEntity): Boolean {
                 return oldItem.hashCode() == newItem.hashCode()
             }
 
-            override fun areContentsTheSame(oldItem: AddressModel, newItem: AddressModel): Boolean {
+            override fun areContentsTheSame(oldItem: LocalAddressEntity, newItem: LocalAddressEntity): Boolean {
                 return oldItem == newItem
             }
         }

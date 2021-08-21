@@ -48,26 +48,26 @@ class ZeepyButton: ConstraintLayout {
     @SuppressLint("ClickableViewAccessibility")
     fun setUnUsableButton() {
         binding.root.setOnTouchListener { _, _ -> true }
-        binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_unuseable)
+        binding.linearlayoutButton.setBackgroundResource(R.drawable.zeepy_button_unuseable)
         binding.tvButton.setTextColor(getColor(context, R.color.zeepy_gray_ba))
     }
 
     @SuppressLint("ClickableViewAccessibility")
     fun setUsableButton() {
         binding.root.setOnTouchListener { _, _ -> false }
-        binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button)
+        binding.linearlayoutButton.setBackgroundResource(R.drawable.zeepy_button)
         binding.tvButton.setTextColor(getColor(context, R.color.zeepy_white_f3))
     }
 
     fun setParticipationButton() {
-        binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_participation)
+        binding.linearlayoutButton.setBackgroundResource(R.drawable.zeepy_button_participation)
         binding.tvButton.setTextColor(getColor(context, R.color.zeepy_green_33))
     }
 
     @SuppressLint("ClickableViewAccessibility")
     fun setCommunityUsableButton() {
         binding.root.setOnTouchListener { _, _ -> false }
-        binding.layoutButton.setBackgroundResource(R.drawable.zeepy_button_community)
+        binding.linearlayoutButton.setBackgroundResource(R.drawable.zeepy_button_community)
         binding.tvButton.setTextColor(getColor(context, R.color.white))
     }
 

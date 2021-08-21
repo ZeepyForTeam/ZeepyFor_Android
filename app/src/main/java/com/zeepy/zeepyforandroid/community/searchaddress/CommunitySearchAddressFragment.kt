@@ -30,10 +30,7 @@ class CommunitySearchAddressFragment : BaseFragment<FragmentCommunitySearchAddre
 
     private fun initViewTheme() {
         binding.layoutSearchAddress.apply {
-            btnNext.apply {
-                setCommunityUsableButton()
-                setText("다음으로")
-            }
+
             etSearchAddress.apply {
                 val searchIcon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_search_community)
                 setBackgroundResource(R.drawable.edittext_community)
@@ -50,10 +47,10 @@ class CommunitySearchAddressFragment : BaseFragment<FragmentCommunitySearchAddre
     }
 
     private fun goToWriteDetailAddress() {
-        binding.layoutSearchAddress.btnNext.setOnClickListener {
-            viewModel.changeSearchAddressQuery(binding.layoutSearchAddress.etSearchAddress.text.toString())
-            findNavController().navigate(R.id.action_communitySearchAddressFragment_to_communityDetailAddressFragment)
-        }
+//        binding.layoutSearchAddress.btnNext.setOnClickListener {
+//            viewModel.changeSearchAddressQuery(binding.layoutSearchAddress.etSearchAddress.text.toString())
+//            findNavController().navigate(R.id.action_communitySearchAddressFragment_to_communityDetailAddressFragment)
+//        }
     }
 
 }

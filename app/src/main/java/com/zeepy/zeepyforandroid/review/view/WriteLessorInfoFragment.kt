@@ -14,9 +14,9 @@ import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteLessorInfoBinding
-import com.zeepy.zeepyforandroid.eunm.LessorAge.Companion.findLessorAge
+import com.zeepy.zeepyforandroid.enum.LessorAge.Companion.findLessorAge
+import com.zeepy.zeepyforandroid.enum.LessorGender.Companion.findGender
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 
 class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
@@ -32,7 +32,6 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        viewModel.changeCurrentFragment(ReviewNotice.WRITE_LESSOR_DETAIL)
 
         setSpinner()
         setNextButton()
@@ -47,7 +46,6 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
 
         setSpinner()
         binding.groupSelectGender.clearCheck()
-
     }
 
     private fun setNextButton() {
@@ -58,17 +56,13 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
     }
 
     private fun selectGender() {
-        binding.groupSelectGender.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
-            override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-                when(checkedId) {
-                    binding.toggleMale.id -> viewModel.changeLessorGender(requireContext().getString(R.string.male))
-                    binding.toggleFemale.id -> viewModel.changeLessorGender(requireContext().getString(R.string.female))
-                }
-                Log.e("gender", viewModel.lessorGender.value.toString())
-                viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
+        binding.groupSelectGender.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                binding.toggleMale.id -> viewModel.changeLessorGender(findGender(R.string.male))
+                binding.toggleFemale.id -> viewModel.changeLessorGender(findGender(R.string.female))
             }
-        })
-
+            viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
+        }
     }
 
     private fun setSpinner() {
@@ -78,10 +72,6 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
                 onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         viewModel.changeLessorAge(mapOf(findLessorAge((view as AppCompatTextView).text.toString()) to position))
-                        Log.e("gender", viewModel.lessorGender.value.toString())
-                        viewModel.lessorPersonality.value?.let { it1 -> Log.e("tendency", it1) }
-                        Log.e("age", viewModel.lessorAge.value.toString())
-
                     }
                     override fun onNothingSelected(p0: AdapterView<*>?) {}
                 }

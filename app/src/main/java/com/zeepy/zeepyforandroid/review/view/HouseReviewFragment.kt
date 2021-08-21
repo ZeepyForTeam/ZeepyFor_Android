@@ -1,30 +1,21 @@
 package com.zeepy.zeepyforandroid.review.view
 
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spanned
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.toSpannable
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.zeepy.zeepyforandroid.databinding.FragmentHouseReviewBinding
-import com.zeepy.zeepyforandroid.eunm.Options.Companion.findOptions
-import com.zeepy.zeepyforandroid.eunm.Preference.Companion.findPreference
-import com.zeepy.zeepyforandroid.eunm.RoomCount.Companion.findRoomCount
+import com.zeepy.zeepyforandroid.enum.Options.Companion.findOptions
+import com.zeepy.zeepyforandroid.enum.Preference.Companion.findPreference
+import com.zeepy.zeepyforandroid.enum.RoomCount.Companion.findRoomCount
 import com.zeepy.zeepyforandroid.review.view.adapter.ReviewChoiceAdapter
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
-import com.zeepy.zeepyforandroid.util.CustomTypefaceSpan
 import com.zeepy.zeepyforandroid.util.ItemDecoration
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 
 class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
@@ -38,15 +29,12 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.changeCurrentFragment(ReviewNotice.CHECK_HOUSE_CONDITION)
-        Log.e(viewModel.toString(), viewModel.toString())
 
         setRoomTypeChoice()
         setReviewChoice()
         setOptionChoice()
         setNextButton()
         goToWriteHouseInfo()
-        setTopNotice()
     }
 
     override fun onResume() {
@@ -54,28 +42,11 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
         binding.roomtypeGroup.clearCheck()
     }
 
-    private fun setTopNotice() {
-        val parent = (parentFragment as NavHostFragment).parentFragment
-        val notice = parent?.view?.findViewById<TextView>(R.id.tv_review_notice)
-        notice?.visibility = View.GONE
-
-        val span = binding.tvReviewNotice.text.toSpannable()
-        val typeface = Typeface.create(
-            ResourcesCompat.getFont(
-                requireContext(),
-                R.font.nanum_square_round_extrabold
-            ), Typeface.NORMAL
-        )
-        span.setSpan(CustomTypefaceSpan(typeface), 0, 8, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-        span.setSpan(CustomTypefaceSpan(typeface), 15, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-    }
-
     private fun setReviewChoice() {
         binding.rvReviewChoice.run {
             adapter = ReviewChoiceAdapter { map ->
                 map.forEach { evaluation ->
                     viewModel.addReviewPreference(evaluation.key, findPreference(evaluation.value))
-                    Log.e("viewModel evaluation", "${findPreference(evaluation.value)}")
                 }
                 viewModel.reviewPreference.value?.let { enableNextButton(it) }
             }
@@ -91,7 +62,6 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
                 binding.radiobtnThreeRoom.id -> viewModel.changeRoomType(findRoomCount(R.string.roomcount_threeormore))
             }
             viewModel.reviewPreference.value?.let { enableNextButton(it) }
-            Log.e("roomtype", viewModel.roomType.value.toString())
         }
     }
 
@@ -100,13 +70,10 @@ class HouseReviewFragment : BaseFragment<FragmentHouseReviewBinding>() {
             adapter = ConditionOptionAdapter(object : ConditionOptionAdapter.SelectOptionInterface {
                 override fun select(option: Int) {
                     viewModel.selectOption(findOptions(option))
-                    Log.e("option", "${viewModel.selectedOptionList.value}")
                 }
 
                 override fun unselect(option: Int) {
                     viewModel.unselectOption(findOptions(option))
-                    Log.e("option", "${viewModel.selectedOptionList.value}")
-
                 }
             })
             addItemDecoration(ItemDecoration(8, 8))

@@ -5,11 +5,13 @@
     android:id="@+id/navigation_graph"
     app:startDestination="@id/mainFrameFragment">
 
+
     <fragment
         android:id="@+id/mainFrameFragment"
         android:name="com.zeepy.zeepyforandroid.mainframe.MainFrameFragment"
         android:label="fragment_main_frame"
         tools:layout="@layout/fragment_main_frame" >
+
         <action
             android:id="@+id/action_mainFrameFragment_to_reviewSearchAddressFragment"
             app:destination="@id/reviewSearchAddressFragment" />
@@ -41,6 +43,10 @@
             android:id="@+id/action_mainFrameFragment_to_buildingDetailFragment"
             app:destination="@id/buildingDetailFragment"/>
 
+        <action
+            android:id="@+id/action_mainFrameFragment_to_navigation_review"
+            app:destination="@id/navigation_review" />
+
     </fragment>
 
     <fragment
@@ -71,7 +77,13 @@
         android:id="@+id/reviewFrameFragment"
         android:name="com.zeepy.zeepyforandroid.review.view.ReviewFrameFragment"
         android:label="ReviewFrameFragment"
-        tools:layout="@layout/fragment_review_frame"/>
+        tools:layout="@layout/fragment_review_frame">
+        <argument
+            android:name="isJustRegisterAddress"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/postingDetailFragment"
@@ -120,9 +132,19 @@
 
     <fragment
         android:id="@+id/changeAddressFragment"
-        android:name="com.zeepy.zeepyforandroid.ChangeAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.address.ChangeAddressFragment"
         android:label="ChangeAddressFragment"
-        tools:layout="@layout/fragment_change_address"/>
+        tools:layout="@layout/fragment_change_address">
+
+        <argument android:name="addressList"
+            app:argType="com.zeepy.zeepyforandroid.address.LocalAddressEntity[]"/>
+
+        <action
+            android:id="@+id/action_changeAddressFragment_to_reviewFrameFragment"
+            app:destination="@id/reviewFrameFragment"
+            app:popUpTo="@id/mainFrameFragment"
+            app:popUpToInclusive="false"/>
+    </fragment>
 
     <fragment
         android:id="@+id/buildingDetailFragment"

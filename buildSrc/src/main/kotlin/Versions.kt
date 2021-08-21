@@ -3,13 +3,16 @@ object Versions {
 
     const val RETROFIT_VERSION = "2.9.0"
     const val OKHTTP_VERSION = "4.9.0"
+    const val GSON_VERSION = "2.8.6"
 
     const val RXJAVA_VERSION = "2.1.9"
     const val RXANDROID_VERSION = "2.0.2"
 
     const val ROOM_VERSION = "2.3.0-alpha04"
-    const val DAGGER_VERSION = "2.35.1"
+    const val DAGGER_VERSION = "2.38.1"
     const val LOREM_VERSION = "2.1"
+
+    const val ROOM_VERSINO = "2.3.0"
 
     const val PAGING_VERSION = "3.0.0"
 

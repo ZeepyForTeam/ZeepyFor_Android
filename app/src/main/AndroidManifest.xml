@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -39,8 +40,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
 
-
             </intent-filter>
+            <nav-graph android:value="@navigation/navigation_graph"/>
+            <nav-graph android:value="@navigation/navigation_review"/>
+            <nav-graph android:value="@navigation/navigation_community"/>
+
         </activity>
 
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:textColor="@color/zeepy_black_2a"
             android:textSize="12sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/button_search"
             app:layout_constraintBottom_toBottomOf="@id/et_search_address"
             app:layout_constraintEnd_toEndOf="@id/et_search_address"
@@ -52,26 +52,20 @@
             android:text="검색"
             android:textColor="@color/zeepy_blue_5f" />
 
-        <View
-            android:id="@+id/view_btn_border"
-            app:layout_constraintBottom_toTopOf="@id/btn_next"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.975"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/zeepy_gray_f4" />
 
-        <com.zeepy.zeepyforandroid.customview.ZeepyButton
-            android:id="@+id/btn_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/et_search_address"
-            app:layout_constraintStart_toStartOf="@id/et_search_address"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.972"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_result"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_search_address_list"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/et_search_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

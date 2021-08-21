@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:bufferType="spannable"
             android:fontFamily="@font/nanum_square_round_regular"
-            android:text="@string/write_detail_address"
+            android:text="@string/is_house_right_to_write_review"
             android:lineSpacingExtra="8dp"
             android:textColor="@color/zeepy_green_33"
             android:textSize="24sp"
@@ -28,7 +28,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="@id/toolbar"
-            tools:text="@string/write_detail_address"/>
+            tools:text="@string/is_house_right_to_write_review"/>
 
         <include
             android:id="@+id/layout_community_detail_address"

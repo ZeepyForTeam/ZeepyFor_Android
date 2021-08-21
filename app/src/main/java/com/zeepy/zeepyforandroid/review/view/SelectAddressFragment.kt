@@ -1,12 +1,15 @@
 package com.zeepy.zeepyforandroid.review.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentSelectAddressBinding
 import com.zeepy.zeepyforandroid.review.view.adapter.AddressAdapter
@@ -27,11 +30,13 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.changeCurrentFragment(ReviewNotice.SELECT_ADDRESS)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         initView()
         setDatas()
         goToSearchAddress()
-
+        getBuildingId()
     }
 
     private fun initView() {
@@ -43,13 +48,13 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
             }
         }
 
-        binding.rvAddressList.run {
+        binding.recyclerviewAddressList.run {
             adapter = AddressAdapter(requireContext(), object : AddressAdapter.ClickListener{
-                override fun delete(item: AddressModel) {
+                override fun delete(item: LocalAddressEntity) {
                     viewModel.deleteAddress(item)
                 }
-                override fun select(item: AddressModel) {
-                    viewModel.changeAddressSelected(item.address)
+                override fun select(item: LocalAddressEntity) {
+                    viewModel.changeAddressSelected(item)
                     binding.btnNext.setUsableButton()
                 }
             })
@@ -58,18 +63,28 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun setDatas() {
-        viewModel.addressList.observe(viewLifecycleOwner){
-            (binding.rvAddressList.adapter as AddressAdapter).submitList(viewModel.addressList.value)
+        viewModel.addressListRegistered.observe(viewLifecycleOwner){
+            (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it)
+        }
+    }
+
+    private fun getBuildingId() {
+        viewModel.addressSelected.observe(viewLifecycleOwner) {
+            viewModel.getBuildingId()
         }
     }
 
     private fun goToWriteDetailAddress() {
-        Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_lessorPersonalityFragment)
+        val action = SelectAddressFragmentDirections.actionSelectAddressFragmentToWriteDetailAddressFragment(viewModel.addressSelected.value!!)
+        findNavController().navigate(action)
     }
 
     private fun goToSearchAddress() {
         binding.tvRegisterAddress.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
+            findNavController().navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
+        }
+        binding.textviewRegisterAddressNoAddress.setOnClickListener {
+            findNavController().navigate(R.id.action_selectAddressFragment_to_searchAddressFragment)
         }
     }
 

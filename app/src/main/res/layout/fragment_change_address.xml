@@ -23,37 +23,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.597">
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView2"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nanum_square_round_bold"
-                android:textColor="@color/zeepy_black_3b"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="14dp"
-                app:layout_constraintBottom_toTopOf="@+id/appCompatTextView"
-                app:layout_constraintStart_toStartOf="parent"
+                tools:itemCount="2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_change_address"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="이촌동 2가" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nanum_square_round_bold"
-                android:textColor="@color/zeepy_black_3b"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="14dp"
-                app:layout_constraintBottom_toTopOf="@+id/appCompatTextView3"
+                app:layout_constraintBottom_toTopOf="@id/textview_change_address"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
-                tools:text="이촌동 2가" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView3"
+                android:id="@+id/textview_change_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanum_square_round_extrabold"
@@ -63,7 +48,7 @@
                 android:layout_marginBottom="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview_address" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

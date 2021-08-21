@@ -20,7 +20,7 @@ class ZeepyDialog(
     private val rightButtonText: String? = "취소",
     private val weightRightButton: Float? = 0.5f,
     private val weightLeftButton: Float? = 0.5f,
-    private val reverseTextColor: Boolean? = false,
+    private val isCommunityTheme: Boolean? = false,
     private val dialogClickListener: DialogClickListener?
 ) : DialogFragment() {
     private lateinit var binding: ZeepyDialogBinding
@@ -88,10 +88,10 @@ class ZeepyDialog(
                 visibility = View.VISIBLE
             }
         }
-        if (reverseTextColor == true) {
+        if (isCommunityTheme == true) {
             binding.run {
-                textviewLeftButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                textviewRightButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                textviewLeftButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_green_33))
+                textviewRightButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f3))
             }
         }
     }

@@ -37,5 +37,6 @@
     <color name="zeepy_red_fb">#fb8f78</color>
     <color name="zeepy_black28">#282828</color>
     <color name="zeepy_gray_3300">#33000000</color>
+    <color name="zeepy_black_33">#333333</color>
 
 </resources>
