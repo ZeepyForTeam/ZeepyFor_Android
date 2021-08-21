@@ -8,11 +8,9 @@ object Versions {
     const val RXJAVA_VERSION = "2.1.9"
     const val RXANDROID_VERSION = "2.0.2"
 
-    const val ROOM_VERSION = "2.3.0-alpha04"
-    const val DAGGER_VERSION = "2.38.1"
+    const val ROOM_VERSION = "2.4.0-alpha03"
+    const val DAGGER_VERSION = "2.37"
     const val LOREM_VERSION = "2.1"
-
-    const val ROOM_VERSINO = "2.3.0"
 
     const val PAGING_VERSION = "3.0.0"
 
