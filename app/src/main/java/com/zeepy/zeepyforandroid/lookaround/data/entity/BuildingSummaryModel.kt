@@ -1,8 +1,6 @@
 package com.zeepy.zeepyforandroid.lookaround.data.entity
 
 import android.os.Parcelable
-import com.zeepy.zeepyforandroid.community.data.entity.UrlPictureModel
-import com.zeepy.zeepyforandroid.eunm.Options
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

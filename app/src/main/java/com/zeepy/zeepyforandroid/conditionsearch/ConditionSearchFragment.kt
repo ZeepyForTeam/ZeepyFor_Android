@@ -1,11 +1,9 @@
 package com.zeepy.zeepyforandroid.conditionsearch
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.Observable
 import androidx.fragment.app.viewModels
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -13,8 +11,7 @@ import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.zeepy.zeepyforandroid.databinding.FragmentSearchByConditionBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.google.android.material.slider.RangeSlider
-import com.zeepy.zeepyforandroid.conditionsearch.data.RadioButtonModel
-import com.zeepy.zeepyforandroid.eunm.Options
+import com.zeepy.zeepyforandroid.enum.Options
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
