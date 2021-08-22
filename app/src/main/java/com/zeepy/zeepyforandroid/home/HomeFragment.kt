@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
-import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
@@ -74,10 +73,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)
                 } else {
-                    val selectedAddress = viewModel.addressList.value!!.toTypedArray()
+                    val addresses = viewModel.addressList.value!!.toTypedArray()
                     val action =
                         MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(
-                            selectedAddress
+                            addresses
                         )
                     requireParentFragment().requireParentFragment().findNavController()
                         .navigate(action)

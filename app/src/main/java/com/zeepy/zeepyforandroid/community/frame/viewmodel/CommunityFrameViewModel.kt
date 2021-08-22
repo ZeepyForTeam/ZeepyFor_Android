@@ -68,7 +68,9 @@ class CommunityFrameViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     _addressList.postValue(response.toMutableList())
-                    _selectedAddress.postValue(response.filter { it.isAddressCheck }.first()?.cityDistinct.toString())
+                    if (!response.isNullOrEmpty()) {
+                        _selectedAddress.postValue(response.filter { it.isAddressCheck }.first()?.cityDistinct.toString())
+                    }
                 }, {
                     it.printStackTrace()
                 })
