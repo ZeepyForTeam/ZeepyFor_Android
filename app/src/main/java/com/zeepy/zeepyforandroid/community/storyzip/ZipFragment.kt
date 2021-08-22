@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentZipBinding
+import com.zeepy.zeepyforandroid.enum.PostingType.Companion.findPostingTypeTag
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,21 +31,66 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setStoryZipRecyclerView()
-        viewModel.getPostingList()
-        updatePostings()
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         initPostingTag()
+        setStoryZipRecyclerView()
+        updatePostings()
+        changeCategory()
+        getCategoryPostingList()
+        changeAddress()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getCheckedbutton(binding.radiogroupTag.checkedRadioButtonId)
     }
 
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
             adapter = ZipAdapter{
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(
-                    it
-                )
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment()
                 requireParentFragment().requireParentFragment().requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
             addItemDecoration(ItemDecoration(8,0))
+        }
+    }
+
+    private fun changeCategory() {
+        binding.radiogroupTag.setOnCheckedChangeListener { _, checkedId ->
+            getCheckedbutton(checkedId)
+        }
+    }
+
+    private fun getCheckedbutton(checkedId: Int) {
+        when(checkedId) {
+            binding.rbTagEverything.id -> {
+                viewModel.changeCategory(null)
+            }
+            binding.rbTabGroupPurchase.id -> {
+                viewModel.changeCategory("JOINTPURCHASE")
+            }
+            binding.rbTagFreeShare.id -> {
+                viewModel.changeCategory("FREESHARING")
+            }
+            binding.rbTagFriends.id -> {
+                viewModel.changeCategory("NEIGHBORHOODFRIEND")
+            }
+        }
+    }
+
+    private fun changeAddress() {
+        viewModel.addressList.observe(viewLifecycleOwner) {
+            viewModel.getPostingList()
+        }
+    }
+
+    private fun getCategoryPostingList() {
+        viewModel.selectedCategory.observe(viewLifecycleOwner) {
+            if (!viewModel.addressList.value.isNullOrEmpty()) {
+                viewModel.getPostingList()
+            }
         }
     }
 

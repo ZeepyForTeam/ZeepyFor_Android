@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
-    private val viewModel by viewModels<CommunityFrameViewModel>()
+    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -24,8 +24,15 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
         return FragmentCommunityMainBinding.inflate(inflater, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAddressListFromLocal()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setToolbar()
         initViewPager()
@@ -33,7 +40,13 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            setTitle("을지로 3가")
+            viewModel.selectedAddress.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    setTitle("주소 등록하기")
+                } else {
+                    setTitle(it)
+                }
+            }
             setCommunityLocation()
             setRightButton(R.drawable.ic_btn_write) {
                 findNavController().navigate(R.id.action_communityMainFragment_to_communitySelectCategoryFragment)

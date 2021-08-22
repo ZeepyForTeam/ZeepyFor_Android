@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.BR
 import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
+import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.databinding.ItemStoryZipBinding
 import com.zeepy.zeepyforandroid.util.DiffCallback
 
-class ZipAdapter(val listener: (PostingDetailModel) -> Unit): ListAdapter<PostingDetailModel, ZipAdapter.StoryZipViewHolder>(
-    DiffCallback<PostingDetailModel>()
+class ZipAdapter(val listener: (PostingListModel) -> Unit): ListAdapter<PostingListModel, ZipAdapter.StoryZipViewHolder>(
+    DiffCallback<PostingListModel>()
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryZipViewHolder {

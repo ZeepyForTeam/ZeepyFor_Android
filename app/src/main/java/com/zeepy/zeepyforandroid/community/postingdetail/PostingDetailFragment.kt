@@ -25,11 +25,9 @@ import javax.inject.Inject
 class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     @Inject lateinit var prefs: SharedPreferencesManager
     private val viewModel by viewModels<PostingDetailViewModel>()
-    private val args: PostingDetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.changePosting(args.postingModel)
     }
 
     override fun getFragmentBinding(

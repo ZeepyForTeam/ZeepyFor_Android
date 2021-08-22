@@ -120,7 +120,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
                     dialog.dismiss()
                 }
-
                 override fun clickRightButton(dialog: ZeepyDialog) {
                     findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
                     dialog.dismiss()
