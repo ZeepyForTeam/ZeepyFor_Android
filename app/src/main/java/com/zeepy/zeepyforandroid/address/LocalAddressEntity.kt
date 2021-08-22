@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class LocalAddressEntity(
     @ColumnInfo(name = "cityDistinct")
     val cityDistinct: String,
-    val isAddressCheck: Boolean,
+    var isAddressCheck: Boolean,
     @ColumnInfo(name = "primaryAddress")
     val primaryAddress: String
 ): Parcelable {

@@ -36,7 +36,6 @@ class AddressAdapter(private val context: Context, val listener: ClickListener):
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
         val item = getItem(position)
 
-        Log.e("item", "${item.primaryAddress}")
         holder.binding.setVariable(BR.data, item)
         holder.binding.btnDelete.setOnClickListener {
             listener.delete(item)

@@ -23,7 +23,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel by viewModels<HomeViewModel>()
-    @Inject lateinit var userPreferenceManager: UserPreferenceManager
+    @Inject
+    lateinit var userPreferenceManager: UserPreferenceManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -55,7 +56,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             setCommunityLocation()
             viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
                 val selectedAddress = addresses.find { it.isAddressCheck }
-                if(addresses.isNullOrEmpty()) {
+                if (addresses.isNullOrEmpty()) {
                     setTitle("주소 등록하기")
                 } else {
                     selectedAddress?.let { setTitle(it.cityDistinct) }
@@ -66,15 +67,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun changeAddress() {
         binding.toolbar.binding.textviewToolbar.setOnClickListener {
-            if(userPreferenceManager.fetchIsAlreadyLogin()) {
-                if(viewModel.addressList.value.isNullOrEmpty()) {
-                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                if (viewModel.addressList.value.isNullOrEmpty()) {
+                    val action =
+                        MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)
                 } else {
-                    val selectedAddress= viewModel.addressList.value!!.toTypedArray()
-                    val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(selectedAddress)
-                    requireParentFragment().requireParentFragment().findNavController().navigate(action)
+                    val selectedAddress = viewModel.addressList.value!!.toTypedArray()
+                    val action =
+                        MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(
+                            selectedAddress
+                        )
+                    requireParentFragment().requireParentFragment().findNavController()
+                        .navigate(action)
                 }
             } else {
                 showLoginDialog()
@@ -93,7 +99,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun writeReview() {
         binding.buttonWriteReview.setOnClickListener {
             if (userPreferenceManager.fetchIsAlreadyLogin()) {
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                val action =
+                    MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
                 action.isJustRegisterAddress = false
                 findNavController().navigate(action)
             } else {
@@ -103,7 +110,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun showLoginDialog() {
-        val loginDialog = ZeepyDialogBuilder(resources.getString(R.string.login_notice_message),null)
+        val loginDialog =
+            ZeepyDialogBuilder(resources.getString(R.string.login_notice_message), null)
 
         loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "삭제")
             .setRightButton(R.drawable.box_blue_59_8dp, "좋았어, 로그인하기!")
@@ -112,6 +120,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
                     dialog.dismiss()
                 }
+
                 override fun clickRightButton(dialog: ZeepyDialog) {
                     findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
                     dialog.dismiss()

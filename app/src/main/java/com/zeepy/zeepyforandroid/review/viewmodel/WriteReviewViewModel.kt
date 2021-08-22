@@ -290,6 +290,7 @@ class WriteReviewViewModel @Inject constructor(
             }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    getAddress()
                     Log.e("delete success", "yes!!")
                 }, {
                     it.printStackTrace()
