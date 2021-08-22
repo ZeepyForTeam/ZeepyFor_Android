@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -51,7 +52,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             }
         }
     private lateinit var resizeAnimation: WidthResizeAnimation
-    private val mapViewModel: MapViewModel by activityViewModels()
+    private val viewModel: MapViewModel by viewModels<MapViewModel>()
     private var buildings = listOf<Building>()
     private var markers = mutableListOf<MapPOIItem>()
     private val eventListener = MarkerEventListener(context)
@@ -74,6 +75,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
         // 동적으로 지도뷰 & 지도 위 버튼들 추가
         mapView = MapView(activity)
         mapViewContainer = binding.mapViewContainer
@@ -85,8 +89,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             topMargin = MetricsConverter.dpToPixel(16F, context).toInt()
         }
 
+        // 현재위치 버튼 클릭 시 permission 요청 (수정될 수도)
         myLocationButton.setOnClickListener { getGpsLocation() }
-        setMarkersObserver()
+
+        //setMarkersObserver()
         setOptionButton()
         setToolbar()
         
@@ -94,25 +100,27 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         setMarker(37.505834449999995, 126.96320847343215, R.drawable.emoji_5_map)
         setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
 
+        // FIXME: Error accessing mapPointBounds
+        // Log.e("mapbounds", mapView.mapPointBounds.topRight.mapPointGeoCoord.longitude.toString())
 
     }
 
-    private fun setMarkersObserver() {
-        mapViewModel.markers.observe(viewLifecycleOwner) { markers ->
-            markers?.let {
-                this.buildings = markers
-                setMarkersList()
-                mapView.setPOIItemEventListener(eventListener)
-            }
-        }
-    }
+//    private fun setMarkersObserver() {
+//        mapViewModel.markers.observe(viewLifecycleOwner) { markers ->
+//            markers?.let {
+//                this.buildings = markers
+//                setMarkersList()
+//                mapView.setPOIItemEventListener(eventListener)
+//            }
+//        }
+//    }
 
     private fun setOptionButton() {
         binding.optionBtnLayout.optionBtn.setOnClickListener {
             resizeAnimation = WidthResizeAnimation(it, 800, false)
             resizeAnimation.duration = 600
-            Log.d("original widthhhhhhhh", resizeAnimation.originalWidth.toString())
-            Log.d("target widthhhhhhhh", resizeAnimation.targetWidth.toString())
+            Log.d("original width", resizeAnimation.originalWidth.toString())
+            Log.d("target width", resizeAnimation.targetWidth.toString())
             it.startAnimation(resizeAnimation)
             it.visibility = View.GONE
             Handler(Looper.getMainLooper()).postDelayed(object : Runnable {
@@ -124,14 +132,12 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                     binding.optionBtnLayout.optionFive.visibility = View.VISIBLE
                 }
             },300)
-
-
         }
         binding.optionBtnLayout.optionBtn.setOnClickListener {
             resizeAnimation = WidthResizeAnimation(it, 218, false)
             resizeAnimation.duration = 600
-            Log.d("original widthhhhhhhh", resizeAnimation.originalWidth.toString())
-            Log.d("target widthhhhhhhh", resizeAnimation.targetWidth.toString())
+            Log.d("original width", resizeAnimation.originalWidth.toString())
+            Log.d("target width", resizeAnimation.targetWidth.toString())
             it.startAnimation(resizeAnimation)
             binding.optionBtnLayout.optionBtn.visibility = View.VISIBLE
             binding.optionBtnLayout.optionOne.visibility = View.GONE
@@ -168,7 +174,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     inner class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
         // Set marker detail visibility
         private fun setMarkerDetailVisibility(index: Int) {
-            mapViewModel.setMarkerClick(buildings[index].id)
+            viewModel.setMarkerClick(buildings[index].id)
         }
 
         private fun setMarkerDetailAnimation() {
