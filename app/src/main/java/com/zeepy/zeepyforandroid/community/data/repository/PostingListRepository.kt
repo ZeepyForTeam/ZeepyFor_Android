@@ -6,4 +6,5 @@ import io.reactivex.Single
 
 interface PostingListRepository {
     fun getPostingList(address: String, communityType: String?): Single<List<PostingListModel>>
+    fun getMyZipList(communityCategory: String?): Single<List<PostingListModel>>
 }

@@ -11,4 +11,7 @@ class PostingListRepositoryImpl @Inject constructor(
 ): PostingListRepository {
     override fun getPostingList(address: String, communityType: String?): Single<List<PostingListModel>> =
         dataSource.getPosting(address, communityType).map { it.content.map { it.toPostingListModel() } }
+
+    override fun getMyZipList(communityCategory: String?): Single<List<PostingListModel>> =
+        dataSource.getMyZip(communityCategory).map { it.myZip.map { it.toPostingListModel() } }
 }

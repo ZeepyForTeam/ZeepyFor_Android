@@ -4,16 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentZipBinding
-import com.zeepy.zeepyforandroid.enum.PostingType.Companion.findPostingTypeTag
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,14 +77,14 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     private fun changeAddress() {
         viewModel.addressList.observe(viewLifecycleOwner) {
-            viewModel.getPostingList()
+            viewModel.fetchPostingList()
         }
     }
 
     private fun getCategoryPostingList() {
         viewModel.selectedCategory.observe(viewLifecycleOwner) {
             if (!viewModel.addressList.value.isNullOrEmpty()) {
-                viewModel.getPostingList()
+                viewModel.fetchPostingList()
             }
         }
     }

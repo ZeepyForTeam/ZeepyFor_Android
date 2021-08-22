@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.community.data.remote.response
 
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
+import com.zeepy.zeepyforandroid.enum.PostingType.Companion.convertToCommunityTypeString
 
 data class PostingListDTO(
     val communityCategory: String,
@@ -13,7 +14,7 @@ data class PostingListDTO(
     fun toPostingListModel(): PostingListModel =
         PostingListModel(
             id,
-            communityCategory,
+            convertToCommunityTypeString(communityCategory),
             isCompleted,
             title,
             content,

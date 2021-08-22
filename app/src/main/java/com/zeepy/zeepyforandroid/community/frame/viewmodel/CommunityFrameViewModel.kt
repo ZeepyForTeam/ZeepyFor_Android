@@ -18,6 +18,10 @@ class CommunityFrameViewModel @Inject constructor(
     private val postingListRepository: PostingListRepository,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
+    private val _currentFragmentId = MutableLiveData<Int>()
+    val currentFragmentId: LiveData<Int>
+        get() = _currentFragmentId
+
     private val _addressList = MutableLiveData<MutableList<LocalAddressEntity>>(mutableListOf())
     val addressList: LiveData<MutableList<LocalAddressEntity>>
         get() = _addressList
@@ -38,6 +42,10 @@ class CommunityFrameViewModel @Inject constructor(
         getAddressListFromLocal()
     }
 
+    fun changeCurrentFragmentId(id: Int) {
+        _currentFragmentId.value = id
+    }
+
     fun changeCategory(category: String?) {
         _selectedCategory.value = category
     }
@@ -46,11 +54,32 @@ class CommunityFrameViewModel @Inject constructor(
         _selectedAddress.value = address
     }
 
-    fun getPostingList() {
+    fun fetchPostingList() {
+        when(currentFragmentId.value) {
+            0 -> getStoryZipPostingList()
+            1 -> getMyZipList()
+        }
+    }
+
+    fun getStoryZipPostingList() {
         val type = selectedCategory.value
         Log.e("dsfksdj;", selectedAddress.value.toString())
         addDisposable(
             postingListRepository.getPostingList(selectedAddress.value.toString(), type)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _postingList.postValue(it)
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun getMyZipList() {
+        val type = selectedCategory.value
+        addDisposable(
+            postingListRepository.getMyZipList(type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

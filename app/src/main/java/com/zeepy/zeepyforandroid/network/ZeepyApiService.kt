@@ -4,6 +4,7 @@ import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.community.data.remote.response.PostingDetailDTO
+import com.zeepy.zeepyforandroid.community.data.remote.response.ResponseMyZipList
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
@@ -45,4 +46,7 @@ interface ZeepyApiService {
 
     @GET("/api/community")
     fun getCommunityPostingList(@Query ("address") address: String, @Query ("communityType") communityType: String?): Single<ResponsePostingList>
+
+    @GET("/api/community/myzip")
+    fun getCommunityMyZipList(@Query ("communityCategory") communityCategory: String?): Single<ResponseMyZipList>
 }

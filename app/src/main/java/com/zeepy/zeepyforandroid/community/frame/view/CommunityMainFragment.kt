@@ -1,11 +1,13 @@
 package com.zeepy.zeepyforandroid.community.frame.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
@@ -36,6 +38,7 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
 
         setToolbar()
         initViewPager()
+        changeZipFragment()
     }
 
     private fun setToolbar() {
@@ -68,6 +71,18 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
                 else -> throw RuntimeException("TabLayout Error")
             }
         }.attach()
+    }
+
+    private fun changeZipFragment() {
+        binding.viewpagerCommunity.run {
+            viewModel.changeCurrentFragmentId(this.currentItem)
+            registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    viewModel.changeCurrentFragmentId(position)
+                }
+            })
+        }
     }
 
     companion object {
