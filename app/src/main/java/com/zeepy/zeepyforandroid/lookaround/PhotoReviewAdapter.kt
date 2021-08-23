@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.databinding.ItemPictureBinding
-import com.zeepy.zeepyforandroid.lookaround.data.entity.LookAroundBuildingSummaryModel
+import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.util.DiffCallback
 import com.zeepy.zeepyforandroid.BR
 
 
 class PhotoReviewAdapter: RecyclerView.Adapter<PhotoReviewAdapter.LookAroundPhotoViewHolder>() {
-    private val diffcallback = DiffCallback<LookAroundBuildingSummaryModel>()
+    private val diffcallback = DiffCallback<BuildingSummaryModel>()
     private val differ = AsyncListDiffer(this, diffcallback)
 
-    fun submitList(list: List<LookAroundBuildingSummaryModel>?) = differ.submitList(list)
+    fun submitList(list: List<BuildingSummaryModel>?) = differ.submitList(list)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

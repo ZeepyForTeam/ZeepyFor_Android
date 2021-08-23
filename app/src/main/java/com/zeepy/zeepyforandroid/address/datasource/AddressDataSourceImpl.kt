@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class AddressDataSourceImpl @Inject constructor(
     private val zeepyApiService: ZeepyApiService
-): AddressDataSource {
+) : AddressDataSource {
     override fun fetchAddressList(): Single<AddressListDTO> = zeepyApiService.getAddressList()
     override fun fetchBuildgingInfoByAddress(address: String): Single<ResponseBuildingInfoDTO> = zeepyApiService.getBuildingByAddress(address)
 }

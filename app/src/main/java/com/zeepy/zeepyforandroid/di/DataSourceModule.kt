@@ -6,6 +6,8 @@ import com.zeepy.zeepyforandroid.address.datasource.NotAuthSearchAddressDataSour
 import com.zeepy.zeepyforandroid.address.datasource.NotAuthSearchAddressDataSourceImpl
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSource
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSourceImpl
+import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSource
+import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSourceImpl
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.qualifier.UnAuthService
 import com.zeepy.zeepyforandroid.qualifier.ZeepyService
@@ -31,9 +33,7 @@ object DataSourceModule {
     @Singleton
     fun provideNotAuthSearchAddressDataSource(@UnAuthService zeepyApiService: ZeepyApiService): NotAuthSearchAddressDataSource = NotAuthSearchAddressDataSourceImpl(zeepyApiService)
 
-//    @Provides
-//    @Singleton
-//    fun provideGeocodingDataSource(naverApiService: NaverApiService) : GeocodingDataSource {
-//        return GeocodingRepository(naverApiService)
-//    }
+    @Provides
+    @Singleton
+    fun provideBuildingsDataSource(@ZeepyService zeepyApiService: ZeepyApiService): RemoteBuildingsDataSource = RemoteBuildingsDataSourceImpl(zeepyApiService)
 }

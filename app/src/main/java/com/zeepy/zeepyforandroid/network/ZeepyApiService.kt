@@ -31,18 +31,28 @@ interface ZeepyApiService {
     fun writeReview(@Body reviewDto: RequestWriteReview): Completable
 
     @GET("/api/community")
-    fun getPostingList(@Query("address") address: String, @Query("communityType") communityType: String?): Single<List<ResponsePostingList>>
+    fun getPostingList(
+        @Query("address") address: String,
+        @Query("communityType") communityType: String?
+    ): Single<List<ResponsePostingList>>
 
     @GET("/api/user/address")
     fun getAddressList(): Single<AddressListDTO>
 
     @GET("/api/buildings/address")
-    fun getBuildingByAddress(@Query ("address") address: String): Single<ResponseBuildingInfoDTO>
+    fun getBuildingByAddress(@Query("address") address: String): Single<ResponseBuildingInfoDTO>
 
     @PUT("/api/user/address")
     fun addAddress(@Body addresses: AddressListDTO): Completable
 
     @GET("/api/buildings/addresses")
-    fun searchBuildingAddress(@Query ("address")address: String): Single<ResponseSearchBuildingAddressDTO>
+    fun searchBuildingAddress(@Query("address") address: String): Single<ResponseSearchBuildingAddressDTO>
 
+    @GET("/api/buildings/location")
+    suspend fun getBuildingsByLocation(
+        @Query("latitudeGreater") latitudeGreater: Double,
+        @Query("latitudeLess") latitudeLess: Double,
+        @Query("longitudeGreater") longitudeGreater: Double,
+        @Query("longitudeLess") longitudeLess: Double
+    ): Response<List<ResponseBuildingInfoDTO>>
 }

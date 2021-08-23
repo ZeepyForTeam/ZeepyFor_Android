@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.databinding.ItemLookaroundBuildingBinding
-import com.zeepy.zeepyforandroid.lookaround.data.entity.LookAroundBuildingSummaryModel
+import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.util.DiffCallback
 import com.zeepy.zeepyforandroid.BR
 
 
-class LookAroundListAdapter: RecyclerView.Adapter<LookAroundListAdapter.LookAroundListViewHolder>() {
-    private val diffcallback = DiffCallback<LookAroundBuildingSummaryModel>()
-    private val differ = AsyncListDiffer(this, diffcallback)
+class LookAroundListAdapter(val listener: (BuildingSummaryModel) -> Unit): RecyclerView.Adapter<LookAroundListAdapter.LookAroundListViewHolder>() {
+    private val diffCallback = DiffCallback<BuildingSummaryModel>()
+    private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitList(list: List<LookAroundBuildingSummaryModel>?) = differ.submitList(list)
+    fun submitList(list: List<BuildingSummaryModel>?) = differ.submitList(list)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,6 +27,9 @@ class LookAroundListAdapter: RecyclerView.Adapter<LookAroundListAdapter.LookArou
     override fun onBindViewHolder(holder: LookAroundListViewHolder, position: Int) {
         val item = differ.currentList[position]
         holder.binding.setVariable(BR.data, item)
+        holder.binding.root.setOnClickListener {
+            listener(item)
+        }
     }
 
     override fun getItemCount() = differ.currentList.size
