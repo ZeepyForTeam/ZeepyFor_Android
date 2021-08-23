@@ -7,6 +7,7 @@ import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingD
 import com.zeepy.zeepyforandroid.enum.PostingType.Companion.convertToCommunityTypeString
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.util.DateParser.convertDateFormat
+import com.zeepy.zeepyforandroid.util.DateParser.diffFromCreatedTime
 import java.lang.IllegalArgumentException
 
 data class ResponsePostingDetail(
@@ -32,7 +33,7 @@ data class ResponsePostingDetail(
             user.id,
             user.profileImage,
             user.name,
-            convertDateFormat(createdTime),
+            diffFromCreatedTime(createdTime),
             toPostingType(communityCategory),
             title,
             content,
