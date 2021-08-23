@@ -13,11 +13,12 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentCommunityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
-    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
+    private val viewModel by viewModels<CommunityFrameViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -28,7 +29,7 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAddressListFromLocal()
+        viewModel.getAddressListFromServer()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +58,8 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             setRightButtonMargin(32)
 
             binding.textviewToolbar.setOnClickListener {
-                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(viewModel.addressList.value!!.toTypedArray())
+                requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
         }
     }

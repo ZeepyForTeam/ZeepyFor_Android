@@ -15,9 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ZipFragment : BaseFragment<FragmentZipBinding>() {
-    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = {
-        requireParentFragment().requireParentFragment().requireParentFragment()
-    })
+    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment() })
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -80,7 +78,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     }
 
     private fun changeAddress() {
-        viewModel.addressList.observe(viewLifecycleOwner) {
+        viewModel.selectedAddress.observe(viewLifecycleOwner) {
             viewModel.fetchPostingList()
         }
     }
