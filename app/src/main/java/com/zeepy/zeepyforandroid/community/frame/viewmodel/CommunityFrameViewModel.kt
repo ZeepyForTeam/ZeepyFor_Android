@@ -42,6 +42,7 @@ class CommunityFrameViewModel @Inject constructor(
         getAddressListFromLocal()
     }
 
+
     fun changeCurrentFragmentId(id: Int) {
         _currentFragmentId.value = id
     }

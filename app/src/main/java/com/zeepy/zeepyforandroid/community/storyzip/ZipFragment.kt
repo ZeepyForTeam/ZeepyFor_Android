@@ -15,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ZipFragment : BaseFragment<FragmentZipBinding>() {
-    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment().requireParentFragment().requireParentFragment() })
+    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = {
+        requireParentFragment().requireParentFragment().requireParentFragment()
+    })
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -44,11 +46,13 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
-            adapter = ZipAdapter{
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(it)
-                requireParentFragment().requireParentFragment().requireParentFragment().requireParentFragment().findNavController().navigate(action)
+            adapter = ZipAdapter {
+                val action =
+                    MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(it)
+                requireParentFragment().requireParentFragment().requireParentFragment()
+                    .requireParentFragment().findNavController().navigate(action)
             }
-            addItemDecoration(ItemDecoration(8,0))
+            addItemDecoration(ItemDecoration(8, 0))
         }
     }
 
@@ -59,7 +63,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     }
 
     private fun getCheckedbutton(checkedId: Int) {
-        when(checkedId) {
+        when (checkedId) {
             binding.rbTagEverything.id -> {
                 viewModel.changeCategory(null)
             }
@@ -90,8 +94,16 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     }
 
     private fun updatePostings() {
-        viewModel.postingList.observe(viewLifecycleOwner){
-            (binding.rvStoryzip.adapter as ZipAdapter).submitList(it)
+        viewModel.postingList.observe(viewLifecycleOwner) {
+            val postingListAdapter = (binding.rvStoryzip.adapter as ZipAdapter)
+
+            if (!postingListAdapter.currentList.equals(it)) {
+                postingListAdapter.run {
+                    submitList(it)
+                    binding.rvStoryzip.scrollToPosition(0)
+                }
+            }
+
         }
     }
 

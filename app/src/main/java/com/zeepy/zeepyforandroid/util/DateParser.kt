@@ -26,31 +26,49 @@ object DateParser {
     }
 
     fun diffFromCreatedTime(date: String): String {
-        val current = localDateFormat.parse(getCurrentDate())
-        val created = localDateFormat.parse(convertDateFormat(date))
-        var hours = 0.0.toLong()
-        var minutes = 0.0.toLong()
-        var seconds = 0.0.toLong()
-        var days = 0.0.toLong()
+        val current = Date().time
+        val created = serverDateFormat.parse(date)
+        var timeDisplayed = ""
 
         try {
-            val diff:Long = current.time - created.time
-            seconds = diff/1000
-            minutes = seconds/60
-            hours = minutes/60
-            days = hours/24
+            var diffTimeWithSecond = (current - created.time) / MILLI_SECOND
+            val minutes = diffTimeWithSecond / SECOND
+            val hours = minutes /MINUTE
+            val days = hours / HOUR
+            val month = days / DAY
+            val year = month / MONTH
+
+            timeDisplayed = when {
+                diffTimeWithSecond < SECOND -> {
+                    "${diffTimeWithSecond}초 전"
+                }
+                minutes < MINUTE -> {
+                    "${minutes}분 전"
+                }
+                hours < HOUR -> {
+                    "${hours}시간 전"
+                }
+                days < DAY -> {
+                    "${days}일 전"
+                }
+                month < MONTH -> {
+                    "${month}달 전"
+                }
+                else -> {
+                    "${year}년 전"
+                }
+            }
         } catch (e: ParseException) {
             e.printStackTrace()
         }
 
-        return if (days >= 1) {
-            "${days}일 전"
-        } else if(hours >= 1) {
-            "${hours}시간 "
-        } else if (minutes >= 1) {
-            "${minutes}분 전"
-        } else {
-            "${seconds}초 전"
-        }
+        return timeDisplayed
     }
+
+    private const val MILLI_SECOND = 1000
+    private const val SECOND = 60
+    private const val MINUTE = 60
+    private const val HOUR = 24
+    private const val DAY = 30
+    private const val MONTH = 12
 }

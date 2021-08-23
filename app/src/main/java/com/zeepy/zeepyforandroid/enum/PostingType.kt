@@ -13,7 +13,7 @@ enum class PostingType(val content: String) {
                 ?: throw IllegalArgumentException("Not found Posting Type Tag")
         }
 
-        fun convertToCommunityTypeString(content: String):String {
+        fun convertToCommunityTypeString(content: String): String {
             return values().find { it.name == content }?.content
                 ?: throw java.lang.IllegalArgumentException("Not Found")
         }

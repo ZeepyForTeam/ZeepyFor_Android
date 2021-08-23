@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.community.data.remote.response
 
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.enum.PostingType.Companion.convertToCommunityTypeString
+import com.zeepy.zeepyforandroid.util.DateParser.diffFromCreatedTime
 
 data class PostingListDTO(
     val communityCategory: String,
@@ -18,6 +19,6 @@ data class PostingListDTO(
             isCompleted,
             title,
             content,
-            createdTime
+            diffFromCreatedTime(createdTime)
         )
 }
