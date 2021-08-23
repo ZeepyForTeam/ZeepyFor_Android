@@ -30,8 +30,8 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         sharedPreferencesManager.putSharedPref(USER_ID, id)
     }
 
-    fun fetchUserId(): String {
-        return sharedPreferencesManager.getSharedPrefs(USER_ID, "")
+    fun fetchUserId(): Int {
+        return sharedPreferencesManager.getSharedPrefs(USER_ID, -1)
     }
 
 

@@ -8,6 +8,7 @@ import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,6 +19,7 @@ class CommunityFrameViewModel @Inject constructor(
     private val postingListRepository: PostingListRepository,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
+
     private val _currentFragmentId = MutableLiveData<Int>()
     val currentFragmentId: LiveData<Int>
         get() = _currentFragmentId
@@ -64,7 +66,6 @@ class CommunityFrameViewModel @Inject constructor(
 
     fun getStoryZipPostingList() {
         val type = selectedCategory.value
-        Log.e("dsfksdj;", selectedAddress.value.toString())
         addDisposable(
             postingListRepository.getPostingList(selectedAddress.value.toString(), type)
                 .subscribeOn(Schedulers.io())

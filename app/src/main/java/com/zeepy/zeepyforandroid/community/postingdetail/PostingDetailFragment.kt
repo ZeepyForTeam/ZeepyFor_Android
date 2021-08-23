@@ -146,11 +146,11 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     private fun setCommentsRecyclerView() {
         binding.rvComments.addItemDecoration(ItemDecoration(8,0))
-        viewModel.commentList?.observe(viewLifecycleOwner) { comments->
+        viewModel.commentList?.observe(viewLifecycleOwner) { comments ->
             binding.rvComments.apply {
                 adapter = CommentsAdapter(
                     CommentAuthenticatedModel(
-                        prefs.getSharedPrefs("userIdx", -1),
+                        viewModel.userId.value ?: -1,
                         viewModel.postingDetail.value?.writerUserIdx,
                         null
                     )

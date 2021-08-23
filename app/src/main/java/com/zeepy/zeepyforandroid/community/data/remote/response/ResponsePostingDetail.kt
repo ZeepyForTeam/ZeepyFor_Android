@@ -28,7 +28,7 @@ data class ResponsePostingDetail(
     val createdTime: String,
     val isCompleted: Boolean
 ){
-    fun toPostinDetailModel(): PostingDetailModel {
+    fun toPostingDetailModel(): PostingDetailModel {
         return PostingDetailModel(
             user.id,
             user.profileImage,
@@ -38,6 +38,8 @@ data class ResponsePostingDetail(
             title,
             content,
             isCompleted,
+            isLiked,
+            participants,
             imageUrls.map { UrlPictureModel(it)},
             comments?.map { it.toCommentModel() }?.toMutableList()
         )
@@ -51,7 +53,7 @@ data class ResponsePostingDetail(
         companion object {
             fun toPostingType(type: String): String {
                 return values().find {
-                    it.name== type
+                    it.name == type
                 }?.tag ?: throw IllegalArgumentException("Posting type Error")
             }
         }

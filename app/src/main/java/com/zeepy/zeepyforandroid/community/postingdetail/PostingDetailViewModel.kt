@@ -8,6 +8,7 @@ import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
 import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
 import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -15,9 +16,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostingDetailViewModel @Inject constructor(
-    private val sharedPrefs: SharedPreferencesManager,
+    private val userPreferenceManager: UserPreferenceManager,
     private val postingListRepository: PostingListRepository
 ): BaseViewModel() {
+    private val _userId = MutableLiveData<Int>()
+    val userId: LiveData<Int>
+        get() = _userId
+
+
     private val _postingId = MutableLiveData<Int>()
     val postingId: LiveData<Int>
         get() = _postingId
@@ -43,6 +49,10 @@ class PostingDetailViewModel @Inject constructor(
     private val _hasAchievement = MutableLiveData<Boolean>(false)
     val hasAchievement: LiveData<Boolean>
         get() = _hasAchievement
+
+    init {
+        _userId.value = userPreferenceManager.fetchUserId()
+    }
 
 
     fun changePostingId(id: Int) {
@@ -78,7 +88,7 @@ class PostingDetailViewModel @Inject constructor(
         if (!commentWriting.value.isNullOrEmpty()) {
             currentList.add(
                 CommentModel(
-                    sharedPrefs.getSharedPrefs("userIdx", -1),
+                    userId.value!!,
                     "https://github.com/SONPYEONGHWA.png",
                     "hello",
                     commentWriting.value.toString(),
