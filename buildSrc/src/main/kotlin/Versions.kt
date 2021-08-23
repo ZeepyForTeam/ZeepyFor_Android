@@ -15,7 +15,7 @@ object Versions {
     const val PAGING_VERSION = "3.0.0"
 
     const val GLIDE_VERSION = "4.12.0"
-    const val COIL_VERSION = "1.1.1"
+    const val COIL_VERSION = "1.3.2"
 
     const val NAVIGATION_VERSION = "2.3.5"
     const val FRAGMENT_VERSION = "1.3.4"

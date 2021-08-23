@@ -22,8 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel by viewModels<HomeViewModel>()
-    @Inject
-    lateinit var userPreferenceManager: UserPreferenceManager
+    @Inject lateinit var userPreferenceManager: UserPreferenceManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,

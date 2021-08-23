@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.community.data.repository
 import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSource
+import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -14,4 +15,7 @@ class PostingListRepositoryImpl @Inject constructor(
 
     override fun getMyZipList(communityCategory: String?): Single<List<PostingListModel>> =
         dataSource.getMyZip(communityCategory).map { it.myZip.map { it.toPostingListModel() } }
+
+    override fun getPostingDetail(id: Int): Single<PostingDetailModel> =
+        dataSource.getPostingDetail(id).map { it.toPostinDetailModel() }
 }

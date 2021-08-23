@@ -45,7 +45,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
             adapter = ZipAdapter{
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment()
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(it)
                 requireParentFragment().requireParentFragment().requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
             addItemDecoration(ItemDecoration(8,0))

@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.community.postingdetail
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
@@ -12,23 +13,29 @@ import androidx.core.text.color
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
+import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
+import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
+import com.zeepy.zeepyforandroid.util.FileConverter
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     @Inject lateinit var prefs: SharedPreferencesManager
     private val viewModel by viewModels<PostingDetailViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val args: PostingDetailFragmentArgs by navArgs()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -41,16 +48,18 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.changePostingId(args.postingModel.id)
 
         Log.e("userIdx", prefs.getSharedPrefs("userIdx", -1).toString())
 
         setToolbar()
+        setPictureRecyclerview()
+        getPostingDetailContent()
+        changePostingDatas()
         setSwipeRefreshLayout()
         setParticipationButton()
-        setPictureRecyclerview()
         setCommentsRecyclerView()
         setAchievementTextColor()
-        changePostingDatas()
         writeComment()
         setComments()
     }
@@ -82,11 +91,34 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
+    private fun getPostingDetailContent() {
+        viewModel.postingId.observe(viewLifecycleOwner) {
+            viewModel.fetchPostingDetailContent()
+        }
+    }
+
     private fun changePostingDatas() {
-        viewModel.postingDetail.observe(viewLifecycleOwner) {
-            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
+        viewModel.postingDetail.observe(viewLifecycleOwner) { postingdetail ->
+            if(postingdetail.picturesPosting.isNullOrEmpty()) {
+                binding.rvPicturePosting.visibility = View.GONE
+            }
+            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(postingdetail.picturesPosting)
             viewModel.changeIsGroupPurchase()
-            viewModel.changeCommentList(it.comments)
+            viewModel.changeCommentList(postingdetail.comments)
+
+//            Observable.just( postingdetail.picturesPosting.map { PictureModel(FileConverter.convertUrlToBitmap(it.picture)) })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                        (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it)
+//                        viewModel.changeIsGroupPurchase()
+//                        viewModel.changeCommentList(postingdetail.comments)
+//                    }, {
+//                        it.printStackTrace()
+//                    })
+
+
+
         }
     }
 

@@ -147,6 +147,5 @@
             app:layout_constraintTop_toTopOf="@id/button_free_share"
             app:layout_constraintWidth_percent="0.29" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

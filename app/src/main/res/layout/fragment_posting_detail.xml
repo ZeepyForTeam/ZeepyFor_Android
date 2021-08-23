@@ -9,6 +9,7 @@
         <variable
             name="viewModel"
             type="com.zeepy.zeepyforandroid.community.postingdetail.PostingDetailViewModel" />
+
         <variable
             name="view"
             type="android.view.View" />
@@ -159,10 +160,10 @@
                         android:id="@+id/rv_picture_posting"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:orientation="horizontal"
                         android:layout_marginTop="20dp"
-                        app:layout_constraintDimensionRatio="1:0.267"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        app:layout_constraintDimensionRatio="1:0.267"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/tv_content_posting"
                         app:layout_constraintTop_toBottomOf="@id/tv_content_posting"
@@ -201,20 +202,6 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_achievement"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end">
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tv_no_achievement"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="@string/no_achievement"-->
-<!--                            android:textColor="@color/zeepy_black_3b"-->
-<!--                            android:fontFamily="@font/nanum_square_round_bold"-->
-<!--                            android:textSize="12sp"-->
-<!--                            android:visibility="@{viewModel.isGroupPurchase() ? view.GONE : view.VISIBLE}"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"/>-->
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_rate_achievement"

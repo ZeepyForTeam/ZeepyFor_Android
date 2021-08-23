@@ -14,6 +14,5 @@ data class PostingDetailModel(
     val contentPosting: String,
     val postingStatus: Boolean,
     val picturesPosting: List<UrlPictureModel>,
-    val isSetAchievement: Boolean,
-    val comments: MutableList<CommentModel>?
+    val comments: MutableList<CommentModel?>?
 ): Parcelable
