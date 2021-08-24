@@ -4,10 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="java.util.List"/>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".lookaround.LookAroundFragment">
+        tools:context=".lookaround.BuildingDetailFragment">
 
         <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
@@ -26,14 +34,15 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/box_blue5f_12dp"
-            android:text="방화동 128-1번지"
+            android:text="@{viewModel.buildingSummary.buildingName}"
             android:textSize="14sp"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_black_3b"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp"
+            tools:text="방화동 21번지"/>
 
         <TextView
             android:id="@+id/tv_building_type"
@@ -53,7 +62,8 @@
             app:layout_constraintStart_toEndOf="@id/tv_building_type"
             app:layout_constraintTop_toTopOf="@id/tv_building_type"
             app:layout_constraintBottom_toBottomOf="@id/tv_building_type"
-            android:text="원룸"
+            tools:text="원룸"
+            android:text="@{viewModel.buildingSummary.buildingType}"
             android:textSize="14sp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
@@ -77,7 +87,8 @@
             app:layout_constraintStart_toEndOf="@id/tv_deal_type"
             app:layout_constraintTop_toTopOf="@id/tv_deal_type"
             app:layout_constraintBottom_toBottomOf="@id/tv_deal_type"
-            android:text="전세"
+            tools:text="전세"
+            android:text="@{viewModel.buildingSummary.dealType}"
             android:textSize="14sp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
@@ -96,12 +107,14 @@
             android:layout_marginTop="8dp"/>
 
         <TextView
+            android:id="@+id/tv_characteristics_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/tv_characteristics"
             app:layout_constraintTop_toTopOf="@id/tv_characteristics"
             app:layout_constraintBottom_toBottomOf="@id/tv_characteristics"
-            android:text="에어컨, 세탁기, 신발장, 냉장고"
+            tools:text="에어컨, 세탁기, 신발장, 냉장고"
+            android:text="random"
             android:textSize="14sp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
@@ -143,7 +156,7 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/box_blue59_16dp"
+                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(0).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -158,7 +171,7 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/box_blue59_16dp"
+                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(1).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toStartOf="@id/image3"
                     app:layout_constraintTop_toTopOf="parent"
@@ -172,7 +185,7 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/box_blue59_16dp"
+                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(2).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toEndOf="@id/image2"
                     app:layout_constraintEnd_toStartOf="@id/image_add"
@@ -186,7 +199,7 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/box_blue59_16dp"
+                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(3).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toEndOf="@id/image3"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -433,7 +446,8 @@
                     app:layout_constraintStart_toStartOf="@id/tv_no_review"
                     app:layout_constraintEnd_toEndOf="@id/tv_no_review"
                     app:layout_constraintTop_toBottomOf="@id/tv_no_review"
-                    android:layout_marginTop="14dp"/>
+                    android:layout_marginTop="14dp"
+                    android:visibility="@{viewModel.buildingSummary.reviews.size() > 0 ? View.VISIBLE : View.GONE}"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -442,14 +456,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/box_blue5f_5dp"
-            android:text="건물 평가 모두보기(11개)"
+            tools:text="@{@string/go_to_all_reviews(11)}"
+            android:text="@{@string/go_to_all_reviews(viewModel.buildingSummary.reviews.size())}"
             android:textSize="14sp"
             android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_bold"
             app:layout_constraintStart_toStartOf="@id/card_building_detailed_review"
             app:layout_constraintEnd_toEndOf="@id/card_building_detailed_review"
             app:layout_constraintTop_toBottomOf="@id/card_building_detailed_review"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:visibility="@{viewModel.buildingSummary.reviews.size() > 0 ? View.VISIBLE : View.GONE}"/>
 
 
 

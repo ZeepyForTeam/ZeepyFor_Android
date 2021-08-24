@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
 
         <variable
-            name="mapViewModel"
+            name="viewModel"
             type="com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel"/>
     </data>
 
@@ -90,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="@{mapViewModel.buildingId != -1? View.VISIBLE : View.GONE}">
+            android:visibility="@{viewModel.buildingId != -1? View.VISIBLE : View.GONE}">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_start"

@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.customview
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -90,5 +91,15 @@ class ZeepyToolbar @JvmOverloads constructor(
     fun setRightButtonMargin(margin: Int) {
         val rightButton = binding.buttonRight.layoutParams as ConstraintLayout.LayoutParams
         rightButton.marginEnd = margin
+    }
+
+    fun setLookaroundBuildingTitle() {
+        val title = binding.textviewToolbar.layoutParams as ConstraintLayout.LayoutParams
+        title.endToEnd = id
+        title.marginStart = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60F, context.resources.displayMetrics)
+            .toInt()
+        binding.textviewToolbar.apply {
+            layoutParams = title
+        }
     }
 }

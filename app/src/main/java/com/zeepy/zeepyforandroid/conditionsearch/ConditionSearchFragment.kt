@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
+import androidx.fragment.app.viewModels
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.zeepy.zeepyforandroid.databinding.FragmentSearchByConditionBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.google.android.material.slider.RangeSlider
+import com.zeepy.zeepyforandroid.enum.Options
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>(){
 
-    private var roomOptionCnt = 0;
-    private var payOptionCnt = 0;
+    private val viewModel by viewModels<ConditionSearchViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -28,23 +29,46 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this.viewLifecycleOwner
-        binding.cbOptionWalsae.setOnCheckedChangeListener(CheckboxListener())
-        binding.cbOptionJeonsae.setOnCheckedChangeListener(CheckboxListener())
-        binding.cbOptionOneroom.setOnCheckedChangeListener(CheckboxListener())
-        binding.cbOptionTworoom.setOnCheckedChangeListener(CheckboxListener())
-        binding.rsMonthlypay.addOnChangeListener(valueChangeListener)
-        binding.rsDeposit.addOnChangeListener(valueChangeListener)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        setRangeSliderOnChangeListener()
         setOptionChoice()
         setNextButton()
         removeSliderPadding()
+
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun setRangeSliderOnChangeListener() {
+        binding.rsMonthlypay.addOnChangeListener(valueChangeListener)
+        binding.rsDeposit.addOnChangeListener(valueChangeListener)
+    }
+
+
+    private fun stepToPrice(stepValue: Float, payType: String): String {
+        var price: String = ""
+        if (payType == "deposit") {
+            when (stepValue) {
+                1F -> price = "500만"
+                2F -> price = "1,000만"
+                3F -> price = "2,500만"
+                4F -> price = "5,000만"
+                5F -> price = "1억만"
+            }
+        } else {
+            when (stepValue) {
+                1F -> price = "25만"
+                2F -> price = "50만"
+                3F -> price = "75만"
+                4F -> price = "100만"
+                5F -> price = "125만"
+            }
+        }
+        return price
     }
 
     // 슬라이더 이동에 따른 가격 범위 텍스트 변경
+    // TODO: ViewModel Data Binding
     private val valueChangeListener: RangeSlider.OnChangeListener =
         RangeSlider.OnChangeListener { slider, value, fromUser ->
             val vStart = slider.values[0]
@@ -52,104 +76,73 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
             var newStart = ""
             var newEnd = ""
 
-            if (value != vEnd) {
-                newStart = "${value.toInt()}"
-                newEnd = "${vEnd.toInt()}"
-            }
-            else if (value != vStart) {
-                newEnd = "${value.toInt()}"
-                newStart = "${vStart.toInt()}"
-            }
-            else if (vEnd == vStart) {
-                newStart = "${value.toInt()}"
-                newEnd = "${value.toInt()}"
-            }
             if (slider == binding.rsDeposit) {
-                binding.tvDepositRange.text = getString(R.string.deposit_price_range, newStart, newEnd)
+                if (value != vEnd) {
+                    newStart = stepToPrice(value, "deposit")
+                    newEnd = stepToPrice(vEnd, "deposit")
+                }
+                else if (value != vStart) {
+                    newEnd = stepToPrice(value, "deposit")
+                    newStart = stepToPrice(vStart, "deposit")
+                }
+                // FIXME: Unreachable block
+                else if (vEnd == vStart) {
+                    newStart = stepToPrice(value, "deposit")
+                    newEnd = stepToPrice(value, "deposit")
+                }
+                if (vStart == 0F) {
+                    if(vEnd == 6F) {
+                        binding.tvDepositRange.text = "전체"
+                    } else
+                        binding.tvDepositRange.text = getString(R.string.deposit_price_to, newEnd)
+                } else if (vEnd == 6F) {
+                    if (vStart == 0F) {
+                        binding.tvDepositRange.text = "전체"
+                    } else
+                        binding.tvDepositRange.text = getString(R.string.deposit_price_from, newStart)
+                } else {
+                    binding.tvDepositRange.text = getString(R.string.deposit_price_range, newStart, newEnd)
+                }
             }
-            if (slider == binding.rsMonthlypay) {
-                binding.tvMonthlypayRange.text = getString(R.string.deposit_price_range, newStart, newEnd)
+            else if (slider == binding.rsMonthlypay) {
+                if (value != vEnd) {
+                    newStart = stepToPrice(value, "monthly")
+                    newEnd = stepToPrice(vEnd, "monthly")
+                }
+                else if (value != vStart) {
+                    newEnd = stepToPrice(value, "monthly")
+                    newStart = stepToPrice(vStart, "monthly")
+                }
+                // FIXME: Unreachable block
+                else if (vEnd == vStart) {
+                    newStart = stepToPrice(value, "monthly")
+                    newEnd = stepToPrice(value, "monthly")
+                }
+                if (vStart == 0F) {
+                    if(vEnd == 6F) {
+                        binding.tvMonthlypayRange.text = "전체"
+                    } else
+                        binding.tvMonthlypayRange.text = getString(R.string.monthly_price_to, newEnd)
+                } else if (vEnd == 6F) {
+                    if (vStart == 0F) {
+                        binding.tvMonthlypayRange.text = "전체"
+                    } else
+                        binding.tvMonthlypayRange.text = getString(R.string.monthly_price_from, newStart)
+                } else {
+                    binding.tvMonthlypayRange.text = getString(R.string.monthly_price_range, newStart, newEnd)
+                }
             }
-
         }
-
-    // 체크박스 체크상태에 따른 밑에 슬라이더 visibility 설정
-    inner class CheckboxListener: CompoundButton.OnCheckedChangeListener {
-        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-            when (buttonView) {
-                binding.cbOptionWalsae ->
-                    if (isChecked) {
-                        payOptionCnt++
-                        binding.tvPrice.visibility = View.VISIBLE
-                        binding.rsMonthlypay.visibility = View.VISIBLE
-                        binding.tvMonthlypay.visibility = View.VISIBLE
-                        binding.tvMonthlypayRange.visibility = View.VISIBLE
-                        binding.layoutMonthlyPriceRange.visibility = View.VISIBLE
-                        if (!binding.cbOptionJeonsae.isChecked) {
-                            binding.rsDeposit.visibility = View.VISIBLE
-                            binding.tvDeposit.visibility = View.VISIBLE
-                            binding.tvDepositRange.visibility = View.VISIBLE
-                            binding.layoutDepositPriceRange.visibility = View.VISIBLE
-                        }
-                    }
-                    else {
-                        payOptionCnt--
-                        binding.rsMonthlypay.visibility = View.GONE
-                        binding.tvMonthlypay.visibility = View.GONE
-                        binding.tvMonthlypayRange.visibility = View.GONE
-                        binding.layoutMonthlyPriceRange.visibility = View.GONE
-                        if (!binding.cbOptionJeonsae.isChecked) {
-                            binding.tvPrice.visibility = View.GONE
-                            binding.rsDeposit.visibility = View.GONE
-                            binding.tvDeposit.visibility = View.GONE
-                            binding.tvDepositRange.visibility = View.GONE
-                            binding.layoutDepositPriceRange.visibility = View.GONE
-                        }
-                    }
-                binding.cbOptionJeonsae ->
-                    if (isChecked) {
-                        payOptionCnt++
-                        binding.tvPrice.visibility = View.VISIBLE
-                        if (!binding.cbOptionWalsae.isChecked) {
-                            binding.rsDeposit.visibility = View.VISIBLE
-                            binding.tvDeposit.visibility = View.VISIBLE
-                            binding.tvDepositRange.visibility = View.VISIBLE
-                            binding.layoutDepositPriceRange.visibility = View.VISIBLE
-                        }
-                    }
-                    else {
-                        payOptionCnt--
-                        if (!binding.cbOptionWalsae.isChecked) {
-                            binding.tvPrice.visibility = View.GONE
-                            binding.rsDeposit.visibility = View.GONE
-                            binding.tvDeposit.visibility = View.GONE
-                            binding.tvDepositRange.visibility = View.GONE
-                            binding.layoutDepositPriceRange.visibility = View.GONE
-                        }
-                    }
-                binding.cbOptionOneroom ->
-                    if (isChecked) roomOptionCnt++
-                    else roomOptionCnt--
-                binding.cbOptionTworoom ->
-                    if (isChecked) roomOptionCnt++
-                    else roomOptionCnt--
-            }
-            if (roomOptionCnt >= 1 && payOptionCnt >= 1)
-                binding.btnNext.setUsableButton()
-            else
-                binding.btnNext.setUnUsableButton()
-        }
-    }
 
     private fun setOptionChoice() {
         binding.rvFurnitureOption.run {
             adapter = ConditionOptionAdapter(object : ConditionOptionAdapter.SelectOptionInterface {
                 override fun select(option: Int) {
-                    TODO("Not yet implemented")
+                    viewModel.selectOption(Options.findOptions(option))
                 }
 
                 override fun unselect(option: Int) {
-                    TODO("Not yet implemented")
+                    viewModel.unselectOption(Options.findOptions(option))
                 }
             })
             addItemDecoration(ItemDecoration(8, 8))
@@ -159,13 +152,14 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
     private fun setNextButton() {
         binding.btnNext.run {
             setText("다음으로")
-            setUnUsableButton()
+            setUsableButton()
         }
     }
 
     private fun removeSliderPadding() {
         binding.rsDeposit.setPadding(0, 0, 0, 0)
         binding.rsMonthlypay.setPadding(0, 0, 0, 0)
+        binding.rsDeposit.setMinSeparationValue(1F)
+        binding.rsMonthlypay.setMinSeparationValue(1F)
     }
-
 }

@@ -28,9 +28,12 @@
     <string name="hint_deal_method_write_posting">거래 방식 (ex. 택배/직거래/만남장소 등)</string>
     <string name="collect_content_write_content">참여자에게 어떤 내용을 받을까요?</string>
     <string name="hint_count_people_write_posting">ex. 3</string>
-    <string name="deposit_price_range">%1$s,000만 ~ %2$s,000만</string>
-    <string name="deposit_price_from">%1$s,000만 부터</string>
-    <string name="deposit_price_to">%1$s,000만 까지</string>
+    <string name="deposit_price_range">%1$s ~ %2$s</string>
+    <string name="deposit_price_from">%1$s 부터</string>
+    <string name="deposit_price_to">%1$s 까지</string>
+    <string name="monthly_price_range">%1$s ~ %2$s</string>
+    <string name="monthly_price_from">%1$s 부터</string>
+    <string name="monthly_price_to">%1$s 까지</string>
     <string name="input_id_login">아이디를 입력해주세요</string>
     <string name="input_password_signup">8~16자의 비밀번호를 입력해주세요</string>
     <string name="target_count_write_posting">%d</string>
@@ -82,6 +85,7 @@
     <string name="input_password_login">비밀번호를 입력해주세요</string>
     <string name="write_review_notice_message">*리뷰 등록 후에는 수정하거나 삭제하실 수\n없으니 글 작성에 유의해주세요.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.</string>
     <string name="login_notice_message">기능 제한 없이 ZEEPY의\n모든 기능을 즐겨보세요!</string>
+    <string name="go_to_all_reviews">건물 평가 모두보기(%d)</string>
     <string name="address_citydistinct_primary">%s %s</string>
     <string name="no_address_not_yet">아직 등록된 주소가요 없어요 :(</string>
     <string name="goto_register_address">직접 등록하기</string>
