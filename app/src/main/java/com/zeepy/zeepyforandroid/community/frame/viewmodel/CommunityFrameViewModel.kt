@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.community.frame.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nhn.android.idp.common.connection.NetworkState
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.base.BaseViewModel
@@ -10,6 +11,7 @@ import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,8 +37,8 @@ class CommunityFrameViewModel @Inject constructor(
     val selectedCategory: LiveData<String?>
         get() = _selectedCategory
 
-    private val _postingList = MutableLiveData<List<PostingListModel>>()
-    val postingList: LiveData<List<PostingListModel>>
+    private val _postingList = MutableLiveData<NetworkStatus<List<PostingListModel>>>()
+    val postingList: LiveData<NetworkStatus<List<PostingListModel>>>
         get() = _postingList
 
     private val _selectedAddress = MutableLiveData<String>()
@@ -68,13 +70,15 @@ class CommunityFrameViewModel @Inject constructor(
 
     fun getStoryZipPostingList() {
         val type = selectedCategory.value
+        _postingList.value = NetworkStatus.LOADING(null)
         addDisposable(
             postingListRepository.getPostingList(selectedAddress.value.toString(), type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _postingList.postValue(it)
+                    _postingList.postValue(NetworkStatus.SUCCESS(it))
                 }, {
+                    _postingList.postValue(NetworkStatus.ERROR(null, it.message.toString()))
                     it.printStackTrace()
                 })
         )
@@ -82,13 +86,15 @@ class CommunityFrameViewModel @Inject constructor(
 
     fun getMyZipList() {
         val type = selectedCategory.value
+        _postingList.value = NetworkStatus.LOADING(null)
         addDisposable(
             postingListRepository.getMyZipList(type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _postingList.postValue(it)
+                    _postingList.postValue(NetworkStatus.SUCCESS(it))
                 }, {
+                    _postingList.postValue(NetworkStatus.ERROR(null, it.message.toString()))
                     it.printStackTrace()
                 })
         )

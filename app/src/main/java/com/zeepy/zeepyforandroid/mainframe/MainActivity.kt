@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.zeepy.zeepyforandroid.R
@@ -24,13 +25,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        disableDarkMode()
         initNavController()
-
-        pref.putSharedPref("userIdx", 3)
 
         getAppKeyHash()
 
+    }
+
+    private fun disableDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     private fun initNavController() {

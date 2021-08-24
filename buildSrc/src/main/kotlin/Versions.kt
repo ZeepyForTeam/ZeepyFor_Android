@@ -33,4 +33,6 @@ object Versions {
     const val KAKAO_USERMGMT_VERSION = "1.27.0"
 
     const val ANDROID_DESIGN_VERSION = "28.0.0"
+
+    const val LOTTIE_VERSION = "4.1.0"
 }

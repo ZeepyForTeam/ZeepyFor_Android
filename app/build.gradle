@@ -113,6 +113,9 @@ dependencies {
     //Coil
     implementation "io.coil-kt:coil:${Versions.COIL_VERSION}"
 
+    //Lottie
+    implementation "com.airbnb.android:lottie:$Versions.LOTTIE_VERSION"
+
     //Annotations
     implementation "com.android.support:support-annotations:${Versions.ANNOTATIONS_VERSION}"
 

@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentZipBinding
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -92,16 +94,43 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     }
 
     private fun updatePostings() {
-        viewModel.postingList.observe(viewLifecycleOwner) {
-            val postingListAdapter = (binding.rvStoryzip.adapter as ZipAdapter)
+        viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
+            when (postingList.status) {
+                NetworkStatus.State.LOADING -> {
+//                    controlLoadingAnimation(true)
+                }
 
-            if (!postingListAdapter.currentList.equals(it)) {
-                postingListAdapter.run {
-                    submitList(it)
-                    binding.rvStoryzip.scrollToPosition(0)
+                NetworkStatus.State.SUCCESS -> {
+                    updatePostingList(postingList.data)
+                    controlLoadingAnimation(false)
+                }
+
+                NetworkStatus.State.ERROR -> {
+                    controlLoadingAnimation(false)
                 }
             }
+        }
+    }
 
+    private fun updatePostingList(updateData: List<PostingListModel>?) {
+        val postingListAdapter = (binding.rvStoryzip.adapter as ZipAdapter)
+        if (!postingListAdapter.currentList.equals(updateData)) {
+            postingListAdapter.run {
+                submitList(updateData)
+                binding.rvStoryzip.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun controlLoadingAnimation(play: Boolean) {
+        binding.lottieLoading.run {
+            if (play) {
+                this.visibility = View.VISIBLE
+                this.playAnimation()
+            } else {
+                this.visibility = View.GONE
+                this.cancelAnimation()
+            }
         }
     }
 
