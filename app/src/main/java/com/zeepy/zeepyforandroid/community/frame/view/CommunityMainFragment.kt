@@ -1,16 +1,19 @@
 package com.zeepy.zeepyforandroid.community.frame.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentCommunityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,16 +27,30 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
         return FragmentCommunityMainBinding.inflate(inflater, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAddressListFromServer()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setToolbar()
         initViewPager()
+        changeZipFragment()
     }
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            setTitle("을지로 3가")
+            viewModel.selectedAddress.observe(viewLifecycleOwner) {
+                if (it.isNullOrEmpty()) {
+                    setTitle("주소 등록하기")
+                } else {
+                    setTitle(it)
+                }
+            }
             setCommunityLocation()
             setRightButton(R.drawable.ic_btn_write) {
                 findNavController().navigate(R.id.action_communityMainFragment_to_communitySelectCategoryFragment)
@@ -41,7 +58,8 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             setRightButtonMargin(32)
 
             binding.textviewToolbar.setOnClickListener {
-                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_changeAddressFragment)
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(viewModel.addressList.value!!.toTypedArray())
+                requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
         }
     }
@@ -55,6 +73,18 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
                 else -> throw RuntimeException("TabLayout Error")
             }
         }.attach()
+    }
+
+    private fun changeZipFragment() {
+        binding.viewpagerCommunity.run {
+            viewModel.changeCurrentFragmentId(this.currentItem)
+            registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    viewModel.changeCurrentFragmentId(position)
+                }
+            })
+        }
     }
 
     companion object {

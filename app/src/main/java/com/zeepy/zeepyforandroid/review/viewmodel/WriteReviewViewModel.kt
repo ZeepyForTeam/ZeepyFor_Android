@@ -233,16 +233,16 @@ class WriteReviewViewModel @Inject constructor(
 //    }
 
     fun deleteAddress(address: LocalAddressEntity) {
-        _addressListRegistered.value?.remove(address)
+        val addresses = addressListRegistered.value
+        addresses?.remove(address)
+        _addressListRegistered.value = addresses!!
 
         val addressDTO = addressListRegistered.value?.map {
             AddressEntity(it.cityDistinct, it.isAddressCheck, it.primaryAddress)
         }
 
         val requestAddresses = addressDTO?.let {
-            AddressListDTO(
-                it
-            )
+            AddressListDTO(it)
         }
 
         if (addressDTO != null) {

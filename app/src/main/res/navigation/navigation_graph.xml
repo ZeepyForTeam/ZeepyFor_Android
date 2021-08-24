@@ -91,9 +91,8 @@
         android:label="PostingDetailFragment"
         tools:layout="@layout/fragment_posting_detail">
 
-        <argument
-            android:name="postingModel"
-            app:argType="com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel"/>
+        <argument android:name="postingModel"
+            app:argType="com.zeepy.zeepyforandroid.community.data.entity.PostingListModel"/>
 
     </fragment>
 

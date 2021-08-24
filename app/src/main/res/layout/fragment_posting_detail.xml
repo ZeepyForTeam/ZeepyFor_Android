@@ -9,6 +9,7 @@
         <variable
             name="viewModel"
             type="com.zeepy.zeepyforandroid.community.postingdetail.PostingDetailViewModel" />
+
         <variable
             name="view"
             type="android.view.View" />
@@ -159,10 +160,10 @@
                         android:id="@+id/rv_picture_posting"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:orientation="horizontal"
                         android:layout_marginTop="20dp"
-                        app:layout_constraintDimensionRatio="1:0.267"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        app:layout_constraintDimensionRatio="1:0.267"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/tv_content_posting"
                         app:layout_constraintTop_toBottomOf="@id/tv_content_posting"
@@ -202,20 +203,6 @@
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end">
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/tv_no_achievement"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="@string/no_achievement"-->
-<!--                            android:textColor="@color/zeepy_black_3b"-->
-<!--                            android:fontFamily="@font/nanum_square_round_bold"-->
-<!--                            android:textSize="12sp"-->
-<!--                            android:visibility="@{viewModel.isGroupPurchase() ? view.GONE : view.VISIBLE}"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"/>-->
-
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_rate_achievement"
                             android:layout_width="wrap_content"
@@ -223,7 +210,6 @@
                             android:textSize="12sp"
                             android:textColor="@color/zeepy_black_3b"
                             android:fontFamily="@font/nanum_square_round_extrabold"
-                            android:text="25000원 / 50000원"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="7dp"
                             android:gravity="center_vertical"
@@ -238,7 +224,7 @@
                             android:layout_height="wrap_content"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
-                            android:progress="50"
+                            android:progress="@{viewModel.achievementRate}"
                             android:layout_marginTop="12dp"
                             app:layout_constraintTop_toBottomOf="@id/tv_rate_achievement"
                             app:layout_constraintStart_toStartOf="@id/tv_rate_achievement"
@@ -252,7 +238,7 @@
                             android:layout_marginTop="12dp"
                             android:textColor="@color/zeepy_black_3b"
                             android:fontFamily="@font/nanum_square_round_extrabold"
-                            android:text="0원"
+                            android:text="0명"
                             app:layout_constraintTop_toBottomOf="@id/progressbar_achievement"
                             app:layout_constraintStart_toStartOf="@id/progressbar_achievement"/>
 
@@ -263,7 +249,7 @@
                             android:textSize="10sp"
                             android:textColor="@color/zeepy_black_3b"
                             android:fontFamily="@font/nanum_square_round_extrabold"
-                            android:text="50000원"
+                            android:text="@{@string/achievement_progress_count_format(viewModel.postingDetail.targetNumberOfPeople)}"
                             app:layout_constraintTop_toTopOf="@id/tv_start_count"
                             app:layout_constraintEnd_toEndOf="@id/progressbar_achievement"/>
 

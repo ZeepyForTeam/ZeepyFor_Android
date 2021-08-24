@@ -1,49 +1,148 @@
 package com.zeepy.zeepyforandroid.community.frame.viewmodel
 
-import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nhn.android.idp.common.connection.NetworkState
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
+import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.base.BaseViewModel
-import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
+import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
+import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
 class CommunityFrameViewModel @Inject constructor(
-    private val postingListRepository: PostingListRepository
-): BaseViewModel() {
-    private val _postingList = MutableLiveData<List<PostingDetailModel>>()
-    val postingList: LiveData<List<PostingDetailModel>>
+    private val addressDataSource: AddressDataSource,
+    private val postingListRepository: PostingListRepository,
+    private val zeepyLocalRepository: ZeepyLocalRepository
+) : BaseViewModel() {
+
+    private val _currentFragmentId = MutableLiveData<Int>()
+    val currentFragmentId: LiveData<Int>
+        get() = _currentFragmentId
+
+    private val _addressList = MutableLiveData<MutableList<LocalAddressEntity>>(mutableListOf())
+    val addressList: LiveData<MutableList<LocalAddressEntity>>
+        get() = _addressList
+
+    private val _selectedCategory = MutableLiveData<String?>()
+    val selectedCategory: LiveData<String?>
+        get() = _selectedCategory
+
+    private val _postingList = MutableLiveData<NetworkStatus<List<PostingListModel>>>()
+    val postingList: LiveData<NetworkStatus<List<PostingListModel>>>
         get() = _postingList
 
-    private val _searchAddressQuery = MutableLiveData<String>()
-    val searchAddressQuery: LiveData<String>
-        get() = _searchAddressQuery
+    private val _selectedAddress = MutableLiveData<String>()
+    val selectedAddress: LiveData<String>
+        get() = _selectedAddress
 
-    private val _detailAddress = MutableLiveData<String>()
-    val detailAddress: LiveData<String>
-        get() = _detailAddress
-
-    fun changeSearchAddressQuery(address: String) {
-        _searchAddressQuery.value = address
+    init {
+        getAddressListFromLocal()
     }
 
-    fun changeDetailAddressQuery(detailAddress: String) {
-        _detailAddress.value = detailAddress
+    fun changeCurrentFragmentId(id: Int) {
+        _currentFragmentId.value = id
     }
 
-    @SuppressLint("CheckResult")
-    fun getPostingList() {
+    fun changeCategory(category: String?) {
+        _selectedCategory.value = category
+    }
+
+    fun changeSelectedAddress(address: String) {
+        _selectedAddress.value = address
+    }
+
+    fun fetchPostingList() {
+        when(currentFragmentId.value) {
+            0 -> getStoryZipPostingList()
+            1 -> getMyZipList()
+        }
+    }
+
+    fun getStoryZipPostingList() {
+        val type = selectedCategory.value
+        _postingList.value = NetworkStatus.LOADING(null)
         addDisposable(
-            postingListRepository.getPostingList("", "")
+            postingListRepository.getPostingList(selectedAddress.value.toString(), type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    _postingList.postValue(it)
-                },{
+                    _postingList.postValue(NetworkStatus.SUCCESS(it))
+                }, {
+                    _postingList.postValue(NetworkStatus.ERROR(null, it.message.toString()))
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun getMyZipList() {
+        val type = selectedCategory.value
+        _postingList.value = NetworkStatus.LOADING(null)
+        addDisposable(
+            postingListRepository.getMyZipList(type)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _postingList.postValue(NetworkStatus.SUCCESS(it))
+                }, {
+                    _postingList.postValue(NetworkStatus.ERROR(null, it.message.toString()))
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun getAddressListFromServer() {
+        addDisposable(
+            addressDataSource.fetchAddressList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    if (!response.addresses.isNullOrEmpty()) {
+                        insertAddressListToLocal(response.addresses.map { it.toLocalAddressEntity() })
+                    } else {
+                        getAddressListFromLocal()
+                    }
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    private fun insertAddressListToLocal(addressList: List<LocalAddressEntity>) {
+        addDisposable(
+            Observable.fromCallable {
+                zeepyLocalRepository.insertAllAddress(addressList)
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    getAddressListFromLocal()
+                }, {
+                    getAddressListFromLocal()
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun getAddressListFromLocal() {
+        addDisposable(
+            zeepyLocalRepository.fetchAddressList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    _addressList.postValue(response.toMutableList())
+                    if (!response.isNullOrEmpty()) {
+                        _selectedAddress.postValue(response.filter { it.isAddressCheck }.first()?.cityDistinct.toString())
+                    }
+                }, {
                     it.printStackTrace()
                 })
         )

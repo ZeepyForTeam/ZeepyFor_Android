@@ -37,9 +37,9 @@ class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel)
                     item.commentWriterIdx
                 )
             )
-
             addItemDecoration(ItemDecoration(8, 0))
-            if (item.nestedComments == null) {
+
+            if (item.nestedComments.isNullOrEmpty()) {
                 this.visibility = View.GONE
             } else {
                 this.visibility = View.VISIBLE

@@ -101,7 +101,6 @@ dependencies {
     kapt "androidx.room:room-compiler:${Versions.ROOM_VERSION}"
     implementation "androidx.room:room-rxjava2:${Versions.ROOM_VERSION}"
     implementation "androidx.room:room-ktx:${Versions.ROOM_VERSION}"
-//    kapt "org.xerial:sqlite-jdbc:3.34.0"
 
     // LoremIpsum
     implementation("com.thedeanda:lorem:${Versions.LOREM_VERSION}")
@@ -122,6 +121,9 @@ dependencies {
 
     //Coil
     implementation "io.coil-kt:coil:${Versions.COIL_VERSION}"
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:$Versions.LOTTIE_VERSION"
 
     //Annotations
     implementation "com.android.support:support-annotations:${Versions.ANNOTATIONS_VERSION}"
