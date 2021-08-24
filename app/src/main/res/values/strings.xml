@@ -85,4 +85,6 @@
     <string name="address_citydistinct_primary">%s %s</string>
     <string name="no_address_not_yet">아직 등록된 주소가요 없어요 :(</string>
     <string name="goto_register_address">직접 등록하기</string>
+    <string name="achievement_rate_format" >%d명/%d명</string>
+    <string name="achievement_progress_count_format">%d명</string>
 </resources>

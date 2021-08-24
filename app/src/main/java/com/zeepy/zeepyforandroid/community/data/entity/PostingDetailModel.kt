@@ -15,6 +15,7 @@ data class PostingDetailModel(
     val contentPosting: String,
     val postingStatus: Boolean,
     val isLiked: Boolean,
+    val targetNumberOfPeople: Int,
     val participants: List<Participant>,
     val picturesPosting: List<UrlPictureModel>,
     val comments: MutableList<CommentModel?>?

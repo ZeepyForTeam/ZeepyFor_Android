@@ -23,7 +23,6 @@ class PostingDetailViewModel @Inject constructor(
     val userId: LiveData<Int>
         get() = _userId
 
-
     private val _postingId = MutableLiveData<Int>()
     val postingId: LiveData<Int>
         get() = _postingId
@@ -31,6 +30,10 @@ class PostingDetailViewModel @Inject constructor(
     private val _postingDetail = MutableLiveData<PostingDetailModel>()
     val postingDetail: LiveData<PostingDetailModel>
         get() = _postingDetail
+
+    private val _achievementRate = MutableLiveData<Int>()
+    val achievementRate: LiveData<Int>
+        get() = _achievementRate
 
     private val _commentList = MutableLiveData<List<CommentModel?>?>()
     val commentList: LiveData<List<CommentModel?>?>
@@ -46,14 +49,13 @@ class PostingDetailViewModel @Inject constructor(
     val isGroupPurchase: LiveData<Boolean>
         get() = _isGroupPurchase
 
-    private val _hasAchievement = MutableLiveData<Boolean>(false)
-    val hasAchievement: LiveData<Boolean>
-        get() = _hasAchievement
-
     init {
         _userId.value = userPreferenceManager.fetchUserId()
     }
 
+    fun changeAchievement(rate: Int) {
+        _achievementRate.value = rate
+    }
 
     fun changePostingId(id: Int) {
         _postingId.value = id
@@ -65,16 +67,16 @@ class PostingDetailViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                         _postingDetail.postValue(it)
+                    _postingDetail.postValue(it)
                 },{
                     it.printStackTrace()
                 })
         )
-
     }
 
     fun changeIsGroupPurchase() {
-        _isGroupPurchase.value = ResponsePostingDetail.PostingType.JOINTPURCHASE.tag == postingDetail.value?.typePosting
+        _isGroupPurchase.value =
+            ResponsePostingDetail.PostingType.JOINTPURCHASE.tag == postingDetail.value?.typePosting
     }
 
     fun changeCommentList(comments: MutableList<CommentModel?>?) {

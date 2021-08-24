@@ -39,6 +39,7 @@ data class ResponsePostingDetail(
             content,
             isCompleted,
             isLiked,
+            targetNumberOfPeople,
             participants,
             imageUrls.map { UrlPictureModel(it)},
             comments?.map { it.toCommentModel() }?.toMutableList()
