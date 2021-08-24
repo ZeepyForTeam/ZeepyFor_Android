@@ -108,10 +108,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun showLoginDialog() {
-        val loginDialog =
-            ZeepyDialogBuilder(resources.getString(R.string.login_notice_message), null)
+        val loginDialog = ZeepyDialogBuilder(resources.getString(R.string.login_notice_message), null)
 
-        loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "삭제")
+        loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "취소")
             .setRightButton(R.drawable.box_blue_59_8dp, "좋았어, 로그인하기!")
             .setButtonHorizontalWeight(0.287f, 0.712f)
             .setDialogClickListener(object : DialogClickListener {
