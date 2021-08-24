@@ -131,7 +131,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                 } else {
                     viewModel.changeAchievement(0)
                 }
-                
+
                 val achievementText = "${this?.participants?.size}명 / ${this?.targetNumberOfPeople}명 "
                 val splitIndex = achievementText.indexOf("/")
                 val lastIndex = achievementText.lastIndex

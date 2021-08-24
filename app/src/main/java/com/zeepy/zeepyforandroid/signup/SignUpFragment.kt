@@ -37,11 +37,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
             }
         }
+
         binding.buttonSignup.apply {
             setText("완료")
             setUnUsableButton()
             onClick{
-
+// Todo: 서버팀에서 회원가입 완료하면 주석해제
+//                viewModel.signUp()
             }
         }
     }
@@ -70,4 +72,5 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
         }
     }
+
 }

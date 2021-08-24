@@ -10,6 +10,7 @@ import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
+import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
@@ -66,4 +67,7 @@ interface ZeepyApiService {
         @Query("longitudeGreater") longitudeGreater: Double,
         @Query("longitudeLess") longitudeLess: Double
     ): Response<List<ResponseBuildingInfoDTO>>
+
+    @POST("/api/user/registration")
+    fun signUp(requestSignUpDTO: RequestSignUpDTO): Completable
 }

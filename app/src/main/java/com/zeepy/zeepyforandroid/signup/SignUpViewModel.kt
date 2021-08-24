@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.signup.controller.SignUpController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val signUpController: SignUpController
-) : ViewModel() {
+) : BaseViewModel() {
     private val _isPasswordMatched = MutableLiveData<Boolean>(false)
     val isPasswordMatched: LiveData<Boolean>
         get() = _isPasswordMatched
@@ -35,35 +36,48 @@ class SignUpViewModel @Inject constructor(
 
 
     fun checkEmailRepetition() {
-        email.value?.let { email ->
-            signUpController.checkEmailRepetition(email)
+        addDisposable(
+            signUpController.checkEmailRepetition(email.value.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Log.e("email", "success")
-                           _isEmailRepetition.postValue(false)
+                    _isEmailRepetition.postValue(false)
                 }, {
-                    Log.e("email", "fail")
                     _isEmailRepetition.postValue(true)
                 })
-        }
+        )
     }
 
     fun checkNickNameRepetition() {
-        nickname.value?.let { nickname ->
-            signUpController.checkNickNamRepetition(nickname)
+        addDisposable(
+            signUpController.checkNickNamRepetition(nickname.value.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Log.e("nickname", "success")
                     _isNickNameRepetition.postValue(false)
-
                 }, {
-                    Log.e("nickname", "fail")
                     _isNickNameRepetition.postValue(true)
                 })
-        }
+        )
     }
 
+    fun signUp() {
+        val requestSignUp = RequestSignUpDTO(
+            email.value!!,
+            name.value!!,
+            nickname.value!!,
+            password.value!!,
+            true
+        )
+        addDisposable(
+            signUpController.signUp(requestSignUp)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
 
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
 }
