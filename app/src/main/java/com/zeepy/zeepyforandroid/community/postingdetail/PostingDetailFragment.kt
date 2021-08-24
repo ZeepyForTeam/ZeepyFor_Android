@@ -51,6 +51,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         setCommentsRecyclerView()
         writeComment()
         setComments()
+
+        viewModel.achievementRate.observe(viewLifecycleOwner) {
+            binding.progressbarAchievement.progress = it
+        }
     }
 
     private fun setToolbar() {
@@ -107,8 +111,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 //                        it.printStackTrace()
 //                    })
 
-
-
         }
     }
 
@@ -122,12 +124,14 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     private fun updateAchievementRate() {
         binding.tvRateAchievement.apply {
             viewModel.postingDetail.value?.run {
-                if(targetNumberOfPeople != 0) {
-                    viewModel.changeAchievement((participants.size/targetNumberOfPeople) * PERCENTAGE)
+                val participantsCount = (participants.size).toDouble()
+                val target = targetNumberOfPeople.toDouble()
+                if (targetNumberOfPeople != null && this.participants.isNotEmpty()) {
+                    viewModel.changeAchievement(((participantsCount/target)* PERCENTAGE).toInt())
                 } else {
                     viewModel.changeAchievement(0)
                 }
-
+                
                 val achievementText = "${this?.participants?.size}명 / ${this?.targetNumberOfPeople}명 "
                 val splitIndex = achievementText.indexOf("/")
                 val lastIndex = achievementText.lastIndex

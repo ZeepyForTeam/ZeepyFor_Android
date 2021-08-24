@@ -125,7 +125,7 @@
                         android:paddingHorizontal="12dp"
                         app:layout_constraintTop_toTopOf="@id/tv_time_posting"
                         app:layout_constraintBottom_toBottomOf="@id/tv_time_posting"
-                        app:layout_constraintEnd_toEndOf="@id/tv_content_posting"/>
+                        app:layout_constraintEnd_toEndOf="@id/framelayout_content"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title_posting"
@@ -141,20 +141,133 @@
                         app:layout_constraintStart_toStartOf="@id/iv_picture_writer"
                         tools:text="위메프에서 같이 사실 분 구해요~"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_content_posting"
+                    <FrameLayout
+                        android:id="@+id/framelayout_content"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/nanum_square_round_regular"
-                        android:textSize="12sp"
-                        android:text="@{viewModel.postingDetail.contentPosting}"
                         android:layout_marginTop="22dp"
-                        android:textColor="@color/zeepy_black_3b"
-                        android:lineSpacingExtra="8sp"
                         app:layout_constraintTop_toBottomOf="@id/tv_title_posting"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
-                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                        tools:text="@string/dummy_content_posting"/>
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_content_posting"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nanum_square_round_regular"
+                            android:textSize="12sp"
+                            android:text="@{viewModel.postingDetail.contentPosting}"
+                            android:textColor="@color/zeepy_black_3b"
+                            android:lineSpacingExtra="8sp"
+                            tools:text="@string/dummy_content_posting"/>
+                        
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constriant_group_purchase_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+                            
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_productname_key"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="제품명"
+                                android:textSize="12sp"
+                                android:textColor="@color/zeepy_black_3b"
+                                android:fontFamily="@font/nanum_square_round_bold"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_productname_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/nanum_square_round_regular"
+                                android:textColor="@color/zeepy_black_3b"
+                                app:layout_constraintTop_toTopOf="@id/textview_productname_key"
+                                app:layout_constraintStart_toEndOf="@id/textview_productname_key"
+                                tools:text="삼다수 1.5L"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_store_key"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="구매처"
+                                android:textSize="12sp"
+                                android:textColor="@color/zeepy_black_3b"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/nanum_square_round_bold"
+                                app:layout_constraintTop_toBottomOf="@id/textview_productname_key"
+                                app:layout_constraintStart_toStartOf="@id/textview_productname_key"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_store_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/nanum_square_round_regular"
+                                android:textColor="@color/zeepy_black_3b"
+                                app:layout_constraintTop_toTopOf="@id/textview_store_key"
+                                app:layout_constraintStart_toEndOf="@id/textview_store_key"
+                                tools:text="쿠팡"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_sharing_method_key"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="거래 방식"
+                                android:textSize="12sp"
+                                android:textColor="@color/zeepy_black_3b"
+                                android:fontFamily="@font/nanum_square_round_bold"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintTop_toBottomOf="@id/textview_store_key"
+                                app:layout_constraintStart_toStartOf="@id/textview_store_key"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_sharing_method_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/nanum_square_round_regular"
+                                android:textColor="@color/zeepy_black_3b"
+                                app:layout_constraintTop_toTopOf="@id/textview_sharing_method_key"
+                                app:layout_constraintStart_toEndOf="@id/textview_sharing_method_key"
+                                tools:text="원호슈퍼에서 만나요"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_notice_key"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="안내"
+                                android:textSize="12sp"
+                                android:textColor="@color/zeepy_black_3b"
+                                android:fontFamily="@font/nanum_square_round_bold"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintTop_toBottomOf="@id/textview_sharing_method_key"
+                                app:layout_constraintStart_toStartOf="@id/textview_sharing_method_key"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textview_notice_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/nanum_square_round_regular"
+                                android:textColor="@color/zeepy_black_3b"
+                                app:layout_constraintTop_toTopOf="@id/textview_notice_key"
+                                app:layout_constraintStart_toEndOf="@id/textview_notice_key"
+                                tools:text="[닉네임/제품명/구매개수/총 가격]+비밀글로 남겨주세요!"/>
+                            
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        
+                        
+                    </FrameLayout>
+
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_picture_posting"
@@ -165,8 +278,8 @@
                         android:orientation="horizontal"
                         app:layout_constraintDimensionRatio="1:0.267"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/tv_content_posting"
-                        app:layout_constraintTop_toBottomOf="@id/tv_content_posting"
+                        app:layout_constraintStart_toStartOf="@id/framelayout_content"
+                        app:layout_constraintTop_toBottomOf="@id/framelayout_content"
                         tools:listitem="@layout/item_picture" />
 
                     <View
