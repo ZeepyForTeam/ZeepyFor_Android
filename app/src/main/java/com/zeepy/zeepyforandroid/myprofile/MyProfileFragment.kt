@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentMyProfileBinding
 import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
@@ -21,15 +23,27 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setButtonsOnClickListener()
         setOptionsRecyclerView()
     }
 
-    private fun setOptionsRecyclerView() {
+    private fun setButtonsOnClickListener() {
+        binding.ivManageAddress.setOnClickListener {
+            findNavController().navigate(R.id.action_myProfileFragment_to_ManageAddressFragment)
+        }
+        binding.ivManageReview.setOnClickListener {
+            findNavController().navigate(R.id.action_myProfileFragment_to_ManageReviewFragment)
+        }
+        binding.ivWishlist.setOnClickListener {
+            findNavController().navigate(R.id.action_myProfileFragment_to_wishListFragment)
+        }
+    }
 
-        val options = arrayOf("환경설정", "문의 및 의견 보내기", "지피의 지기들", "현재 버전 1.1")
+    private fun setOptionsRecyclerView() {
+        val options = arrayOf("환경설정", "문의 및 의견 보내기", "신고하기", "지피의 지기들", "현재 버전 1.1")
 
         binding.rvOptionsList.apply {
-            //setHasFixedSize(true)
+            setHasFixedSize(true)
             adapter = MyProfileOptionsAdapter(options)
         }
     }

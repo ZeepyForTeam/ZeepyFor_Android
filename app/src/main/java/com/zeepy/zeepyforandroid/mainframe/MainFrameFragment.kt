@@ -60,7 +60,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
                     R.id.homeFragment -> 0
                     R.id.lookAroundFragment -> 1
                     R.id.communityFrameFragment -> 2
-                    R.id.myProfileFragment -> 3
+                    R.id.myProfileFrameFragment -> 3
                     else -> throw RuntimeException("error error")
                 }
             )
@@ -73,7 +73,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
             0 -> R.id.homeFragment
             1 -> R.id.lookAroundFragment
             2 -> R.id.communityFrameFragment
-            3 -> R.id.myProfileFragment
+            3 -> R.id.myProfileFrameFragment
             else -> throw RuntimeException("Bottom Navigation Item Error")
         }
     }

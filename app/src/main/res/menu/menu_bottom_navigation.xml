@@ -16,8 +16,8 @@
         android:title="community"/>
 
     <item
-        android:id="@+id/myProfileFragment"
+        android:id="@+id/myProfileFrameFragment"
         android:icon="@drawable/selector_tab_mypage"
-        android:title="My"/>
+        android:title="myProfile" />
 
 </menu>

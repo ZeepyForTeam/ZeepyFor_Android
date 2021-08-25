@@ -9,14 +9,6 @@
         android:layout_height="match_parent"
         tools:context=".myprofile.MyProfileFragment">
 
-        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_main_msg"
             android:layout_width="wrap_content"
@@ -27,7 +19,7 @@
             android:text="@string/myprofile_loggedout"
             android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_regular"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <ImageView
@@ -98,6 +90,12 @@
             app:layout_constraintStart_toStartOf="@id/iv_wishlist"
             app:layout_constraintEnd_toEndOf="@id/iv_wishlist"
             android:layout_marginTop="12dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintBottom_toTopOf="@id/rv_options_list"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_options_list"

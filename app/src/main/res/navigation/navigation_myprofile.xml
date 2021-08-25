@@ -5,6 +5,8 @@
     android:id="@+id/navigation_myprofile"
     app:startDestination="@id/myProfileFragment">
 
+    <include app:graph="@navigation/navigation_review"/>
+
     <fragment
         android:id="@+id/myProfileFragment"
         android:name="com.zeepy.zeepyforandroid.myprofile.MyProfileFragment"
@@ -29,6 +31,9 @@
         <action
             android:id="@+id/action_myProfileFragment_to_settingsFragment"
             app:destination="@+id/settingsFragment"/>
+        <action
+            android:id="@+id/action_mnyProfileFragment_to_reportFragment"
+            app:destination="@+id/reportFragment"/>
 
     </fragment>
 
@@ -61,19 +66,25 @@
     </fragment>
 
     <fragment
-        android:id="@+id/ziggysFragment"
-        android:name="com.zeepy.zeepyforandroid.myprofile.ZiggysFragment"
-        android:label="ZiggysFragment"
-        tools:layout="@layout/fragment_ziggys">
-    </fragment>
-
-    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.zeepy.zeepyforandroid.myprofile.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings">
     </fragment>
 
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ReportFragment"
+        android:label="ReportFragment"
+        tools:layout="@layout/fragment_report">
+    </fragment>
+
+    <fragment
+        android:id="@+id/ziggysFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ZiggysFragment"
+        android:label="ZiggysFragment"
+        tools:layout="@layout/fragment_ziggys">
+    </fragment>
 
 
 </navigation>
