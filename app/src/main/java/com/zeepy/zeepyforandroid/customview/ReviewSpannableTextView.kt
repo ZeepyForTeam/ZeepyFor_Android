@@ -43,8 +43,5 @@ class ReviewSpannableTextView @JvmOverloads constructor(context:Context, attribu
             spannableString.setSpan(CustomTypefaceSpan(typeFace), spannableStart, spannableEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             text = spannableString
         }
-
-
-
     }
 }

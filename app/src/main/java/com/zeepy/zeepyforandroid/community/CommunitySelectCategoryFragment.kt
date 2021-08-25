@@ -68,7 +68,6 @@ class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCateg
                     setUnUsableButton()
                 }
             }
-
         }
     }
 
