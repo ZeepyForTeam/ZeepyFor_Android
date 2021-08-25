@@ -219,10 +219,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             customImageResourceId = resourceID
             setCustomImageAnchor(0.5F, 1F)
             selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-            customSelectedImageResourceId = R.drawable.btn_option_1 //FIXME: 이 이미지 사용했을 때 위치 오차가 발생 (이미지 크기 차이로 인해 발생하는 것으로 추정)
+            customSelectedImageResourceId = R.drawable.icon_map_act //FIXME: 이 이미지 사용했을 때 위치 오차가 발생 (이미지 크기 차이로 인해 발생하는 것으로 추정)
             isCustomImageAutoscale = false
-            isMoveToCenterOnSelect = true
-            Log.e("map point before clicked", "" + mapPoint);
+            isShowCalloutBalloonOnTouch = false
 
         }
         //draw marker
