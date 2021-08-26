@@ -95,7 +95,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         //setMarkersObserver()
         setOptionButton()
         setToolbar()
-        
+        mapView.setPOIItemEventListener(eventListener)
         // 마커 띄우기 테스트
         setMarker(37.505834449999995, 126.96320847343215, R.drawable.emoji_5_map)
         setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
@@ -186,8 +186,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
 
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
+            Log.e("map point after clicked", "" + p1?.mapPoint);
             //TODO: marker info layout 띄우기
-            p1?.setCustomImageAnchor(0.5F, 1F)
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
@@ -217,10 +217,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             mapPoint = MapPoint.mapPointWithGeoCoord(lat, lng)
             markerType = MapPOIItem.MarkerType.CustomImage
             customImageResourceId = resourceID
+            setCustomImageAnchor(0.5F, 1F)
             selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-            customSelectedImageResourceId = R.drawable.icon_map_act //FIXME: 이 이미지 사용했을 때 위치 오차가 발생
-            isCustomImageAutoscale = true
-            setCustomImageAnchor(0.5F, 0.5F)
+            customSelectedImageResourceId = R.drawable.icon_map_act //FIXME: 이 이미지 사용했을 때 위치 오차가 발생 (이미지 크기 차이로 인해 발생하는 것으로 추정)
+            isCustomImageAutoscale = false
+            isShowCalloutBalloonOnTouch = false
 
         }
         //draw marker

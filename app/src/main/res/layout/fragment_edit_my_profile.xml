@@ -26,22 +26,26 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_nickname"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/box_grayf7_8dp"
-            android:fontFamily="@font/nanum_square_round_bold"
-            android:paddingStart="12dp"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_nickname_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="zeepy.official@gmail.com"
+            android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
-            android:textColorHint="@color/zeepy_gray_9a"
-            android:textSize="12sp"
-            app:layout_constraintDimensionRatio="1:0.12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+            app:layout_constraintStart_toStartOf="@id/tv_nickname"
+            android:layout_marginTop="12dp"
+            app:layout_goneMarginStart="16dp"/>
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nickname_content"
+            android:layout_marginTop="16dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_email"
@@ -53,21 +57,39 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
-            app:layout_constraintTop_toBottomOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/divider1"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_sns_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/kakaologo"
+            app:layout_constraintTop_toBottomOf="@id/tv_email"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="18dp"
+            android:layout_marginStart="16dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_email_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
             android:text="zeepy.official@gmail.com"
-            android:layout_marginTop="18dp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
-            app:layout_constraintTop_toBottomOf="@id/tv_email"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toEndOf="@id/iv_sns_logo"
+            app:layout_constraintTop_toTopOf="@id/iv_sns_logo"
+            app:layout_constraintBottom_toBottomOf="@id/iv_sns_logo"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email_content"
+            android:layout_marginTop="16dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_password"
@@ -75,12 +97,13 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_marginStart="16dp"
-            android:text="비밀번호"
-            android:layout_marginTop="32dp"
+            android:text="비밀번호 변경"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
-            app:layout_constraintTop_toBottomOf="@id/tv_email_content"
+            app:layout_constraintTop_toBottomOf="@id/divider2"
             app:layout_constraintStart_toStartOf="parent"/>
+
 
         <RelativeLayout
             android:id="@+id/layout_password"
@@ -110,28 +133,37 @@
                 android:id="@+id/btn_submit_change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/zeepy_yellow_4d"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:textColor="@color/zeepy_black_3b"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp"
                 android:text="변경"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true" />
+                android:textColor="@color/zeepy_black_3b"
+                android:textSize="12sp" />
         </RelativeLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toBottomOf="@+id/layout_password"
+            android:layout_marginTop="16dp"/>
 
         <TextView
             android:id="@+id/tv_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/layout_password"
+            app:layout_constraintTop_toBottomOf="@id/divider3"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="로그아웃"
+            android:text="@string/logout_underlined"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="16dp"/>
 
         <TextView
@@ -140,7 +172,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_logout"
             app:layout_constraintBottom_toBottomOf="@id/tv_logout"
             app:layout_constraintStart_toEndOf="@id/tv_logout"
-            android:text="회원탈퇴"
+            android:text="@string/withdraw_underlined"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:layout_marginStart="12dp"/>
