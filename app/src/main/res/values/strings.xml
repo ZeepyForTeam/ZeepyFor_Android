@@ -94,4 +94,6 @@
     <string name="withdraw_underlined"><u>회원탈퇴</u></string>
     <string name="report_confirm">정말 신고하시겠어요?</string>
     <string name="report_confirm_content">*신고 후에는 신고 내욜을 수정하거나\n취소하실 수 없습니다.\n\n*악의적인 의도나 허위로 신고할 경우에는\n서비스 이용이 제한될 수 있습니다.</string>
+    <string name="achievement_rate_format" >%d명/%d명</string>
+    <string name="achievement_progress_count_format">%d명</string>
 </resources>

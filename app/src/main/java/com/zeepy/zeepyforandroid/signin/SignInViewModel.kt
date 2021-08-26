@@ -55,6 +55,7 @@ class SignInViewModel @Inject constructor(
                             saveIsAlreadyLogin(true)
                             saveUserAccessToken(response.accessToken)
                             saveUserRefreshToken(response.refreshToken)
+                            saveUserId(response.userId)
                         }
                     }
                 }, {

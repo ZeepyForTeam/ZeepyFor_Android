@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
@@ -16,10 +15,8 @@ import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentSelectAddressBinding
 import com.zeepy.zeepyforandroid.review.view.adapter.AddressAdapter
-import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 
 class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
@@ -37,7 +34,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         initView()
-        setDatas()
+        setAddressDatas()
         goToSearchAddress()
         getBuildingId()
     }
@@ -84,9 +81,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         deleteAddressDialog.show(childFragmentManager, this.tag)
     }
 
-    private fun setDatas() {
+    private fun setAddressDatas() {
         viewModel.addressListRegistered.observe(viewLifecycleOwner){
-            (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it)
+            (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it.map { it.copy() })
         }
     }
 

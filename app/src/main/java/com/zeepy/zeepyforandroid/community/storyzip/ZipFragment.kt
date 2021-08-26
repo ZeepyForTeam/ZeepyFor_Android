@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentZipBinding
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ZipFragment : BaseFragment<FragmentZipBinding>() {
-    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment().requireParentFragment().requireParentFragment() })
+    private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment() })
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -26,27 +28,109 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setStoryZipRecyclerView()
-        viewModel.getPostingList()
-        updatePostings()
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         initPostingTag()
+        setStoryZipRecyclerView()
+        updatePostings()
+        changeCategory()
+        getCategoryPostingList()
+        changeAddress()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getCheckedbutton(binding.radiogroupTag.checkedRadioButtonId)
     }
 
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
-            adapter = ZipAdapter{
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(
-                    it
-                )
-                requireParentFragment().requireParentFragment().requireParentFragment().requireParentFragment().findNavController().navigate(action)
+            adapter = ZipAdapter {
+                val action =
+                    MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(it)
+                requireParentFragment().requireParentFragment().requireParentFragment()
+                    .requireParentFragment().findNavController().navigate(action)
             }
-            addItemDecoration(ItemDecoration(8,0))
+            addItemDecoration(ItemDecoration(8, 0))
+        }
+    }
+
+    private fun changeCategory() {
+        binding.radiogroupTag.setOnCheckedChangeListener { _, checkedId ->
+            getCheckedbutton(checkedId)
+        }
+    }
+
+    private fun getCheckedbutton(checkedId: Int) {
+        when (checkedId) {
+            binding.rbTagEverything.id -> {
+                viewModel.changeCategory(null)
+            }
+            binding.rbTabGroupPurchase.id -> {
+                viewModel.changeCategory("JOINTPURCHASE")
+            }
+            binding.rbTagFreeShare.id -> {
+                viewModel.changeCategory("FREESHARING")
+            }
+            binding.rbTagFriends.id -> {
+                viewModel.changeCategory("NEIGHBORHOODFRIEND")
+            }
+        }
+    }
+
+    private fun changeAddress() {
+        viewModel.selectedAddress.observe(viewLifecycleOwner) {
+            viewModel.fetchPostingList()
+        }
+    }
+
+    private fun getCategoryPostingList() {
+        viewModel.selectedCategory.observe(viewLifecycleOwner) {
+            if (!viewModel.addressList.value.isNullOrEmpty()) {
+                viewModel.fetchPostingList()
+            }
         }
     }
 
     private fun updatePostings() {
-        viewModel.postingList.observe(viewLifecycleOwner){
-            (binding.rvStoryzip.adapter as ZipAdapter).submitList(it)
+        viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
+            when (postingList.status) {
+                NetworkStatus.State.LOADING -> {
+//                    controlLoadingAnimation(true)
+                }
+
+                NetworkStatus.State.SUCCESS -> {
+                    updatePostingList(postingList.data)
+                    controlLoadingAnimation(false)
+                }
+
+                NetworkStatus.State.ERROR -> {
+                    controlLoadingAnimation(false)
+                }
+            }
+        }
+    }
+
+    private fun updatePostingList(updateData: List<PostingListModel>?) {
+        val postingListAdapter = (binding.rvStoryzip.adapter as ZipAdapter)
+        if (!postingListAdapter.currentList.equals(updateData)) {
+            postingListAdapter.run {
+                submitList(updateData)
+                binding.rvStoryzip.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun controlLoadingAnimation(play: Boolean) {
+        binding.lottieLoading.run {
+            if (play) {
+                this.visibility = View.VISIBLE
+                this.playAnimation()
+            } else {
+                this.visibility = View.GONE
+                this.cancelAnimation()
+            }
         }
     }
 

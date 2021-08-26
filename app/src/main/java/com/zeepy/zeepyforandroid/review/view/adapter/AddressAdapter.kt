@@ -39,7 +39,6 @@ class AddressAdapter(private val context: Context, val listener: ClickListener):
         holder.binding.setVariable(BR.data, item)
         holder.binding.btnDelete.setOnClickListener {
             listener.delete(item)
-            notifyItemRemoved(position)
         }
         holder.binding.root.setOnClickListener {
             listener.select(item)

@@ -29,7 +29,7 @@ class NestedCommentsAdapter(private val authenticatedUsers: CommentAuthenticated
     inner class NestedCommentsViewHolder(val binding: ItemNestedCommentBinding): RecyclerView.ViewHolder(binding.root) {
         fun setSecretComment(item: NestedCommentModel) {
             authenticatedUsers.apply {
-                if (item.isSecretComment) {
+                if (item.isSecretComment == true) {
                     when(currentUserIdx) {
                         item.writerUserIdx, this.commentWriterIdx -> binding.tvNestedComment.text = item.comment
                         else -> binding.tvNestedComment.text = "비밀 댓글입니다."

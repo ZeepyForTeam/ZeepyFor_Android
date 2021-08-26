@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.community
+package com.zeepy.zeepyforandroid.community.frame.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,6 +27,4 @@ class CommunityFrameFragment: BaseFragment<FragmentCommunityFrameBinding>() {
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment_community) as NavHostFragment
         navController = navHostFragment.navController
     }
-
-
 }

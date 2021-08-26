@@ -2,11 +2,14 @@ package com.zeepy.zeepyforandroid.util
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import com.zeepy.zeepyforandroid.loadUrl
+import io.reactivex.Observable
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -14,6 +17,9 @@ import okhttp3.RequestBody
 import okio.BufferedSink
 import okio.IOException
 import okio.source
+import java.net.MalformedURLException
+import java.net.URL
+import java.util.*
 
 object FileConverter {
 
@@ -53,6 +59,20 @@ object FileConverter {
             } else {
                 MediaStore.Images.Media.getBitmap(contentResolver, this)
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return bitmap
+    }
+
+    fun convertUrlToBitmap(urlString: String): Bitmap? {
+        val bitmap: Bitmap? = null
+        try {
+            val url = URL(urlString)
+            val stream = url.openStream()
+            return BitmapFactory.decodeStream(stream)
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
         }

@@ -27,11 +27,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     private val viewModel by viewModels<PostingDetailViewModel>()
     private val args: PostingDetailFragmentArgs by navArgs()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.changePosting(args.postingModel)
-    }
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -43,16 +38,17 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.changePostingId(args.postingModel.id)
 
         Log.e("userIdx", prefs.getSharedPrefs("userIdx", -1).toString())
 
         setToolbar()
+        setPictureRecyclerview()
+        getPostingDetailContent()
+        changePostingDatas()
         setSwipeRefreshLayout()
         setParticipationButton()
-        setPictureRecyclerview()
         setCommentsRecyclerView()
-        setAchievementTextColor()
-        changePostingDatas()
         writeComment()
         setComments()
     }
@@ -84,11 +80,35 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
+    private fun getPostingDetailContent() {
+        viewModel.postingId.observe(viewLifecycleOwner) {
+            viewModel.fetchPostingDetailContent()
+        }
+    }
+
     private fun changePostingDatas() {
-        viewModel.postingDetail.observe(viewLifecycleOwner) {
-            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it.picturesPosting)
+        viewModel.postingDetail.observe(viewLifecycleOwner) { postingdetail ->
+            if(postingdetail.picturesPosting.isNullOrEmpty()) {
+                binding.rvPicturePosting.visibility = View.GONE
+            }
+            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(postingdetail.picturesPosting)
             viewModel.changeIsGroupPurchase()
-            viewModel.changeCommentList(it.comments)
+            viewModel.changeCommentList(postingdetail.comments)
+            updateAchievementRate()
+
+//            Observable.just( postingdetail.picturesPosting.map { PictureModel(FileConverter.convertUrlToBitmap(it.picture)) })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                        (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it)
+//                        viewModel.changeIsGroupPurchase()
+//                        viewModel.changeCommentList(postingdetail.comments)
+//                    }, {
+//                        it.printStackTrace()
+//                    })
+
+
+
         }
     }
 
@@ -99,28 +119,37 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
-    private fun setAchievementTextColor() {
+    private fun updateAchievementRate() {
         binding.tvRateAchievement.apply {
-            val splitIndex = text.indexOf("/")
-            val lastIndex = text.lastIndex
-            val color = ContextCompat.getColor(requireContext(), R.color.zeepy_gray_9a)
+            viewModel.postingDetail.value?.run {
+                if(targetNumberOfPeople != 0) {
+                    viewModel.changeAchievement((participants.size/targetNumberOfPeople) * PERCENTAGE)
+                } else {
+                    viewModel.changeAchievement(0)
+                }
 
-            val spannableText = SpannableStringBuilder().append(
-                text.subSequence(0, splitIndex)
-            ).color(color) {
-                append(text.subSequence(splitIndex, lastIndex+1))
+                val achievementText = "${this?.participants?.size}명 / ${this?.targetNumberOfPeople}명 "
+                val splitIndex = achievementText.indexOf("/")
+                val lastIndex = achievementText.lastIndex
+                val color = ContextCompat.getColor(requireContext(), R.color.zeepy_gray_9a)
+
+                val spannableText = SpannableStringBuilder().append(
+                    achievementText.subSequence(0, splitIndex)
+                ).color(color) {
+                    append(achievementText.subSequence(splitIndex, lastIndex+1))
+                }
+                text = spannableText
             }
-            text = spannableText
         }
     }
 
     private fun setCommentsRecyclerView() {
         binding.rvComments.addItemDecoration(ItemDecoration(8,0))
-        viewModel.commentList?.observe(viewLifecycleOwner) { comments->
+        viewModel.commentList?.observe(viewLifecycleOwner) { comments ->
             binding.rvComments.apply {
                 adapter = CommentsAdapter(
                     CommentAuthenticatedModel(
-                        prefs.getSharedPrefs("userIdx", -1),
+                        viewModel.userId.value ?: -1,
                         viewModel.postingDetail.value?.writerUserIdx,
                         null
                     )
@@ -141,5 +170,8 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
             viewModel.postComment()
             binding.etComment.text?.clear()
         }
+    }
+    companion object {
+        private const val PERCENTAGE = 100
     }
 }

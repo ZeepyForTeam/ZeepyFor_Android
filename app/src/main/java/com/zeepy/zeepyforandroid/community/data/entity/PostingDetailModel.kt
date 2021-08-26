@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.community.data.entity
 
 import android.os.Parcelable
+import com.zeepy.zeepyforandroid.community.data.remote.response.Participant
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -13,7 +14,9 @@ data class PostingDetailModel(
     val titlePosting: String,
     val contentPosting: String,
     val postingStatus: Boolean,
+    val isLiked: Boolean,
+    val targetNumberOfPeople: Int,
+    val participants: List<Participant>,
     val picturesPosting: List<UrlPictureModel>,
-    val isSetAchievement: Boolean,
-    val comments: MutableList<CommentModel>?
+    val comments: MutableList<CommentModel?>?
 ): Parcelable
