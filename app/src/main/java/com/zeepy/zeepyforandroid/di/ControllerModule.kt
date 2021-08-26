@@ -2,6 +2,8 @@ package com.zeepy.zeepyforandroid.di
 
 import com.zeepy.zeepyforandroid.address.controller.AddressController
 import com.zeepy.zeepyforandroid.address.controller.AddressControllerImpl
+import com.zeepy.zeepyforandroid.community.controller.WritePostingController
+import com.zeepy.zeepyforandroid.community.controller.WritePostingControllerImpl
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenControllerImpl
@@ -42,4 +44,8 @@ object ControllerModule {
     @Provides
     @Singleton
     fun provideAddressController(@ZeepyService zeepyApiService: ZeepyApiService):AddressController = AddressControllerImpl(zeepyApiService)
+
+    @Provides
+    @Singleton
+    fun provideWritePostingController(@ZeepyService zeepyApiService: ZeepyApiService): WritePostingController = WritePostingControllerImpl(zeepyApiService)
 }

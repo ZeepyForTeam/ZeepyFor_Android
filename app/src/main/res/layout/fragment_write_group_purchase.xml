@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.zeepy.zeepyforandroid.community.WritePostingViewModel" />
+            type="com.zeepy.zeepyforandroid.community.writeposting.WriteGroupPurchaseViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,7 +54,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@null"
                     android:paddingStart="12dp"
-                    android:text="@{viewModel.title}"
+                    android:text="@={viewModel.title}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -67,7 +67,42 @@
                     app:layout_constraintEnd_toEndOf="parent"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_input_purchase_info"
+                    android:id="@+id/tv_purchase_introduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="14sp"
+                    android:text="@string/purchase_introduce_write_community"
+                    app:layout_constraintTop_toBottomOf="@id/et_title"
+                    app:layout_constraintStart_toStartOf="@id/et_title"/>
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_purchase_introduce"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:paddingStart="12dp"
+                    android:paddingTop="17dp"
+                    android:text="@={viewModel.content}"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="top"
+                    android:hint="@string/purchase_introduce_hint"
+                    app:layout_constraintDimensionRatio="1:0.274"
+                    app:layout_constraintTop_toBottomOf="@id/tv_purchase_introduce"
+                    app:layout_constraintStart_toStartOf="@id/et_title"
+                    app:layout_constraintEnd_toEndOf="@id/et_title"/>
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_purchase_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
@@ -75,8 +110,8 @@
                     android:textColor="@color/zeepy_black_3b"
                     android:textSize="14sp"
                     android:text="@string/input_purchase_write_posting"
-                    app:layout_constraintTop_toBottomOf="@id/et_title"
-                    app:layout_constraintStart_toStartOf="@id/et_title"/>
+                    app:layout_constraintTop_toBottomOf="@id/et_purchase_introduce"
+                    app:layout_constraintStart_toStartOf="@id/et_purchase_introduce"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_product_name"
@@ -84,7 +119,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
-                    android:text="@{viewModel.productName}"
+                    android:text="@={viewModel.productName}"
                     android:paddingStart="12dp"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
@@ -93,7 +128,7 @@
                     android:gravity="center_vertical"
                     android:hint="@string/hint_product_name_write_posting"
                     app:layout_constraintDimensionRatio="1:0.13"
-                    app:layout_constraintTop_toBottomOf="@id/tv_input_purchase_info"
+                    app:layout_constraintTop_toBottomOf="@id/tv_purchase_info"
                     app:layout_constraintStart_toStartOf="@id/et_title"
                     app:layout_constraintEnd_toEndOf="@id/et_title"/>
 
@@ -104,7 +139,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@null"
                     android:paddingStart="12dp"
-                    android:text="@{viewModel.productPrice}"
+                    android:text="@={viewModel.productPrice}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -123,7 +158,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@null"
                     android:paddingStart="12dp"
-                    android:text="@{viewModel.purchaseSite}"
+                    android:text="@={viewModel.purchaseSite}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -142,7 +177,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@null"
                     android:paddingStart="12dp"
-                    android:text="@{viewModel.dealMethod}"
+                    android:text="@={viewModel.sharingMethod}"
                     android:foreground="@drawable/box_stroke_graybd_8dp"
                     android:textColor="@color/zeepy_black_3b"
                     android:textColorHint="@color/zeepy_gray_9a"
@@ -172,7 +207,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="12dp"
                     android:background="@null"
-                    android:text="@{viewModel.targetCount != null ? @string/target_count_write_posting(viewModel.targetCount) : ``}"
+                    android:text="@={viewModel.targetCount}"
                     android:paddingStart="12dp"
                     android:inputType="number"
                     android:foreground="@drawable/box_stroke_graybd_8dp"

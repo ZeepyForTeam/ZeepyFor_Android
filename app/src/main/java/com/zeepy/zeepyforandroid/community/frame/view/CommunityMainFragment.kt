@@ -59,7 +59,7 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             }
             setCommunityLocation()
             setRightButton(R.drawable.ic_btn_write) {
-                findNavController().navigate(R.id.action_communityMainFragment_to_communitySelectCategoryFragment)
+                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_communitySelectCategoryFragment)
             }
             setRightButtonMargin(32)
 

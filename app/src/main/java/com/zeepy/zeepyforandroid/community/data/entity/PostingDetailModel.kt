@@ -1,7 +1,7 @@
 package com.zeepy.zeepyforandroid.community.data.entity
 
 import android.os.Parcelable
-import com.zeepy.zeepyforandroid.community.data.remote.response.Participant
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.Participant
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.community.data.entity.CommentModel
 import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
-import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers

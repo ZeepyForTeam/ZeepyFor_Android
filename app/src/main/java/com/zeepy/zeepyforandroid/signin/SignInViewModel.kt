@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.signin
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.base.BaseViewModel
@@ -56,6 +57,10 @@ class SignInViewModel @Inject constructor(
                             saveUserAccessToken(response.accessToken)
                             saveUserRefreshToken(response.refreshToken)
                             saveUserId(response.userId)
+
+                            Log.e("login access", "${response.accessToken}")
+                            Log.e("login refresh", "${response.refreshToken}")
+
                         }
                     }
                 }, {

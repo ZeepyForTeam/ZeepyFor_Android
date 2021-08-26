@@ -3,9 +3,10 @@ package com.zeepy.zeepyforandroid.network
 import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponseMyZipList
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
@@ -13,6 +14,7 @@ import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -28,7 +30,7 @@ interface ZeepyApiService {
     fun signin(@Body requestLogin: RequestLogin): Single<ResponseAuthDTO>
 
     @POST("/api/auth/reissue")
-    fun fetchAccessToken(@Body reIssueReqDto: RequestTokenDTO): Response<ResponseAuthDTO>
+    fun fetchAccessToken(@Body reIssueReqDto: RequestTokenDTO): Call<ResponseAuthDTO>
 
     @POST("/api/review")
     fun writeReview(@Body reviewDto: RequestWriteReview): Completable
@@ -69,5 +71,8 @@ interface ZeepyApiService {
     ): Response<List<ResponseBuildingInfoDTO>>
 
     @POST("/api/user/registration")
-    fun signUp(requestSignUpDTO: RequestSignUpDTO): Completable
+    fun signUp(@Body requestSignUpDTO: RequestSignUpDTO): Completable
+
+    @POST("/api/community")
+    fun uploadPosting(@Body requestWritePosting: RequestWritePosting): Completable
 }

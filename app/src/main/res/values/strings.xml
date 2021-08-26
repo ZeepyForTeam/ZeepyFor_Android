@@ -91,4 +91,7 @@
     <string name="goto_register_address">직접 등록하기</string>
     <string name="achievement_rate_format" >%d명/%d명</string>
     <string name="achievement_progress_count_format">%d명</string>
+    <string name="posting_content_notice_community">*ZEEPY 이용정책에 위반되는 게시글의 경우\n무통보 게시글 삭제 및 이용이 제재될 수 있습니다.</string>
+    <string name="purchase_introduce_hint">공동구매를 간단히 소개해주세요. (100자 이내)</string>
+    <string name="purchase_introduce_write_community">공구 소개</string>
 </resources>

@@ -1,12 +1,8 @@
-package com.zeepy.zeepyforandroid.community.data.remote.response
+package com.zeepy.zeepyforandroid.community.data.remote.responseDTO
 
-import android.content.Context
 import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
 import com.zeepy.zeepyforandroid.community.data.entity.UrlPictureModel
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail.PostingType.Companion.toPostingType
-import com.zeepy.zeepyforandroid.enum.PostingType.Companion.convertToCommunityTypeString
-import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
-import com.zeepy.zeepyforandroid.util.DateParser.convertDateFormat
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail.PostingType.Companion.toPostingType
 import com.zeepy.zeepyforandroid.util.DateParser.diffFromCreatedTime
 import java.lang.IllegalArgumentException
 

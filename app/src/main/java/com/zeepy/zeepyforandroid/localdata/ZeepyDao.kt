@@ -4,6 +4,7 @@ import androidx.room.*
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import io.reactivex.Maybe
 import io.reactivex.Single
+import retrofit2.http.DELETE
 
 @Dao
 interface ZeepyDao {
@@ -18,4 +19,7 @@ interface ZeepyDao {
 
     @Delete
     fun deleteAddress(address: LocalAddressEntity)
+
+    @Query("DELETE FROM address_table")
+    fun deleteEveryAddress()
 }

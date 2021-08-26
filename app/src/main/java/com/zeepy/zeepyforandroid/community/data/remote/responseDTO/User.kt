@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.community.data.remote.response
+package com.zeepy.zeepyforandroid.community.data.remote.responseDTO
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
