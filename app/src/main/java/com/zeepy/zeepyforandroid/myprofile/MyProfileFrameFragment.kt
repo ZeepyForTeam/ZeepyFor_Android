@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentCommunityFrameBinding
@@ -29,6 +31,8 @@ class MyProfileFrameFragment: BaseFragment<FragmentMyprofileFrameBinding>() {
         navController = navHostFragment.navController
 
         initToolbar()
+        unsetBottomNavigationBar()
+        swipeOnlyOnMain()
     }
 
     private fun initToolbar() {
@@ -45,6 +49,30 @@ class MyProfileFrameFragment: BaseFragment<FragmentMyprofileFrameBinding>() {
                     setTitle("마이페이지")
                 }
             }
+        }
+    }
+
+    private fun unsetBottomNavigationBar() {
+        val navBar = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.reportFragment
+                || destination.id == R.id.reportOtherFragment
+                || destination.id == R.id.ziggysFragment) {
+                navBar?.visibility = View.GONE
+            } else {
+                navBar?.visibility = View.VISIBLE
+            }
+
+        }
+    }
+
+    private fun swipeOnlyOnMain() {
+        val viewPager = activity?.findViewById<ViewPager2>(R.id.viewpager_main)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id != R.id.myProfileFragment)
+                viewPager?.isUserInputEnabled = false
         }
     }
 }

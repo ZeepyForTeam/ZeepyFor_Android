@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_report_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="신고 사유"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="16sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+
+        <EditText
+            android:id="@+id/et_report_reason_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/box_grayf9_8dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_report_reason"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_gray_9a"
+            android:inputType="text"
+            android:maxLines="1"
+            android:hint="기타"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_detail_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_report_reason_content"
+            android:text="상세 내용"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="16sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+
+        <EditText
+            android:id="@+id/et_detail_info_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1.5377"
+            android:background="@drawable/box_grayf9_8dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_gray_9a"
+            android:hint="신고하려는 게시물, 사용자에 대해\n조금 더 상세히 알려주세요!"
+            android:gravity="left"
+            android:lineSpacingExtra="10sp"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/et_detail_info_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.zeepy.zeepyforandroid.customview.ZeepyButton
+                    android:id="@+id/btn_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="250dp"
+                    android:layout_marginHorizontal="30dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

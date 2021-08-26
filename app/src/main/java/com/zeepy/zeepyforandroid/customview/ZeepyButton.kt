@@ -74,4 +74,11 @@ class ZeepyButton: ConstraintLayout {
     fun changeIsActivie(isActive: Boolean) {
         this._isActive.value = isActive
     }
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun setMyProfileUsableButtion() {
+        binding.root.setOnTouchListener { _, _ -> false }
+        binding.linearlayoutButton.setBackgroundResource(R.drawable.zeepy_button_myprofile)
+        binding.tvButton.setTextColor(getColor(context, R.color.white))
+    }
 }

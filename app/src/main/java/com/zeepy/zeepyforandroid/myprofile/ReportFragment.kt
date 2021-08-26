@@ -10,6 +10,7 @@ import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentReportBinding
 import com.zeepy.zeepyforandroid.databinding.FragmentSettingsBinding
 import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
+import com.zeepy.zeepyforandroid.myprofile.adapter.ReportOptionsAdapter
 
 class ReportFragment: BaseFragment<FragmentReportBinding>() {
     override fun getFragmentBinding(
@@ -32,7 +33,7 @@ class ReportFragment: BaseFragment<FragmentReportBinding>() {
 
         binding.rvOptionsList.apply {
             setHasFixedSize(true)
-            adapter = MyProfileOptionsAdapter(options)
+            adapter = ReportOptionsAdapter(options, this@ReportFragment)
         }
     }
 

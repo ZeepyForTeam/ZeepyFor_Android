@@ -1,8 +1,6 @@
 package com.zeepy.zeepyforandroid.myprofile.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -22,12 +20,9 @@ class MyProfileOptionsAdapter(private val dataSet: Array<String>):
 
         holder.itemView.setOnClickListener {
 
-            Log.e("binding.root: ", "" + holder.binding.root)
-            Log.e("itemView: ", "" + holder.itemView)
-            Log.e("navController: ", "" + holder.itemView.findNavController())
             when (position) {
                 0 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_settingsFragment)
-                2 -> holder.itemView.findNavController().navigate(R.id.action_mnyProfileFragment_to_reportFragment)
+                2 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_reportFragment)
                 3 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_ziggysFragment)
             }
         }
