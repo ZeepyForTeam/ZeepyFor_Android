@@ -154,7 +154,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
 
     fun showReviewRegisterDialog() {
         val parent = (parentFragment as NavHostFragment).parentFragment
-        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", false)
+        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", null)
             .setContent(resources.getString(R.string.write_review_notice_message))
             .setLeftButton(R.drawable.box_grayf9_8dp,"취소")
             .setRightButton(R.drawable.box_blue_59_8dp,"확인")

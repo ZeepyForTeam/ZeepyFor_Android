@@ -66,7 +66,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
     }
 
     private fun showDeleteAddressDialog(address: LocalAddressEntity) {
-        val deleteAddressDialog = ZeepyDialogBuilder("정말 삭제하시겠습니까?", false)
+        val deleteAddressDialog = ZeepyDialogBuilder("정말 삭제하시겠습니까?", null)
             .setLeftButton(R.drawable.box_grayf9_8dp,"삭제")
             .setRightButton(R.drawable.box_blue_59_8dp, "취소")
             .setDialogClickListener(object : DialogClickListener{
@@ -107,7 +107,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         binding.tvRegisterAddress.setOnClickListener {
             viewModel.addressListRegistered.value?.let { addresses ->
                 if (addresses.count() >= 3) {
-                    ZeepyDialogBuilder("최대 3개의 주소까지\n등록이 가능해요!",false)
+                    ZeepyDialogBuilder("최대 3개의 주소까지\n등록이 가능해요!",null)
                         .setSingleButton(true)
                         .setDialogClickListener(object : DialogClickListener{
                             override fun clickLeftButton(dialog: ZeepyDialog) {

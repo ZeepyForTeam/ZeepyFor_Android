@@ -1,6 +1,10 @@
 package com.zeepy.zeepyforandroid.myprofile
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +28,17 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbar()
+
+        binding.tvAlarmSettingsChange.setOnClickListener {
+            context?.openAppSystemSettings()
+        }
+    }
+
+    private fun Context.openAppSystemSettings() {
+        startActivity(Intent().apply {
+            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = Uri.fromParts("package", packageName, null)
+        })
     }
 
     private fun setToolbar() {

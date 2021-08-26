@@ -273,7 +273,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_10"
             android:drawablePadding="12dp"
-            android:text="류혜린"
+            android:text="서정록"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"

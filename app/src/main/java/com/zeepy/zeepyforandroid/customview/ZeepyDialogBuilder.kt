@@ -2,7 +2,7 @@ package com.zeepy.zeepyforandroid.customview
 
 class ZeepyDialogBuilder(
     private val title: String,
-    private val reverseTextColor: Boolean?
+    private val theme: String?
 ) {
     private var content: String? = null
     private var leftButtonDrawable: Int? = null
@@ -24,7 +24,7 @@ class ZeepyDialogBuilder(
             rightButtonText,
             weightLeftButton,
             weightRightButton,
-            reverseTextColor,
+            theme,
             singleButton,
             dialogClickListener
         )
