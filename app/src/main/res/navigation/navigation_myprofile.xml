@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_myprofile"
+    app:startDestination="@id/myProfileFragment">
+
+    <include app:graph="@navigation/navigation_review"/>
+
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.MyProfileFragment"
+        android:label="MyProfileFragment"
+        tools:layout="@layout/fragment_my_profile">
+
+        <action
+            android:id="@+id/action_myProfileFragment_to_EditMyProfileFragment"
+            app:destination="@+id/editMyProfileFragment"/>
+        <action
+            android:id="@+id/action_myProfileFragment_to_ManageAddressFragment"
+            app:destination="@+id/manageAddressFragment"/>
+        <action
+            android:id="@+id/action_myProfileFragment_to_ManageReviewFragment"
+            app:destination="@+id/manageReviewFragment"/>
+        <action
+            android:id="@+id/action_myProfileFragment_to_wishListFragment"
+            app:destination="@+id/wishlistFragment"/>
+        <action
+            android:id="@+id/action_myProfileFragment_to_ziggysFragment"
+            app:destination="@+id/ziggysFragment"/>
+        <action
+            android:id="@+id/action_myProfileFragment_to_settingsFragment"
+            app:destination="@+id/settingsFragment"/>
+        <action
+            android:id="@+id/action_myProfileFragment_to_reportFragment"
+            app:destination="@+id/reportFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editMyProfileFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.EditMyProfileFragment"
+        android:label="EditMyProfileFragment"
+        tools:layout="@layout/fragment_edit_my_profile">
+    </fragment>
+
+    <fragment
+        android:id="@+id/manageAddressFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ManageAddressFragment"
+        android:label="ManageAddressFragment"
+        tools:layout="@layout/fragment_manage_address">
+    </fragment>
+
+    <fragment
+        android:id="@+id/manageReviewFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ManageReviewFragment"
+        android:label="ManageReviewFragment"
+        tools:layout="@layout/fragment_manage_review">
+    </fragment>
+
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.WishListFragment"
+        android:label="WishlistFragment"
+        tools:layout="@layout/fragment_wishlist">
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ReportFragment"
+        android:label="ReportFragment"
+        tools:layout="@layout/fragment_report">
+
+        <action
+            android:id="@+id/action_reportFragment_to_reportOtherFragment"
+            app:destination="@+id/reportOtherFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportOtherFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ReportOtherFragment"
+        android:label="ReportOtherFragment"
+        tools:layout="@layout/fragment_report_other">
+    </fragment>
+
+    <fragment
+        android:id="@+id/ziggysFragment"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ZiggysFragment"
+        android:label="ZiggysFragment"
+        tools:layout="@layout/fragment_ziggys">
+    </fragment>
+
+
+</navigation>

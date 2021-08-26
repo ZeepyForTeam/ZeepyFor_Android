@@ -41,7 +41,8 @@
     <string name="input_password_check_signup">비밀번호를 다시 입력해주세요</string>
     <string name="getting_info_to_email_signup">ZEEPY 서비스에 대한 소식을 이메일로 받아봅니다. (선택)</string>
     <string name="input_email_signup">이메일ID를 입력해주세요</string>
-    <string name="myprofile_loggedout">로그인을\n완료해주세요.</string>
+    <string name="myprofile_loggedout"><annotation font="nanum_square_round_extrabold" color="zeepy_yellow_ee" clickable="true"><u>로그인</u></annotation><annotation font="nanum_square_round_regular" color="zeepy_black_3b">을\n완료해주세요.</annotation></string>
+    <string name="myprofile_loggedin"><annotation font="nanum_square_round_regular" color="zeepy_black_3b">반가워요!\n</annotation><annotation font="nanum_square_round_extrabold" color="zeepy_black_3b" args="0" clickable="true"><u>%1$s</u></annotation> 지기님</string>
     <string name="doesnt_match_password">비밀번호가 일치하지 않습니다.</string>
     <string name="lessor_business">칼 같은 우리 사이, 비즈니스형</string>
     <string name="lessor_kind">따뜻해 녹아내리는 중!, 친절형</string>
@@ -89,6 +90,10 @@
     <string name="address_citydistinct_primary">%s %s</string>
     <string name="no_address_not_yet">아직 등록된 주소가요 없어요 :(</string>
     <string name="goto_register_address">직접 등록하기</string>
+    <string name="logout_underlined"><u>로그아웃</u></string>
+    <string name="withdraw_underlined"><u>회원탈퇴</u></string>
+    <string name="report_confirm">정말 신고하시겠어요?</string>
+    <string name="report_confirm_content">*신고 후에는 신고 내욜을 수정하거나\n취소하실 수 없습니다.\n\n*악의적인 의도나 허위로 신고할 경우에는\n서비스 이용이 제한될 수 있습니다.</string>
     <string name="achievement_rate_format" >%d명/%d명</string>
     <string name="achievement_progress_count_format">%d명</string>
     <string name="posting_content_notice_community">*ZEEPY 이용정책에 위반되는 게시글의 경우\n무통보 게시글 삭제 및 이용이 제재될 수 있습니다.</string>
