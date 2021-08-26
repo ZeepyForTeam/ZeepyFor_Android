@@ -22,9 +22,6 @@ import java.net.URL
 import java.util.*
 
 object FileConverter {
-
-
-
     fun getBody(key: String, value: Any): MultipartBody.Part {
         return MultipartBody.Part.createFormData(key, value.toString())
     }

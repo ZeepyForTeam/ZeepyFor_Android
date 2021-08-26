@@ -174,7 +174,6 @@ class WriteReviewViewModel @Inject constructor(
         return (reviewOfHouse.value.isNullOrEmpty() || houseTotalEvaluation.value.isNullOrEmpty())
     }
 
-    //Todo: 유저 api 및 주소, 빌딩id api 연결되면 수정
     @SuppressLint("CheckResult")
     fun postReviewToServer() {
         postReviewController.postReview(

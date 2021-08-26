@@ -16,6 +16,7 @@ class ReviewSpannableTextView @JvmOverloads constructor(context:Context, attribu
     private val typeFace = Typeface.create(ResourcesCompat.getFont(context, R.font.nanum_square_round_extrabold), Typeface.NORMAL)
     private var spannableStart = -1
     private var spannableEnd = -1
+
     init {
         val typedArray = context.theme.obtainStyledAttributes(
             attributeSet,
@@ -25,6 +26,12 @@ class ReviewSpannableTextView @JvmOverloads constructor(context:Context, attribu
         )
         setTextColor(context.getColor(R.color.zeepy_blue_5f))
         textSize = 24f
+
+        if (typedArray.hasValue(R.styleable.zeepySpannableText_community_type)) {
+            if (typedArray.getBoolean(R.styleable.zeepySpannableText_community_type, false)) {
+                changeToCommunityTheme()
+            }
+        }
         val spannableString = SpannableString(text)
 
         if(typedArray.hasValue(R.styleable.zeepySpannableText_start) && typedArray.hasValue(R.styleable.zeepySpannableText_end)) {
@@ -33,7 +40,6 @@ class ReviewSpannableTextView @JvmOverloads constructor(context:Context, attribu
 
             spannableString.setSpan(CustomTypefaceSpan(typeFace), spannableStart, spannableEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             text = spannableString
-
         }
 
         if (typedArray.hasValue(R.styleable.zeepySpannableText_second_start) && typedArray.hasValue(R.styleable.zeepySpannableText_second_end)) {
@@ -43,5 +49,9 @@ class ReviewSpannableTextView @JvmOverloads constructor(context:Context, attribu
             spannableString.setSpan(CustomTypefaceSpan(typeFace), spannableStart, spannableEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             text = spannableString
         }
+    }
+
+    private fun changeToCommunityTheme() {
+        setTextColor(context.getColor(R.color.zeepy_green_33))
     }
 }

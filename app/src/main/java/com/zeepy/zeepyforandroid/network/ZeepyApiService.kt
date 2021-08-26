@@ -7,12 +7,14 @@ import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePo
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
+import com.zeepy.zeepyforandroid.imagecontrol.PreSignedUrlDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Response
@@ -75,4 +77,7 @@ interface ZeepyApiService {
 
     @POST("/api/community")
     fun uploadPosting(@Body requestWritePosting: RequestWritePosting): Completable
+
+    @GET("/api/s3")
+    fun getPresignedUrl(): Observable<PreSignedUrlDTO>
 }

@@ -153,7 +153,7 @@
 
     <fragment
         android:id="@+id/communitySelectCategoryFragment"
-        android:name="com.zeepy.zeepyforandroid.community.writeposting.CommunitySelectCategoryFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.view.CommunitySelectCategoryFragment"
         android:label="CommunitySelectCategoryFragment"
         tools:layout="@layout/fragment_community_select_category">
         <action
@@ -168,18 +168,37 @@
 
     <fragment
         android:id="@+id/writeGroupPurchaseFragment"
-        android:name="com.zeepy.zeepyforandroid.community.writeposting.WriteGroupPurchaseFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.view.WriteGroupPurchaseFragment"
         android:label="WriteGroupPurchaseFragment"
-        tools:layout="@layout/fragment_write_group_purchase"/>
+        tools:layout="@layout/fragment_write_group_purchase">
+        <action
+            android:id="@+id/action_writeGroupPurchaseFragment_to_communityLoadPictureFragment"
+            app:destination="@id/communityLoadPictureFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/writeShareOrFriendsFragment"
-        android:name="com.zeepy.zeepyforandroid.community.writeposting.WriteShareOrFriendsFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.view.WriteShareOrFriendsFragment"
         android:label="WriteShareOrFriendsFragment"
         tools:layout="@layout/fragment_write_share_or_friends">
         <argument
             android:name="postingType"
             app:argType="string" />
+        <action
+            android:id="@+id/action_writeShareOrFriendsFragment_to_communityLoadPictureFragment"
+            app:destination="@id/communityLoadPictureFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityLoadPictureFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.CommunityLoadPictureFragment"
+        android:label="CommunityLoadPictureFragment"
+        tools:layout="@layout/fragment_community_load_picture">
+        <argument
+            android:name="requestWritePosting"
+            app:argType="com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting"
+            app:nullable="true"/>
+
     </fragment>
 
 </navigation>

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.zeepy.zeepyforandroid.community.writeposting.WriteGroupPurchaseViewModel" />
+            type="com.zeepy.zeepyforandroid.community.writeposting.viewmodel.WriteGroupPurchaseViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

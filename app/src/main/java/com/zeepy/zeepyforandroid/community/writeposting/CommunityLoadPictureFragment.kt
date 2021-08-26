@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.review.view
+package com.zeepy.zeepyforandroid.community.writeposting
 
 import android.net.Uri
 import android.os.Bundle
@@ -12,34 +12,39 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.community.writeposting.viewmodel.CommunityLoadPictureViewModel
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
-import com.zeepy.zeepyforandroid.databinding.FragmentHousePictureBinding
+import com.zeepy.zeepyforandroid.databinding.FragmentCommunityLoadPictureBinding
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
+import com.zeepy.zeepyforandroid.review.view.HousePictureFragment.Companion.PERMISSION_REQUESTED
 import com.zeepy.zeepyforandroid.review.view.adapter.UploadPictureAdapter
-import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.zeepy.zeepyforandroid.util.FileConverter.asBitmap
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
-class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
+@AndroidEntryPoint
+class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBinding>() {
+    private val viewModel: CommunityLoadPictureViewModel by viewModels()
+    private val args: CommunityLoadPictureFragmentArgs by navArgs()
     private lateinit var pictureUri: Uri
     private val pictures = mutableListOf<PictureModel>()
-    private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = { requireParentFragment().requireParentFragment() })
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentHousePictureBinding {
-        return FragmentHousePictureBinding.inflate(inflater, container, false)
+    ): FragmentCommunityLoadPictureBinding {
+        return FragmentCommunityLoadPictureBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.changeRequestPosting(args.requestWritePosting)
 
         setPictureList()
         setRegisterButton()
@@ -57,7 +62,10 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     private fun setRegisterButton() {
-        binding.btnRegister.setText("동록하기")
+        binding.btnRegister.apply {
+            setText("건너뛰기")
+            setCommunityUsableButton()
+        }
     }
 
     private fun openGallery() {
@@ -97,7 +105,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
             imageList.forEach { uri ->
                 val bitmap = uri.asBitmap(requireContext().contentResolver)
                 pictures.add(PictureModel(bitmap))
-                viewModel.changeHousePictures(pictures)
+                viewModel.changeUploadPictures(pictures)
             }
         }
 
@@ -105,7 +113,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if (isSaved) {
                 pictures.add(PictureModel(pictureUri.asBitmap(requireContext().contentResolver)))
-                viewModel.changeHousePictures(pictures)
+                viewModel.changeUploadPictures(pictures)
             }
         }
 
@@ -124,16 +132,16 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     private fun stagePictures() {
-        viewModel.bitmapImages.observe(viewLifecycleOwner) {
+        viewModel.uploadBitmapImages.observe(viewLifecycleOwner) {
             (binding.rvHousePictures.adapter as UploadPictureAdapter).apply {
-                submitList(viewModel.bitmapImages.value?.toList())
+                submitList(viewModel.uploadBitmapImages.value?.toList())
             }
             changeVisibility()
         }
     }
 
     private fun changeVisibility() {
-        if (viewModel.bitmapImages.value.isNullOrEmpty()) {
+        if (viewModel.uploadBitmapImages.value.isNullOrEmpty()) {
             binding.tvUploadImages.visibility = View.GONE
             binding.rvHousePictures.visibility = View.GONE
         } else {
@@ -147,12 +155,12 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
         binding.tvSkip.setOnClickListener { showReviewRegisterDialog() }
     }
 
-    fun showReviewRegisterDialog() {
+    private fun showReviewRegisterDialog() {
         val parent = (parentFragment as NavHostFragment).parentFragment
-        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", false)
-            .setContent(resources.getString(R.string.write_review_notice_message))
+        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", true)
+            .setContent("*공동구매 글의 경우 참여자가 1명 이상일\n경우 글을 삭제하거나 수정하실 수 없습니다.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.")
             .setLeftButton(R.drawable.box_grayf9_8dp,"취소")
-            .setRightButton(R.drawable.box_blue_59_8dp,"확인")
+            .setRightButton(R.drawable.box_green33_8dp,"확인")
             .setDialogClickListener(object : DialogClickListener {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
                     parent?.findNavController()?.popBackStack()
@@ -160,25 +168,11 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
                 }
 
                 override fun clickRightButton(dialog: ZeepyDialog) {
-                    viewModel.postReviewToServer()
+                    //Todo: 커뮤니티 글 업로드 서버통신
                     parent?.findNavController()?.popBackStack()
                     dialog.dismiss()
                 }
             }).build()
         registerReviewDialog.show(childFragmentManager, this.tag)
-    }
-
-    companion object {
-        const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
-        const val PERMISSION_WRITE_EXTERNAL_STORAGE =
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-        const val PERMISSION_READ_EXTERNAL_STORAGE =
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-
-        val PERMISSION_REQUESTED = arrayOf(
-            PERMISSION_CAMERA,
-            PERMISSION_WRITE_EXTERNAL_STORAGE,
-            PERMISSION_READ_EXTERNAL_STORAGE
-        )
     }
 }

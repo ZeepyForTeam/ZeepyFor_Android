@@ -1,9 +1,7 @@
-package com.zeepy.zeepyforandroid.community.writeposting
+package com.zeepy.zeepyforandroid.community.writeposting.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.community.controller.WritePostingController
 import com.zeepy.zeepyforandroid.community.data.entity.CollectContentModel
@@ -47,6 +45,10 @@ class WriteGroupPurchaseViewModel @Inject constructor(
     val uploadImages: LiveData<List<String>>
         get() = _uploadImages
 
+    private val _requestWritePosting = MutableLiveData<RequestWritePosting>()
+    val requestWritePosting: LiveData<RequestWritePosting>
+        get() = _requestWritePosting
+
     init {
         fetchAddressList()
     }
@@ -57,7 +59,16 @@ class WriteGroupPurchaseViewModel @Inject constructor(
     }
 
     fun checkEveryInfoEntered() {
-        val inputList = listOf(title, productName, productPrice, purchaseSite, targetCount, sharingMethod, content, targetCount)
+        val inputList = listOf(
+            title,
+            productName,
+            productPrice,
+            purchaseSite,
+            targetCount,
+            sharingMethod,
+            content,
+            targetCount
+        )
         val emptyList = inputList.filter { it.value.isNullOrEmpty() }
         _isEveryInfoEntered.value = emptyList.isEmpty()
     }
@@ -88,29 +99,20 @@ class WriteGroupPurchaseViewModel @Inject constructor(
         _collectList.value = collectList
     }
 
-    fun uploadPosting() {
-        addDisposable(
-            writePostingController.uploadPosting(
-                RequestWritePosting(
-                    selectedAddress.value!!,
-                    PostingType.JOINTPURCHASE.name,
-                    content.value,
-                    uploadImages.value!!,
-                    instructions.value,
-                    productName.value,
-                    productPrice.value,
-                    purchaseSite.value,
-                    sharingMethod.value,
-                    targetCount.value?.toInt(),
-                    title.value
-                )
-            ).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                           Log.e("success posting", "success")
-                }, {
-                    Log.e("fail posting", "fail")
-                })
-        )
+    fun sendRequestData() {
+        val requestData = RequestWritePosting(
+                selectedAddress.value!!,
+                PostingType.JOINTPURCHASE.name,
+                content.value,
+                uploadImages.value!!,
+                instructions.value,
+                productName.value,
+                productPrice.value,
+                purchaseSite.value,
+                sharingMethod.value,
+                targetCount.value?.toInt(),
+                title.value
+            )
+        _requestWritePosting.value = requestData
     }
 }

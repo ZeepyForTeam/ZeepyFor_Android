@@ -4,7 +4,7 @@ package com.zeepy.zeepyforandroid.di
 import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
-import com.zeepy.zeepyforandroid.network.auth.*
+import com.zeepy.zeepyforandroid.network.auth.AuthInterceptor
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.qualifier.*
@@ -81,13 +81,15 @@ object NetworkModule {
     @Provides
     @Singleton
     @ZeepyService
-    fun provideZeepyApiService(@ZeepyRetrofit retrofit: Retrofit): ZeepyApiService = retrofit.create(ZeepyApiService::class.java)
+    fun provideZeepyApiService(@ZeepyRetrofit retrofit: Retrofit): ZeepyApiService =
+        retrofit.create(ZeepyApiService::class.java)
 
 
     @Provides
     @Singleton
     @UnAuthService
-    fun provideUnAuthApiService(@UnAuthRetrofit retrofit: Retrofit): ZeepyApiService = retrofit.create(ZeepyApiService::class.java)
+    fun provideUnAuthApiService(@UnAuthRetrofit retrofit: Retrofit): ZeepyApiService =
+        retrofit.create(ZeepyApiService::class.java)
 
 //    @Provides
 //    @Singleton
@@ -95,5 +97,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(tokenController: TokenController, userPreferenceManager: UserPreferenceManager, zeepyLocalRepository: ZeepyLocalRepository): AuthInterceptor = AuthInterceptor(tokenController, userPreferenceManager, zeepyLocalRepository)
+    fun provideAuthInterceptor(
+        tokenController: TokenController,
+        userPreferenceManager: UserPreferenceManager,
+        zeepyLocalRepository: ZeepyLocalRepository
+    ): AuthInterceptor =
+        AuthInterceptor(tokenController, userPreferenceManager, zeepyLocalRepository)
+
+
 }

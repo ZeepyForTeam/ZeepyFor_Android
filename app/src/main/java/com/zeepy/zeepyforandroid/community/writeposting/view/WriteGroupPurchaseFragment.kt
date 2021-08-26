@@ -1,7 +1,6 @@
-package com.zeepy.zeepyforandroid.community.writeposting
+package com.zeepy.zeepyforandroid.community.writeposting.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CollectContentModel
+import com.zeepy.zeepyforandroid.community.writeposting.viewmodel.WriteGroupPurchaseViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteGroupPurchaseBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +40,7 @@ class WriteGroupPurchaseFragment: BaseFragment<FragmentWriteGroupPurchaseBinding
         binding.toolbarWritePosting.run {
             setTitle("글 작성하기")
             setBackButton{
-
+                findNavController().popBackStack()
             }
         }
     }
@@ -54,11 +54,10 @@ class WriteGroupPurchaseFragment: BaseFragment<FragmentWriteGroupPurchaseBinding
 
     private fun setCollectList() {
         binding.recyclerviewCollectList.run {
-            adapter = CollectListAdapter (object: CollectListAdapter.CollectListInterface{
+            adapter = CollectListAdapter (object: CollectListAdapter.CollectListInterface {
                 override fun select(item: CollectContentModel) {
                     viewModel.addCollectList(item)
                     viewModel.makeInstructionString()
-                    Log.e("instructions", "${viewModel.instructions.value}")
                 }
                 override fun unSelect(item: CollectContentModel) {
                     viewModel.removeCollectList(item)
@@ -74,8 +73,6 @@ class WriteGroupPurchaseFragment: BaseFragment<FragmentWriteGroupPurchaseBinding
         essentialLiveDataList.forEach {
             it.observe(viewLifecycleOwner) {
                 viewModel.checkEveryInfoEntered()
-                Log.e("fdasf", "ddfas")
-
             }
         }
         viewModel.isEveryInfoEntered.observe(viewLifecycleOwner) { isEveryEntered ->
@@ -89,8 +86,10 @@ class WriteGroupPurchaseFragment: BaseFragment<FragmentWriteGroupPurchaseBinding
 
     private fun uploadPosting() {
         binding.btnNext.setOnClickListener {
-            viewModel.uploadPosting()
-            findNavController().popBackStack()
+            viewModel.sendRequestData()
+            val argsToSend = viewModel.requestWritePosting.value
+            val action = WriteGroupPurchaseFragmentDirections.actionWriteGroupPurchaseFragmentToCommunityLoadPictureFragment(argsToSend)
+            findNavController().navigate(action)
         }
     }
 }

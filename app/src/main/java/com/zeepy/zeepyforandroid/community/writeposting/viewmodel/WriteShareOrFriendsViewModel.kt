@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.community.writeposting
+package com.zeepy.zeepyforandroid.community.writeposting.viewmodel
 
 import androidx.lifecycle.ViewModel
 

@@ -1,8 +1,7 @@
-package com.zeepy.zeepyforandroid.community.writeposting
+package com.zeepy.zeepyforandroid.community.writeposting.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.BR
 import com.zeepy.zeepyforandroid.community.data.entity.CollectContentModel

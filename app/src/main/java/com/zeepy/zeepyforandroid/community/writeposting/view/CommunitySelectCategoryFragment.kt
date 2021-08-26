@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.community.writeposting
+package com.zeepy.zeepyforandroid.community.writeposting.view
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -93,13 +93,20 @@ class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCateg
             var action: NavDirections? = null
             when(selectedCategory) {
                 PostingType.JOINTPURCHASE.name -> {
-                    action = CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteGroupPurchaseFragment()
+                    action =
+                        CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteGroupPurchaseFragment()
                 }
                 PostingType.FREESHARING.name -> {
-                    action = CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteShareOrFriendsFragment(selectedCategory)
+                    action =
+                        CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteShareOrFriendsFragment(
+                            selectedCategory
+                        )
                 }
                 PostingType.NEIGHBORHOODFRIEND.name -> {
-                    action = CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteShareOrFriendsFragment(selectedCategory)
+                    action =
+                        CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteShareOrFriendsFragment(
+                            selectedCategory
+                        )
                 }
             }
             action?.let { action -> findNavController().navigate(action) }
