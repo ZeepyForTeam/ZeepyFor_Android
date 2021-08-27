@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -31,6 +32,7 @@
             android:layout_marginTop="8dp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_warning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +53,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="- ZEEPY 회원탈퇴 시 ZEEPY 서비스에서 탈퇴되며, 회원탈퇴 후 재가입하더라도 탈퇴 전의 회원정보, 게시글 및 목록, 찜 목록 등은 복구되지 않습니다."
+                tools:text="ZEEPY 회원탈퇴 시 ZEEPY 서비스에서 탈퇴되며, 회원탈퇴 후 재가입하더라도 탈퇴 전의 회원정보, 게시글 및 목록, 찜 목록 등은 복구되지 않습니다."
+                android:text="@string/withdraw_warning1"
                 android:textSize="14sp"
                 android:lineHeight="24sp"
                 android:fontFamily="@font/nanum_square_round_regular"
@@ -64,24 +67,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_warning_content1"
                 android:layout_marginTop="31dp"
-                android:text="ZEEPY 회원탈퇴 시 회원정보 및 서비스 이용기록은 모두 삭제되며, 삭제된 데이터는 복구가 불가능합니다. 다만 법령에 의하여 보관해야 하는 경우 또는 회원가입 남용, 서비스 부정사용 등을 위한 정보는 회원탈퇴 후에도 일정기간 보관됩니다."
+                tools:text="ZEEPY 회원탈퇴 시 회원정보 및 서비스 이용기록은 모두 삭제되며, 삭제된 데이터는 복구가 불가능합니다. 다만 법령에 의하여 보관해야 하는 경우 또는 회원가입 남용, 서비스 부정사용 등을 위한 정보는 회원탈퇴 후에도 일정기간 보관됩니다."
+                android:text="@string/withdraw_warning2"
                 android:textSize="14sp"
                 android:lineHeight="24sp"
                 android:fontFamily="@font/nanum_square_round_regular"
                 android:textColor="@color/zeepy_black_3b"/>
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
-
-
-
-
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            android:layout_marginHorizontal="30dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_warning"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

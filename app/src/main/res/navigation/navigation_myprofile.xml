@@ -5,6 +5,7 @@
     android:id="@+id/navigation_myprofile"
     app:startDestination="@id/myProfileFragment">
 
+    <include app:graph="@navigation/navigation_graph"/>
     <include app:graph="@navigation/navigation_review"/>
 
     <fragment

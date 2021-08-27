@@ -66,4 +66,7 @@ interface ZeepyApiService {
         @Query("longitudeGreater") longitudeGreater: Double,
         @Query("longitudeLess") longitudeLess: Double
     ): Response<List<ResponseBuildingInfoDTO>>
+
+//    @DELETE("api/user/withdrawal")
+//    suspend fun deleteAccount(@Body userEmail: String): Response<>
 }

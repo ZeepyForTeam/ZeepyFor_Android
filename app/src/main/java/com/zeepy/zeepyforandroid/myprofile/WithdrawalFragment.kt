@@ -22,10 +22,20 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setToolbar()
+        setWithdrawButton()
     }
 
     private fun setToolbar() {
         requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
             ?.setTitle("회원탈퇴")
+    }
+
+    private fun setWithdrawButton() {
+        binding.btnNext.apply {
+            setText("회원 탈퇴")
+            setOnClickListener {
+
+            }
+        }
     }
 }

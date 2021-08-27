@@ -34,6 +34,14 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         return sharedPreferencesManager.getSharedPrefs(USER_ID, -1)
     }
 
+    fun saveUserEmail(id: Int) {
+        sharedPreferencesManager.putSharedPref(USER_EMAIL, id)
+    }
+
+    fun fetchUserEmail(): Int {
+        return sharedPreferencesManager.getSharedPrefs(USER_EMAIL, -1)
+    }
+
 
 
     companion object {
@@ -41,5 +49,6 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         private const val REFRESH_TOKEN = "refresh_token"
         private const val IS_ALREADY_LOGIN = "isAlreadyLogin"
         private const val USER_ID = "user_id"
+        private const val USER_EMAIL = "user_email"
     }
 }

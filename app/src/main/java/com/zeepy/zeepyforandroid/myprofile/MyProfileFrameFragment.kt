@@ -56,9 +56,7 @@ class MyProfileFrameFragment: BaseFragment<FragmentMyprofileFrameBinding>() {
         val navBar = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.reportFragment
-                || destination.id == R.id.reportOtherFragment
-                || destination.id == R.id.ziggysFragment) {
+            if (destination.id != R.id.myProfileFragment) {
                 navBar?.visibility = View.GONE
             } else {
                 navBar?.visibility = View.VISIBLE

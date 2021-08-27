@@ -88,9 +88,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
             getText(R.string.myprofile_loggedout) as SpannedString
         }
         val spannable = SpannableStringBuilder(text)
-        val annotations = text.getSpans(0, text.length, android.text.Annotation::class.java)
 
-        // replace placeholders in string
         fun SpannableStringBuilder.applyArgAnnotations(vararg args: Any) {
             val annotations = text.getSpans(0, text.length, android.text.Annotation::class.java)
             annotations.forEach { annotation ->
@@ -107,38 +105,45 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                             }
                         }
                     }
+                    "clickable" -> {
+                        spannable.setSpan(object: ClickableSpan() {
+                            val dest = annotation.value
+                            override fun onClick(widget: View) {
+                                when (dest) {
+                                    "signIn" -> {
+                                        findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                                    }
+                                    "editProfile" -> {
+                                        findNavController().navigate(R.id.action_myProfileFragment_to_EditMyProfileFragment)
+                                    }
+                                    else -> {
+                                        throw IllegalArgumentException("Invalid destination argument was given")
+                                    }
+                                }
+                            }
+                        },
+                            spannable.getSpanStart(annotation),
+                            spannable.getSpanEnd(annotation),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                    "font" -> {
+                        val fontName = annotation.value
+                        val typeface = ResourcesCompat.getFont(requireContext(), context?.resources!!.getIdentifier(fontName, "font", context?.packageName))
+                        spannable.setSpan(CustomTypefaceSpan(typeface!!), spannable.getSpanStart(annotation), spannable.getSpanEnd(annotation), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                    "color" -> {
+                        val colorName = annotation.value
+                        Log.e("colorname", "" + colorName)
+                        val colorId = context?.resources?.getIdentifier(colorName, "color", context?.packageName)
+                        Log.e("colorid", "" + colorId)
+                        Log.e("zeepyblack3b id", R.color.zeepy_black_3b.toString())
+                        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), colorId!!)), spannable.getSpanStart(annotation), spannable.getSpanEnd(annotation), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
                 }
             }
         }
 
         spannable.applyArgAnnotations(nickname)
-
-        for (annotation in annotations) {
-            if (annotation.key == "font") {
-                val fontName = annotation.value
-                val typeface = ResourcesCompat.getFont(requireContext(), context?.resources!!.getIdentifier(fontName, "font", context?.packageName))
-                spannable.setSpan(CustomTypefaceSpan(typeface!!), spannable.getSpanStart(annotation), spannable.getSpanEnd(annotation), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            }
-            if (annotation.key == "color") {
-                val colorName = annotation.value
-                Log.e("colorname", "" + colorName) //FIXME: Color가 다르게 칠해지는 경우가 있음..
-                val colorId = context?.resources?.getIdentifier(colorName, "color", context?.packageName)
-                Log.e("colorid", "" + colorId)
-                Log.e("zeepyblack3b id", R.color.zeepy_black_3b.toString())
-                spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), colorId!!)), spannable.getSpanStart(annotation), spannable.getSpanEnd(annotation), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-            if (annotation.key == "clickable") {
-                spannable.setSpan(object: ClickableSpan() {
-                    override fun onClick(widget: View) {
-                        findNavController().navigate(R.id.action_myProfileFragment_to_EditMyProfileFragment)
-                    }
-                },
-                spannable.getSpanStart(annotation),
-                spannable.getSpanEnd(annotation),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            }
-        }
         binding.tvMainMsg.text = spannable
         binding.tvMainMsg.movementMethod = LinkMovementMethod.getInstance()
     }

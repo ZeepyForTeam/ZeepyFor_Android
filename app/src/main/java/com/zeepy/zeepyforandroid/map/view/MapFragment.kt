@@ -3,7 +3,6 @@ package com.zeepy.zeepyforandroid.map.view
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,11 +13,9 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
@@ -38,6 +35,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
+    private lateinit var lastSelectedMarker: MapPOIItem
     private lateinit var myLocationButton: ConstraintLayout
     private val permReqLauncher =
         registerForActivityResult(
@@ -55,6 +53,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private val viewModel: MapViewModel by viewModels<MapViewModel>()
     private var buildings = listOf<Building>()
     private var markers = mutableListOf<MapPOIItem>()
+    private var markerId = 0
+    private var lastSelectedMarkerOriginalImage: Int = -1
+    private var existSelectedMarker = false
     private val eventListener = MarkerEventListener(context)
 
     companion object {
@@ -89,10 +90,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             topMargin = MetricsConverter.dpToPixel(16F, context).toInt()
         }
 
-        // 현재위치 버튼 클릭 시 permission 요청 (수정될 수도)
+        // 현재위치 버튼 클릭 시 permission 요청 (TODO: 요청 시점 수정될 수도)
         myLocationButton.setOnClickListener { getGpsLocation() }
 
-        //setMarkersObserver()
+        // setMarkersObserver()
         setOptionButton()
         setToolbar()
         mapView.setPOIItemEventListener(eventListener)
@@ -101,7 +102,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
 
         // FIXME: Error accessing mapPointBounds
-        // Log.e("mapbounds", mapView.mapPointBounds.topRight.mapPointGeoCoord.longitude.toString())
+         //Log.e("mapbounds", mapView.mapPointBounds.toString())
 
     }
 
@@ -148,7 +149,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
-    //툴바 세팅
     private fun setToolbar() {
         binding.mapToolbar.run {
             setTitle("지도로 검색하기")
@@ -160,7 +160,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
 
 
-    //Add & Set markers from buildings
+    // Add & Set markers from buildings
     private fun setMarkersList() {
         buildings.indices.forEach { index ->
             markers.add(
@@ -185,9 +185,44 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             }
         }
 
+        /**
+         * 마커가 선택되었을 시 실행되는 함수
+         */
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-            Log.e("map point after clicked", "" + p1?.mapPoint);
-            //TODO: marker info layout 띄우기
+            if (!existSelectedMarker) {
+                lastSelectedMarker = p1!!.clone()
+                lastSelectedMarkerOriginalImage = p1.customImageResourceId
+                p0?.removePOIItem(p1)
+
+                lastSelectedMarker.setCustomImageAnchor(0.5F, 1F)
+                lastSelectedMarker.customImageResourceId = R.drawable.icon_map_act
+
+                p0?.addPOIItem(lastSelectedMarker)
+                mapView.setMapCenterPoint(lastSelectedMarker.mapPoint, false)
+                existSelectedMarker = true
+            } else {
+                if (p1?.tag != lastSelectedMarker.tag) {
+                    val markerUnselected = lastSelectedMarker.clone()
+                    p0?.removePOIItem(lastSelectedMarker)
+
+                    markerUnselected.setCustomImageAnchor(0.5F, 0.5F)
+                    markerUnselected.customImageResourceId = lastSelectedMarkerOriginalImage
+
+                    p0?.addPOIItem(markerUnselected)
+
+                    lastSelectedMarker = p1!!.clone()
+                    lastSelectedMarkerOriginalImage = p1.customImageResourceId
+                    p0?.removePOIItem(p1)
+
+                    lastSelectedMarker.setCustomImageAnchor(0.5F, 1F)
+                    lastSelectedMarker.customImageResourceId = R.drawable.icon_map_act
+
+                    p0?.addPOIItem(lastSelectedMarker)
+                    mapView.setMapCenterPoint(lastSelectedMarker.mapPoint, false)
+                    existSelectedMarker = true
+                }
+            }
+
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
@@ -209,23 +244,41 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     }
 
-    // 지도에 마커 띄우기 (테스트 용도)
+    /**
+     * 마커를 생성하고 지도에 띄워주는 함수
+     */
     private fun setMarker(lat: Double, lng: Double, resourceID: Int) {
         val marker = MapPOIItem()
         marker.apply {
             itemName = "테스트 마커"
+            tag = markerId++
             mapPoint = MapPoint.mapPointWithGeoCoord(lat, lng)
+            setCustomImageAnchor(0.5F, 0.5F)
             markerType = MapPOIItem.MarkerType.CustomImage
             customImageResourceId = resourceID
-            setCustomImageAnchor(0.5F, 1F)
-            selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-            customSelectedImageResourceId = R.drawable.icon_map_act //FIXME: 이 이미지 사용했을 때 위치 오차가 발생 (이미지 크기 차이로 인해 발생하는 것으로 추정)
+            // customSelectedImageResourceId 사용했을 때 위치 오차가 발생 (이미지 크기 차이로 인해 발생하는 것으로 추정)
             isCustomImageAutoscale = false
             isShowCalloutBalloonOnTouch = false
-
         }
-        //draw marker
+        // draw marker
         mapView.addPOIItem(marker)
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lng), false)
+    }
+
+    /**
+     * 마커 객체를 복사하는 함수
+     */
+    private fun MapPOIItem.clone(): MapPOIItem {
+        val marker = MapPOIItem()
+        marker.itemName = this.itemName
+        marker.tag = this.tag
+        marker.mapPoint = this.mapPoint
+        marker.markerType = this.markerType
+        marker.customImageResourceId = this.customImageResourceId
+        marker.isCustomImageAutoscale = this.isCustomImageAutoscale
+        marker.isShowCalloutBalloonOnTouch = this.isShowCalloutBalloonOnTouch
+
+        return marker
     }
 
     private fun getGpsLocation() {

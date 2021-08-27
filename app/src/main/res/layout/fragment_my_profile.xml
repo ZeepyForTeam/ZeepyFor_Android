@@ -81,7 +81,7 @@
             android:id="@+id/tv_wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="리뷰 관리"
+            android:text="찜 목록"
             android:textAlignment="center"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textSize="12sp"
