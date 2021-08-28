@@ -1,14 +1,19 @@
 package com.zeepy.zeepyforandroid.community.writeposting
 
+import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -26,6 +31,13 @@ import com.zeepy.zeepyforandroid.review.view.adapter.UploadPictureAdapter
 import com.zeepy.zeepyforandroid.util.FileConverter.asBitmap
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okio.BufferedSink
 import java.io.File
 
 @AndroidEntryPoint
@@ -44,7 +56,13 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changeRequestPosting(args.requestWritePosting)
+
+        viewModel.uploadUriImages.observe(viewLifecycleOwner) {
+            Log.e("uri ruiruir", "$it")
+        }
 
         setPictureList()
         setRegisterButton()
@@ -52,6 +70,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
         openCamera()
         stagePictures()
         completeUpload()
+        successUpload()
     }
 
     private fun setPictureList() {
@@ -103,8 +122,14 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     private val galleryActivityLauncher =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { imageList ->
             imageList.forEach { uri ->
+                Log.e("dfjnrijgnwierbni", "${uri.path}")
                 val bitmap = uri.asBitmap(requireContext().contentResolver)
+                val requestBody = BitmapRequestBody(bitmap!!)
+                val multipartBody = MultipartBody.Part.createFormData("imgs","zeepy", requestBody)
+
+                viewModel.addRequestBodyList(multipartBody)
                 pictures.add(PictureModel(bitmap))
+                viewModel.addUploadUriImages(uri)
                 viewModel.changeUploadPictures(pictures)
             }
         }
@@ -113,6 +138,8 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if (isSaved) {
                 pictures.add(PictureModel(pictureUri.asBitmap(requireContext().contentResolver)))
+//                viewModel.addRequestBodyList(BitmapRequestBody(pictureUri.asBitmap(requireContext().contentResolver)!!))
+                viewModel.addUploadUriImages(pictureUri)
                 viewModel.changeUploadPictures(pictures)
             }
         }
@@ -151,28 +178,54 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     private fun completeUpload() {
-        binding.btnRegister.setOnClickListener { showReviewRegisterDialog() }
-        binding.tvSkip.setOnClickListener { showReviewRegisterDialog() }
+        binding.btnRegister.setOnClickListener { showPostingRegisterDialog() }
+        binding.tvSkip.setOnClickListener { showPostingRegisterDialog() }
     }
 
-    private fun showReviewRegisterDialog() {
+    private fun showPostingRegisterDialog() {
         val parent = (parentFragment as NavHostFragment).parentFragment
-        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", true)
+        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", "community")
             .setContent("*공동구매 글의 경우 참여자가 1명 이상일\n경우 글을 삭제하거나 수정하실 수 없습니다.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.")
             .setLeftButton(R.drawable.box_grayf9_8dp,"취소")
             .setRightButton(R.drawable.box_green33_8dp,"확인")
             .setDialogClickListener(object : DialogClickListener {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
-                    parent?.findNavController()?.popBackStack()
                     dialog.dismiss()
                 }
 
                 override fun clickRightButton(dialog: ZeepyDialog) {
-                    //Todo: 커뮤니티 글 업로드 서버통신
-                    parent?.findNavController()?.popBackStack()
-                    dialog.dismiss()
+                    uploadPosting()
                 }
             }).build()
         registerReviewDialog.show(childFragmentManager, this.tag)
+    }
+
+    private fun uploadPosting() {
+        if(viewModel.uploadBitmapImages.value.isNullOrEmpty()) {
+//            viewModel.uploadPostingToZeepyServer()
+        } else {
+            viewModel.getPresignedUrl(requireContext().contentResolver)
+//            viewModel.uploadPostingToZeepyServer()
+        }
+
+        viewModel.multipartBodyUrlPair.observe(viewLifecycleOwner) {
+//            viewModel.uploadPostingToZeepyServer()
+        }
+    }
+
+    private fun successUpload() {
+        viewModel.successUpload.observe(viewLifecycleOwner) { isSuccessful ->
+            if (isSuccessful) {
+                viewModel.uploadPostingToZeepyServer()
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
+        override fun contentType(): MediaType = "image/jpeg".toMediaType()
+        override fun writeTo(sink: BufferedSink) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, sink.outputStream())
+        }
     }
 }

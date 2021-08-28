@@ -36,6 +36,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        val url = "https://zeepy.s3.ap-northeast-2.amazonaws.com/images/3u1p8532812385901-14254?13nfjnuao9uhf913h"
+        val path = url.replace("https://zeepy.s3.ap-northeast-2.amazonaws.com/","").substringBefore("?")
+        Log.e("path", "$path")
+
+
+
         writeReview()
         setFilterList()
         changeAddress()

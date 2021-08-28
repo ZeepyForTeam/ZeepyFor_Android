@@ -1,6 +1,8 @@
 package com.zeepy.zeepyforandroid.util
 
 import android.content.ContentResolver
+import android.content.ContentUris
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
@@ -8,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import androidx.core.graphics.rotationMatrix
 import com.zeepy.zeepyforandroid.loadUrl
 import io.reactivex.Observable
 import okhttp3.MediaType
@@ -17,6 +20,7 @@ import okhttp3.RequestBody
 import okio.BufferedSink
 import okio.IOException
 import okio.source
+import java.io.File
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
@@ -24,6 +28,15 @@ import java.util.*
 object FileConverter {
     fun getBody(key: String, value: Any): MultipartBody.Part {
         return MultipartBody.Part.createFormData(key, value.toString())
+    }
+
+    fun Uri.tofile(contentResolver: ContentResolver): String? {
+        val cursor= contentResolver.query(this,null, null, null,null)
+        cursor?.moveToNext()
+        val path = cursor?.getString(cursor.getColumnIndex("_data"))
+        cursor?.close()
+       return path
+
     }
 
     fun Uri.asMultipart(name: String, contentResolver: ContentResolver): MultipartBody.Part? {
@@ -75,5 +88,4 @@ object FileConverter {
         }
         return bitmap
     }
-
 }
