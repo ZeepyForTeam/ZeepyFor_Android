@@ -3,18 +3,23 @@ package com.zeepy.zeepyforandroid.community.postingdetail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.base.BaseViewModel
+import com.zeepy.zeepyforandroid.community.controller.WritePostingController
 import com.zeepy.zeepyforandroid.community.data.entity.CommentModel
 import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.DateParser.getCurrentDateComment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class PostingDetailViewModel @Inject constructor(
+    private val writePostingController: WritePostingController,
     private val userPreferenceManager: UserPreferenceManager,
     private val postingListRepository: PostingListRepository
 ): BaseViewModel() {
@@ -40,6 +45,10 @@ class PostingDetailViewModel @Inject constructor(
 
     val commentWriting = MutableLiveData<String>()
 
+    private val _superCommentId = MutableLiveData<Int>()
+    val superCommentId: LiveData<Int>
+        get() = _superCommentId
+
     private val currentList = mutableListOf<CommentModel?>()
 
     val isSecretCommentWriting = MutableLiveData<Boolean>()
@@ -50,6 +59,10 @@ class PostingDetailViewModel @Inject constructor(
 
     init {
         _userId.value = userPreferenceManager.fetchUserId()
+    }
+
+    fun changeSuperCommentId(id: Int) {
+        _superCommentId.value = id
     }
 
     fun changeAchievement(rate: Int) {
@@ -90,15 +103,37 @@ class PostingDetailViewModel @Inject constructor(
             currentList.add(
                 CommentModel(
                     userId.value!!,
-                    "https://github.com/SONPYEONGHWA.png",
-                    "hello",
+                    postingDetail.value?.imageWriter,
+                    "nickname",
                     commentWriting.value.toString(),
-                    "",
+                    getCurrentDateComment(),
                     isSecretCommentWriting.value ?: false,
                     null
                 )
             )
             _commentList.postValue(currentList)
+        }
+    }
+
+    fun postCommentToServer() {
+        if (!commentWriting.value.isNullOrEmpty()) {
+            addDisposable(
+                writePostingController.writeComment(
+                    postingId.value!!,
+                    RequestWriteCommentDTO(
+                        commentWriting.value!!,
+                        isSecretCommentWriting.value ?: false,
+                        superCommentId.value
+                    )
+                ).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                               fetchPostingDetailContent()
+                    }, {
+                        it.printStackTrace()
+                    })
+
+            )
         }
     }
 }

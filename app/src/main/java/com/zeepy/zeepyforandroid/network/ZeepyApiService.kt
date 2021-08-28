@@ -4,6 +4,7 @@ import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
@@ -80,4 +81,7 @@ interface ZeepyApiService {
 
     @GET("/api/s3")
     fun getPresignedUrl(): Observable<PreSignedUrlDTO>
+
+    @POST("/api/community/comment/{id}")
+    fun postComment(@Path ("id") id: Int, @Body requestCommentRequest: RequestWriteCommentDTO): Completable
 }
