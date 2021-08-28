@@ -84,7 +84,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(){
 
     private fun loginWithKAKAO() {
         binding.buttonLoginKakao.setOnClickListener {
-            checkKakaoToken()
+            getKakaoLogin()
         }
     }
 
@@ -99,7 +99,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(){
                         }
                     } else {
                         //토큰 유효성 체크 성공(필요 시 sdk내부에서 토큰 갱신됨)
-
                     }
                 }
             } else {
@@ -112,12 +111,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(){
     private fun getKakaoLogin() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
+                Log.e("error", "${error.message}")
                 //Login Fail
             } else if (token != null) {
-                //Login Success
-                    Log.e("token", "${token.accessToken}")
-                Log.e("token", "${token.refreshToken}")
-
                 viewModel.kakaoLogIn(token.accessToken)
             }
         }

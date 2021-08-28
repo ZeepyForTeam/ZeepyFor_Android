@@ -11,11 +11,6 @@ class ZeepyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        context = this
         KakaoSdk.init(this, BuildConfig.KAKAO_APP_KEY)
-    }
-
-    companion object {
-        var context:Context? = null
     }
 }

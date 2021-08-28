@@ -27,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         disableDarkMode()
         initNavController()
-        getAppKeyHash()
 
-        pref.putSharedPref("userIdx", 3)
+        Log.e("key hash", "${com.kakao.util.helper.Utility.getKeyHash(this)}")
 
     }
 
