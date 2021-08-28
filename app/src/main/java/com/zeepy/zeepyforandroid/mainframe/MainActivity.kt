@@ -1,9 +1,14 @@
 package com.zeepy.zeepyforandroid.mainframe
 
+import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
+import android.util.DisplayMetrics
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
@@ -32,22 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    // 카카오 지도 hash key 보기
-    fun getAppKeyHash() {
-        try {
-            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            for(i in info.signatures) {
-                val md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(i.toByteArray())
-
-                val something = String(Base64.encode(md.digest(), 0)!!)
-                Log.e("Debug key", something)
-            }
-        } catch(e: Exception) {
-            Log.e("Not found", e.toString())
-        }
-    }
-
     private fun disableDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
@@ -55,5 +44,28 @@ class MainActivity : AppCompatActivity() {
     private fun initNavController() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+    }
+
+
+    fun getDeviceSize(): List<Int> {
+        var deviceWidth = 0
+        var deviceHeight = 0
+        val outMetrics = DisplayMetrics()
+        //defaultDisplay Deprecated로 인한 Version 처리
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val display = this.display
+            display?.getRealMetrics(outMetrics)
+            deviceHeight = outMetrics.heightPixels
+            deviceWidth = outMetrics.widthPixels
+        } else {
+            @Suppress("DEPRECATION")
+            val display = this.windowManager.defaultDisplay
+            @Suppress("DEPRECATION")
+            display.getMetrics(outMetrics)
+            deviceHeight = outMetrics.heightPixels
+            deviceWidth = outMetrics.widthPixels
+        }
+        return listOf(deviceWidth, deviceHeight)
     }
 }

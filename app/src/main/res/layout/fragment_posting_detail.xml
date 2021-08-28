@@ -72,7 +72,7 @@
                         android:id="@+id/iv_picture_writer"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        load_shapeableimage="@{viewModel.postingDetail.imageWriter}"
+                        load_shapeableimage="@{viewModel.postingDetail.data.imageWriter}"
                         android:layout_marginTop="15dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/paris"
@@ -91,7 +91,7 @@
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/nanum_square_round_bold"
                         android:textSize="12sp"
-                        android:text="@{viewModel.postingDetail.nameWriter.toString()}"
+                        android:text="@{viewModel.postingDetail.data.nameWriter.toString()}"
                         android:textColor="@color/zeepy_black_3b"
                         app:layout_constraintTop_toTopOf="@id/iv_picture_writer"
                         app:layout_constraintBottom_toBottomOf="@id/iv_picture_writer"
@@ -105,7 +105,7 @@
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/nanum_square_round_regular"
                         android:textSize="12sp"
-                        android:text="@{viewModel.postingDetail.postingTime}"
+                        android:text="@{viewModel.postingDetail.data.postingTime}"
                         android:textColor="@color/zeepy_gray_9a"
                         app:layout_constraintTop_toTopOf="@id/tv_nickname"
                         app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
@@ -117,7 +117,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/tag_posting"
-                        android:text="@{viewModel.postingDetail.typePosting}"
+                        android:text="@{viewModel.postingDetail.data.typePosting}"
+                        android:visibility="@{viewModel.postingDetail.data != null ? view.VISIBLE : view.GONE}"
                         android:textColor="@color/white"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:textSize="12sp"
@@ -127,13 +128,24 @@
                         app:layout_constraintBottom_toBottomOf="@id/tv_time_posting"
                         app:layout_constraintEnd_toEndOf="@id/framelayout_content"/>
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_more_horizontal"
+                        android:layout_marginEnd="12dp"
+                        android:visibility="@{viewModel.userId == viewModel.postingDetail.data.writerUserIdx ? view.VISIBLE : view.GONE}"
+                        app:layout_constraintTop_toTopOf="@id/tv_tag_posting"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_tag_posting"
+                        app:layout_constraintEnd_toStartOf="@id/tv_tag_posting"/>
+
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_title_posting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:textSize="16sp"
-                        android:text="@{viewModel.postingDetail.titlePosting}"
+                        android:text="@{viewModel.postingDetail.data.titlePosting}"
                         android:layout_marginTop="24dp"
                         app:layout_constraintHorizontal_bias="0.0"
                         android:textColor="@color/zeepy_black_3b"
@@ -156,7 +168,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nanum_square_round_regular"
                             android:textSize="12sp"
-                            android:text="@{viewModel.postingDetail.contentPosting}"
+                            android:text="@{viewModel.postingDetail.data.contentPosting}"
                             android:textColor="@color/zeepy_black_3b"
                             android:lineSpacingExtra="8sp"
                             tools:text="@string/dummy_content_posting"/>
@@ -274,6 +286,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginTop="20dp"
+                        android:visibility="@{viewModel.postingDetail.data.picturesPosting.empty == true ? view.GONE : view.VISIBLE}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:orientation="horizontal"
                         app:layout_constraintDimensionRatio="1:0.267"
@@ -362,7 +375,7 @@
                             android:textSize="10sp"
                             android:textColor="@color/zeepy_black_3b"
                             android:fontFamily="@font/nanum_square_round_extrabold"
-                            android:text="@{@string/achievement_progress_count_format(viewModel.postingDetail.targetNumberOfPeople)}"
+                            android:text="@{@string/achievement_progress_count_format(viewModel.postingDetail.data.targetNumberOfPeople)}"
                             app:layout_constraintTop_toTopOf="@id/tv_start_count"
                             app:layout_constraintEnd_toEndOf="@id/progressbar_achievement"/>
 
@@ -472,6 +485,18 @@
                     app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_posting_detail"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:lottie_rawRes="@raw/zeepy_loading"
+                app:lottie_loop="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

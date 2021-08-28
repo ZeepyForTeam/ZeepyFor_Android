@@ -85,9 +85,10 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             app:lottie_rawRes="@raw/zeepy_loading"
+            app:lottie_loop="true"
             app:layout_constraintTop_toTopOf="@id/rv_storyzip"
             app:layout_constraintStart_toStartOf="@id/rv_storyzip"
             app:layout_constraintEnd_toEndOf="@id/rv_storyzip"

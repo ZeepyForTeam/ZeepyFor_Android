@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_necessory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="(필수)"
+                android:textColor="@color/zeepy_green_33"
+                android:textSize="14sp"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/nanum_square_round_bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_necessory_input_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아래 내용 입력 후 참여를 확하세요!"
+                android:textColor="@color/black"
+                app:fontFamily="@font/nanum_square_round_bold"
+                android:textSize="14sp"
+                android:layout_marginStart="6dp"
+                android:fontFamily="@font/nanum_square_round_bold"
+                app:layout_constraintTop_toTopOf="@id/textview_necessory"
+                app:layout_constraintBottom_toBottomOf="@id/textview_necessory"
+                app:layout_constraintStart_toEndOf="@id/textview_necessory"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edittext_information"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintDimensionRatio="1:0.363"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:paddingStart="12dp"
+                android:paddingTop="17dp"
+                android:foreground="@drawable/box_stroke_gray9a_5dp"
+                android:textColor="@color/zeepy_black_3b"
+                android:textColorHint="@color/zeepy_gray_9a"
+                android:textSize="14sp"
+                android:gravity="top"
+                android:hint="[제품명/구매개/연락처]등을 남겨주세요."
+                app:layout_constraintTop_toBottomOf="@id/textview_necessory_input_notice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_post_comment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="댓글 작성하기"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:fontFamily="@font/nanum_square_round_regular"
+                android:background="@drawable/box_green33_8dp"
+                app:layout_constraintDimensionRatio="1:0.164"
+                app:layout_constraintTop_toBottomOf="@id/edittext_information"
+                app:layout_constraintStart_toStartOf="@id/edittext_information"
+                app:layout_constraintEnd_toEndOf="@id/edittext_information"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

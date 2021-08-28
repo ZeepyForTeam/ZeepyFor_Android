@@ -13,4 +13,5 @@ class ZeepyApplication: Application() {
 
         KakaoSdk.init(this, BuildConfig.KAKAO_APP_KEY)
     }
+
 }

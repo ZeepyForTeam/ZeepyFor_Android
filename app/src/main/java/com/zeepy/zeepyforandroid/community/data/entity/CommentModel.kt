@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class CommentModel(
     val commentWriterIdx: Int,
     val profile: String?,
-    val nickname: String,
+    val nickname: String?,
     val comment: String,
     val date: String,
     val isSecretComment: Boolean,

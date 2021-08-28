@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.community.postingdetail
 
 import android.app.Activity
 import android.content.Context
+import android.net.Network
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
@@ -18,15 +19,17 @@ import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
+import com.zeepy.zeepyforandroid.customview.ParticipationDialog
 import com.zeepy.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import com.zeepy.zeepyforandroid.util.NetworkStatus
+import com.zeepy.zeepyforandroid.util.ext.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
-    @Inject lateinit var prefs: SharedPreferencesManager
     private val viewModel by viewModels<PostingDetailViewModel>()
     private val args: PostingDetailFragmentArgs by navArgs()
 
@@ -43,8 +46,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changePostingId(args.postingModel.id)
 
-        Log.e("userIdx", prefs.getSharedPrefs("userIdx", -1).toString())
-
         setToolbar()
         setPictureRecyclerview()
         getPostingDetailContent()
@@ -53,17 +54,20 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         setParticipationButton()
         setCommentsRecyclerView()
         writeComment()
+        participationGroupPurchase()
         setComments()
-
-        viewModel.achievementRate.observe(viewLifecycleOwner) {
-            binding.progressbarAchievement.progress = it
-        }
     }
 
     private fun setToolbar() {
         binding.toolbar.apply {
             setTitle("커뮤니티")
-            setScrapButton {}
+            setScrapButton {
+                if(binding.checkboxScrap.isChecked) {
+                    viewModel.scrapPosting()
+                } else {
+                    viewModel.cancelScrapPosting()
+                }
+            }
             setBackButton{
                 findNavController().popBackStack()
             }
@@ -95,25 +99,39 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     private fun changePostingDatas() {
         viewModel.postingDetail.observe(viewLifecycleOwner) { postingdetail ->
-            if(postingdetail.picturesPosting.isNullOrEmpty()) {
-                binding.rvPicturePosting.visibility = View.GONE
+            when(postingdetail.status) {
+                NetworkStatus.State.LOADING -> {
+                    controlLoadingAnimation(true)
+                }
+                NetworkStatus.State.SUCCESS -> {
+                    (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(postingdetail.data?.picturesPosting)
+                    viewModel.changeIsGroupPurchase()
+                    viewModel.changeCommentList(postingdetail.data?.comments)
+                    checkLikeButton(postingdetail.data?.isLiked ?: false)
+                    updateAchievementRate()
+                    controlLoadingAnimation(false)
+                }
+                NetworkStatus.State.ERROR -> {
+                    controlLoadingAnimation(false)
+                }
             }
-            (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(postingdetail.picturesPosting)
-            viewModel.changeIsGroupPurchase()
-            viewModel.changeCommentList(postingdetail.comments)
-            updateAchievementRate()
+        }
+    }
 
-//            Observable.just( postingdetail.picturesPosting.map { PictureModel(FileConverter.convertUrlToBitmap(it.picture)) })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                        (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(it)
-//                        viewModel.changeIsGroupPurchase()
-//                        viewModel.changeCommentList(postingdetail.comments)
-//                    }, {
-//                        it.printStackTrace()
-//                    })
+    private fun participationGroupPurchase() {
+        binding.btnParticipation.onClick {
+            val participationDialog = ParticipationDialog(object : ParticipationDialog.ParticipationListener{
+                override fun participation(participation: String) {
+                    viewModel.changeParticipationComment(participation)
+                }
+            })
+            participationDialog.show(childFragmentManager, this.tag)
+        }
 
+        viewModel.participationComment.observe(viewLifecycleOwner) { comment ->
+            if (!comment.isNullOrEmpty()) {
+                viewModel.participateGroupPurchase()
+            }
         }
     }
 
@@ -125,12 +143,15 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     }
 
     private fun updateAchievementRate() {
+        viewModel.achievementRate.observe(viewLifecycleOwner) {
+            binding.progressbarAchievement.progress = it
+        }
         binding.tvRateAchievement.apply {
-            viewModel.postingDetail.value?.run {
+            viewModel.postingDetail.value?.data?.run {
                 val participantsCount = (participants.size).toDouble()
-                val target = targetNumberOfPeople.toDouble()
+                val target = targetNumberOfPeople?.toDouble()
                 if (targetNumberOfPeople != null && this.participants.isNotEmpty()) {
-                    viewModel.changeAchievement(((participantsCount/target)* PERCENTAGE).toInt())
+                    viewModel.changeAchievement(((participantsCount/target!!)* PERCENTAGE).toInt())
                 } else {
                     viewModel.changeAchievement(0)
                 }
@@ -157,11 +178,17 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                 adapter = CommentsAdapter(
                     CommentAuthenticatedModel(
                         viewModel.userId.value ?: -1,
-                        viewModel.postingDetail.value?.writerUserIdx,
+                        viewModel.postingDetail.value?.data?.writerUserIdx,
                         null
                     )
                 )
             }
+        }
+    }
+
+    private fun checkLikeButton(isLiked: Boolean) {
+        binding.toolbar.binding.checkboxScrap.apply {
+            check(isLiked)
         }
     }
 
@@ -180,9 +207,16 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
-    fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    private fun controlLoadingAnimation(play: Boolean) {
+        binding.lottiePostingDetail.run {
+            if (play) {
+                this.visibility = View.VISIBLE
+                this.playAnimation()
+            } else {
+                this.visibility = View.GONE
+                this.cancelAnimation()
+            }
+        }
     }
 
 

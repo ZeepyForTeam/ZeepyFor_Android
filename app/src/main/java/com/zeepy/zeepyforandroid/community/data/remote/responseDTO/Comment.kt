@@ -10,7 +10,7 @@ data class Comment(
     val id: Int,
     val isParticipation: Boolean,
     val isSecret: Boolean,
-    val subComments: List<Comment?>,
+    val subComments: List<Comment?>?,
     val superCommentId: Int?,
     val writer: Writer
 ) {
@@ -26,8 +26,8 @@ data class Comment(
         )
     }
 
-    private fun toNestedCommentModel(): List<NestedCommentModel> {
-        return subComments.map { comment ->
+    private fun toNestedCommentModel(): List<NestedCommentModel>? {
+        return subComments?.map { comment ->
             NestedCommentModel(
                 comment?.writer?.id,
                 comment?.writer?.name,

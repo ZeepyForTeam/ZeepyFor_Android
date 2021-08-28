@@ -10,10 +10,10 @@ data class ResponsePostingDetail(
     val id: Int,
     val communityCategory: String,
     val address: String,
-    val productName: String,
-    val sharingMethod: String,
-    val targetNumberOfPeople: Int,
-    val currentNumberOfPeople: Int,
+    val productName: String?,
+    val sharingMethod: String?,
+    val targetNumberOfPeople: Int?,
+    val currentNumberOfPeople: Int?,
     val title: String,
     val content: String,
     val user: User,
@@ -24,8 +24,8 @@ data class ResponsePostingDetail(
     val imageUrls: List<String>,
     val createdTime: String,
     val isCompleted: Boolean,
-    val productPrice: String,
-    val purchasePlace: String
+    val productPrice: String?,
+    val purchasePlace: String?
 ){
     fun toPostingDetailModel(): PostingDetailModel {
         return PostingDetailModel(
