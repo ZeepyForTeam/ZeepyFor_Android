@@ -5,8 +5,8 @@ import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import io.reactivex.Single
 import javax.inject.Inject
 
-class NotAuthSearchAddressDataSourceImpl @Inject constructor(
+class SearchAddressDataSourceImpl @Inject constructor(
     private val zeepyApiService: ZeepyApiService
-): NotAuthSearchAddressDataSource {
+): SearchAddressDataSource {
     override fun searchBuildingAddress(address: String): Single<ResponseSearchBuildingAddressDTO> = zeepyApiService.searchBuildingAddress(address)
 }

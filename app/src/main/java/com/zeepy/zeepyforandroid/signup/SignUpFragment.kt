@@ -1,10 +1,16 @@
 package com.zeepy.zeepyforandroid.signup
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +34,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         setInitView()
         showEmailRepetitionNotice()
         showNickNameRepetitionNotice()
+        successSignUp()
+        checkEveryInputEntered()
+        checkRepetition()
     }
 
     private fun setInitView() {
@@ -42,9 +51,39 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             setText("완료")
             setUnUsableButton()
             onClick{
-// Todo: 서버팀에서 회원가입 완료하면 주석해제
-//                viewModel.signUp()
+                viewModel.signUp()
             }
+        }
+    }
+
+    private fun checkEveryInputEntered() {
+        val inputList = listOf(viewModel.email, viewModel.name, viewModel.nickname, viewModel.isEmailRepetition, viewModel.isNickNameRepetition,
+         viewModel.password, viewModel.passwordCheck,viewModel.termsApprove, viewModel.personalInfoApprove)
+
+        inputList.forEach { liveData ->
+            liveData.observe(viewLifecycleOwner) {
+                Log.e("${liveData.value}", "$it")
+                viewModel.checkPasswordCheckMatched()
+                viewModel.checkEveryInputEntered()
+            }
+        }
+
+        viewModel.isInputEverythig.observe(viewLifecycleOwner) { isEnabledSignUp ->
+            Log.e("isEnabledSignUp", "$isEnabledSignUp")
+            if (isEnabledSignUp) {
+                binding.buttonSignup.setUsableButton()
+            } else {
+                binding.buttonSignup.setUnUsableButton()
+            }
+        }
+    }
+
+    private fun checkRepetition() {
+        viewModel.nickname.observe(viewLifecycleOwner) {
+            viewModel.changeTrueNickNameRepetition()
+        }
+        viewModel.email.observe(viewLifecycleOwner) {
+            viewModel.changeTrueEmailRepetition()
         }
     }
 
@@ -69,8 +108,15 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     View.GONE
                 }
             }
-
         }
     }
 
+
+    private fun successSignUp() {
+        viewModel.signUpSuccess.observe(viewLifecycleOwner) {
+            if(it) {
+                findNavController().popBackStack()
+            }
+        }
+    }
 }

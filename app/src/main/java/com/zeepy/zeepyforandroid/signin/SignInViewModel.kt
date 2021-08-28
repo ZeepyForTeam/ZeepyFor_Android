@@ -3,10 +3,14 @@ package com.zeepy.zeepyforandroid.signin
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.kakao.auth.authorization.accesstoken.AccessToken
 import com.zeepy.zeepyforandroid.base.BaseViewModel
+import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.signin.controller.SignInController
-import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
+import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
+import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
+import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,7 +20,7 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     private val signInController: SignInController,
     private val userPreferenceManager: UserPreferenceManager
-): BaseViewModel() {
+) : BaseViewModel() {
     val email = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
 
@@ -43,7 +47,7 @@ class SignInViewModel @Inject constructor(
     fun signIn() {
         addDisposable(
             signInController.signin(
-                RequestLogin(
+                RequestLoginDTO(
                     email.value.toString(),
                     password.value.toString()
                 )
@@ -51,25 +55,56 @@ class SignInViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     if (response != null) {
-                        userPreferenceManager.run {
-                            _loginSuccess.postValue(true)
-                            saveIsAlreadyLogin(true)
-                            saveUserAccessToken(response.accessToken)
-                            saveUserRefreshToken(response.refreshToken)
-                            saveUserId(response.userId)
-
-                            Log.e("login access", "${response.accessToken}")
-                            Log.e("login refresh", "${response.refreshToken}")
-
-                        }
+                        successSignIn(response)
                     }
                 }, {
                     it.printStackTrace()
-                    userPreferenceManager.run {
-                        _loginSuccess.postValue(false)
-                        saveIsAlreadyLogin(false)
-                    }
+                    failedToSignIn()
                 })
         )
+    }
+
+    fun kakaoLogIn(accessToken: String) {
+        addDisposable(
+            signInController.kakaoSignin(RequestSocialSigninDTO(accessToken))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    successSignIn(response)
+                }, {
+                    failedToSignIn()
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun naverLogIn(accessToken: String) {
+        addDisposable(
+            signInController.naverSignin(RequestSocialSigninDTO(accessToken))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    successSignIn(response)
+                }, {
+                    it.printStackTrace()
+                    failedToSignIn()
+                })
+        )
+    }
+
+    private fun failedToSignIn() {
+        userPreferenceManager.saveIsAlreadyLogin(false)
+        _loginSuccess.postValue(false)
+    }
+
+    private fun successSignIn(response: ResponseAuthDTO) {
+        _loginSuccess.postValue(true)
+        userPreferenceManager.apply {
+            saveIsAlreadyLogin(true)
+            saveUserAccessToken(response.accessToken)
+            saveUserRefreshToken(response.refreshToken)
+            saveUserEmail(response.userEmail)
+            saveUserId(response.userId)
+        }
     }
 }

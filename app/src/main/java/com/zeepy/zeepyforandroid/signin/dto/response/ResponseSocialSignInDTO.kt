@@ -1,6 +1,6 @@
-package com.zeepy.zeepyforandroid.network.auth.dto
+package com.zeepy.zeepyforandroid.signin.dto.response
 
-data class ResponseAuthDTO(
+data class ResponseSocialSignInDTO(
     val accessToken: String,
     val refreshToken: String,
     val userEmail: String,

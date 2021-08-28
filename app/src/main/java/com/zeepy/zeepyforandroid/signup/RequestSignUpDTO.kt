@@ -5,5 +5,5 @@ data class RequestSignUpDTO(
     val name: String,
     val nickname: String,
     val password: String,
-    val sendMainCheck: Boolean
+    val sendMailCheck: Boolean
 )

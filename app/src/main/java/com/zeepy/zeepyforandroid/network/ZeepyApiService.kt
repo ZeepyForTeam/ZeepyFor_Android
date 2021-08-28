@@ -12,7 +12,9 @@ import com.zeepy.zeepyforandroid.imagecontrol.PreSignedUrlDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
-import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
+import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
+import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
+import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -30,7 +32,13 @@ interface ZeepyApiService {
     fun checkNickNamRepetition(@Body nickname: String): Completable
 
     @POST("/api/auth/login")
-    fun signin(@Body requestLogin: RequestLogin): Single<ResponseAuthDTO>
+    fun signin(@Body requestLoginDTO: RequestLoginDTO): Single<ResponseAuthDTO>
+
+    @POST("/api/auth/login/naver")
+    fun naverSignin(@Body accessToken: RequestSocialSigninDTO): Single<ResponseAuthDTO>
+
+    @POST("/api/auth/login/kakao")
+    fun kakaoSignin(@Body accessToken: RequestSocialSigninDTO): Single<ResponseAuthDTO>
 
     @POST("/api/auth/reissue")
     fun fetchAccessToken(@Body reIssueReqDto: RequestTokenDTO): Call<ResponseAuthDTO>

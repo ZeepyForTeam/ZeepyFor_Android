@@ -1,6 +1,9 @@
 package com.zeepy.zeepyforandroid.di
 
 
+import android.content.Context
+import com.nhn.android.naverlogin.OAuthLogin
+import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.network.AmazonS3ApiService
@@ -12,6 +15,7 @@ import com.zeepy.zeepyforandroid.qualifier.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -104,4 +108,17 @@ object NetworkModule {
         zeepyLocalRepository: ZeepyLocalRepository
     ): AuthInterceptor =
         AuthInterceptor(tokenController, userPreferenceManager, zeepyLocalRepository)
+
+    @Provides
+    @Singleton
+    fun provideOAuthLogin(@ApplicationContext context: Context): OAuthLogin {
+        val mOAuthLoginInstance = OAuthLogin.getInstance()
+        mOAuthLoginInstance.init(
+            context,
+            BuildConfig.NAVER_CLIENT_ID,
+            BuildConfig.NAVER_CLIENT_SECRET_ID,
+            "Zeepy"
+        )
+        return mOAuthLoginInstance
+    }
 }
