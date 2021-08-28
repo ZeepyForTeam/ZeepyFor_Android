@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.map.view
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -17,26 +18,37 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentMapBinding
 import com.zeepy.zeepyforandroid.map.data.Building
+import com.zeepy.zeepyforandroid.map.data.BuildingModel
+import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.MapHelper
 import com.zeepy.zeepyforandroid.util.MetricsConverter
 import com.zeepy.zeepyforandroid.util.WidthResizeAnimation
 import dagger.hilt.android.AndroidEntryPoint
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
+import net.daum.mf.map.n.api.internal.NativeDeviceCheckUtilsMapLibrary
+import net.daum.mf.map.n.api.internal.NativeMapController
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>() {
 
+    @Inject
+    lateinit var userPreferenceManager: UserPreferenceManager
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
     private lateinit var lastSelectedMarker: MapPOIItem
     private lateinit var myLocationButton: ConstraintLayout
+    private lateinit var mapHelper: MapHelper
     private val permReqLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -51,12 +63,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     private lateinit var resizeAnimation: WidthResizeAnimation
     private val viewModel: MapViewModel by viewModels<MapViewModel>()
-    private var buildings = listOf<Building>()
+    private var buildings = listOf<BuildingModel>()
     private var markers = mutableListOf<MapPOIItem>()
     private var markerId = 0
     private var lastSelectedMarkerOriginalImage: Int = -1
     private var existSelectedMarker = false
-    private val eventListener = MarkerEventListener(context)
+    private val markerEventListener = MarkerEventListener(context)
+    private val mapViewEventListener = MapViewEventListener(context)
+    private var currentZoomLevel = 2
 
     companion object {
         val LOCATION_PERMISSIONS = arrayOf(
@@ -96,25 +110,58 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         // setMarkersObserver()
         setOptionButton()
         setToolbar()
-        mapView.setPOIItemEventListener(eventListener)
+        mapView.setPOIItemEventListener(markerEventListener)
+        mapView.setMapViewEventListener(mapViewEventListener)
         // 마커 띄우기 테스트
         setMarker(37.505834449999995, 126.96320847343215, R.drawable.emoji_5_map)
         setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
 
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
         // FIXME: Error accessing mapPointBounds
-         //Log.e("mapbounds", mapView.mapPointBounds.toString())
+        // FIXME: 현재 카카오 지도 네이티브 소스에서 Fatal signal 11(SIGSEGV) 잘못된 메모리 참조 에러 발생 (getZoomLevel이나 getMapPointBounds를 불러올 수 없는 상황)
+        Log.e("mapCenterPoint", "" + mapView.mapCenterPoint.mapPointGeoCoord.latitude + "," + mapView.mapCenterPoint.mapPointGeoCoord.longitude)
+        Log.e("mapZoomLevel", "" + currentZoomLevel)
+        mapHelper = MapHelper(requireActivity(), mapView, currentZoomLevel)
+        mapHelper.setTopLeftPoint()
+        mapHelper.setBottomRightPoint()
+        mapHelper.setRemainingPoints()
+        Log.e("topLeftPoint", "" + mapHelper.topLeftLat + "," + mapHelper.topLeftLng)
+        Log.e("bottomRightPoint", "" + mapHelper.bottomRightLat + "," + mapHelper.bottomRightLng)
 
+        viewModel.getBuildingsByLocation(37.961350, 35.161614, 129.483989, 126.285148)
+
+
+        viewModel.fetchBuildingsResponse.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                is Result.Success -> {
+                    result.data.let {
+                        this.buildings = it
+                        setMarkersList()
+                        mapView.setPOIItemEventListener(markerEventListener)
+                    }
+                }
+                is Result.Error -> {
+                    if (result.exception.message == "401") {
+                        Log.e("Unauthorized User", result.toString())
+                    }
+                }
+            }
+        })
     }
 
-//    private fun setMarkersObserver() {
-//        mapViewModel.markers.observe(viewLifecycleOwner) { markers ->
-//            markers?.let {
-//                this.buildings = markers
-//                setMarkersList()
-//                mapView.setPOIItemEventListener(eventListener)
-//            }
-//        }
-//    }
+    /**
+     * Render markers
+     */
+    private fun setMarkersList() {
+        buildings.indices.forEach { index ->
+            markers.add(
+                MapPOIItem().apply {
+                    mapPoint = MapPoint.mapPointWithGeoCoord(buildings[index].latitude, buildings[index].longitude)
+                }
+            )
+            mapView.addPOIItems(markers.toTypedArray())
+        }
+    }
 
     private fun setOptionButton() {
         binding.optionBtnLayout.optionBtn.setOnClickListener {
@@ -158,18 +205,38 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
-
-
-    // Add & Set markers from buildings
-    private fun setMarkersList() {
-        buildings.indices.forEach { index ->
-            markers.add(
-                MapPOIItem().apply {
-                    mapPoint = MapPoint.mapPointWithGeoCoord(buildings[index].latitude, buildings[index].longitude)
-                }
-            )
+    inner class MapViewEventListener(val context: Context?): MapView.MapViewEventListener {
+        override fun onMapViewInitialized(p0: MapView?) {
         }
+
+        override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
+            currentZoomLevel = p1
+        }
+
+        override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
+
+        }
+
+        override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {
+        }
+
     }
+
 
     inner class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
         // Set marker detail visibility

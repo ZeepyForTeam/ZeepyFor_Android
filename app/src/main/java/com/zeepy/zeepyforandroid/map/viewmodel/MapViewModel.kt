@@ -1,12 +1,14 @@
 package com.zeepy.zeepyforandroid.map.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zeepy.zeepyforandroid.map.data.BuildingModel
 import com.zeepy.zeepyforandroid.map.usecase.GetBuildingsByLocationUseCase
+import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.usecase.util.data
 import com.zeepy.zeepyforandroid.map.usecase.util.succeeded
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,18 +26,11 @@ class MapViewModel @Inject constructor(
     private val _buildingId = MutableLiveData(-1)
     val buildingId: LiveData<Int> = _buildingId
 
+    private val _fetchBuildingsResponse = MutableLiveData<Result<List<BuildingModel>>>()
+    val fetchBuildingsResponse: LiveData<Result<List<BuildingModel>>> = _fetchBuildingsResponse
+
     fun setMarkerClick(buildingId: Int) {
         _buildingId.value = buildingId
-    }
-
-    // test init
-    init {
-        try {
-            //getBuildingsByLocation(37.507308, 37.507114, 126.963345, 126.955746)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     fun getBuildingsByLocation(latitudeGreater: Double, latitudeLess: Double, longitudeGreater: Double, longitudeLess: Double) {
@@ -43,10 +38,9 @@ class MapViewModel @Inject constructor(
             val result = getBuildingsByLocationUseCase(GetBuildingsByLocationUseCase.Params(latitudeGreater, latitudeLess, longitudeGreater, longitudeLess))
             if (result.succeeded) {
                 _markers.value = result.data
-                Log.e("response for getBuildingsByLocation", "" + result)
-            } else {
-                Log.e("error", "response fail")
+                Log.e("response for getBuildingsByLocation", "" + result.data)
             }
+            _fetchBuildingsResponse.value = result
         }
     }
 

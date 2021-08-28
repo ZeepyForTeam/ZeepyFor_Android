@@ -33,7 +33,7 @@ android {
 
         //Kakao map
         ndk {
-            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86'
+            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
         }
     }
 
@@ -137,7 +137,6 @@ dependencies {
     //Kakao map
     implementation files('libs/libDaumMapAndroid.jar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs/libDaumMapAndroid.jar')
 
     //Naver Login
     implementation files('libs/naveridlogin_android_sdk_4.2.6.aar')

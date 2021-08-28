@@ -103,7 +103,7 @@
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:button="@null"
-                            android:drawableTop="@drawable/selector_option_ready"
+                            android:drawableTop="@drawable/selector_option_3"
                             android:drawablePadding="8dp"/>
 
                     </RadioGroup>
@@ -175,7 +175,7 @@
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:button="@null"
-                            android:drawableTop="@drawable/selector_option_ready"
+                            android:drawableTop="@drawable/selector_option_3"
                             android:drawablePadding="8dp"/>
 
 
@@ -186,6 +186,7 @@
                             android:layout_marginEnd="8dp"
                             android:text="매매"
                             android:checked="false"
+                            android:clickable="false"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:button="@null"
