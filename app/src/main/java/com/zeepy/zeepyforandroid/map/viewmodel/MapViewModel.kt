@@ -31,7 +31,7 @@ class MapViewModel @Inject constructor(
     // test init
     init {
         try {
-            getBuildingsByLocation(37.507308, 37.507114, 126.963345, 126.955746)
+            //getBuildingsByLocation(37.507308, 37.507114, 126.963345, 126.955746)
 
         } catch (e: Exception) {
             e.printStackTrace()
