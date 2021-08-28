@@ -1,12 +1,8 @@
-package com.zeepy.zeepyforandroid.community.data.remote.response
+package com.zeepy.zeepyforandroid.community.data.remote.responseDTO
 
-import android.content.Context
 import com.zeepy.zeepyforandroid.community.data.entity.PostingDetailModel
 import com.zeepy.zeepyforandroid.community.data.entity.UrlPictureModel
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail.PostingType.Companion.toPostingType
-import com.zeepy.zeepyforandroid.enum.PostingType.Companion.convertToCommunityTypeString
-import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
-import com.zeepy.zeepyforandroid.util.DateParser.convertDateFormat
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail.PostingType.Companion.toPostingType
 import com.zeepy.zeepyforandroid.util.DateParser.diffFromCreatedTime
 import java.lang.IllegalArgumentException
 
@@ -17,6 +13,7 @@ data class ResponsePostingDetail(
     val productName: String,
     val sharingMethod: String,
     val targetNumberOfPeople: Int,
+    val currentNumberOfPeople: Int,
     val title: String,
     val content: String,
     val user: User,
@@ -26,7 +23,9 @@ data class ResponsePostingDetail(
     val participants: List<Participant>,
     val imageUrls: List<String>,
     val createdTime: String,
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
+    val productPrice: String,
+    val purchasePlace: String
 ){
     fun toPostingDetailModel(): PostingDetailModel {
         return PostingDetailModel(
@@ -39,6 +38,10 @@ data class ResponsePostingDetail(
             content,
             isCompleted,
             isLiked,
+            productName,
+            sharingMethod,
+            productPrice,
+            purchasePlace,
             targetNumberOfPeople,
             participants,
             imageUrls.map { UrlPictureModel(it)},

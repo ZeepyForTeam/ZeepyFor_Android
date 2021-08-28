@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.community.data.remote.response
+package com.zeepy.zeepyforandroid.community.data.remote.responseDTO
 
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.enum.PostingType.Companion.convertToCommunityTypeString

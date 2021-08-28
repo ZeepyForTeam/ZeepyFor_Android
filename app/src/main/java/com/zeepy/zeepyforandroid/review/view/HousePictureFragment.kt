@@ -3,7 +3,6 @@ package com.zeepy.zeepyforandroid.review.view
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,11 +19,10 @@ import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHousePictureBinding
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
-import com.zeepy.zeepyforandroid.review.view.adapter.HousePictureAdapter
+import com.zeepy.zeepyforandroid.review.view.adapter.UploadPictureAdapter
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.zeepy.zeepyforandroid.util.FileConverter.asBitmap
 import com.zeepy.zeepyforandroid.util.ItemDecoration
-import com.zeepy.zeepyforandroid.util.ReviewNotice
 import java.io.File
 
 class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
@@ -53,7 +51,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
 
     private fun setPictureList() {
         binding.rvHousePictures.apply {
-            adapter = HousePictureAdapter()
+            adapter = UploadPictureAdapter()
             addItemDecoration(ItemDecoration(0, 18))
         }
     }
@@ -100,7 +98,6 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
                 val bitmap = uri.asBitmap(requireContext().contentResolver)
                 pictures.add(PictureModel(bitmap))
                 viewModel.changeHousePictures(pictures)
-                Log.e("pictures", "${viewModel.bitmapImages.value}")
             }
         }
 
@@ -109,8 +106,6 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
             if (isSaved) {
                 pictures.add(PictureModel(pictureUri.asBitmap(requireContext().contentResolver)))
                 viewModel.changeHousePictures(pictures)
-                Log.e("pictures", "${viewModel.bitmapImages.value}")
-
             }
         }
 
@@ -130,7 +125,7 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
 
     private fun stagePictures() {
         viewModel.bitmapImages.observe(viewLifecycleOwner) {
-            (binding.rvHousePictures.adapter as HousePictureAdapter).apply {
+            (binding.rvHousePictures.adapter as UploadPictureAdapter).apply {
                 submitList(viewModel.bitmapImages.value?.toList())
             }
             changeVisibility()
@@ -174,13 +169,13 @@ class HousePictureFragment : BaseFragment<FragmentHousePictureBinding>() {
     }
 
     companion object {
-        private const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
-        private const val PERMISSION_WRITE_EXTERNAL_STORAGE =
+        const val PERMISSION_CAMERA = android.Manifest.permission.CAMERA
+        const val PERMISSION_WRITE_EXTERNAL_STORAGE =
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-        private const val PERMISSION_READ_EXTERNAL_STORAGE =
+        const val PERMISSION_READ_EXTERNAL_STORAGE =
             android.Manifest.permission.READ_EXTERNAL_STORAGE
 
-        private val PERMISSION_REQUESTED = arrayOf(
+        val PERMISSION_REQUESTED = arrayOf(
             PERMISSION_CAMERA,
             PERMISSION_WRITE_EXTERNAL_STORAGE,
             PERMISSION_READ_EXTERNAL_STORAGE

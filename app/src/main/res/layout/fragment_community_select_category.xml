@@ -60,7 +60,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:button="@null"
-                android:text="공동구매"
+                android:text="공동 구매"
                 android:textColor="@color/selector_black_gray9a"
                 android:fontFamily="@font/nanum_square_round_extrabold"
                 android:textSize="16sp"

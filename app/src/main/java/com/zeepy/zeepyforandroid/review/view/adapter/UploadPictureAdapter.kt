@@ -9,7 +9,7 @@ import com.zeepy.zeepyforandroid.databinding.ItemPictureBinding
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.util.DiffCallback
 
-class HousePictureAdapter: ListAdapter<PictureModel, HousePictureAdapter.HousePictureViewHolder>(
+class UploadPictureAdapter: ListAdapter<PictureModel, UploadPictureAdapter.HousePictureViewHolder>(
     DiffCallback<PictureModel>()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HousePictureViewHolder {

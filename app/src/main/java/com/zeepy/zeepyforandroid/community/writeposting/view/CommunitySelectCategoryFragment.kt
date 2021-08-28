@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.community
+package com.zeepy.zeepyforandroid.community.writeposting.view
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -9,13 +9,17 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.toSpannable
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentCommunitySelectCategoryBinding
+import com.zeepy.zeepyforandroid.enum.PostingType
 import com.zeepy.zeepyforandroid.util.CustomTypefaceSpan
 
 class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCategoryBinding>() {
+    private lateinit var selectedCategory: String
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -25,6 +29,8 @@ class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCateg
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+
         setToolbar()
         setNextButton()
         setCategorySelectButton()
@@ -53,6 +59,17 @@ class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCateg
     private fun setCategorySelectButton() {
         binding.radiogroupCategory.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener{
             override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+                when(checkedId) {
+                    binding.buttonFreeShare.id -> {
+                        selectedCategory = PostingType.FREESHARING.name
+                    }
+                    binding.buttonGroupPurchase.id -> {
+                        selectedCategory = PostingType.JOINTPURCHASE.name
+                    }
+                    binding.radiobuttonFriends.id -> {
+                        selectedCategory = PostingType.NEIGHBORHOODFRIEND.name
+                    }
+                }
                 binding.btnNext.changeIsActivie(true)
             }
         })
@@ -68,13 +85,31 @@ class CommunitySelectCategoryFragment: BaseFragment<FragmentCommunitySelectCateg
                     setUnUsableButton()
                 }
             }
-
         }
     }
 
     private fun writePosting() {
         binding.btnNext.onClick {
-            requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_writePostingFragment)
+            var action: NavDirections? = null
+            when(selectedCategory) {
+                PostingType.JOINTPURCHASE.name -> {
+                    action =
+                        CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteGroupPurchaseFragment()
+                }
+                PostingType.FREESHARING.name -> {
+                    action =
+                        CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteShareOrFriendsFragment(
+                            selectedCategory
+                        )
+                }
+                PostingType.NEIGHBORHOODFRIEND.name -> {
+                    action =
+                        CommunitySelectCategoryFragmentDirections.actionCommunitySelectCategoryFragmentToWriteShareOrFriendsFragment(
+                            selectedCategory
+                        )
+                }
+            }
+            action?.let { action -> findNavController().navigate(action) }
         }
     }
 }

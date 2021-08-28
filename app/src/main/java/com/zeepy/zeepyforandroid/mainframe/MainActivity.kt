@@ -28,8 +28,24 @@ class MainActivity : AppCompatActivity() {
         disableDarkMode()
         initNavController()
 
-        pref.putSharedPref("userIdx", 3)
+        Log.e("key hash", "${com.kakao.util.helper.Utility.getKeyHash(this)}")
 
+    }
+
+    // 카카오 지도 hash key 보기
+    fun getAppKeyHash() {
+        try {
+            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+            for(i in info.signatures) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(i.toByteArray())
+
+                val something = String(Base64.encode(md.digest(), 0)!!)
+                Log.e("Debug key", something)
+            }
+        } catch(e: Exception) {
+            Log.e("Not found", e.toString())
+        }
     }
 
     private fun disableDarkMode() {

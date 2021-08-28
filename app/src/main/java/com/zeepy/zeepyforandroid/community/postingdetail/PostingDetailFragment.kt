@@ -1,11 +1,14 @@
 package com.zeepy.zeepyforandroid.community.postingdetail
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
@@ -51,6 +54,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         setCommentsRecyclerView()
         writeComment()
         setComments()
+
+        viewModel.achievementRate.observe(viewLifecycleOwner) {
+            binding.progressbarAchievement.progress = it
+        }
     }
 
     private fun setToolbar() {
@@ -107,8 +114,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 //                        it.printStackTrace()
 //                    })
 
-
-
         }
     }
 
@@ -122,8 +127,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     private fun updateAchievementRate() {
         binding.tvRateAchievement.apply {
             viewModel.postingDetail.value?.run {
-                if(targetNumberOfPeople != 0) {
-                    viewModel.changeAchievement((participants.size/targetNumberOfPeople) * PERCENTAGE)
+                val participantsCount = (participants.size).toDouble()
+                val target = targetNumberOfPeople.toDouble()
+                if (targetNumberOfPeople != null && this.participants.isNotEmpty()) {
+                    viewModel.changeAchievement(((participantsCount/target)* PERCENTAGE).toInt())
                 } else {
                     viewModel.changeAchievement(0)
                 }
@@ -167,10 +174,18 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     private fun writeComment() {
         binding.btnWriteComment.setOnClickListener {
-            viewModel.postComment()
+            viewModel.postCommentToServer()
             binding.etComment.text?.clear()
+            requireActivity().hideKeyboard(this.binding.root)
         }
     }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+
     companion object {
         private const val PERCENTAGE = 100
     }

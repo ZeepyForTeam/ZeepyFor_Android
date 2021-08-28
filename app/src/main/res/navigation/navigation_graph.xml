@@ -31,9 +31,6 @@
             android:id="@+id/action_mainFrameFragment_to_communitySearchAddressFragment"
             app:destination="@id/communitySearchAddressFragment" />
         <action
-            android:id="@+id/action_mainFrameFragment_to_writePostingFragment"
-            app:destination="@id/writePostingFragment" />
-        <action
             android:id="@+id/action_mainFrameFragment_to_changeAddressFragment"
             app:destination="@id/changeAddressFragment" />
         <action
@@ -46,6 +43,9 @@
         <action
             android:id="@+id/action_mainFrameFragment_to_navigation_review"
             app:destination="@id/navigation_review" />
+        <action
+            android:id="@+id/action_mainFrameFragment_to_communitySelectCategoryFragment"
+            app:destination="@id/communitySelectCategoryFragment" />
 
     </fragment>
 
@@ -117,11 +117,6 @@
         android:name="com.zeepy.zeepyforandroid.community.searchaddress.CommunityDetailAddressFragment"
         android:label="CommunityDetailAddressFragment"
         tools:layout="@layout/fragment_community_detail_address"/>
-    <fragment
-        android:id="@+id/writePostingFragment"
-        android:name="com.zeepy.zeepyforandroid.community.WritePostingFragment"
-        android:label="WritePostingFragment"
-        tools:layout="@layout/fragment_write_posting"/>
 
     <fragment
         android:id="@+id/signUpFragment"
@@ -154,6 +149,56 @@
         <argument
             android:name="buildingSummaryModel"
             app:argType="com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/communitySelectCategoryFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.view.CommunitySelectCategoryFragment"
+        android:label="CommunitySelectCategoryFragment"
+        tools:layout="@layout/fragment_community_select_category">
+        <action
+            android:id="@+id/action_communitySelectCategoryFragment_to_writeShareOrFriendsFragment"
+            app:destination="@id/writeShareOrFriendsFragment"
+            app:popUpTo="@id/mainFrameFragment"/>
+        <action
+            android:id="@+id/action_communitySelectCategoryFragment_to_writeGroupPurchaseFragment"
+            app:destination="@id/writeGroupPurchaseFragment"
+            app:popUpTo="@id/mainFrameFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/writeGroupPurchaseFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.view.WriteGroupPurchaseFragment"
+        android:label="WriteGroupPurchaseFragment"
+        tools:layout="@layout/fragment_write_group_purchase">
+        <action
+            android:id="@+id/action_writeGroupPurchaseFragment_to_communityLoadPictureFragment"
+            app:destination="@id/communityLoadPictureFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/writeShareOrFriendsFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.view.WriteShareOrFriendsFragment"
+        android:label="WriteShareOrFriendsFragment"
+        tools:layout="@layout/fragment_write_share_or_friends">
+        <argument
+            android:name="postingType"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_writeShareOrFriendsFragment_to_communityLoadPictureFragment"
+            app:destination="@id/communityLoadPictureFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityLoadPictureFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.CommunityLoadPictureFragment"
+        android:label="CommunityLoadPictureFragment"
+        tools:layout="@layout/fragment_community_load_picture">
+        <argument
+            android:name="requestWritePosting"
+            app:argType="com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting"
+            app:nullable="true"/>
+
     </fragment>
 
 </navigation>

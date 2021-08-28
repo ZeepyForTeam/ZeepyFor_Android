@@ -10,15 +10,8 @@
         android:name="com.zeepy.zeepyforandroid.community.frame.view.CommunityMainFragment"
         android:label="CommunityMainFragment"
         tools:layout="@layout/fragment_community_main">
-        <action
-            android:id="@+id/action_communityMainFragment_to_communitySelectCategoryFragment"
-            app:destination="@id/communitySelectCategoryFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/communitySelectCategoryFragment"
-        android:name="com.zeepy.zeepyforandroid.community.CommunitySelectCategoryFragment"
-        android:label="CommunitySelectCategoryFragment"
-        tools:layout="@layout/fragment_community_select_category"/>
+
 
 </navigation>

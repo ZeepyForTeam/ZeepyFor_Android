@@ -13,12 +13,18 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.databinding.FragmentCommunityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
     private val viewModel by viewModels<CommunityFrameViewModel>()
+    @Inject lateinit var userPreferenceManager: UserPreferenceManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -53,12 +59,33 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             }
             setCommunityLocation()
             setRightButton(R.drawable.ic_btn_write) {
-                findNavController().navigate(R.id.action_communityMainFragment_to_communitySelectCategoryFragment)
+                requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_communitySelectCategoryFragment)
             }
             setRightButtonMargin(32)
 
             binding.textviewToolbar.setOnClickListener {
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(viewModel.addressList.value!!.toTypedArray())
+                changeAddress()
+            }
+        }
+    }
+
+    private fun changeAddress() {
+        val isAlreadyLogin = userPreferenceManager.fetchIsAlreadyLogin()
+        val isAlreadyRegisterAddress = !viewModel.addressList.value.isNullOrEmpty()
+
+        when {
+            !isAlreadyLogin -> {
+                showLoginDialog()
+            }
+
+            isAlreadyLogin && isAlreadyRegisterAddress -> {
+                val addresses = viewModel.addressList.value!!.toTypedArray()
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(addresses)
+                requireParentFragment().requireParentFragment().findNavController().navigate(action)
+            }
+
+            isAlreadyLogin && !isAlreadyRegisterAddress -> {
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToCommunitySearchAddressFragment()
                 requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
         }
@@ -85,6 +112,25 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
                 }
             })
         }
+    }
+
+    private fun showLoginDialog() {
+        val loginDialog = ZeepyDialogBuilder(resources.getString(R.string.login_notice_message), null)
+
+        loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "취소")
+            .setRightButton(R.drawable.box_green33_8dp, "좋았어, 로그인하기!")
+            .setButtonHorizontalWeight(0.287f, 0.712f)
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                    dialog.dismiss()
+                }
+            })
+            .build()
+            .show(childFragmentManager, this@CommunityMainFragment.tag)
     }
 
     companion object {

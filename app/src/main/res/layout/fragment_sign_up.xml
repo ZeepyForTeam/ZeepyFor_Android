@@ -80,7 +80,7 @@
             android:text="@string/nickname_repetition_signup"
             android:textColor="@color/zeepy_red_fb"
             android:textSize="10sp"
-            android:visibility="gone"
+            android:visibility="@{viewModel.isNickNameRepetition == true ? view.VISIBLE : view.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/textview_nickname"
             app:layout_constraintEnd_toEndOf="@+id/button_check_nickname_repetition"
             app:layout_constraintTop_toTopOf="@id/textview_nickname" />
@@ -141,7 +141,7 @@
             android:text="@string/email_repetition_signup"
             android:textColor="@color/zeepy_red_fb"
             android:textSize="10sp"
-            android:visibility="gone"
+            android:visibility="@{viewModel.isEmailRepetition() == true ? view.VISIBLE : view.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/textview_email"
             app:layout_constraintEnd_toEndOf="@+id/edittext_name"
             app:layout_constraintTop_toTopOf="@id/textview_email" />
@@ -260,7 +260,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="@drawable/check"
-            android:visibility="@{viewModel.password.equals(viewModel.passwordCheck) &amp;&amp; viewModel.password.empty == false ? view.VISIBLE : view.GONE}"
+            android:visibility="@{viewModel.isPasswordMatched == true &amp;&amp; viewModel.password.empty == false ? view.VISIBLE : view.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/edittext_password_check"
             app:layout_constraintEnd_toEndOf="@id/edittext_password_check"
             app:layout_constraintTop_toTopOf="@id/edittext_password_check" />
@@ -273,7 +273,7 @@
             android:text="@string/doesnt_match_password"
             android:textColor="@color/zeepy_red_fb"
             android:textSize="10sp"
-            android:visibility="@{viewModel.password.equals(viewModel.passwordCheck) ? view.GONE : view.VISIBLE}"
+            android:visibility="@{viewModel.isPasswordMatched == true ? view.GONE : view.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/textview_password_check"
             app:layout_constraintEnd_toEndOf="@id/edittext_password_check"
             app:layout_constraintTop_toTopOf="@id/textview_password_check" />
@@ -283,6 +283,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:checked="@={viewModel.termsApprove}"
             app:layout_constraintStart_toStartOf="@id/edittext_password_check"
             app:layout_constraintTop_toBottomOf="@id/edittext_password_check"
             zeepy:button_type="3" />
@@ -300,27 +301,50 @@
             app:layout_constraintStart_toEndOf="@id/checkbox_terms_approve"
             app:layout_constraintTop_toTopOf="@id/checkbox_terms_approve" />
 
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_approve_personal_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:text="@string/approve_personal_info"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox_approve_personal_info"
+            app:layout_constraintStart_toEndOf="@id/checkbox_approve_personal_info"
+            app:layout_constraintTop_toTopOf="@id/checkbox_approve_personal_info" />
+
+        <com.zeepy.zeepyforandroid.customview.ZeepyCheckBox
+            android:id="@+id/checkbox_approve_personal_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="@={viewModel.personalInfoApprove}"
+            app:layout_constraintStart_toStartOf="@id/checkbox_terms_approve"
+            app:layout_constraintTop_toBottomOf="@id/checkbox_terms_approve"
+            zeepy:button_type="3" />
+
         <com.zeepy.zeepyforandroid.customview.ZeepyCheckBox
             android:id="@+id/checkbox_approve_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/checkbox_terms_approve"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_terms_approve"
+            app:layout_constraintStart_toStartOf="@id/checkbox_approve_personal_info"
+            app:layout_constraintTop_toBottomOf="@id/checkbox_approve_personal_info"
             zeepy:button_type="3" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_approve_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:text="@string/getting_info_to_email_signup"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@id/checkbox_approve_email"
-            app:layout_constraintStart_toEndOf="@id/checkbox_approve_email"
-            app:layout_constraintTop_toTopOf="@id/checkbox_approve_email" />
+            app:layout_constraintBottom_toBottomOf="@+id/checkbox_approve_email"
+            app:layout_constraintStart_toStartOf="@id/textview_approve_personal_info"
+            app:layout_constraintTop_toTopOf="@+id/checkbox_approve_email" />
 
         <com.zeepy.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/button_signup"
@@ -345,6 +369,19 @@
             app:layout_constraintBottom_toBottomOf="@id/textview_terms_approve"
             app:layout_constraintStart_toEndOf="@+id/textview_terms_approve"
             app:layout_constraintTop_toTopOf="@id/textview_terms_approve" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_show_terms_personal_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="약관보기"
+            android:textColor="@color/zeepy_blue_5f"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_approve_personal_info"
+            app:layout_constraintStart_toEndOf="@+id/textview_approve_personal_info"
+            app:layout_constraintTop_toTopOf="@id/textview_approve_personal_info" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

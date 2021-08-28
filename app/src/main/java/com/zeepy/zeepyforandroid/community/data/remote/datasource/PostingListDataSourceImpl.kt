@@ -1,8 +1,8 @@
 package com.zeepy.zeepyforandroid.community.data.remote.datasource
 
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponseMyZipList
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import io.reactivex.Single
 import javax.inject.Inject
