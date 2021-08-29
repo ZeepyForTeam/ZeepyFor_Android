@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.network
 import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
@@ -92,4 +93,19 @@ interface ZeepyApiService {
 
     @POST("/api/community/comment/{id}")
     fun postComment(@Path ("id") id: Int, @Body requestCommentRequest: RequestWriteCommentDTO): Completable
+
+    @POST("/api/community/participation/{id}")
+    fun participateGroupPurchase(@Path ("id") id: Int, @Body participateDTO: RequestParticipationDTO): Completable
+
+    @POST("/api/community/like")
+    fun scrapPosting(@Query ("communityId") communityId: Int): Completable
+
+    @DELETE("/api/community/like")
+    fun cancelScrapPosting(@Query ("communityId") communityId: Int): Completable
+
+    @PUT("/api/community/participation/{id}")
+    fun cancelParticipation(@Path ("id") communityId: Int): Completable
+
+    @DELETE("/api/community/{id}")
+    fun deletePosting(@Path ("id") communityId: Int): Completable
 }

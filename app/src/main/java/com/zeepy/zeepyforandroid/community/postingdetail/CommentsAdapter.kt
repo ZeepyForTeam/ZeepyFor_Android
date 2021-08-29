@@ -12,9 +12,12 @@ import com.zeepy.zeepyforandroid.databinding.ItemCommentBinding
 import com.zeepy.zeepyforandroid.util.DiffCallback
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 
-class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel) : ListAdapter<CommentModel, CommentsAdapter.CommentsViewHolder>(
+class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel, val listener: WriteNestedCommentListener) : ListAdapter<CommentModel, CommentsAdapter.CommentsViewHolder>(
         DiffCallback<CommentModel>()
 ) {
+    interface WriteNestedCommentListener{
+        fun write(item: CommentModel)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentsViewHolder {
         val binding = ItemCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,6 +29,7 @@ class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel)
         holder.binding.setVariable(BR.data, item)
         holder.setSecretComment(item)
         setNestedComment(holder, item)
+        writeNestedComment(holder, item)
     }
 
     private fun setNestedComment(holder: CommentsViewHolder, item: CommentModel) {
@@ -45,6 +49,12 @@ class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel)
                 this.visibility = View.VISIBLE
                 (adapter as NestedCommentsAdapter).submitList(item.nestedComments)
             }
+        }
+    }
+
+    private fun writeNestedComment(holder: CommentsViewHolder, item: CommentModel) {
+        holder.binding.ivChat.setOnClickListener {
+            listener.write(item)
         }
     }
 

@@ -122,7 +122,11 @@
         android:id="@+id/signUpFragment"
         android:name="com.zeepy.zeepyforandroid.signup.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up"/>
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_termsWebviewFragment"
+            app:destination="@id/termsWebviewFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/changeAddressFragment"
@@ -198,7 +202,16 @@
             android:name="requestWritePosting"
             app:argType="com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting"
             app:nullable="true"/>
+    </fragment>
 
+    <fragment
+        android:id="@+id/termsWebviewFragment"
+        android:name="com.zeepy.zeepyforandroid.signup.TermsWebviewFragment"
+        android:label="TermsWebviewFragment"
+        tools:layout="@layout/fragment_terms_webview">
+
+        <argument android:name="webviewType"
+            app:argType="string"/>
     </fragment>
 
 </navigation>
