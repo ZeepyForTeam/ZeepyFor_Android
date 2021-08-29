@@ -24,10 +24,9 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="8dp"
+            android:layout_height="60dp"
             app:labelVisibilityMode="unlabeled"
-            app:itemIconSize="48dp"
+            app:itemIconSize="43dp"
             app:itemHorizontalTranslationEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

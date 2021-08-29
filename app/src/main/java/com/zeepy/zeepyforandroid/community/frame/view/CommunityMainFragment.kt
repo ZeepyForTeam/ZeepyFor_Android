@@ -50,14 +50,12 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            viewModel.selectedAddress.observe(viewLifecycleOwner) {
-                if (it.isNullOrEmpty()) {
-                    setTitle("주소 등록하기")
-                } else {
-                    setTitle(it)
-                }
-            }
             setCommunityLocation()
+            setTitle(viewModel.selectedAddress.value ?: "주소 등록하기")
+            viewModel.selectedAddress.observe(viewLifecycleOwner) {
+                setTitle(it ?: "주소 등록하기")
+            }
+
             setRightButton(R.drawable.ic_btn_write) {
                 requireParentFragment().requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_communitySelectCategoryFragment)
             }

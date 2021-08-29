@@ -85,15 +85,15 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_loading"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:lottie_rawRes="@raw/zeepy_loading"
             app:lottie_loop="true"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="@id/rv_storyzip"
             app:layout_constraintStart_toStartOf="@id/rv_storyzip"
             app:layout_constraintEnd_toEndOf="@id/rv_storyzip"
             app:layout_constraintBottom_toBottomOf="@id/rv_storyzip"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
