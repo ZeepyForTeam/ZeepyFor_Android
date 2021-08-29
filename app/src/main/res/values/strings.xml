@@ -102,4 +102,5 @@
     <string name="approve_personal_info">ZEEPY에서 제공하는 개인정보 처리방침에 동의합니다.</string>
     <string name="select_house">거주하고 계신 집을\n선택해주세요.</string>
     <string name="check_address_to_register">등록할 주소를\n확인해주세요.</string>
+    <string name="format_count_posting_content">(%d/1500자)</string>
 </resources>
