@@ -8,4 +8,5 @@ interface ZeepyLocalRepository {
     fun insertAllAddress(addressList: List<LocalAddressEntity>)
     fun insertAddress(address: LocalAddressEntity)
     fun deleteAddress(address: LocalAddressEntity)
+    fun deleteEveryAddress()
 }

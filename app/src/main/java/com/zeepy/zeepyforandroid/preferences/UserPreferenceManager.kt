@@ -34,15 +34,13 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         return sharedPreferencesManager.getSharedPrefs(USER_ID, -1)
     }
 
-    fun saveUserEmail(id: Int) {
-        sharedPreferencesManager.putSharedPref(USER_EMAIL, id)
+    fun saveUserEmail(email: String) {
+        sharedPreferencesManager.putSharedPref(USER_EMAIL, email)
     }
 
-    fun fetchUserEmail(): Int {
-        return sharedPreferencesManager.getSharedPrefs(USER_EMAIL, -1)
+    fun fetchUserEmail(): String {
+        return sharedPreferencesManager.getSharedPrefs(USER_EMAIL, "")
     }
-
-
 
     companion object {
         private const val ACCESS_TOKEN = "access_token"

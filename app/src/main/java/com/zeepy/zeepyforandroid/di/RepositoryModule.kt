@@ -2,12 +2,11 @@ package com.zeepy.zeepyforandroid.di
 
 import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepositoryImpl
-import com.zeepy.zeepyforandroid.address.datasource.NotAuthSearchAddressDataSource
+import com.zeepy.zeepyforandroid.address.datasource.SearchAddressDataSource
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSource
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepositoryImpl
 import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSource
-import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSourceImpl
 import com.zeepy.zeepyforandroid.map.repository.BuildingsRepository
 import com.zeepy.zeepyforandroid.map.repository.BuildingsRepositoryImpl
 import dagger.Module
@@ -26,7 +25,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAddressListRepository(dataSource: NotAuthSearchAddressDataSource): SearchAddressListRepository = SearchAddressListRepositoryImpl(dataSource)
+    fun provideAddressListRepository(dataSource: SearchAddressDataSource): SearchAddressListRepository = SearchAddressListRepositoryImpl(dataSource)
 
     @Provides
     @Singleton

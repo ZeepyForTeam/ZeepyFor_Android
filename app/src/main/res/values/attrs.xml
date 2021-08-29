@@ -28,6 +28,7 @@
         <attr name="end" format="integer"/>
         <attr name="second_start" format="integer"/>
         <attr name="second_end" format="integer"/>
+        <attr name="community_type" format="boolean"/>
     </declare-styleable>
 
 </resources>

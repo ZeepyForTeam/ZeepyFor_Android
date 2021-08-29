@@ -1,16 +1,23 @@
 package com.zeepy.zeepyforandroid.di
 
 
+import android.content.Context
+import com.nhn.android.naverlogin.OAuthLogin
+import com.nhn.android.naverlogin.OAuthLoginHandler
 import com.zeepy.zeepyforandroid.BuildConfig
+import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
+import com.zeepy.zeepyforandroid.network.AmazonS3ApiService
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
-import com.zeepy.zeepyforandroid.network.auth.*
+import com.zeepy.zeepyforandroid.network.auth.AuthInterceptor
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.qualifier.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,7 +43,6 @@ object NetworkModule {
             .writeTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
-//            .authenticator(Authenticator(zeepyApiService, userPreferenceManager))
             .addInterceptor(authInterceptor)
             .build()
     }
@@ -80,19 +86,39 @@ object NetworkModule {
     @Provides
     @Singleton
     @ZeepyService
-    fun provideZeepyApiService(@ZeepyRetrofit retrofit: Retrofit): ZeepyApiService = retrofit.create(ZeepyApiService::class.java)
+    fun provideZeepyApiService(@ZeepyRetrofit retrofit: Retrofit): ZeepyApiService =
+        retrofit.create(ZeepyApiService::class.java)
 
 
     @Provides
     @Singleton
     @UnAuthService
-    fun provideUnAuthApiService(@UnAuthRetrofit retrofit: Retrofit): ZeepyApiService = retrofit.create(ZeepyApiService::class.java)
+    fun provideUnAuthApiService(@UnAuthRetrofit retrofit: Retrofit): ZeepyApiService =
+        retrofit.create(ZeepyApiService::class.java)
+
+//    @Provides
+//    @Singleton
+//    fun provideAuthenticator(@UnAuthService zeepyApiService: ZeepyApiService, userPreferenceManager: UserPreferenceManager): Authenticator = Authenticator(zeepyApiService, userPreferenceManager)
 
     @Provides
     @Singleton
-    fun provideAuthenticator(@UnAuthService zeepyApiService: ZeepyApiService, userPreferenceManager: UserPreferenceManager): Authenticator = Authenticator(zeepyApiService, userPreferenceManager)
+    fun provideAuthInterceptor(
+        tokenController: TokenController,
+        userPreferenceManager: UserPreferenceManager,
+        zeepyLocalRepository: ZeepyLocalRepository
+    ): AuthInterceptor =
+        AuthInterceptor(tokenController, userPreferenceManager, zeepyLocalRepository)
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(tokenController: TokenController, userPreferenceManager: UserPreferenceManager): AuthInterceptor = AuthInterceptor(tokenController, userPreferenceManager)
+    fun provideOAuthLogin(@ApplicationContext context: Context): OAuthLogin {
+        val mOAuthLoginInstance = OAuthLogin.getInstance()
+        mOAuthLoginInstance.init(
+            context,
+            BuildConfig.NAVER_CLIENT_ID,
+            BuildConfig.NAVER_CLIENT_SECRET_ID,
+            "Zeepy"
+        )
+        return mOAuthLoginInstance
+    }
 }

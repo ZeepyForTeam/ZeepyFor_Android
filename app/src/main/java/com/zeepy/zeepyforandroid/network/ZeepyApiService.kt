@@ -3,15 +3,24 @@ package com.zeepy.zeepyforandroid.network
 import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponseMyZipList
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingDetail
-import com.zeepy.zeepyforandroid.community.data.remote.response.ResponsePostingList
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
+import com.zeepy.zeepyforandroid.imagecontrol.PreSignedUrlDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
-import com.zeepy.zeepyforandroid.signin.dto.RequestLogin
+import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
+import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
+import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
+import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -24,10 +33,16 @@ interface ZeepyApiService {
     fun checkNickNamRepetition(@Body nickname: String): Completable
 
     @POST("/api/auth/login")
-    fun signin(@Body requestLogin: RequestLogin): Single<ResponseAuthDTO>
+    fun signin(@Body requestLoginDTO: RequestLoginDTO): Single<ResponseAuthDTO>
+
+    @POST("/api/auth/login/naver")
+    fun naverSignin(@Body accessToken: RequestSocialSigninDTO): Single<ResponseAuthDTO>
+
+    @POST("/api/auth/login/kakao")
+    fun kakaoSignin(@Body accessToken: RequestSocialSigninDTO): Single<ResponseAuthDTO>
 
     @POST("/api/auth/reissue")
-    fun fetchAccessToken(@Body reIssueReqDto: RequestTokenDTO): Response<ResponseAuthDTO>
+    fun fetchAccessToken(@Body reIssueReqDto: RequestTokenDTO): Call<ResponseAuthDTO>
 
     @POST("/api/review")
     fun writeReview(@Body reviewDto: RequestWriteReview): Completable
@@ -69,4 +84,31 @@ interface ZeepyApiService {
 
 //    @DELETE("api/user/withdrawal")
 //    suspend fun deleteAccount(@Body userEmail: String): Response<>
+
+    @POST("/api/user/registration")
+    fun signUp(@Body requestSignUpDTO: RequestSignUpDTO): Completable
+
+    @POST("/api/community")
+    fun uploadPosting(@Body requestWritePosting: RequestWritePosting): Completable
+
+    @GET("/api/s3")
+    fun getPresignedUrl(): Observable<PreSignedUrlDTO>
+
+    @POST("/api/community/comment/{id}")
+    fun postComment(@Path ("id") id: Int, @Body requestCommentRequest: RequestWriteCommentDTO): Completable
+
+    @POST("/api/community/participation/{id}")
+    fun participateGroupPurchase(@Path ("id") id: Int, @Body participateDTO: RequestParticipationDTO): Completable
+
+    @POST("/api/community/like")
+    fun scrapPosting(@Query ("communityId") communityId: Int): Completable
+
+    @DELETE("/api/community/like")
+    fun cancelScrapPosting(@Query ("communityId") communityId: Int): Completable
+
+    @PUT("/api/community/participation/{id}")
+    fun cancelParticipation(@Path ("id") communityId: Int): Completable
+
+    @DELETE("/api/community/{id}")
+    fun deletePosting(@Path ("id") communityId: Int): Completable
 }

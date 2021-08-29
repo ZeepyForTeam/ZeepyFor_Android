@@ -36,8 +36,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
-
         writeReview()
         setFilterList()
         changeAddress()

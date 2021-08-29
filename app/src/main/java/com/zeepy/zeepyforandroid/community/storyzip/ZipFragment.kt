@@ -97,7 +97,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
             when (postingList.status) {
                 NetworkStatus.State.LOADING -> {
-//                    controlLoadingAnimation(true)
+                    controlLoadingAnimation(true)
                 }
 
                 NetworkStatus.State.SUCCESS -> {

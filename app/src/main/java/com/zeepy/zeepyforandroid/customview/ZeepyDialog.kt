@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.databinding.ZeepyDialogBinding
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
 
 class ZeepyDialog(
     private val title: String,
@@ -38,36 +39,13 @@ class ZeepyDialog(
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return binding.root
-
     }
 
     override fun onResume() {
         super.onResume()
-        getDeviceSize()
+        val deviceSize = (requireActivity() as MainActivity).getDeviceSize()
+        setDialogSize(deviceSize[0], deviceSize[1])
         attachClickListener()
-    }
-
-    //defaultDisplay Deprecated로 인한 Version 처리
-    private fun getDeviceSize() {
-        var deviceWidth = 0
-        var deviceHeight = 0
-        val outMetrics = DisplayMetrics()
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-            val display = requireActivity().display
-            display?.getRealMetrics(outMetrics)
-            deviceHeight = outMetrics.heightPixels
-            deviceWidth = outMetrics.widthPixels
-            setDialogSize(deviceWidth, deviceHeight)
-        } else {
-            @Suppress("DEPRECATION")
-            val display = requireActivity().windowManager.defaultDisplay
-            @Suppress("DEPRECATION")
-            display.getMetrics(outMetrics)
-            deviceHeight = outMetrics.heightPixels
-            deviceWidth = outMetrics.widthPixels
-            setDialogSize(deviceWidth, deviceHeight)
-        }
     }
 
     private fun setDialogSize(deviceWidth: Int, deviceHeight:Int) {

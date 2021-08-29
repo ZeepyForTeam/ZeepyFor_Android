@@ -1,48 +1,114 @@
 package com.zeepy.zeepyforandroid.network.auth
 
 import android.util.Log
-import com.zeepy.zeepyforandroid.application.DaggerZeepyApplication_HiltComponents_SingletonC.builder
+import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
+import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import okhttp3.*
-import okhttp3.ResponseBody.Companion.toResponseBody
-import okhttp3.internal.http2.ConnectionShutdownException
-import java.io.IOException
 import java.net.HttpURLConnection
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import okhttp3.Interceptor
+import okhttp3.Request
+import okhttp3.Response
+import retrofit2.Call
+import retrofit2.Callback
+import java.util.*
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
     private val tokenController: TokenController,
-    private val userPreferenceManager: UserPreferenceManager
+    private val userPreferenceManager: UserPreferenceManager,
+    private val zeepyLocalRepository: ZeepyLocalRepository
 ) : Interceptor {
 
     @Throws(Exception::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().newBuilder().addHeaders(userPreferenceManager.fetchUserAccessToken()).build()
+        val request =
+            chain.request().newBuilder().addHeaders(userPreferenceManager.fetchUserAccessToken())
+                .build()
+
         val response = chain.proceed(request)
-        try {
-            if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                val tokenRefreshed = tokenController.fetchAccessToken()
+        if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            response.close()
+            val accessToken = refreshAccessToken()
+            val newRequest = chain.request().newBuilder()
+                .addHeaders(accessToken)
+                .build()
 
-                if (tokenRefreshed.isSuccessful) {
-                    userPreferenceManager.saveUserAccessToken(tokenRefreshed.body()!!.accessToken)
-                    userPreferenceManager.saveUserRefreshToken(tokenRefreshed.body()!!.refreshToken)
-                    val newRequest = chain.request().newBuilder()
-                        .addHeaders(userPreferenceManager.fetchUserAccessToken())
-                        .build()
+            return chain.proceed(newRequest)
+        }
+        return response
+//        try {
+//            if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+//                val tokenRefreshed = tokenController.fetchAccessToken()
+//
+//                if (tokenRefreshed.isSuccessful) {
+//                    userPreferenceManager.saveUserAccessToken(tokenRefreshed.body()!!.accessToken)
+//                    userPreferenceManager.saveUserRefreshToken(tokenRefreshed.body()!!.refreshToken)
+//                    val newRequest = chain.request().newBuilder()
+//                        .addHeaders(userPreferenceManager.fetchUserAccessToken())
+//                        .build()
+//
+//                    return chain.proceed(newRequest)
+//                }
+//            }
+//            Log.e("AuthInterceptor catch Excpetion run?", "NO")
+//            return response
+//        } catch (e: Exception) {
+//            Log.e("AuthInterceptor catch Excpetion run?", "YES")
+//            e.printStackTrace()
+//            return response
+//        }
+    }
 
-                    return chain.proceed(newRequest)
+    private fun refreshAccessToken():String {
+        val tokenRefreshed = tokenController.fetchAccessToken()
+        var accessToken = ""
+        tokenRefreshed.enqueue(object : Callback<ResponseAuthDTO> {
+            override fun onResponse(
+                call: Call<ResponseAuthDTO>,
+                response: retrofit2.Response<ResponseAuthDTO>
+            ) {
+                if(response.isSuccessful) {
+                    if (response.body() != null) {
+                        userPreferenceManager.saveUserAccessToken(response.body()!!.accessToken)
+                        userPreferenceManager.saveUserRefreshToken(response.body()!!.refreshToken)
+                        accessToken =  response.body()!!.accessToken
+                    } else {
+                        deleteUserInfo()
+                    }
+                } else {
+                    deleteUserInfo()
                 }
             }
-            Log.e("AuthInterceptor catch Excpetion run?", "NO")
-            return response
-        } catch (e: Exception) {
-            Log.e("AuthInterceptor catch Excpetion run?", "YES")
-            e.printStackTrace()
-            return response
-        }
+
+            override fun onFailure(call: Call<ResponseAuthDTO>, t: Throwable) {
+                userPreferenceManager.saveIsAlreadyLogin(false)
+            }
+        })
+        return accessToken
+    }
+
+    private fun deleteUserInfo() {
+        val disposable = CompositeDisposable()
+        userPreferenceManager.saveIsAlreadyLogin(false)
+
+        disposable.add(
+            Observable.fromCallable{
+                zeepyLocalRepository.deleteEveryAddress()
+            }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("delete all address", "success")
+                }, {
+                    Log.e("delete all address", "fail")
+                })
+        )
+        disposable.clear()
     }
 
     private fun Request.Builder.addHeaders(token: String) =
@@ -51,4 +117,5 @@ class AuthInterceptor @Inject constructor(
     companion object {
         private const val AUTH_HEADER_KEY = "X-AUTH-TOKEN"
     }
+
 }

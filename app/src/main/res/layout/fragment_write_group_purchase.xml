@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.community.writeposting.viewmodel.WriteGroupPurchaseViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollview_write_posting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
+                    android:id="@+id/toolbar_write_posting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_posting_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="14sp"
+                    android:text="글 제목"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar_write_posting"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_title"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:paddingStart="12dp"
+                    android:text="@={viewModel.title}"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/input_title_write_posting"
+                    app:layout_constraintDimensionRatio="1:0.13"
+                    app:layout_constraintTop_toBottomOf="@id/tv_posting_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_purchase_introduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="14sp"
+                    android:text="@string/purchase_introduce_write_community"
+                    app:layout_constraintTop_toBottomOf="@id/et_title"
+                    app:layout_constraintStart_toStartOf="@id/et_title"/>
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_purchase_introduce"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:paddingStart="12dp"
+                    android:paddingTop="17dp"
+                    android:text="@={viewModel.content}"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="top"
+                    android:hint="@string/purchase_introduce_hint"
+                    app:layout_constraintDimensionRatio="1:0.274"
+                    app:layout_constraintTop_toBottomOf="@id/tv_purchase_introduce"
+                    app:layout_constraintStart_toStartOf="@id/et_title"
+                    app:layout_constraintEnd_toEndOf="@id/et_title"/>
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_purchase_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="14sp"
+                    android:text="@string/input_purchase_write_posting"
+                    app:layout_constraintTop_toBottomOf="@id/et_purchase_introduce"
+                    app:layout_constraintStart_toStartOf="@id/et_purchase_introduce"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_product_name"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:text="@={viewModel.productName}"
+                    android:paddingStart="12dp"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_product_name_write_posting"
+                    app:layout_constraintDimensionRatio="1:0.13"
+                    app:layout_constraintTop_toBottomOf="@id/tv_purchase_info"
+                    app:layout_constraintStart_toStartOf="@id/et_title"
+                    app:layout_constraintEnd_toEndOf="@id/et_title"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_product_price"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@null"
+                    android:paddingStart="12dp"
+                    android:text="@={viewModel.productPrice}"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_product_price_write_posting"
+                    app:layout_constraintDimensionRatio="1:0.13"
+                    app:layout_constraintTop_toBottomOf="@id/et_product_name"
+                    app:layout_constraintStart_toStartOf="@id/et_title"
+                    app:layout_constraintEnd_toEndOf="@id/et_title"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_purchase_site"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@null"
+                    android:paddingStart="12dp"
+                    android:text="@={viewModel.purchaseSite}"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_purchase_site_write_posting"
+                    app:layout_constraintDimensionRatio="1:0.13"
+                    app:layout_constraintTop_toBottomOf="@id/et_product_price"
+                    app:layout_constraintStart_toStartOf="@id/et_title"
+                    app:layout_constraintEnd_toEndOf="@id/et_title"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_deal_method"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@null"
+                    android:paddingStart="12dp"
+                    android:text="@={viewModel.sharingMethod}"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_deal_method_write_posting"
+                    app:layout_constraintDimensionRatio="1:0.13"
+                    app:layout_constraintTop_toBottomOf="@id/et_purchase_site"
+                    app:layout_constraintStart_toStartOf="@id/et_title"
+                    app:layout_constraintEnd_toEndOf="@id/et_title"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_target_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="14sp"
+                    android:layout_marginTop="36dp"
+                    android:text="목표 인원"
+                    app:layout_constraintTop_toBottomOf="@id/et_deal_method"
+                    app:layout_constraintStart_toStartOf="@id/et_deal_method"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_target_count"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@null"
+                    android:text="@={viewModel.targetCount}"
+                    android:paddingStart="12dp"
+                    android:inputType="number"
+                    android:foreground="@drawable/box_stroke_graybd_8dp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textColorHint="@color/zeepy_gray_9a"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_count_people_write_posting"
+                    app:layout_constraintWidth_percent="0.35"
+                    app:layout_constraintDimensionRatio="1:0.31"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintTop_toBottomOf="@id/tv_target_count"
+                    app:layout_constraintStart_toStartOf="@id/et_title"
+                    app:layout_constraintEnd_toEndOf="@id/et_title"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_count_peoeple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_regular"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="14sp"
+                    android:layout_marginStart="8dp"
+                    android:text="명"
+                    app:layout_constraintTop_toTopOf="@id/et_target_count"
+                    app:layout_constraintStart_toEndOf="@id/et_target_count"
+                    app:layout_constraintBottom_toBottomOf="@id/et_target_count"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_collect_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:textSize="14sp"
+                    android:layout_marginTop="53dp"
+                    android:text="@string/collect_content_write_content"
+                    app:layout_constraintTop_toBottomOf="@id/et_target_count"
+                    app:layout_constraintStart_toStartOf="@id/et_deal_method"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_collect_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3"
+                    tools:listitem="@layout/item_write_posting_collect_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_collect_content"
+                    app:layout_constraintStart_toStartOf="@id/et_deal_method"
+                    app:layout_constraintEnd_toEndOf="@id/et_deal_method"/>
+
+                <View
+                    android:id="@+id/view_btn_border"
+                    app:layout_constraintBottom_toTopOf="@id/btn_next"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="53dp"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerview_collect_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/zeepy_gray_f4" />
+
+                <com.zeepy.zeepyforandroid.customview.ZeepyButton
+                    android:id="@+id/btn_next"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="11dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_btn_border" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
