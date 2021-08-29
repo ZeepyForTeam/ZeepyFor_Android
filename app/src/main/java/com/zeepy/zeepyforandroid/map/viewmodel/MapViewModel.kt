@@ -12,6 +12,7 @@ import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.usecase.util.data
 import com.zeepy.zeepyforandroid.map.usecase.util.succeeded
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject

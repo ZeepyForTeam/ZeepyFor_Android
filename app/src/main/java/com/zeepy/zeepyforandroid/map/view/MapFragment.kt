@@ -3,7 +3,6 @@ package com.zeepy.zeepyforandroid.map.view
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,12 +17,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentMapBinding
-import com.zeepy.zeepyforandroid.map.data.Building
 import com.zeepy.zeepyforandroid.map.data.BuildingModel
 import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
@@ -35,8 +32,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
-import net.daum.mf.map.n.api.internal.NativeDeviceCheckUtilsMapLibrary
-import net.daum.mf.map.n.api.internal.NativeMapController
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,6 +66,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private val markerEventListener = MarkerEventListener(context)
     private val mapViewEventListener = MapViewEventListener(context)
     private var currentZoomLevel = 2
+    private var currentMapCenterPoint: MapPoint? = null
+    private var mapDisplayOffset: Float = 0F
 
     companion object {
         val LOCATION_PERMISSIONS = arrayOf(
@@ -105,39 +102,37 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
 
         // 현재위치 버튼 클릭 시 permission 요청 (TODO: 요청 시점 수정될 수도)
+        // FIXME: 아마 처음 지도 실행 시 현재위치 기준으로 mapCenterPoint를 가져와야 할 것 같음
         myLocationButton.setOnClickListener { getGpsLocation() }
 
-        // setMarkersObserver()
         setOptionButton()
         setToolbar()
         mapView.setPOIItemEventListener(markerEventListener)
         mapView.setMapViewEventListener(mapViewEventListener)
+
         // 마커 띄우기 테스트
         setMarker(37.505834449999995, 126.96320847343215, R.drawable.emoji_5_map)
         setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
 
+        // init test
+        currentMapCenterPoint = markers[1].mapPoint
+
+
+
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
-        // FIXME: Error accessing mapPointBounds
+
         // FIXME: 현재 카카오 지도 네이티브 소스에서 Fatal signal 11(SIGSEGV) 잘못된 메모리 참조 에러 발생 (getZoomLevel이나 getMapPointBounds를 불러올 수 없는 상황)
-        Log.e("mapCenterPoint", "" + mapView.mapCenterPoint.mapPointGeoCoord.latitude + "," + mapView.mapCenterPoint.mapPointGeoCoord.longitude)
-        Log.e("mapZoomLevel", "" + currentZoomLevel)
-        mapHelper = MapHelper(requireActivity(), mapView, currentZoomLevel)
-        mapHelper.setTopLeftPoint()
-        mapHelper.setBottomRightPoint()
-        mapHelper.setRemainingPoints()
-        Log.e("topLeftPoint", "" + mapHelper.topLeftLat + "," + mapHelper.topLeftLng)
-        Log.e("bottomRightPoint", "" + mapHelper.bottomRightLat + "," + mapHelper.bottomRightLng)
-
-        viewModel.getBuildingsByLocation(37.961350, 35.161614, 129.483989, 126.285148)
 
 
+
+
+        // FIXME: Make this an observer function
         viewModel.fetchBuildingsResponse.observe(viewLifecycleOwner, { result ->
             when (result) {
                 is Result.Success -> {
                     result.data.let {
                         this.buildings = it
                         setMarkersList()
-                        mapView.setPOIItemEventListener(markerEventListener)
                     }
                 }
                 is Result.Error -> {
@@ -157,9 +152,18 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             markers.add(
                 MapPOIItem().apply {
                     mapPoint = MapPoint.mapPointWithGeoCoord(buildings[index].latitude, buildings[index].longitude)
+                    itemName = "테스트 마커"
+                    tag = markerId++
+                    setCustomImageAnchor(0.5F, 0.5F)
+                    markerType = MapPOIItem.MarkerType.CustomImage
+                    customImageResourceId = R.drawable.emoji_1_map
+                    isCustomImageAutoscale = false
+                    isShowCalloutBalloonOnTouch = false
                 }
             )
-            mapView.addPOIItems(markers.toTypedArray())
+        }
+        markers.forEach {
+            mapView.addPOIItem(it)
         }
     }
 
@@ -210,6 +214,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
 
         override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
+            currentMapCenterPoint = p1
         }
 
         override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
@@ -220,7 +225,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
 
         override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
-
         }
 
         override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {
@@ -230,6 +234,26 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
 
         override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
+            if (currentZoomLevel < 3) {
+                mapDisplayOffset = binding.mapToolbar.height + binding.edittextSearchMap.height + MetricsConverter.dpToPixel(16F, context)
+                Log.e("zoomLevel", "" + currentZoomLevel)
+                Log.e("mapCenterPoint.mapPointGeoCoord", "" + currentMapCenterPoint?.mapPointGeoCoord?.latitude + "," + currentMapCenterPoint?.mapPointGeoCoord?.longitude)
+                mapHelper = MapHelper(requireActivity(), currentZoomLevel, currentMapCenterPoint!!, mapDisplayOffset)
+                mapHelper.setMapMetrics()
+                Log.e("toolBarHeight", "" + binding.mapToolbar.height)
+                Log.e("searchBarHeight", "" + binding.edittextSearchMap.height)
+                Log.e("offSet", "" + mapDisplayOffset)
+                Log.e("displayWidth", "" + mapHelper.displayWidth)
+                Log.e("displayHeight", "" + mapHelper.displayHeight)
+                mapHelper.setFourPoints()
+                Log.e("TopLeft", "" + mapHelper.topLeftLat + "," + mapHelper.topLeftLng)
+                Log.e("TopRight", "" + mapHelper.topRightLat + "," + mapHelper.topRightLng)
+                Log.e("BottomLeft", "" + mapHelper.bottomLeftLat + "," + mapHelper.bottomLeftLng)
+                Log.e("BottomRight", "" + mapHelper.bottomRightLat + "," + mapHelper.bottomRightLng)
+
+                viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
+            }
+
         }
 
         override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {
@@ -327,9 +351,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             isCustomImageAutoscale = false
             isShowCalloutBalloonOnTouch = false
         }
+        markers.add(marker)
         // draw marker
         mapView.addPOIItem(marker)
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lng), false)
+        //mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lng), false)
+
     }
 
     /**
