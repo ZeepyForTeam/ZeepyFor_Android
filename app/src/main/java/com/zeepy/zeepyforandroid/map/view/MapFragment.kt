@@ -3,9 +3,11 @@ package com.zeepy.zeepyforandroid.map.view
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +35,7 @@ import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>() {
@@ -41,7 +44,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     lateinit var userPreferenceManager: UserPreferenceManager
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
-    private lateinit var lastSelectedMarker: MapPOIItem
+    private var lastSelectedMarker: MapPOIItem = MapPOIItem()
     private lateinit var myLocationButton: ConstraintLayout
     private lateinit var mapHelper: MapHelper
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
@@ -196,33 +199,35 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     }
 
     private fun setOptionButton() {
-        binding.optionBtnLayout.optionBtn.setOnClickListener {
-            resizeAnimation = WidthResizeAnimation(it, 800, false)
+        val metrics = DisplayMetrics()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val display = activity?.display
+            display?.getRealMetrics(metrics)
+        } else {
+            @Suppress("DEPRECATION")
+            val display = activity?.windowManager?.defaultDisplay
+            @Suppress("DEPRECATION")
+            (display?.getMetrics(metrics))
+        }
+
+        val displayWidth = metrics.widthPixels
+        val targetWidth = (displayWidth - MetricsConverter.dpToPixel(32F, context)).roundToInt()
+
+        binding.optionBtn.setOnClickListener {
+            resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, targetWidth, false)
             resizeAnimation.duration = 600
             //Log.d("original width", resizeAnimation.originalWidth.toString())
             //Log.d("target width", resizeAnimation.targetWidth.toString())
-            it.startAnimation(resizeAnimation)
+            binding.optionBtnLayout.startAnimation(resizeAnimation)
             it.visibility = View.GONE
             Handler(Looper.getMainLooper()).postDelayed({
-                binding.optionBtnLayout.optionOne.visibility = View.VISIBLE
-                binding.optionBtnLayout.optionTwo.visibility = View.VISIBLE
-                binding.optionBtnLayout.optionThree.visibility = View.VISIBLE
-                binding.optionBtnLayout.optionFour.visibility = View.VISIBLE
-                binding.optionBtnLayout.optionFive.visibility = View.VISIBLE
+                binding.optionOne.visibility = View.VISIBLE
+                binding.optionTwo.visibility = View.VISIBLE
+                binding.optionThree.visibility = View.VISIBLE
+                binding.optionFour.visibility = View.VISIBLE
+                binding.optionFive.visibility = View.VISIBLE
             },300)
-        }
-        binding.optionBtnLayout.optionBtn.setOnClickListener {
-            resizeAnimation = WidthResizeAnimation(it, 218, false)
-            resizeAnimation.duration = 600
-            //Log.d("original width", resizeAnimation.originalWidth.toString())
-            //Log.d("target width", resizeAnimation.targetWidth.toString())
-            it.startAnimation(resizeAnimation)
-            binding.optionBtnLayout.optionBtn.visibility = View.VISIBLE
-            binding.optionBtnLayout.optionOne.visibility = View.GONE
-            binding.optionBtnLayout.optionTwo.visibility = View.GONE
-            binding.optionBtnLayout.optionThree.visibility = View.GONE
-            binding.optionBtnLayout.optionFour.visibility = View.GONE
-            binding.optionBtnLayout.optionFive.visibility = View.GONE
         }
     }
 
@@ -259,16 +264,32 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
         override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            if (lastSelectedMarker.tag != 0) {
+                //Unselect marker
+                val markerUnselected = lastSelectedMarker.clone()
+                p0?.removePOIItem(lastSelectedMarker)
 
-            //Unselect marker
-            val markerUnselected = lastSelectedMarker.clone()
-            p0?.removePOIItem(lastSelectedMarker)
+                markerUnselected.setCustomImageAnchor(0.5F, 0.5F)
+                markerUnselected.customImageResourceId = lastSelectedMarkerOriginalImage
 
-            markerUnselected.setCustomImageAnchor(0.5F, 0.5F)
-            markerUnselected.customImageResourceId = lastSelectedMarkerOriginalImage
+                p0?.addPOIItem(markerUnselected)
+                existSelectedMarker = false
+            }
 
-            p0?.addPOIItem(markerUnselected)
-            existSelectedMarker = false
+            if (binding.optionBtn.visibility == View.GONE) {
+                resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, 218, false)
+                resizeAnimation.duration = 600
+                //Log.d("original width", resizeAnimation.originalWidth.toString())
+                //Log.d("target width", resizeAnimation.targetWidth.toString())
+                binding.optionBtnLayout.startAnimation(resizeAnimation)
+                binding.optionBtn.visibility = View.VISIBLE
+                binding.optionOne.visibility = View.GONE
+                binding.optionTwo.visibility = View.GONE
+                binding.optionThree.visibility = View.GONE
+                binding.optionFour.visibility = View.GONE
+                binding.optionFive.visibility = View.GONE
+            }
+
         }
 
         override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
