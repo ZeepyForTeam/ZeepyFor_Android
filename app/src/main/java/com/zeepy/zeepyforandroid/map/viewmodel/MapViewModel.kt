@@ -24,14 +24,25 @@ class MapViewModel @Inject constructor(
     private val _markers = MutableLiveData<List<BuildingModel>>()
     val markers: LiveData<List<BuildingModel>> = _markers
 
-    private val _buildingId = MutableLiveData(-1)
-    val buildingId: LiveData<Int> = _buildingId
+    private val _buildingSelected = MutableLiveData<BuildingModel>()
+    val buildingSelected: LiveData<BuildingModel> = _buildingSelected
+
+    private val _buildingSelectedId = MutableLiveData<Int>()
+    val buildingSelectedId: LiveData<Int> = _buildingSelectedId
 
     private val _fetchBuildingsResponse = MutableLiveData<Result<List<BuildingModel>>>()
     val fetchBuildingsResponse: LiveData<Result<List<BuildingModel>>> = _fetchBuildingsResponse
 
-    fun setMarkerClick(buildingId: Int) {
-        _buildingId.value = buildingId
+    init {
+        _buildingSelectedId.value = -1
+    }
+
+    fun updateBuildingSelected(building: BuildingModel) {
+        _buildingSelected.value = building
+    }
+
+    fun updateBuildingSelectedId(id: Int) {
+        _buildingSelectedId.value = id
     }
 
     fun getBuildingsByLocation(latitudeGreater: Double, latitudeLess: Double, longitudeGreater: Double, longitudeLess: Double) {

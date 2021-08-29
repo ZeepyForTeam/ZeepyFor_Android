@@ -5,7 +5,6 @@ import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
-import okhttp3.*
 import java.net.HttpURLConnection
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +15,6 @@ import okhttp3.Request
 import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Callback
-import java.util.*
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
@@ -42,27 +40,6 @@ class AuthInterceptor @Inject constructor(
             return chain.proceed(newRequest)
         }
         return response
-//        try {
-//            if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
-//                val tokenRefreshed = tokenController.fetchAccessToken()
-//
-//                if (tokenRefreshed.isSuccessful) {
-//                    userPreferenceManager.saveUserAccessToken(tokenRefreshed.body()!!.accessToken)
-//                    userPreferenceManager.saveUserRefreshToken(tokenRefreshed.body()!!.refreshToken)
-//                    val newRequest = chain.request().newBuilder()
-//                        .addHeaders(userPreferenceManager.fetchUserAccessToken())
-//                        .build()
-//
-//                    return chain.proceed(newRequest)
-//                }
-//            }
-//            Log.e("AuthInterceptor catch Excpetion run?", "NO")
-//            return response
-//        } catch (e: Exception) {
-//            Log.e("AuthInterceptor catch Excpetion run?", "YES")
-//            e.printStackTrace()
-//            return response
-//        }
     }
 
     private fun refreshAccessToken():String {

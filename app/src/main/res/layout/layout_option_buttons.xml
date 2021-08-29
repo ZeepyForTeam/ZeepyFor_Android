@@ -20,6 +20,7 @@
             android:gravity="center|bottom"
             android:background="@drawable/map_floating_button"
             app:backgroundTint="@null"
+            android:drawableTop="@drawable/icon_more_map"
             android:stateListAnimator="@null"/>
 
         <LinearLayout

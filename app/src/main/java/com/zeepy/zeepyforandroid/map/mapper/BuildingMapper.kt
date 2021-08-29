@@ -18,7 +18,11 @@ object BuildingMapper {
             areaCode = this.areaCode,
             shortAddress = this.shortAddress,
             latitude = this.latitude,
-            longitude = this.longitude
+            longitude = this.longitude,
+            reviews = this.reviews,
+            fullRoadNameAddress = this.fullRoadNameAddress,
+            shortRoadNameAddress = this.shortRoadNameAddress,
+            buildYear = this.buildYear
         )
     }
 }
