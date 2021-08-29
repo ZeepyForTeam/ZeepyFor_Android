@@ -30,4 +30,7 @@ class WritePostingControllerImpl @Inject constructor(
 
     override fun cancelScrapPosting(postingId: Int): Completable =
         zeepyApiService.cancelScrapPosting(postingId)
+
+    override fun cancelParticipation(postingId: Int): Completable =
+        zeepyApiService.cancelParticipation(postingId)
 }

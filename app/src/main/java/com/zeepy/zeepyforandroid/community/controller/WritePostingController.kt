@@ -12,4 +12,5 @@ interface WritePostingController {
     fun participateGroupPurchase(postingId: Int, participationDTO: RequestParticipationDTO): Completable
     fun scrapPosting(postingId: Int): Completable
     fun cancelScrapPosting(postingId: Int): Completable
+    fun cancelParticipation(postingId: Int): Completable
 }

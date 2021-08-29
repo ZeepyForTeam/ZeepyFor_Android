@@ -14,7 +14,10 @@ import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ParticipationDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
@@ -47,7 +50,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         setParticipationButton()
         setCommentsRecyclerView()
         writeComment()
-        participationGroupPurchase()
+        checkIsParticipated()
         setComments()
     }
 
@@ -84,6 +87,18 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
+    private fun setParticipationButtonText() {
+        viewModel.postingDetail.value?.data?.apply {
+            binding.btnParticipation.apply {
+                if (isParticipant) {
+                    setText("이미 구매에 참여하셨어요!")
+               } else {
+                   setText("참여하고 돈 아끼기")
+                }
+            }
+        }
+    }
+
     private fun getPostingDetailContent() {
         viewModel.postingId.observe(viewLifecycleOwner) {
             viewModel.fetchPostingDetailContent()
@@ -100,6 +115,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                     (binding.rvPicturePosting.adapter as PostingPictureAdapter).submitList(postingdetail.data?.picturesPosting)
                     viewModel.changeIsGroupPurchase()
                     viewModel.changeCommentList(postingdetail.data?.comments)
+                    setParticipationButtonText()
                     checkLikeButton(postingdetail.data?.isLiked ?: false)
                     updateAchievementRate()
                     controlLoadingAnimation(false)
@@ -111,14 +127,13 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         }
     }
 
-    private fun participationGroupPurchase() {
+    private fun checkIsParticipated() {
         binding.btnParticipation.onClick {
-            val participationDialog = ParticipationDialog(object : ParticipationDialog.ParticipationListener{
-                override fun participation(participation: String) {
-                    viewModel.changeParticipationComment(participation)
-                }
-            })
-            participationDialog.show(childFragmentManager, this.tag)
+           if (viewModel.postingDetail.value?.data?.isParticipant == false) {
+               participatePurchase()
+           } else {
+               cancelParticipation()
+           }
         }
 
         viewModel.participationComment.observe(viewLifecycleOwner) { comment ->
@@ -210,6 +225,33 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                 this.cancelAnimation()
             }
         }
+    }
+
+    private fun participatePurchase() {
+        val participationDialog = ParticipationDialog(object : ParticipationDialog.ParticipationListener{
+            override fun participation(participation: String) {
+                viewModel.changeParticipationComment(participation)
+            }
+        })
+        participationDialog.show(childFragmentManager, this.tag)
+    }
+
+    private fun cancelParticipation() {
+        val cancelParticipationDialog = ZeepyDialogBuilder("이미 참여한 공구에요!\n참여를 취소하실건가요 T-T?", "community")
+        cancelParticipationDialog.setLeftButton(R.drawable.box_grayf9_8dp,"참여 취소")
+            .setRightButton(R.drawable.box_green33_8dp,"참여할게요!:)")
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    viewModel.cancelParticipation()
+                    dialog.dismiss()
+                }
+
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+            })
+
+        cancelParticipationDialog.build().show(childFragmentManager, this.tag)
     }
 
     companion object {

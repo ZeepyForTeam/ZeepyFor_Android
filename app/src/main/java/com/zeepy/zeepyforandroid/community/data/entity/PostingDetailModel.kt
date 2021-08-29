@@ -16,6 +16,7 @@ data class PostingDetailModel(
     val postingStatus: Boolean,
     val isLiked: Boolean,
     val productName: String?,
+    val isParticipant: Boolean,
     val purchasePlace: String?,
     val productPrice: String?,
     val sharingMethod: String?,

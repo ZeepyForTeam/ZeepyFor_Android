@@ -102,4 +102,7 @@ interface ZeepyApiService {
 
     @DELETE("/api/community/like")
     fun cancelScrapPosting(@Query ("communityId") communityId: Int): Completable
+
+    @PUT("/api/community/participation/{id}")
+    fun cancelParticipation(@Path ("id") communityId: Int): Completable
 }

@@ -108,23 +108,6 @@ class PostingDetailViewModel @Inject constructor(
         }
     }
 
-    fun postComment() {
-        if (!commentWriting.value.isNullOrEmpty()) {
-            currentList.add(
-                CommentModel(
-                    userId.value!!,
-                    postingDetail.value?.data?.imageWriter,
-                    "nickname",
-                    commentWriting.value.toString(),
-                    getCurrentDateComment(),
-                    isSecretCommentWriting.value ?: false,
-                    null
-                )
-            )
-            _commentList.postValue(currentList)
-        }
-    }
-
     fun postCommentToServer() {
         if (!commentWriting.value.isNullOrEmpty()) {
             addDisposable(
@@ -157,7 +140,7 @@ class PostingDetailViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                           fetchPostingDetailContent()
+                    fetchPostingDetailContent()
                 }, {
                     it.printStackTrace()
                 })
@@ -181,6 +164,19 @@ class PostingDetailViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({}, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun cancelParticipation() {
+        addDisposable(
+            writePostingController.cancelParticipation(postingId.value!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    fetchPostingDetailContent()
+                },{
                     it.printStackTrace()
                 })
         )
