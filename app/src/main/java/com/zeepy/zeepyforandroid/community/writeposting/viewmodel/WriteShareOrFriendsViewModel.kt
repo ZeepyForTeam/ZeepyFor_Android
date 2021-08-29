@@ -70,7 +70,7 @@ class WriteShareOrFriendsViewModel@Inject constructor(
     fun sendRequestData() {
         val requestData = RequestWritePosting(
             selectedAddress.value!!,
-            PostingType.JOINTPURCHASE.name,
+            postingType.value!!,
             content.value,
             uploadImages.value!!,
             null,

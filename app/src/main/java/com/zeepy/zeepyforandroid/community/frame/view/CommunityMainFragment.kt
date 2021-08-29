@@ -84,7 +84,7 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             }
 
             isAlreadyLogin && !isAlreadyRegisterAddress -> {
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToCommunitySearchAddressFragment()
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
                 requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
         }

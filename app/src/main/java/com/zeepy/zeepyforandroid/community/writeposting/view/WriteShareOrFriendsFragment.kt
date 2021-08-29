@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.community.writeposting.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,8 @@ class WriteShareOrFriendsFragment: BaseFragment<FragmentWriteShareOrFriendsBindi
             setText("다음으로")
             setUnUsableButton()
             onClick{
+                viewModel.sendRequestData()
+                Log.e("dakfj","${viewModel.requestWritePosting.value}")
                 val action = WriteShareOrFriendsFragmentDirections
                     .actionWriteShareOrFriendsFragmentToCommunityLoadPictureFragment(viewModel.requestWritePosting.value)
                 findNavController().navigate(action)

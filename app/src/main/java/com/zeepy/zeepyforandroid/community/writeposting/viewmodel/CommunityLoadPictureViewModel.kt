@@ -89,6 +89,7 @@ class CommunityLoadPictureViewModel @Inject constructor(
     fun getPresignedUrl(contentResolver: ContentResolver) {
         val imageCount = uploadBitmapImages.value?.size?.toLong() ?: 0
         _successUpload.value = false
+
         addDisposable(
             imageController.getPresignedUrl()
                 .repeat(imageCount)
@@ -99,15 +100,10 @@ class CommunityLoadPictureViewModel @Inject constructor(
                 }, {
                     it.printStackTrace()
                 }, {
-
-                    Log.e("image request bodies", "${requestBodyImages.value}")
                     val multipartBodies = requestBodyImages.value?.map { it!! }
                         ?.zip(presignedUrlList.value!!.toList())
 
                     _requestBodyUrlPair.value = multipartBodies!!
-
-                    Log.e("pair pair", "${requestBodyUrlPair.value}")
-
 
                     val multipartBodyMap = requestBodyUrlPair.value?.map {
 //            val requestbody = it.first.toRequestBody("image/jpeg".toMediaTypeOrNull())
