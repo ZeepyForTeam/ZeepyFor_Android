@@ -67,6 +67,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 if (viewModel.addressList.value.isNullOrEmpty()) {
                     val action =
                         MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                    action.isCommunityTheme = false
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)
                 } else {

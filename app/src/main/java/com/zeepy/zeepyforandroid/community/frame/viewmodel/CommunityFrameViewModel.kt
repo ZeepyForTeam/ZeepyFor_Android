@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.nhn.android.idp.common.connection.NetworkState
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
+import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.data.repository.PostingListRepository
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class CommunityFrameViewModel @Inject constructor(
     private val addressDataSource: AddressDataSource,
     private val postingListRepository: PostingListRepository,
-    private val zeepyLocalRepository: ZeepyLocalRepository
+    private val zeepyLocalRepository: ZeepyLocalRepository,
+    private val searchAddressListRepository: SearchAddressListRepository
 ) : BaseViewModel() {
 
     private val _currentFragmentId = MutableLiveData<Int>()
@@ -44,6 +47,18 @@ class CommunityFrameViewModel @Inject constructor(
     private val _selectedAddress = MutableLiveData<String>()
     val selectedAddress: LiveData<String>
         get() = _selectedAddress
+
+    private val _resultSearchedAddress = MutableLiveData<List<SearchAddressListModel>>()
+    val resultSearchedAddress: LiveData<List<SearchAddressListModel>>
+        get() = _resultSearchedAddress
+
+    private val _selectedBuildingId = MutableLiveData<Int>()
+    val selectedBuildingId: LiveData<Int>
+        get() = _selectedBuildingId
+
+    fun changeSelectedBuildingId(id: Int) {
+        _selectedBuildingId.value = id
+    }
 
     init {
         getAddressListFromLocal()
@@ -142,6 +157,19 @@ class CommunityFrameViewModel @Inject constructor(
                     if (!response.isNullOrEmpty()) {
                         _selectedAddress.postValue(response.filter { it.isAddressCheck }.first()?.cityDistinct.toString())
                     }
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun searchBuildingAddress(address: String) {
+        addDisposable(
+            searchAddressListRepository.searchBuildingAddressList(address)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    _resultSearchedAddress.postValue(response)
                 }, {
                     it.printStackTrace()
                 })

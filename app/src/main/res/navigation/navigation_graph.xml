@@ -83,6 +83,11 @@
             app:argType="boolean"
             android:defaultValue="false" />
 
+        <argument
+            android:name="isCommunityTheme"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
     </fragment>
 
     <fragment
@@ -136,6 +141,11 @@
 
         <argument android:name="addressList"
             app:argType="com.zeepy.zeepyforandroid.address.LocalAddressEntity[]"/>
+
+        <argument
+            android:name="isCommunityTheme"
+            app:argType="boolean"
+            android:defaultValue="false" />
 
         <action
             android:id="@+id/action_changeAddressFragment_to_reviewFrameFragment"

@@ -100,4 +100,6 @@
     <string name="purchase_introduce_hint">공동구매를 간단히 소개해주세요. (100자 이내)</string>
     <string name="purchase_introduce_write_community">공구 소개</string>
     <string name="approve_personal_info">ZEEPY에서 제공하는 개인정보 처리방침에 동의합니다.</string>
+    <string name="select_house">거주하고 계신 집을\n선택해주세요.</string>
+    <string name="check_address_to_register">등록할 주소를\n확인해주세요.</string>
 </resources>

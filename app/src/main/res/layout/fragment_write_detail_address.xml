@@ -2,6 +2,9 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="view"
+            type="android.view.View" />
+        <variable
             name="viewModel"
             type="com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
     </data>
@@ -19,6 +22,20 @@
             android:text="@string/is_house_right_to_write_review"
             zeepy:start="0"
             zeepy:end="9"
+            android:visibility="@{viewModel.isJustRegisterAddress ? view.INVISIBLE : view.VISIBLE}"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/spannabletextview_notice_just_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check_address_to_register"
+            zeepy:start="0"
+            zeepy:end="14"
+            android:visibility="@{viewModel.isJustRegisterAddress ? view.VISIBLE : view.INVISIBLE}"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,6 +46,7 @@
             layout="@layout/layout_detail_address"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="44dp"
             app:layout_constraintTop_toBottomOf="@id/spannabletextview_notice"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
