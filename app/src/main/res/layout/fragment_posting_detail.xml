@@ -129,6 +129,7 @@
                         app:layout_constraintEnd_toEndOf="@id/tv_content_posting"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_modify_posting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_more_horizontal"

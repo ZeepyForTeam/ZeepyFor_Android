@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CommentModel(
+    val commentId: Int,
     val commentWriterIdx: Int,
     val profile: String?,
     val nickname: String?,

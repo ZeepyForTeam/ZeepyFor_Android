@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.community.data.remote.responseDTO
 
 import com.zeepy.zeepyforandroid.community.data.entity.CommentModel
 import com.zeepy.zeepyforandroid.community.data.entity.NestedCommentModel
+import com.zeepy.zeepyforandroid.util.DateParser.convertToLocalDateFormat
 
 data class Comment(
     val comment: String,
@@ -16,11 +17,12 @@ data class Comment(
 ) {
     fun toCommentModel(): CommentModel {
         return CommentModel(
+            id,
             writer.id,
             writer.profileImage,
             writer.name,
             comment,
-            createdTime,
+            convertToLocalDateFormat(createdTime),
             isSecret,
             toNestedCommentModel()
         )
@@ -33,7 +35,7 @@ data class Comment(
                 comment?.writer?.name,
                 comment?.comment,
                 comment?.isSecret,
-                comment?.createdTime
+                convertToLocalDateFormat(comment?.createdTime!!)
             )
         }
     }

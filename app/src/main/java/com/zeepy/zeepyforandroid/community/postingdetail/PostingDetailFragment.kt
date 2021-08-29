@@ -2,10 +2,12 @@ package com.zeepy.zeepyforandroid.community.postingdetail
 
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import androidx.fragment.app.viewModels
@@ -14,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
+import com.zeepy.zeepyforandroid.community.data.entity.CommentModel
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ParticipationDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
@@ -22,6 +25,7 @@ import com.zeepy.zeepyforandroid.databinding.FragmentPostingDetailBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import com.zeepy.zeepyforandroid.util.ext.hideKeyboard
+import com.zeepy.zeepyforandroid.util.ext.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +46,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changePostingId(args.postingModel.id)
 
+        viewModel.superCommentId.observe(viewLifecycleOwner){
+            Log.e("supercommentid", "${it}")
+        }
+
         setToolbar()
         setPictureRecyclerview()
         getPostingDetailContent()
@@ -52,6 +60,8 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         writeComment()
         checkIsParticipated()
         setComments()
+        interceptBackPressed()
+        modifyPosting()
     }
 
     private fun setToolbar() {
@@ -188,7 +198,13 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                         viewModel.userId.value ?: -1,
                         viewModel.postingDetail.value?.data?.writerUserIdx,
                         null
-                    )
+                    ), object : CommentsAdapter.WriteNestedCommentListener{
+                        override fun write(item: CommentModel) {
+                            viewModel.changeSuperCommentId(item.commentId)
+                            binding.etComment.requestFocus()
+                            requireContext().showKeyboard(binding.etComment)
+                        }
+                    }
                 )
             }
         }
@@ -252,6 +268,40 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
             })
 
         cancelParticipationDialog.build().show(childFragmentManager, this.tag)
+    }
+
+    private fun interceptBackPressed() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.superCommentId.value != null) {
+                    viewModel.changeSuperCommentId(null)
+
+                } else {
+                    findNavController().popBackStack()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+    }
+
+    private fun modifyPosting() {
+        binding.ivModifyPosting.setOnClickListener {
+            val modifyBottomSheet = ModifyBottomSheetDialogFragment(object : ModifyBottomSheetDialogFragment.ModifyPostingListener{
+                override fun modify() {
+                    TODO("Not yet implemented")
+                }
+
+                override fun delete() {
+                    viewModel.deletePosting()
+                }
+            })
+            modifyBottomSheet.show(childFragmentManager, this.tag)
+        }
+        viewModel.isDeletedPosting.observe(viewLifecycleOwner){ isDeleted ->
+            if (isDeleted) {
+                findNavController().popBackStack()
+            }
+        }
     }
 
     companion object {

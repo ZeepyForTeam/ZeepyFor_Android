@@ -13,4 +13,5 @@ interface WritePostingController {
     fun scrapPosting(postingId: Int): Completable
     fun cancelScrapPosting(postingId: Int): Completable
     fun cancelParticipation(postingId: Int): Completable
+    fun deletePosting(postingId: Int): Completable
 }

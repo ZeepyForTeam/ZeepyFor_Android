@@ -29,6 +29,10 @@ class PostingDetailViewModel @Inject constructor(
     val commentWriting = MutableLiveData<String>()
     val isSecretCommentWriting = MutableLiveData<Boolean>()
 
+    private val _isDeletedPosting = MutableLiveData<Boolean>()
+    val isDeletedPosting: LiveData<Boolean>
+        get() = _isDeletedPosting
+
     private val _userId = MutableLiveData<Int>()
     val userId: LiveData<Int>
         get() = _userId
@@ -49,8 +53,8 @@ class PostingDetailViewModel @Inject constructor(
     val commentList: LiveData<List<CommentModel?>?>
         get() = _commentList
 
-    private val _superCommentId = MutableLiveData<Int>()
-    val superCommentId: LiveData<Int>
+    private val _superCommentId = MutableLiveData<Int?>()
+    val superCommentId: LiveData<Int?>
         get() = _superCommentId
 
     private val _isGroupPurchase = MutableLiveData<Boolean>(false)
@@ -69,7 +73,7 @@ class PostingDetailViewModel @Inject constructor(
         _participationComment.value = comment
     }
 
-    fun changeSuperCommentId(id: Int) {
+    fun changeSuperCommentId(id: Int?) {
         _superCommentId.value = id
     }
 
@@ -121,8 +125,10 @@ class PostingDetailViewModel @Inject constructor(
                 ).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                               fetchPostingDetailContent()
+                        changeSuperCommentId(null)
+                        fetchPostingDetailContent()
                     }, {
+                        changeSuperCommentId(null)
                         it.printStackTrace()
                     })
             )
@@ -177,6 +183,20 @@ class PostingDetailViewModel @Inject constructor(
                 .subscribe({
                     fetchPostingDetailContent()
                 },{
+                    it.printStackTrace()
+                })
+        )
+    }
+
+    fun deletePosting() {
+        addDisposable(
+            writePostingController.deletePosting(postingId.value!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _isDeletedPosting.postValue(true)
+                },{
+                    _isDeletedPosting.postValue(false)
                     it.printStackTrace()
                 })
         )
