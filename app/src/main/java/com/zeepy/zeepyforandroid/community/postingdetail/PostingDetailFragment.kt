@@ -1,15 +1,10 @@
 package com.zeepy.zeepyforandroid.community.postingdetail
 
-import android.app.Activity
-import android.content.Context
-import android.net.Network
 import android.os.Bundle
 import android.text.SpannableStringBuilder
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import androidx.core.text.color
@@ -21,12 +16,10 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.zeepy.zeepyforandroid.customview.ParticipationDialog
 import com.zeepy.zeepyforandroid.databinding.FragmentPostingDetailBinding
-import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import com.zeepy.zeepyforandroid.util.ext.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
@@ -173,7 +166,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     private fun setCommentsRecyclerView() {
         binding.rvComments.addItemDecoration(ItemDecoration(8,0))
-        viewModel.commentList?.observe(viewLifecycleOwner) { comments ->
+        viewModel.commentList.observe(viewLifecycleOwner) { comments ->
             binding.rvComments.apply {
                 adapter = CommentsAdapter(
                     CommentAuthenticatedModel(
@@ -188,7 +181,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     private fun checkLikeButton(isLiked: Boolean) {
         binding.toolbar.binding.checkboxScrap.apply {
-            check(isLiked)
+            isChecked = isLiked
         }
     }
 
@@ -218,7 +211,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
             }
         }
     }
-
 
     companion object {
         private const val PERCENTAGE = 100
