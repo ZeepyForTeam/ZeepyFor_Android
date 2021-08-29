@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentSignUpBinding
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +38,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         successSignUp()
         checkEveryInputEntered()
         checkRepetition()
+        showTermsInfo()
     }
 
     private fun setInitView() {
@@ -111,12 +113,27 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         }
     }
 
-
     private fun successSignUp() {
         viewModel.signUpSuccess.observe(viewLifecycleOwner) {
             if(it) {
                 findNavController().popBackStack()
             }
+        }
+    }
+
+    private fun showTermsInfo() {
+        binding.textviewShowTerms.setOnClickListener {
+            val action = SignUpFragmentDirections.actionSignUpFragmentToTermsWebviewFragment(
+                TermsWebviewFragment.Companion.WebViewType.ZEEPY_TERMS.name
+            )
+            findNavController().navigate(action)
+
+        }
+        binding.textviewShowTermsPersonalInfo.setOnClickListener {
+            val action = SignUpFragmentDirections.actionSignUpFragmentToTermsWebviewFragment(
+                TermsWebviewFragment.Companion.WebViewType.PERSONAL_INFO.name
+            )
+            findNavController().navigate(action)
         }
     }
 }
