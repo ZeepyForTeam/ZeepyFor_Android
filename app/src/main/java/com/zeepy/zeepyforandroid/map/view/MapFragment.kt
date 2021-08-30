@@ -130,8 +130,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
-        // FIXME: 현재 카카오 지도 네이티브 소스에서 Fatal signal 11(SIGSEGV) 잘못된 메모리 참조 에러 발생 (getZoomLevel이나 getMapPointBounds를 불러올 수 없는 상황)
-
         // FIXME: Make this an observer function
         viewModel.fetchBuildingsResponse.observe(viewLifecycleOwner, { result ->
             when (result) {
@@ -196,14 +194,21 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                             markerType = MapPOIItem.MarkerType.CustomImage
 
                             // 소통 성향별로 마커 이미지 설정
-                            // TODO: 대표 소통성향을 어떤 로직으로 설정해야할지? 리뷰 중에 가장 많은 소통성향? 일단은 첫번째 리뷰 기준으로 설정함
-                            // TODO: 나머지 성향 조건 추가
                             when (buildings[index].reviews[0].communcationTendency) {
-                                "SOFTY" -> {
+                                "BUSINESS" -> {
+                                    customImageResourceId = R.drawable.emoji_1_map
+                                }
+                                "KIND" -> {
                                     customImageResourceId = R.drawable.emoji_2_map
                                 }
                                 "GRAZE" -> {
                                     customImageResourceId = R.drawable.emoji_3_map
+                                }
+                                "SOFTY" -> {
+                                    customImageResourceId = R.drawable.emoji_4_map
+                                }
+                                "BAD" -> {
+                                    customImageResourceId = R.drawable.emoji_5_map
                                 }
                             }
                             isCustomImageAutoscale = false
@@ -222,6 +227,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
+    /**
+     * 지도 하단의 소통성향 옵션 뷰 설정
+     */
     private fun setOptionButton() {
         val metrics = DisplayMetrics()
 
@@ -262,6 +270,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
+    /**
+     * MapView 이벤트 리스너 클래스
+     */
     inner class MapViewEventListener(val context: Context?): MapView.MapViewEventListener {
         override fun onMapViewInitialized(p0: MapView?) {
             currentMapCenterPoint = p0?.mapCenterPoint
@@ -340,10 +351,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     }
 
 
+    /**
+     * POIItem 이벤트 리스너 클래스
+     */
     inner class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
-        /**
-         * 마커가 선택되었을 시 실행되는 함수
-         */
+
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
 
             // 마커 선택시 이미지 변경을 하기 위한 workaround

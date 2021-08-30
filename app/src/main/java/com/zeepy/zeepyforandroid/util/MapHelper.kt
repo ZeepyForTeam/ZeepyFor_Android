@@ -6,7 +6,12 @@ import android.util.DisplayMetrics
 import net.daum.mf.map.api.MapPoint
 import kotlin.math.*
 
-
+/**
+ * Class for working with map functions
+ * As of now, mainly for getting coordinates of visible area of the map
+ * 현재 카카오 지도 네이티브 소스에서 Fatal signal 11(SIGSEGV) 잘못된 메모리 참조 에러 발생
+ * getZoomLevel이나 getMapPointBounds를 불러올 수 없는 상황에 대한 workaround
+ */
 class MapHelper(
     val activity: Activity, var zoomLevel: Int, var centerPoint: MapPoint, var mapDisplayOffset: Float
 ) {

@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.color
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -129,7 +131,10 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                                 override fun onClick(widget: View) {
                                     when (dest) {
                                         "signIn" -> {
-                                            findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                                            //Log.e("parent of onClick 로그인", parentFragment.toString())
+                                            //Log.e("navcontroller.currentBackStackEntry", "" + findNavController().currentBackStackEntry)
+                                            //Log.e("navcontroller.previousBackStackEntry", "" + findNavController().previousBackStackEntry)
+                                            requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.action_mainFrameFragment_to_signInFragment)
                                         }
                                         "editProfile" -> {
                                             findNavController().navigate(R.id.action_myProfileFragment_to_EditMyProfileFragment)
@@ -166,7 +171,9 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
             }
         }
 
-        spannable.applyArgAnnotations(nickname)
+        if (loggedIn) {
+            spannable.applyArgAnnotations(nickname)
+        }
         spannable.applyOtherAnnotations()
 
         // For some reason, having multiple spans with setting ForegroundColorSpan caused incorrect color to be used.
@@ -180,7 +187,6 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                     "color",
                     context?.packageName
                 )
-                Log.e("colorNamePROFILE", colorName + ", " + colorId)
                 spannable.setSpan(
                     ForegroundColorSpan(
                         ContextCompat.getColor(

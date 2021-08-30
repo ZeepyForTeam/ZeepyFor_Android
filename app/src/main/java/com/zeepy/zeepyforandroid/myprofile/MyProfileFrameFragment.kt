@@ -40,15 +40,18 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
         binding.toolbar.run {
             setTitle("마이페이지")
 
+            // NOTE: navController.previousBackStackEntry is null at startDestination
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.id != R.id.myProfileFragment) {
+                //Log.e("WHAT IS DEST NOW?", destination.toString())
+                //Log.e("navcontroller.currentBackStackEntry", "" + navController.currentBackStackEntry)
+                //Log.e("navcontroller.previousBackStackEntry", "" + navController.previousBackStackEntry)
+
+                if (navController.previousBackStackEntry != null) {
                     setBackButton {
-                        if (navController.previousBackStackEntry != null) {
-                            navController.popBackStack()
-                        } else {
-                            Navigation.findNavController(binding.root).popBackStack()
-                        }
+                        navController.popBackStack()
                     }
+                } else {
+                    clearButton()
                 }
             }
         }
@@ -57,22 +60,20 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
     private fun unsetBottomNavigationBar() {
         val navBar = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id != R.id.myProfileFragment) {
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            if (navController.previousBackStackEntry != null) {
                 navBar?.visibility = View.GONE
             } else {
                 navBar?.visibility = View.VISIBLE
             }
-
         }
     }
 
     private fun swipeOnlyOnMain() {
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewpager_main)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            Log.e("destination", "" + destination.id)
-            viewPager?.isUserInputEnabled = destination.id == R.id.myProfileFragment
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            viewPager?.isUserInputEnabled = navController.previousBackStackEntry == null
         }
     }
 }

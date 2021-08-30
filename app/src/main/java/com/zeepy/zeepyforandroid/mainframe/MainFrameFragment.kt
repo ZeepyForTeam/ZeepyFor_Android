@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.R
@@ -29,6 +30,14 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
         initViewPager()
         configureBottomNavigation()
         observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (findNavController().currentDestination?.id == R.id.mainFrameFragment
+            && viewModel.pageIdx.value == 3) {
+            viewModel.changePageIdx(0)
+        }
     }
 
     private fun observeViewModel() {

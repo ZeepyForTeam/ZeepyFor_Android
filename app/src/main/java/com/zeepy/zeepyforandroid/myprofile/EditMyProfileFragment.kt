@@ -36,6 +36,9 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
         setToolbar()
         setOnClickListeners()
 
+        Log.e("parent of EditMyProfileFragment", parentFragment.toString())
+        Log.e("parent of parent of EditMyProfileFragment", parentFragment?.parentFragment.toString())
+        Log.e("parent of parent of parent of EditMyProfileFragment", parentFragment?.parentFragment?.parentFragment.toString())
         // Observers
         viewModel.isWithdrawn.observe(viewLifecycleOwner, {
             if (it == true) {
@@ -50,7 +53,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
                     saveIsAlreadyLogin(false)
                 }
 
-                findNavController().popBackStack(R.id.mainFrameFragment, false)
+                //Navigate out
             }
         })
         viewModel.isLoggedOut.observe(viewLifecycleOwner, {
@@ -61,7 +64,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
                     saveIsAlreadyLogin(false)
                 }
 
-                findNavController().popBackStack(R.id.mainFrameFragment, false)
+                findNavController().popBackStack()
             }
         })
     }
