@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.mainframe
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.zeepy.zeepyforandroid.community.frame.view.CommunityFrameFragment
+import com.zeepy.zeepyforandroid.home.DirectTransitionListener
 import com.zeepy.zeepyforandroid.home.HomeFragment
 import com.zeepy.zeepyforandroid.lookaround.LookAroundFragment
 import com.zeepy.zeepyforandroid.myprofile.MyProfileFrameFragment

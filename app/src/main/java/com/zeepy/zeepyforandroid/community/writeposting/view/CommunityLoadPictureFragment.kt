@@ -1,11 +1,9 @@
-package com.zeepy.zeepyforandroid.community.writeposting
+package com.zeepy.zeepyforandroid.community.writeposting.view
 
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.core.net.toFile
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
@@ -29,14 +25,14 @@ import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.review.view.HousePictureFragment.Companion.PERMISSION_REQUESTED
 import com.zeepy.zeepyforandroid.review.view.adapter.UploadPictureAdapter
 import com.zeepy.zeepyforandroid.util.FileConverter.asBitmap
+import com.zeepy.zeepyforandroid.util.FileConverter.asMultipart
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okio.BufferedSink
 import java.io.File
 
@@ -126,8 +122,10 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
                 val bitmap = uri.asBitmap(requireContext().contentResolver)
                 val requestBody = BitmapRequestBody(bitmap!!)
                 val multipartBody = MultipartBody.Part.createFormData("imgs","zeepy", requestBody)
+                val multipart = uri.asMultipart("imgs", requireContext().contentResolver)
 
-                viewModel.addRequestBodyList(multipartBody)
+
+                viewModel.addRequestBodyList(multipart)
                 pictures.add(PictureModel(bitmap))
                 viewModel.addUploadUriImages(uri)
                 viewModel.changeUploadPictures(pictures)
@@ -200,8 +198,11 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     private fun uploadPosting() {
-        if(viewModel.uploadBitmapImages.value.isNullOrEmpty()) {
-//            viewModel.uploadPostingToZeepyServer()
+        Log.e("datas", "${viewModel.requestWritePosting.value}")
+
+        if(viewModel.requestBodyImages.value.isNullOrEmpty()) {
+            Log.e("datas", "${viewModel.requestWritePosting}")
+            viewModel.getPresignedUrl(requireContext().contentResolver)
         } else {
             viewModel.getPresignedUrl(requireContext().contentResolver)
 //            viewModel.uploadPostingToZeepyServer()
@@ -222,7 +223,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
-        override fun contentType(): MediaType = "image/jpeg".toMediaType()
+        override fun contentType(): MediaType = "multipart/form-data".toMediaType()
         override fun writeTo(sink: BufferedSink) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, sink.outputStream())
         }

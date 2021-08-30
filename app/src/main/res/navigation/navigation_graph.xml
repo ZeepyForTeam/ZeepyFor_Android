@@ -185,7 +185,7 @@
 
     <fragment
         android:id="@+id/communityLoadPictureFragment"
-        android:name="com.zeepy.zeepyforandroid.community.writeposting.CommunityLoadPictureFragment"
+        android:name="com.zeepy.zeepyforandroid.community.writeposting.view.CommunityLoadPictureFragment"
         android:label="CommunityLoadPictureFragment"
         tools:layout="@layout/fragment_community_load_picture">
         <argument

@@ -83,7 +83,7 @@ class CommunityFrameViewModel @Inject constructor(
         }
     }
 
-    fun getStoryZipPostingList() {
+    private fun getStoryZipPostingList() {
         val type = selectedCategory.value
         _postingList.value = NetworkStatus.LOADING(null)
         addDisposable(
@@ -99,7 +99,7 @@ class CommunityFrameViewModel @Inject constructor(
         )
     }
 
-    fun getMyZipList() {
+    private fun getMyZipList() {
         val type = selectedCategory.value
         _postingList.value = NetworkStatus.LOADING(null)
         addDisposable(
@@ -147,7 +147,7 @@ class CommunityFrameViewModel @Inject constructor(
         )
     }
 
-    fun getAddressListFromLocal() {
+    private fun getAddressListFromLocal() {
         addDisposable(
             zeepyLocalRepository.fetchAddressList()
                 .subscribeOn(Schedulers.io())

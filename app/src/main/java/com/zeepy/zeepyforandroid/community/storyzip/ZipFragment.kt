@@ -1,10 +1,14 @@
 package com.zeepy.zeepyforandroid.community.storyzip
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ObservableField
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -15,13 +19,16 @@ import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.COMMUNITY_IS_COMPLETED
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentZipBinding
+import com.zeepy.zeepyforandroid.enum.PostingType
+import com.zeepy.zeepyforandroid.home.DirectTransitionListener
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ZipFragment : BaseFragment<FragmentZipBinding>() {
+class ZipFragment : BaseFragment<FragmentZipBinding>(){
     private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment() })
 
     override fun getFragmentBinding(
@@ -46,7 +53,28 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     override fun onResume() {
         super.onResume()
+        initCommunityType()
         getCheckedbutton(binding.radiogroupTag.checkedRadioButtonId)
+        (requireActivity() as MainActivity).initialCommunityType = null
+    }
+
+    private fun initCommunityType() {
+        val category = (requireActivity() as MainActivity).initialCommunityType
+        when(category) {
+            PostingType.JOINTPURCHASE.name -> {
+                binding.rbTabGroupPurchase.isChecked = true
+            }
+            PostingType.NEIGHBORHOODFRIEND.name -> {
+                binding.rbTagFriends.isChecked = true
+            }
+            PostingType.FREESHARING.name -> {
+                binding.rbTagFreeShare.isChecked = true
+            }
+            else -> {
+                binding.rbTagEverything.isChecked = true
+
+            }
+        }
     }
 
     private fun setStoryZipRecyclerView() {
@@ -74,13 +102,13 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
                 viewModel.changeCategory(null)
             }
             binding.rbTabGroupPurchase.id -> {
-                viewModel.changeCategory("JOINTPURCHASE")
+                viewModel.changeCategory(PostingType.JOINTPURCHASE.name)
             }
             binding.rbTagFreeShare.id -> {
-                viewModel.changeCategory("FREESHARING")
+                viewModel.changeCategory(PostingType.FREESHARING.name)
             }
             binding.rbTagFriends.id -> {
-                viewModel.changeCategory("NEIGHBORHOODFRIEND")
+                viewModel.changeCategory(PostingType.NEIGHBORHOODFRIEND.name)
             }
         }
     }
@@ -121,7 +149,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     private fun showIsCompletedDialog(posting: PostingListModel) {
         val isCompletedDialog = ZeepyDialogBuilder("모집이 완료된 글이에요!", COMMUNITY_IS_COMPLETED)
-            .setButtonHorizontalWeight(0.7f,0.3f)
+            .setButtonHorizontalWeight(0.7f, 0.3f)
             .setDialogClickListener(object : DialogClickListener {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
                     goToPostingDetailFragment(posting)
@@ -140,7 +168,8 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     }
 
     private fun goToPostingDetailFragment(posting: PostingListModel) {
-        val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(posting)
+        val action =
+            MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(posting)
         requireParentFragment().requireParentFragment().requireParentFragment()
             .requireParentFragment().findNavController().navigate(action)
     }

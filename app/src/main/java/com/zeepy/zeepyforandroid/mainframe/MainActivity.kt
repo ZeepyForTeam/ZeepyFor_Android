@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var pref: SharedPreferencesManager
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    var initialCommunityType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
