@@ -15,6 +15,7 @@ import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
+import com.zeepy.zeepyforandroid.signin.dto.response.ResponseNicknameAndEmailDTO
 import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import io.reactivex.Completable
@@ -82,8 +83,14 @@ interface ZeepyApiService {
         @Query("longitudeLess") longitudeLess: Double
     ): Response<List<ResponseBuildingInfoDTO>>
 
-//    @DELETE("api/user/withdrawal")
-//    suspend fun deleteAccount(@Body userEmail: String): Response<>
+    @DELETE("/api/user/withdrawal")
+    suspend fun deleteAccount(@Body userEmail: String): Response<Unit?>
+
+    @DELETE("/api/auth/logout")
+    suspend fun logout(@Body userEmail: String): Response<Unit?>
+
+    @GET("/api/user/nickname/email")
+    fun getUserNicknameAndEmail(@Query("userEmail") userEmail: String): Single<ResponseNicknameAndEmailDTO>
 
     @POST("/api/user/registration")
     fun signUp(@Body requestSignUpDTO: RequestSignUpDTO): Completable

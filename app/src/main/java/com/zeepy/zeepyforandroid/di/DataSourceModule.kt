@@ -8,6 +8,8 @@ import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDat
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSourceImpl
 import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSource
 import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSourceImpl
+import com.zeepy.zeepyforandroid.myprofile.datasource.MyProfileRemoteDataSource
+import com.zeepy.zeepyforandroid.myprofile.datasource.MyProfileRemoteDataSourceImpl
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.qualifier.ZeepyService
 import dagger.Module
@@ -35,4 +37,8 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideBuildingsDataSource(@ZeepyService zeepyApiService: ZeepyApiService): RemoteBuildingsDataSource = RemoteBuildingsDataSourceImpl(zeepyApiService)
+
+    @Provides
+    @Singleton
+    fun provideMyProfileDataSource(@ZeepyService zeepyApiService: ZeepyApiService): MyProfileRemoteDataSource = MyProfileRemoteDataSourceImpl(zeepyApiService)
 }

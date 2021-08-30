@@ -16,6 +16,8 @@ import com.zeepy.zeepyforandroid.review.PostReviewController
 import com.zeepy.zeepyforandroid.review.PostReviewControllerImpl
 import com.zeepy.zeepyforandroid.signin.controller.SignInController
 import com.zeepy.zeepyforandroid.signin.controller.SignInControllerImpl
+import com.zeepy.zeepyforandroid.signin.controller.UserDataController
+import com.zeepy.zeepyforandroid.signin.controller.UserDataControllerImpl
 import com.zeepy.zeepyforandroid.signup.controller.SignUpController
 import com.zeepy.zeepyforandroid.signup.controller.SignUpControllerImpl
 import dagger.Module
@@ -41,6 +43,11 @@ object ControllerModule {
     @Singleton
     fun provideSignInController(@UnAuthService zeepyApiService: ZeepyApiService): SignInController =
         SignInControllerImpl(zeepyApiService)
+
+    @Provides
+    @Singleton
+    fun provideUserDataController(@ZeepyService zeepyApiService: ZeepyApiService): UserDataController =
+        UserDataControllerImpl(zeepyApiService)
 
     @Provides
     @Singleton

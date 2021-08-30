@@ -23,6 +23,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentMapBinding
+import com.zeepy.zeepyforandroid.enum.CommunityTendency
+import com.zeepy.zeepyforandroid.enum.Options
+import com.zeepy.zeepyforandroid.enum.Preference
+import com.zeepy.zeepyforandroid.enum.TotalEvaluation
 import com.zeepy.zeepyforandroid.map.data.BuildingModel
 import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
@@ -124,7 +128,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             this.skipCollapsed = true
         }
 
-
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
         // FIXME: 현재 카카오 지도 네이티브 소스에서 Fatal signal 11(SIGSEGV) 잘못된 메모리 참조 에러 발생 (getZoomLevel이나 getMapPointBounds를 불러올 수 없는 상황)
@@ -151,6 +154,27 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
 
+        })
+        viewModel.buildingSelected.observe(viewLifecycleOwner, { building ->
+            binding.bottomSheetMap.tvBuildingDetailContent.text = building.reviews[0].furnitures.joinToString(separator = ", ") {
+                getString(Options.getOptionFromString(it))
+            }
+            binding.bottomSheetMap.buildingOwnerContent.text = getString(CommunityTendency.findTendencyFromString(building.reviews[0].communcationTendency))
+            binding.bottomSheetMap.tvOverallEvaluationContent.text = getString(TotalEvaluation.findTotalEvaluationFromString(building.reviews[0].totalEvaluation))
+
+            binding.bottomSheetMap.ivSoundproof.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].soundInsulation))
+            binding.bottomSheetMap.ivHygiene.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].pest))
+            binding.bottomSheetMap.ivSunlight.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].lightning))
+            binding.bottomSheetMap.ivWaterpressure.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].waterPressure))
+
+            binding.bottomSheetMap.btnGotoReview.apply {
+                if (building.reviews.isEmpty()) {
+                    setText(getString(R.string.go_to_reviews_button_none))
+                    setUnUsableButton()
+                } else {
+                    setText(getString(R.string.go_to_reviews_button, building.reviews.size.toString()))
+                }
+            }
         })
     }
 
@@ -217,8 +241,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         binding.optionBtn.setOnClickListener {
             resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, targetWidth, false)
             resizeAnimation.duration = 600
-            //Log.d("original width", resizeAnimation.originalWidth.toString())
-            //Log.d("target width", resizeAnimation.targetWidth.toString())
             binding.optionBtnLayout.startAnimation(resizeAnimation)
             it.visibility = View.GONE
             Handler(Looper.getMainLooper()).postDelayed({
@@ -242,6 +264,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     inner class MapViewEventListener(val context: Context?): MapView.MapViewEventListener {
         override fun onMapViewInitialized(p0: MapView?) {
+            currentMapCenterPoint = p0?.mapCenterPoint
         }
 
         override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
@@ -279,8 +302,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             if (binding.optionBtn.visibility == View.GONE) {
                 resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, 218, false)
                 resizeAnimation.duration = 600
-                //Log.d("original width", resizeAnimation.originalWidth.toString())
-                //Log.d("target width", resizeAnimation.targetWidth.toString())
                 binding.optionBtnLayout.startAnimation(resizeAnimation)
                 binding.optionBtn.visibility = View.VISIBLE
                 binding.optionOne.visibility = View.GONE
@@ -304,20 +325,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
             if (currentZoomLevel < 3) {
                 mapDisplayOffset = binding.mapToolbar.height + binding.edittextSearchMap.height + MetricsConverter.dpToPixel(16F, context)
-                //Log.e("zoomLevel", "" + currentZoomLevel)
-                //Log.e("mapCenterPoint.mapPointGeoCoord", "" + currentMapCenterPoint?.mapPointGeoCoord?.latitude + "," + currentMapCenterPoint?.mapPointGeoCoord?.longitude)
                 mapHelper = MapHelper(requireActivity(), currentZoomLevel, currentMapCenterPoint!!, mapDisplayOffset)
                 mapHelper.setMapMetrics()
-                //Log.e("toolBarHeight", "" + binding.mapToolbar.height)
-                //Log.e("searchBarHeight", "" + binding.edittextSearchMap.height)
-                //Log.e("offSet", "" + mapDisplayOffset)
-                //Log.e("displayWidth", "" + mapHelper.displayWidth)
-                //Log.e("displayHeight", "" + mapHelper.displayHeight)
                 mapHelper.setFourPoints()
-                //Log.e("TopLeft", "" + mapHelper.topLeftLat + "," + mapHelper.topLeftLng)
-                //Log.e("TopRight", "" + mapHelper.topRightLat + "," + mapHelper.topRightLng)
-                //Log.e("BottomLeft", "" + mapHelper.bottomLeftLat + "," + mapHelper.bottomLeftLng)
-                //Log.e("BottomRight", "" + mapHelper.bottomRightLat + "," + mapHelper.bottomRightLng)
 
                 viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
             }

@@ -14,7 +14,6 @@ class GetBuildingsByLocationUseCase @Inject constructor(
 ) : CoroutineUseCase<GetBuildingsByLocationUseCase.Params, List<BuildingModel>>(coroutineDispatcher){
 
     override suspend fun execute(parameter: Params): List<BuildingModel> {
-        Log.e("parameters", "" + parameter.latitudeGreater)
         return repository.getBuildingsInfoByLocation(parameter.latitudeGreater, parameter.latitudeLess, parameter.longitudeGreater, parameter.longitudeLess)
     }
 

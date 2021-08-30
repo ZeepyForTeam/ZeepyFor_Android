@@ -1,16 +1,14 @@
 package com.zeepy.zeepyforandroid.signin
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.kakao.auth.authorization.accesstoken.AccessToken
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.signin.controller.SignInController
+import com.zeepy.zeepyforandroid.signin.controller.UserDataController
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
-import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInController: SignInController,
+    private val userDataController: UserDataController,
     private val userPreferenceManager: UserPreferenceManager
 ) : BaseViewModel() {
     val email = MutableLiveData<String>("")
@@ -92,13 +91,25 @@ class SignInViewModel @Inject constructor(
         )
     }
 
+    fun getUserNicknameAndEmail(email: String) {
+        addDisposable(
+            userDataController.getNicknameAndEmail(email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    userPreferenceManager.saveUserNickname(response.nickname)
+                }, {
+                    it.printStackTrace()
+                })
+        )
+    }
+
     private fun failedToSignIn() {
         userPreferenceManager.saveIsAlreadyLogin(false)
         _loginSuccess.postValue(false)
     }
 
     private fun successSignIn(response: ResponseAuthDTO) {
-        _loginSuccess.postValue(true)
         userPreferenceManager.apply {
             saveIsAlreadyLogin(true)
             saveUserAccessToken(response.accessToken)
@@ -106,5 +117,7 @@ class SignInViewModel @Inject constructor(
             saveUserEmail(response.userEmail)
             saveUserId(response.userId)
         }
+        _loginSuccess.postValue(true)
     }
+
 }

@@ -15,5 +15,11 @@ enum class CommunityTendency(@StringRes val tendency: Int) {
         fun findTendency(tendency: Int): String {
             return values().find { it.tendency == tendency }?.name ?: throw IllegalArgumentException("Tendency Not Matched")
         }
+
+        fun findTendencyFromString(text: String): Int {
+            return values().find {
+                it.name == text
+            }?.tendency ?: throw IllegalArgumentException("String and Name Not Matched")
+        }
     }
 }

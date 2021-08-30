@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.color
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -28,6 +29,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
+    private val viewModel by viewModels<MyProfileViewModel>()
+
     @Inject
     lateinit var userPreferenceManager: UserPreferenceManager
 
@@ -40,6 +43,8 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setButtonsOnClickListener()
         setOptionsRecyclerView()
@@ -69,9 +74,15 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
     private fun setMainMsg() {
         if (userPreferenceManager.fetchIsAlreadyLogin()) {
-            changePartialText(true)
+            viewModel.getUserNicknameAndEmail(userPreferenceManager.fetchUserEmail())
+            val nickname = userPreferenceManager.fetchUserNickname()
+            if (nickname != "") {
+                changePartialText(nickname, true)
+            } else {
+                //handle error if nickname cannot be fetched
+            }
         } else {
-            changePartialText(false)
+            changePartialText("", false)
         }
     }
 
@@ -79,9 +90,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
      * Changes part of the text's font type and color using annotations in strings.xml
      * @see android.text.Annotation
      */
-    private fun changePartialText(loggedIn: Boolean) {
-        // FIXME: get stored nickname of the current user from SharedPrefs (When the getUserNicknameAndEmail API will be called? at Login and keep the nickname in SharedPrefs?)
-        val nickname = "도로로로로롱"
+    private fun changePartialText(nickname: String, loggedIn: Boolean) {
         val text = if (loggedIn) {
             getText(R.string.myprofile_loggedin) as SpannedString
         } else {
@@ -105,45 +114,87 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                             }
                         }
                     }
-                    "clickable" -> {
-                        spannable.setSpan(object: ClickableSpan() {
-                            val dest = annotation.value
-                            override fun onClick(widget: View) {
-                                when (dest) {
-                                    "signIn" -> {
-                                        findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
-                                    }
-                                    "editProfile" -> {
-                                        findNavController().navigate(R.id.action_myProfileFragment_to_EditMyProfileFragment)
-                                    }
-                                    else -> {
-                                        throw IllegalArgumentException("Invalid destination argument was given")
+                }
+            }
+        }
+
+        fun SpannableStringBuilder.applyOtherAnnotations() {
+            val annotations = text.getSpans(0, text.length, android.text.Annotation::class.java)
+            annotations.forEach { annotation ->
+                when (annotation.key) {
+                    "clickTo" -> {
+                        spannable.setSpan(
+                            object : ClickableSpan() {
+                                val dest = annotation.value
+                                override fun onClick(widget: View) {
+                                    when (dest) {
+                                        "signIn" -> {
+                                            findNavController().navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                                        }
+                                        "editProfile" -> {
+                                            findNavController().navigate(R.id.action_myProfileFragment_to_EditMyProfileFragment)
+                                        }
+                                        else -> {
+                                            throw IllegalArgumentException("Invalid destination argument was given")
+                                        }
                                     }
                                 }
-                            }
-                        },
+                            },
                             spannable.getSpanStart(annotation),
                             spannable.getSpanEnd(annotation),
-                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                     }
                     "font" -> {
                         val fontName = annotation.value
-                        val typeface = ResourcesCompat.getFont(requireContext(), context?.resources!!.getIdentifier(fontName, "font", context?.packageName))
-                        spannable.setSpan(CustomTypefaceSpan(typeface!!), spannable.getSpanStart(annotation), spannable.getSpanEnd(annotation), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    }
-                    "color" -> {
-                        val colorName = annotation.value
-                        Log.e("colorname", "" + colorName)
-                        val colorId = context?.resources?.getIdentifier(colorName, "color", context?.packageName)
-                        Log.e("colorid", "" + colorId)
-                        Log.e("zeepyblack3b id", R.color.zeepy_black_3b.toString())
-                        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), colorId!!)), spannable.getSpanStart(annotation), spannable.getSpanEnd(annotation), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        val typeface = ResourcesCompat.getFont(
+                            requireContext(),
+                            context?.resources!!.getIdentifier(
+                                fontName,
+                                "font",
+                                context?.packageName
+                            )
+                        )
+                        spannable.setSpan(
+                            CustomTypefaceSpan(typeface!!),
+                            spannable.getSpanStart(annotation),
+                            spannable.getSpanEnd(annotation),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                     }
                 }
             }
         }
 
         spannable.applyArgAnnotations(nickname)
+        spannable.applyOtherAnnotations()
+
+        // For some reason, having multiple spans with setting ForegroundColorSpan caused incorrect color to be used.
+        // Hence, this part was deliberately separated from the above Kotlin Extension functions.
+        val annotations = text.getSpans(0, text.length, android.text.Annotation::class.java)
+        annotations.forEach { annotation ->
+            if (annotation.key == "color") {
+                val colorName = annotation.value
+                val colorId = context?.resources?.getIdentifier(
+                    colorName,
+                    "color",
+                    context?.packageName
+                )
+                Log.e("colorNamePROFILE", colorName + ", " + colorId)
+                spannable.setSpan(
+                    ForegroundColorSpan(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            colorId!!
+                        )
+                    ),
+                    spannable.getSpanStart(annotation),
+                    spannable.getSpanEnd(annotation),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                );
+            }
+        }
+
         binding.tvMainMsg.text = spannable
         binding.tvMainMsg.movementMethod = LinkMovementMethod.getInstance()
     }

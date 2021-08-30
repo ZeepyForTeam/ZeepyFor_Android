@@ -13,5 +13,11 @@ enum class TotalEvaluation(@StringRes val evaluation: Int) {
         fun findTotalEvaluation(evaluation: Int): String {
             return values().find { it.evaluation == evaluation }?.name ?: throw IllegalArgumentException("Total Evaluation Not Matched")
         }
+
+        fun findTotalEvaluationFromString(text: String): Int {
+            return values().find {
+                it.name == text
+            }?.evaluation ?: throw IllegalArgumentException("String and Name Not Matched")
+        }
     }
 }

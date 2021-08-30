@@ -71,13 +71,14 @@
 
         <TextView
             android:id="@+id/tv_building_detail_content"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="furnitures"
+            android:text=""
+            tools:text="화장실 1, 침실 1, 에어컨, 세탁기 옵션, 전자레인지, 발코니, 등등등등등등등등등등등 매우 많은 옵션을 가짐"
             android:fontFamily="@font/nanum_square_round_regular"
             app:layout_constraintTop_toTopOf="@id/tv_building_detail"
-            app:layout_constraintBottom_toBottomOf="@id/tv_building_detail"
             app:layout_constraintStart_toEndOf="@id/tv_building_detail"
+            app:layout_constraintEnd_toStartOf="@id/guideline_end"
             android:layout_marginStart="8dp"/>
 
         <TextView
@@ -87,14 +88,14 @@
             android:text="임대인"
             android:fontFamily="@font/nanum_square_round_extrabold"
             app:layout_constraintStart_toStartOf="@id/tv_building_detail"
-            app:layout_constraintTop_toBottomOf="@id/tv_building_detail"
+            app:layout_constraintTop_toBottomOf="@id/tv_building_detail_content"
             android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/building_owner_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.buildingSelected.reviews[0].communcationTendency}"
+            android:text=""
             android:fontFamily="@font/nanum_square_round_regular"
             app:layout_constraintTop_toTopOf="@id/tv_building_owner"
             app:layout_constraintBottom_toBottomOf="@id/tv_building_owner"
@@ -198,19 +199,12 @@
             android:id="@+id/tv_overall_evaluation_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.buildingSelected.reviews[0].totalEvaluation}"
+            android:text=""
             android:fontFamily="@font/nanum_square_round_regular"
             app:layout_constraintTop_toTopOf="@id/tv_overall_evaluation"
             app:layout_constraintBottom_toBottomOf="@id/tv_overall_evaluation"
             app:layout_constraintStart_toEndOf="@id/tv_overall_evaluation"
             android:layout_marginStart="8dp"/>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="176dp"/>
 
         <com.zeepy.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_goto_review"
@@ -219,8 +213,9 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
-            android:layout_marginBottom="16dp"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_overall_evaluation_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

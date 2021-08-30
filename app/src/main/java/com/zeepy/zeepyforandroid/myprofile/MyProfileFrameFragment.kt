@@ -15,7 +15,7 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentCommunityFrameBinding
 import com.zeepy.zeepyforandroid.databinding.FragmentMyprofileFrameBinding
 
-class MyProfileFrameFragment: BaseFragment<FragmentMyprofileFrameBinding>() {
+class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
     private lateinit var navController: NavController
 
     override fun getFragmentBinding(
@@ -27,7 +27,8 @@ class MyProfileFrameFragment: BaseFragment<FragmentMyprofileFrameBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.myprofile_nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.myprofile_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         initToolbar()
@@ -39,14 +40,15 @@ class MyProfileFrameFragment: BaseFragment<FragmentMyprofileFrameBinding>() {
         binding.toolbar.run {
             setTitle("마이페이지")
 
-            setBackButton{
-                if (navController.previousBackStackEntry != null) {
-                    navController.popBackStack()
-                } else {
-                    Navigation.findNavController(binding.root).popBackStack()
-                }
-                if (navController.currentDestination?.id == R.id.myProfileFragment) {
-                    setTitle("마이페이지")
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (destination.id != R.id.myProfileFragment) {
+                    setBackButton {
+                        if (navController.previousBackStackEntry != null) {
+                            navController.popBackStack()
+                        } else {
+                            Navigation.findNavController(binding.root).popBackStack()
+                        }
+                    }
                 }
             }
         }
@@ -69,8 +71,8 @@ class MyProfileFrameFragment: BaseFragment<FragmentMyprofileFrameBinding>() {
         val viewPager = activity?.findViewById<ViewPager2>(R.id.viewpager_main)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id != R.id.myProfileFragment)
-                viewPager?.isUserInputEnabled = false
+            Log.e("destination", "" + destination.id)
+            viewPager?.isUserInputEnabled = destination.id == R.id.myProfileFragment
         }
     }
 }

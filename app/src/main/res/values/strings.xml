@@ -41,8 +41,8 @@
     <string name="input_password_check_signup">비밀번호를 다시 입력해주세요</string>
     <string name="getting_info_to_email_signup">ZEEPY 서비스 마케팅 수신에 동의합니다. (선택)</string>
     <string name="input_email_signup">이메일ID를 입력해주세요</string>
-    <string name="myprofile_loggedout"><annotation font="nanum_square_round_extrabold" color="zeepy_yellow_ee" clickTo="signIn"><u>로그인</u></annotation><annotation font="nanum_square_round_regular" color="zeepy_black_3b">을\n완료해주세요.</annotation></string>
-    <string name="myprofile_loggedin"><annotation font="nanum_square_round_regular" color="zeepy_black_3b">반가워요!\n</annotation><annotation font="nanum_square_round_extrabold" color="zeepy_black_3b" args="0" clickTo="editProfile"><u>%1$s</u></annotation> 지기님</string>
+    <string name="myprofile_loggedout"><annotation clickTo="signIn" font="nanum_square_round_extrabold" color="zeepy_yellow_ee" ><u>로그인</u></annotation><annotation font="nanum_square_round_regular" color="zeepy_black_3b">을\n완료해주세요.</annotation></string>
+    <string name="myprofile_loggedin"><annotation font="nanum_square_round_regular" color="zeepy_black_3b">반가워요!\n<annotation args="0" clickTo="editProfile" font="nanum_square_round_extrabold" color="zeepy_black_3b"><u>%1$s</u></annotation> 지기님</annotation></string>
     <string name="doesnt_match_password">비밀번호가 일치하지 않습니다.</string>
     <string name="lessor_business">칼 같은 우리 사이, 비즈니스형</string>
     <string name="lessor_kind">따뜻해 녹아내리는 중!, 친절형</string>
@@ -103,4 +103,6 @@
     <string name="purchase_introduce_hint">공동구매를 간단히 소개해주세요. (100자 이내)</string>
     <string name="purchase_introduce_write_community">공구 소개</string>
     <string name="approve_personal_info">ZEEPY에서 제공하는 개인정보 처리방침에 동의합니다.</string>
+    <string name="go_to_reviews_button">건물 리뷰 %s건 보러가기</string>
+    <string name="go_to_reviews_button_none">아직 등록된 리뷰가 없습니다.</string>
 </resources>
