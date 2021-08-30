@@ -140,19 +140,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"/>
 
-        <TextView
-            android:id="@+id/tv_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="건너뛰기"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textSize="14sp"
-            android:textColor="@color/zeepy_gray_9a"
-            app:layout_constraintVertical_bias="0.92"
-            app:layout_constraintTop_toBottomOf="@id/rv_house_pictures"
-            app:layout_constraintBottom_toTopOf="@id/btn_register"
-            app:layout_constraintStart_toStartOf="@id/btn_register"
-            app:layout_constraintEnd_toEndOf="@id/btn_register"/>
 
         <com.zeepy.zeepyforandroid.customview.ZeepyButton
             android:id="@+id/btn_register"

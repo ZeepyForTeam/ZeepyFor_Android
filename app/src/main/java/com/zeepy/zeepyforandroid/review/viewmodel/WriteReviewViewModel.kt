@@ -32,6 +32,10 @@ class WriteReviewViewModel @Inject constructor(
     private val zeepyLocalRepository: ZeepyLocalRepository,
     private val searchAddressListRepository: SearchAddressListRepository
     ) : BaseViewModel() {
+    private val _isCommunityTheme = MutableLiveData<Boolean>(false)
+    val isCommunityTheme: LiveData<Boolean>
+        get() = _isCommunityTheme
+
     private val _isJustRegisterAddress = MutableLiveData<Boolean>(false)
     val isJustRegisterAddress: LiveData<Boolean>
         get() = _isJustRegisterAddress
@@ -108,6 +112,10 @@ class WriteReviewViewModel @Inject constructor(
 
     init {
         getAddress()
+    }
+
+    fun changeIsCommunityTheme(boolean: Boolean) {
+        _isCommunityTheme.value = boolean
     }
 
     fun changeFullReviewAddress(fullAddress: String) {
@@ -215,21 +223,6 @@ class WriteReviewViewModel @Inject constructor(
                 })
         )
     }
-
-//    fun fetchBuildingInfo() {
-//        addDisposable(
-//            addressDataSource.fetchBuildgingInfoByAddress(
-//                "${addressSelected.value!!.cityDistinct} ${addressSelected.value!!.primaryAddress}"
-//            ).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    _writableAddress.postValue(true)
-//                }, {
-//                    it.printStackTrace()
-//                    _writableAddress.postValue(false)
-//                })
-//        )
-//    }
 
     fun deleteAddress(address: LocalAddressEntity) {
         val addresses = addressListRegistered.value

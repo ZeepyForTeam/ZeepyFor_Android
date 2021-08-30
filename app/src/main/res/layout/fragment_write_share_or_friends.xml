@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.community.writeposting.viewmodel.WriteShareOrFriendsViewModel" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -40,6 +49,7 @@
             android:textSize="14sp"
             android:gravity="center_vertical"
             android:hint="@string/input_title_write_posting"
+            android:text="@={viewModel.title}"
             app:layout_constraintDimensionRatio="1:0.13"
             app:layout_constraintTop_toBottomOf="@id/textview_posting_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,11 +81,46 @@
             android:textColorHint="@color/zeepy_gray_9a"
             android:textSize="14sp"
             android:gravity="top"
+            android:text="@={viewModel.content}"
             android:hint="@string/posting_content_notice_community"
             app:layout_constraintDimensionRatio="1:0.84"
             app:layout_constraintTop_toBottomOf="@id/textview_posting_content"
             app:layout_constraintStart_toStartOf="@id/edittext_posting_title"
             app:layout_constraintEnd_toEndOf="@id/edittext_posting_title"/>
+
+        <View
+            android:id="@+id/view_button_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintBottom_toTopOf="@id/button_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textSize="12sp"
+            android:layout_marginEnd="12dp"
+            android:text="@{@string/format_count_posting_content(viewModel.content.length)}"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintEnd_toEndOf="@id/edittext_content"
+            app:layout_constraintBottom_toBottomOf="@id/edittext_content"
+            tools:text="(1/1500자)"/>
+
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
+            android:id="@+id/button_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="38dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/edittext_content"
+            app:layout_constraintStart_toStartOf="@id/edittext_content" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

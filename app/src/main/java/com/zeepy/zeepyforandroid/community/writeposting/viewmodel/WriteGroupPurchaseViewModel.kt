@@ -25,6 +25,7 @@ class WriteGroupPurchaseViewModel @Inject constructor(
     val sharingMethod = MutableLiveData<String>()
     val content = MutableLiveData<String>()
     val targetCount = MutableLiveData<String>()
+
     private val _instructions = MutableLiveData<String>()
     val instructions: LiveData<String>
         get() = _instructions

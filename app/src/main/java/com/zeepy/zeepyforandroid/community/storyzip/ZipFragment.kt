@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.COMMUNITY_IS_COMPLETED
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentZipBinding
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
@@ -46,11 +51,12 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
-            adapter = ZipAdapter {
-                val action =
-                    MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(it)
-                requireParentFragment().requireParentFragment().requireParentFragment()
-                    .requireParentFragment().findNavController().navigate(action)
+            adapter = ZipAdapter { posting ->
+                if (posting.isCompleted) {
+                    showIsCompletedDialog(posting)
+                } else {
+                    goToPostingDetailFragment(posting)
+                }
             }
             addItemDecoration(ItemDecoration(8, 0))
         }
@@ -96,17 +102,8 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     private fun updatePostings() {
         viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
             when (postingList.status) {
-                NetworkStatus.State.LOADING -> {
-                    controlLoadingAnimation(true)
-                }
-
                 NetworkStatus.State.SUCCESS -> {
                     updatePostingList(postingList.data)
-                    controlLoadingAnimation(false)
-                }
-
-                NetworkStatus.State.ERROR -> {
-                    controlLoadingAnimation(false)
                 }
             }
         }
@@ -122,16 +119,30 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         }
     }
 
-    private fun controlLoadingAnimation(play: Boolean) {
-        binding.lottieLoading.run {
-            if (play) {
-                this.visibility = View.VISIBLE
-                this.playAnimation()
-            } else {
-                this.visibility = View.GONE
-                this.cancelAnimation()
-            }
-        }
+    private fun showIsCompletedDialog(posting: PostingListModel) {
+        val isCompletedDialog = ZeepyDialogBuilder("모집이 완료된 글이에요!", COMMUNITY_IS_COMPLETED)
+            .setButtonHorizontalWeight(0.7f,0.3f)
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    goToPostingDetailFragment(posting)
+                    dialog.dismiss()
+                }
+
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+            })
+            .setLeftButton(R.drawable.box_green33_8dp, "계속 보기")
+            .setRightButton(R.drawable.box_grayf9_8dp, "나가기")
+            .build()
+
+        isCompletedDialog.show(childFragmentManager, this.tag)
+    }
+
+    private fun goToPostingDetailFragment(posting: PostingListModel) {
+        val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(posting)
+        requireParentFragment().requireParentFragment().requireParentFragment()
+            .requireParentFragment().findNavController().navigate(action)
     }
 
     private fun initPostingTag() {

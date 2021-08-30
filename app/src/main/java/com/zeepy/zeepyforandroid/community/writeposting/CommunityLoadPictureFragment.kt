@@ -163,6 +163,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
             (binding.rvHousePictures.adapter as UploadPictureAdapter).apply {
                 submitList(viewModel.uploadBitmapImages.value?.toList())
             }
+            binding.btnRegister.setText("등록하기")
             changeVisibility()
         }
     }
@@ -179,12 +180,10 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
 
     private fun completeUpload() {
         binding.btnRegister.setOnClickListener { showPostingRegisterDialog() }
-        binding.tvSkip.setOnClickListener { showPostingRegisterDialog() }
     }
 
     private fun showPostingRegisterDialog() {
-        val parent = (parentFragment as NavHostFragment).parentFragment
-        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", "community")
+        val registerReviewDialog = ZeepyDialogBuilder("글을 등록하시겠습니까?", "community")
             .setContent("*공동구매 글의 경우 참여자가 1명 이상일\n경우 글을 삭제하거나 수정하실 수 없습니다.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.")
             .setLeftButton(R.drawable.box_grayf9_8dp,"취소")
             .setRightButton(R.drawable.box_green33_8dp,"확인")

@@ -70,16 +70,27 @@ class ZeepyDialog(
                 visibility = View.VISIBLE
             }
         }
-        if (theme == "community") {
-            binding.run {
-                textviewLeftButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_green_33))
-                textviewRightButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f3))
+
+        when(theme) {
+            COMMUNITY -> {
+                setTextColor(R.color.zeepy_green_33, R.color.zeepy_white_f3)
             }
-        } else if (theme == "myProfile"){
-            binding.run {
-                textviewLeftButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_yellow_ee))
-                textviewRightButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f3))
+            MY_PROFILE -> {
+                setTextColor(R.color.zeepy_yellow_ee, R.color.zeepy_white_f3)
             }
+            COMMUNITY_IS_COMPLETED -> {
+                setTextColor(R.color.zeepy_white_f3, R.color.zeepy_black_3b)
+            }
+            else -> {
+                setTextColor(R.color.zeepy_blue_59, R.color.zeepy_white_f3)
+            }
+        }
+    }
+
+    private fun setTextColor(left: Int, right: Int) {
+        binding.run {
+            textviewLeftButton.setTextColor(ContextCompat.getColor(requireContext(), left))
+            textviewRightButton.setTextColor(ContextCompat.getColor(requireContext(), right))
         }
     }
 
@@ -122,5 +133,12 @@ class ZeepyDialog(
         binding.textviewSinglebutton.setOnClickListener {
             dialogClickListener?.clickLeftButton(this)
         }
+    }
+
+    companion object {
+        const val COMMUNITY = "community"
+        const val REVIEW = "review"
+        const val MY_PROFILE = "myProfile"
+        const val COMMUNITY_IS_COMPLETED = "community_is_completed"
     }
 }

@@ -77,13 +77,14 @@ class CommunityMainFragment : BaseFragment<FragmentCommunityMainBinding>() {
             }
 
             isAlreadyLogin && isAlreadyRegisterAddress -> {
-                val addresses = viewModel.addressList.value!!.toTypedArray()
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(addresses)
+                val addressList = viewModel.addressList.value!!.toTypedArray()
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(addressList)
+                action.isCommunityTheme = true
                 requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
 
             isAlreadyLogin && !isAlreadyRegisterAddress -> {
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToCommunitySearchAddressFragment()
+                val action = MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
                 requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
         }

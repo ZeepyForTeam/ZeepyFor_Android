@@ -57,11 +57,10 @@ class ReviewSearchAddressFragment : BaseFragment<FragmentReviewSearchAddressBind
 
     private fun observeSearchResult() {
         viewModel.houseListSearched.observe(viewLifecycleOwner) {
-            //Todo: LiveData null check 분기처리 확실하게 하고 ui 다시 수정하기
             if(!it.isNullOrEmpty()){
                 houseListAdapter.submitList(viewModel.houseListSearched.value)
             } else {
-                Toast.makeText(requireContext(), "invalid ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "결과가 없습니다. ", Toast.LENGTH_SHORT).show()
             }
         }
     }

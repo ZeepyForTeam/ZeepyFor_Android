@@ -8,7 +8,7 @@
         xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
         <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
-            android:id="@+id/reviewSpannableTextView"
+            android:id="@+id/spannabletextview_notice_write_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lessor_personality"
