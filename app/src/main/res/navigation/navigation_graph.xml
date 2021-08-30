@@ -5,7 +5,6 @@
     android:id="@+id/navigation_graph"
     app:startDestination="@id/onBoardingFrameFragment">
 
-
     <fragment
         android:id="@+id/mainFrameFragment"
         android:name="com.zeepy.zeepyforandroid.mainframe.MainFrameFragment"
@@ -211,7 +210,9 @@
         tools:layout="@layout/fragment_onboarding_frame">
         <action
             android:id="@+id/action_onBoardingFrameFragment_to_mainFrameFragment"
-            app:destination="@id/mainFrameFragment" />
+            app:destination="@id/mainFrameFragment"
+            app:popUpTo="@id/onBoardingFrameFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

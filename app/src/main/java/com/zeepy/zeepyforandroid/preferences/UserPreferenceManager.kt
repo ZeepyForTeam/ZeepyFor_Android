@@ -42,11 +42,20 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         return sharedPreferencesManager.getSharedPrefs(USER_EMAIL, "")
     }
 
+    fun saveOnboard(onBoard: Boolean) {
+        sharedPreferencesManager.putSharedPref(ON_BOARD, onBoard)
+    }
+
+    fun fetchUserOnBoard(): Boolean {
+        return sharedPreferencesManager.getSharedPrefs(ON_BOARD, false)
+    }
+
     companion object {
         private const val ACCESS_TOKEN = "access_token"
         private const val REFRESH_TOKEN = "refresh_token"
         private const val IS_ALREADY_LOGIN = "isAlreadyLogin"
         private const val USER_ID = "user_id"
         private const val USER_EMAIL = "user_email"
+        private const val ON_BOARD = "on_board"
     }
 }
