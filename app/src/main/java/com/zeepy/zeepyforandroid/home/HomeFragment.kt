@@ -124,4 +124,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             .build()
             .show(childFragmentManager, this@HomeFragment.tag)
     }
+
+    private fun goToCommunityTap() {
+
+    }
 }

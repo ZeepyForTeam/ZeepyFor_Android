@@ -36,7 +36,7 @@
             android:id="@+id/imageview_onboarding_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/onboarding_first"
+            android:background="@drawable/group_950"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
