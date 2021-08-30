@@ -26,7 +26,7 @@
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="28dp"
             android:lineSpacingExtra="10dp"
-            android:text="살아본 사람들의\n리얼후기 yes!"
+            android:text="@string/onboarding_first_ment"
             android:layout_marginTop="26dp"
             android:textColor="@color/zeepy_black_3b"
             app:layout_constraintTop_toBottomOf="@id/textview_ment1"
