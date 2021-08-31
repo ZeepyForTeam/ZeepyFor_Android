@@ -21,8 +21,8 @@
             android:orientation="horizontal"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/rv_storyzip"
-            app:layout_constraintEnd_toEndOf="@id/rv_storyzip">
+            app:layout_constraintStart_toStartOf="@id/swipe_refresh_layout"
+            app:layout_constraintEnd_toEndOf="@id/swipe_refresh_layout">
 
             <com.zeepy.zeepyforandroid.customview.ZeepyRadioButton
                 android:id="@+id/rb_tag_everything"
@@ -68,32 +68,40 @@
                 zeepy:button_type="10"/>
         </RadioGroup>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_storyzip"
-            android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
             android:layout_marginTop="18dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_marginHorizontal="16dp"
-            tools:listitem="@layout/item_story_zip"
             app:layout_constraintTop_toBottomOf="@id/radiogroup_tag"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_loading"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:lottie_rawRes="@raw/zeepy_loading"
-            app:lottie_loop="true"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/rv_storyzip"
-            app:layout_constraintStart_toStartOf="@id/rv_storyzip"
-            app:layout_constraintEnd_toEndOf="@id/rv_storyzip"
-            app:layout_constraintBottom_toBottomOf="@id/rv_storyzip"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_storyzip"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_story_zip" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_loading"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:lottie_rawRes="@raw/zeepy_loading"
+                app:lottie_loop="true"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_storyzip"
+                app:layout_constraintStart_toStartOf="@id/rv_storyzip"
+                app:layout_constraintEnd_toEndOf="@id/rv_storyzip"
+                app:layout_constraintBottom_toBottomOf="@id/rv_storyzip"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -46,10 +46,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changePostingId(args.postingModel.id)
 
-        viewModel.superCommentId.observe(viewLifecycleOwner){
-            Log.e("supercommentid", "${it}")
-        }
-
         setToolbar()
         setPictureRecyclerview()
         getPostingDetailContent()

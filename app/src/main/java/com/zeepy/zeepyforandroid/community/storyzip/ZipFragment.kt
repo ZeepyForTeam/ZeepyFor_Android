@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
@@ -26,6 +27,7 @@ import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.wait
 
 @AndroidEntryPoint
 class ZipFragment : BaseFragment<FragmentZipBinding>(){
@@ -49,6 +51,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
         changeCategory()
         getCategoryPostingList()
         changeAddress()
+        swipeRefreshPostingList()
     }
 
     override fun onResume() {
@@ -56,6 +59,17 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
         initCommunityType()
         getCheckedbutton(binding.radiogroupTag.checkedRadioButtonId)
         (requireActivity() as MainActivity).initialCommunityType = null
+    }
+
+    private fun swipeRefreshPostingList() {
+        binding.swipeRefreshLayout.apply {
+            setOnRefreshListener {
+                viewModel.fetchPostingList()
+            }
+            viewModel.postingList.observe(viewLifecycleOwner) {
+                isRefreshing = false
+            }
+        }
     }
 
     private fun initCommunityType() {
@@ -132,6 +146,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
             when (postingList.status) {
                 NetworkStatus.State.SUCCESS -> {
                     updatePostingList(postingList.data)
+                    binding.rvStoryzip.smoothScrollToPosition(0)
                 }
             }
         }
@@ -142,7 +157,9 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
         if (!postingListAdapter.currentList.equals(updateData)) {
             postingListAdapter.run {
                 submitList(updateData)
-                binding.rvStoryzip.scrollToPosition(0)
+            }
+            binding.rvStoryzip.layoutManager?.apply {
+                smoothScrollToPosition(binding.rvStoryzip, null, updateData!!.size -1)
             }
         }
     }
