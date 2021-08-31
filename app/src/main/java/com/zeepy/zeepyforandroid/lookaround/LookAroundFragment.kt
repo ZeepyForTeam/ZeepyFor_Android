@@ -33,32 +33,12 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("parentparent fragment is what?", requireParentFragment().parentFragment.toString())
-
         setToolbar()
         initRecyclerView()
-        setSpinner()
         updateBuildings()
     }
 
-    private val itemSelectedListener by lazy {
-        object : MaterialSpinner.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: MaterialSpinner,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                parent.focusSearch(View.FOCUS_UP)?.requestFocus()
-                Log.e("view selected", view?.background.toString())
-                Log.e("item selected", position.toString())
-            }
 
-            override fun onNothingSelected(parent: MaterialSpinner) {
-                Log.e("MaterialSpinner", "onNothingSelected parent=${parent.id}")
-            }
-        }
-    }
 
     private fun setToolbar() {
         binding.toolbar.apply {
@@ -90,6 +70,8 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         }
     }
 
+    /** Spinner랑 필터링 미사용 */
+    /*
     private fun setSpinner() {
         ArrayAdapter.createFromResource(requireActivity(), R.array.lessor_personality_array, R.layout.item_lookaround_spinner).let {
             it.setDropDownViewResource(R.layout.item_lookaround_spinner_dropdown)
@@ -102,6 +84,23 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             }
         }
     }
+
+    private val itemSelectedListener by lazy {
+        object : MaterialSpinner.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: MaterialSpinner,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                parent.focusSearch(View.FOCUS_UP)?.requestFocus()
+            }
+
+            override fun onNothingSelected(parent: MaterialSpinner) {
+                Log.e("MaterialSpinner", "onNothingSelected parent=${parent.id}")
+            }
+        }
+    }*/
 
     private fun updateBuildings() {
         viewModel.buildingList.observe(viewLifecycleOwner) {

@@ -30,13 +30,17 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
         initViewPager()
         configureBottomNavigation()
         observeViewModel()
+        setDestListener()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (findNavController().currentDestination?.id == R.id.mainFrameFragment
-            && viewModel.pageIdx.value == 3) {
-            viewModel.changePageIdx(0)
+    private fun setDestListener() {
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.mainFrameFragment
+                && childFragmentManager.findFragmentById(R.id.myprofile_nav_host_fragment)
+                    ?.findNavController()?.previousBackStackEntry == null
+            ) {
+                viewModel.changePageIdx(0)
+            }
         }
     }
 

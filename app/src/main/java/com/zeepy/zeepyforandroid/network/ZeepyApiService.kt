@@ -84,10 +84,10 @@ interface ZeepyApiService {
     ): Response<List<ResponseBuildingInfoDTO>>
 
     @DELETE("/api/user/withdrawal")
-    suspend fun deleteAccount(@Body userEmail: String): Response<Unit?>
+    suspend fun deleteAccount(): Response<Unit?>
 
     @DELETE("/api/auth/logout")
-    suspend fun logout(@Body userEmail: String): Response<Unit?>
+    suspend fun logout(): Response<Unit?>
 
     @GET("/api/user/nickname/email")
     fun getUserNicknameAndEmail(@Query("userEmail") userEmail: String): Single<ResponseNicknameAndEmailDTO>

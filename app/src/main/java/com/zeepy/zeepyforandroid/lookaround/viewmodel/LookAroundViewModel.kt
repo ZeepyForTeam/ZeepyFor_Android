@@ -3,23 +3,51 @@ package com.zeepy.zeepyforandroid.lookaround.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
+import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.OptionModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.ReviewModel
+import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.random.Random
 
 @HiltViewModel
-class LookAroundViewModel @Inject constructor(): BaseViewModel() {
+class LookAroundViewModel @Inject constructor(
+    private val addressDataSource: AddressDataSource,
+    private val searchAddressListRepository: SearchAddressListRepository
+): BaseViewModel() {
     private val _buildingList = MutableLiveData<List<BuildingSummaryModel>>()
     val buildingList: LiveData<List<BuildingSummaryModel>>
         get() = _buildingList
 
+    private val _resultFetchedAddresses = MutableLiveData<List<SearchAddressListModel>>()
+    val resultSearchedAddress: LiveData<List<SearchAddressListModel>>
+        get() = _resultFetchedAddresses
+
     init {
         setDummyBuildings()
+    }
+
+    /**
+     * 현재 주소를 기준으로 빌딩 리스트 가져오기
+     */
+    fun searchBuildingAddress(address: String) {
+        addDisposable(
+            searchAddressListRepository.searchBuildingAddressList(address)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    _resultFetchedAddresses.postValue(response)
+                }, {
+                    it.printStackTrace()
+                })
+        )
     }
 
     private fun setDummyBuildings() {

@@ -35,7 +35,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
         setToolbar()
         setOnClickListeners()
-
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
         Log.e("parent of EditMyProfileFragment", parentFragment.toString())
         Log.e("parent of parent of EditMyProfileFragment", parentFragment?.parentFragment.toString())
         Log.e("parent of parent of parent of EditMyProfileFragment", parentFragment?.parentFragment?.parentFragment.toString())
@@ -53,7 +53,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
                     saveIsAlreadyLogin(false)
                 }
 
-                //Navigate out
+                findNavController().popBackStack()
             }
         })
         viewModel.isLoggedOut.observe(viewLifecycleOwner, {
@@ -61,6 +61,8 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
                 Toast.makeText(context, "로그아웃 하였습니다.", Toast.LENGTH_SHORT).show()
 
                 userPreferenceManager.apply {
+                    saveUserAccessToken("")
+                    saveUserRefreshToken("")
                     saveIsAlreadyLogin(false)
                 }
 
@@ -80,12 +82,12 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
         }
 
         binding.tvLogout.setOnClickListener {
-            Log.e("email", userPreferenceManager.fetchUserEmail())
-            viewModel.submitLogout(userPreferenceManager.fetchUserEmail())
+            Log.e("email fetched for logout", userPreferenceManager.fetchUserEmail())
+            viewModel.submitLogout()
         }
 
         binding.tvWithdraw.setOnClickListener {
-            viewModel.submitWithdrawal(userPreferenceManager.fetchUserEmail())
+            viewModel.submitWithdrawal()
         }
     }
 }

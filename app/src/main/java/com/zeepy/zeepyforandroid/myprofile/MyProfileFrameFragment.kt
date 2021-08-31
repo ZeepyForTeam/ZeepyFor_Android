@@ -76,4 +76,8 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
             viewPager?.isUserInputEnabled = navController.previousBackStackEntry == null
         }
     }
+
+    private fun onResumeToMainFrameFragment() {
+
+    }
 }

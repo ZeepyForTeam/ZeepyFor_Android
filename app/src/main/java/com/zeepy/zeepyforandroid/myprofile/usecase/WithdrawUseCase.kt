@@ -12,7 +12,7 @@ class WithdrawUseCase @Inject constructor(
 ) : CoroutineUseCase<WithdrawUseCase.Params, Unit?>(coroutineDispatcher) {
 
     override suspend fun execute(parameter: Params): Unit? {
-        return repository.submitWithdrawal(parameter.userEmail)
+        return repository.submitWithdrawal()
     }
 
     data class Params(

@@ -8,6 +8,7 @@ import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.map.usecase.util.data
 import com.zeepy.zeepyforandroid.map.usecase.util.succeeded
 import com.zeepy.zeepyforandroid.map.usecase.util.updateOnSuccessFromUnitResponse
+import com.zeepy.zeepyforandroid.myprofile.repository.MyProfileRepository
 import com.zeepy.zeepyforandroid.myprofile.usecase.LogoutUseCase
 import com.zeepy.zeepyforandroid.myprofile.usecase.WithdrawUseCase
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
@@ -22,7 +23,7 @@ import javax.inject.Inject
 class MyProfileViewModel @Inject constructor(
     private val userDataController: UserDataController,
     private val userPreferenceManager: UserPreferenceManager,
-    private val withdrawUseCase: WithdrawUseCase,
+    private val repository: MyProfileRepository,
     private val logoutUseCase: LogoutUseCase
 ) : BaseViewModel() {
 
@@ -51,20 +52,20 @@ class MyProfileViewModel @Inject constructor(
         )
     }
 
-    fun submitWithdrawal(userEmail: String) {
+    fun submitWithdrawal() {
         viewModelScope.launch {
-            val result = withdrawUseCase(WithdrawUseCase.Params(userEmail))
-            result.updateOnSuccessFromUnitResponse(_isWithdrawn, true) {
-                it.printStackTrace()
-            }
+            val result = repository.submitWithdrawal()
+            Log.e("result", "" + result)
         }
     }
 
-    fun submitLogout(userEmail: String) {
+    fun submitLogout() {
         viewModelScope.launch {
-            val result = logoutUseCase(LogoutUseCase.Params(userEmail))
-            result.updateOnSuccessFromUnitResponse(_isLoggedOut, true) {
-                it.printStackTrace()
+            try {
+                val result = repository.logout()
+                _isLoggedOut.value = true
+            } catch (e: Throwable) {
+                e.printStackTrace()
             }
         }
     }

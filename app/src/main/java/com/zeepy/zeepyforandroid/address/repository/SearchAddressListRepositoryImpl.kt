@@ -1,6 +1,8 @@
 package com.zeepy.zeepyforandroid.address.repository
 
+import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.address.datasource.SearchAddressDataSource
+import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import io.reactivex.Single
 import javax.inject.Inject
@@ -15,4 +17,5 @@ class SearchAddressListRepositoryImpl @Inject constructor(
             }
         }
     }
+
 }

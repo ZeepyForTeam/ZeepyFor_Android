@@ -81,7 +81,7 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
             if (nickname != "") {
                 changePartialText(nickname, true)
             } else {
-                //handle error if nickname cannot be fetched
+                // try to fetch nickname?
             }
         } else {
             changePartialText("", false)

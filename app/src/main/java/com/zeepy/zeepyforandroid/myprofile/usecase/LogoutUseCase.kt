@@ -12,7 +12,7 @@ class LogoutUseCase @Inject constructor(
 ) : CoroutineUseCase<LogoutUseCase.Params, Unit?>(coroutineDispatcher) {
 
     override suspend fun execute(parameter: Params): Unit? {
-        return repository.logout(parameter.userEmail)
+        return repository.logout()
     }
 
     data class Params(

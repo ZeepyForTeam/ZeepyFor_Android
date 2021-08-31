@@ -6,11 +6,11 @@ import javax.inject.Inject
 class MyProfileRepositoryImpl @Inject constructor(
     private val dataSource: MyProfileRemoteDataSource
 ): MyProfileRepository {
-    override suspend fun submitWithdrawal(userEmail: String): Unit? {
-        return dataSource.submitWithdrawal(userEmail)
+    override suspend fun submitWithdrawal(): Unit? {
+        return dataSource.submitWithdrawal()
     }
 
-    override suspend fun logout(userEmail: String): Unit? {
-        return dataSource.logout(userEmail)
+    override suspend fun logout(): Unit? {
+        return dataSource.logout()
     }
 }
