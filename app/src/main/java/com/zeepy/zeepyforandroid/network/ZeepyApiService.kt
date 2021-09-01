@@ -66,7 +66,11 @@ interface ZeepyApiService {
     fun searchBuildingAddress(@Query ("address")address: String): Single<ResponseSearchBuildingAddressDTO>
 
     @GET("/api/community")
-    fun getCommunityPostingList(@Query ("address") address: String, @Query ("communityType") communityType: String?): Single<ResponsePostingList>
+    fun getCommunityPostingList(
+        @Query ("address") address: String,
+        @Query ("communityType") communityType: String?,
+        @Query("page") page: Int?
+    ): Single<ResponsePostingList>
 
     @GET("/api/community/myzip")
     fun getCommunityMyZipList(@Query ("communityCategory") communityCategory: String?): Single<ResponseMyZipList>

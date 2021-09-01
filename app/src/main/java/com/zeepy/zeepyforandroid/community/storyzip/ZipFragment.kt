@@ -1,20 +1,30 @@
 package com.zeepy.zeepyforandroid.community.storyzip
 
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
+import com.zeepy.zeepyforandroid.community.frame.view.CommunityFrameFragment
+import com.zeepy.zeepyforandroid.community.frame.view.CommunityMainFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.COMMUNITY_IS_COMPLETED
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentZipBinding
+import com.zeepy.zeepyforandroid.enum.PostingType
+import com.zeepy.zeepyforandroid.home.DirectTransitionListener
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
@@ -36,21 +46,31 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        initPostingTag()
         setStoryZipRecyclerView()
         updatePostings()
-        changeCategory()
-        getCategoryPostingList()
         changeAddress()
+        swipeRefreshPostingList()
+        checkFilter()
+        changeZIP()
+        fetchPaginationPostings()
+        fetchPostingDirectFromHome((requireActivity() as MainActivity).initialCommunityType)
     }
 
-    override fun onResume() {
-        super.onResume()
-        getCheckedbutton(binding.radiogroupTag.checkedRadioButtonId)
+    private fun swipeRefreshPostingList() {
+        binding.swipeRefreshLayout.apply {
+            setOnRefreshListener {
+                resetPostingList()
+                viewModel.fetchPostingList()
+            }
+            viewModel.postingList.observe(viewLifecycleOwner) {
+                isRefreshing = false
+            }
+        }
     }
 
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = ZipAdapter { posting ->
                 if (posting.isCompleted) {
                     showIsCompletedDialog(posting)
@@ -62,66 +82,105 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         }
     }
 
-    private fun changeCategory() {
-        binding.radiogroupTag.setOnCheckedChangeListener { _, checkedId ->
-            getCheckedbutton(checkedId)
-        }
-    }
-
-    private fun getCheckedbutton(checkedId: Int) {
-        when (checkedId) {
-            binding.rbTagEverything.id -> {
-                viewModel.changeCategory(null)
-            }
-            binding.rbTabGroupPurchase.id -> {
-                viewModel.changeCategory("JOINTPURCHASE")
-            }
-            binding.rbTagFreeShare.id -> {
-                viewModel.changeCategory("FREESHARING")
-            }
-            binding.rbTagFriends.id -> {
-                viewModel.changeCategory("NEIGHBORHOODFRIEND")
-            }
-        }
-    }
-
     private fun changeAddress() {
         viewModel.selectedAddress.observe(viewLifecycleOwner) {
+            resetPostingList()
             viewModel.fetchPostingList()
         }
     }
 
-    private fun getCategoryPostingList() {
-        viewModel.selectedCategory.observe(viewLifecycleOwner) {
-            if (!viewModel.addressList.value.isNullOrEmpty()) {
-                viewModel.fetchPostingList()
-            }
+    private fun checkFilter() {
+        binding.radiogroupTag.setOnCheckedChangeListener { radiogroup, isChecked ->
+            resetPostingList()
+            changeFilter(binding.radiogroupTag)
+            viewModel.fetchPostingList()
+            binding.rvStoryzip.scrollToPosition(0)
         }
     }
 
-    private fun updatePostings() {
-        viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
-            when (postingList.status) {
-                NetworkStatus.State.SUCCESS -> {
-                    updatePostingList(postingList.data)
+    private fun changeFilter(radiogroup: RadioGroup) {
+        when (radiogroup.checkedRadioButtonId) {
+            binding.rbTagEverything.id -> {
+                (requireActivity() as MainActivity).initialCommunityType = null
+                viewModel.changeSelectedFilter(null)
+            }
+            binding.rbTabGroupPurchase.id -> {
+                PostingType.JOINTPURCHASE.name.run {
+                    viewModel.changeSelectedFilter(this)
+                    (requireActivity() as MainActivity).initialCommunityType = this
+                }
+            }
+            binding.rbTagFreeShare.id -> {
+                PostingType.FREESHARING.name.run {
+                    viewModel.changeSelectedFilter(this)
+                    (requireActivity() as MainActivity).initialCommunityType = this
+                }
+            }
+            binding.rbTagFriends.id -> {
+                PostingType.NEIGHBORHOODFRIEND.name.run {
+                    viewModel.changeSelectedFilter(this)
+                    (requireActivity() as MainActivity).initialCommunityType = this
                 }
             }
         }
     }
 
-    private fun updatePostingList(updateData: List<PostingListModel>?) {
+    private fun changeZIP() {
+        viewModel.currentFragmentId.observe(viewLifecycleOwner) {
+            resetPostingList()
+            changeFilter(binding.radiogroupTag)
+        }
+    }
+
+    private fun updatePostings() {
+        viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
+            updatePostingList(postingList)
+        }
+    }
+
+    private fun updatePostingList(updateData: List<PostingListModel>) {
         val postingListAdapter = (binding.rvStoryzip.adapter as ZipAdapter)
-        if (!postingListAdapter.currentList.equals(updateData)) {
-            postingListAdapter.run {
-                submitList(updateData)
-                binding.rvStoryzip.scrollToPosition(0)
+        if (postingListAdapter.currentList != updateData) {
+            (binding.rvStoryzip.adapter as ZipAdapter).submitList(updateData)
+        }
+    }
+
+    private fun fetchPaginationPostings() {
+        binding.rvStoryzip.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisible = layoutManager.findLastCompletelyVisibleItemPosition()
+                if (lastVisible >= layoutManager.itemCount - 5) {
+                    Log.e("id", "${viewModel.currentFragmentId.value}")
+                    if(viewModel.currentFragmentId.value != 1 &&
+                        viewModel.paginationIdx.value != -1) {
+                        viewModel.fetchPostingList()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun resetPostingList() {
+        viewModel.removePostingList()
+        viewModel.changePaginationIdx(0)
+    }
+
+    private fun fetchPostingDirectFromHome(type: String?) {
+        with(binding) {
+            when (type) {
+                PostingType.FREESHARING.name -> rbTagFreeShare.isChecked = true
+                PostingType.JOINTPURCHASE.name -> rbTabGroupPurchase.isChecked = true
+                PostingType.NEIGHBORHOODFRIEND.name -> rbTagFriends.isChecked = true
+                else -> rbTagEverything.isChecked = true
             }
         }
     }
 
     private fun showIsCompletedDialog(posting: PostingListModel) {
         val isCompletedDialog = ZeepyDialogBuilder("모집이 완료된 글이에요!", COMMUNITY_IS_COMPLETED)
-            .setButtonHorizontalWeight(0.7f,0.3f)
+            .setButtonHorizontalWeight(0.7f, 0.3f)
             .setDialogClickListener(object : DialogClickListener {
                 override fun clickLeftButton(dialog: ZeepyDialog) {
                     goToPostingDetailFragment(posting)
@@ -140,12 +199,9 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     }
 
     private fun goToPostingDetailFragment(posting: PostingListModel) {
-        val action = MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(posting)
+        val action =
+            MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(posting)
         requireParentFragment().requireParentFragment().requireParentFragment()
             .requireParentFragment().findNavController().navigate(action)
-    }
-
-    private fun initPostingTag() {
-        binding.radiogroupTag.check(binding.rbTagEverything.id)
     }
 }

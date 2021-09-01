@@ -10,7 +10,7 @@ import javax.inject.Inject
 class PostingListDataSourceImpl @Inject constructor(
     private val zeepyApiService: ZeepyApiService
 ): PostingListDataSource {
-    override fun getPosting(address: String, communityType: String?): Single<ResponsePostingList> = zeepyApiService.getCommunityPostingList(address, communityType)
+    override fun getPosting(address: String, communityType: String?, page: Int?): Single<ResponsePostingList> = zeepyApiService.getCommunityPostingList(address, communityType,page)
     override fun getMyZip(communityCategory: String?): Single<ResponseMyZipList> = zeepyApiService.getCommunityMyZipList(communityCategory)
     override fun getPostingDetail(id: Int): Single<ResponsePostingDetail> = zeepyApiService.fetchPostinDetailcontent(id)
 }

@@ -31,11 +31,11 @@ object FileConverter {
     }
 
     fun Uri.tofile(contentResolver: ContentResolver): String? {
-        val cursor= contentResolver.query(this,null, null, null,null)
+        val cursor = contentResolver.query(this, null, null, null, null)
         cursor?.moveToNext()
         val path = cursor?.getString(cursor.getColumnIndex("_data"))
         cursor?.close()
-       return path
+        return path
 
     }
 
@@ -43,6 +43,7 @@ object FileConverter {
         return contentResolver.query(this, null, null, null, null)?.let {
             if (it.moveToNext()) {
                 val displayName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+
                 val requestBody = object : RequestBody() {
                     override fun contentType(): MediaType? {
                         return contentResolver.getType(this@asMultipart)?.toMediaType()
@@ -64,7 +65,7 @@ object FileConverter {
     fun Uri.asBitmap(contentResolver: ContentResolver): Bitmap? {
         var bitmap: Bitmap? = null
         try {
-            bitmap = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, this))
             } else {
                 MediaStore.Images.Media.getBitmap(contentResolver, this)

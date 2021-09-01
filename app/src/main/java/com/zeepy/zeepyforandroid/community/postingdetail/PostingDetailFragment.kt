@@ -22,6 +22,8 @@ import com.zeepy.zeepyforandroid.customview.ParticipationDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentPostingDetailBinding
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragment
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import com.zeepy.zeepyforandroid.util.ext.hideKeyboard
@@ -45,10 +47,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changePostingId(args.postingModel.id)
-
-        viewModel.superCommentId.observe(viewLifecycleOwner){
-            Log.e("supercommentid", "${it}")
-        }
 
         setToolbar()
         setPictureRecyclerview()
