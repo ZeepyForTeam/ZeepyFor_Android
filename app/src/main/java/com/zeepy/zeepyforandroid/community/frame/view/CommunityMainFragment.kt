@@ -1,7 +1,6 @@
 package com.zeepy.zeepyforandroid.community.frame.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.COMMUNITY
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
-import com.zeepy.zeepyforandroid.home.DirectTransitionListener
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +44,7 @@ class CommunityMainFragment (): BaseFragment<FragmentCommunityMainBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.changeCategory(category)
+        viewModel.changeSelectedFilter(category)
 
         setToolbar()
         initViewPager()
@@ -138,10 +136,6 @@ class CommunityMainFragment (): BaseFragment<FragmentCommunityMainBinding>() {
             .show(childFragmentManager, this@CommunityMainFragment.tag)
     }
 
-
-    interface Listener {
-        fun pass(stiring:String)
-    }
     companion object {
         private val TAB_NAME = listOf("이야기ZIP", "나의ZIP")
     }

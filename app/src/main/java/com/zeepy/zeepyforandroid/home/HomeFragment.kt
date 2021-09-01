@@ -45,7 +45,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        onAttachToParentFragment(parentFragment)
+        onAttachToParentFragment(parentFragment, ZipFragment())
 
         writeReview()
         setFilterList()
@@ -137,7 +137,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             .show(childFragmentManager, this@HomeFragment.tag)
     }
 
-    private fun onAttachToParentFragment(mainframe: Fragment?) {
+    private fun onAttachToParentFragment(mainframe: Fragment?, community: Fragment?) {
         try {
             frameFragmentListener = mainframe as DirectTransitionListener
         } catch (e: ClassCastException) {
@@ -154,7 +154,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         binding.buttonFriends.setOnClickListener{
             PostingType.NEIGHBORHOODFRIEND.name.run {
                 setSelectCommunity(this)
-
             }
         }
         binding.buttonGroupPurchase.setOnClickListener{
@@ -166,6 +165,5 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
 
     private fun setSelectCommunity(type: String) {
         frameFragmentListener?.applyCommunityFilter(type)
-        (requireActivity() as MainActivity).initialCommunityType = type
     }
 }

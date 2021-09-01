@@ -14,7 +14,7 @@ import com.zeepy.zeepyforandroid.home.DirectTransitionListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CommunityFrameFragment: BaseFragment<FragmentCommunityFrameBinding>() {
+class CommunityFrameFragment(): BaseFragment<FragmentCommunityFrameBinding>() {
     private lateinit var navController: NavController
 
     override fun getFragmentBinding(

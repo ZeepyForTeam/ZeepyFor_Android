@@ -82,9 +82,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_storyzip"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="match_parent"
                 tools:listitem="@layout/item_story_zip" />
 
             <com.airbnb.lottie.LottieAnimationView

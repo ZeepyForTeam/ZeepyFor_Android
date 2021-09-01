@@ -1,19 +1,21 @@
 package com.zeepy.zeepyforandroid.community.storyzip
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ObservableField
+import android.widget.RadioGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.PostingListModel
+import com.zeepy.zeepyforandroid.community.frame.view.CommunityFrameFragment
+import com.zeepy.zeepyforandroid.community.frame.view.CommunityMainFragment
 import com.zeepy.zeepyforandroid.community.frame.viewmodel.CommunityFrameViewModel
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
@@ -27,10 +29,9 @@ import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.internal.wait
 
 @AndroidEntryPoint
-class ZipFragment : BaseFragment<FragmentZipBinding>(){
+class ZipFragment : BaseFragment<FragmentZipBinding>() {
     private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment() })
 
     override fun getFragmentBinding(
@@ -45,25 +46,21 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        initPostingTag()
         setStoryZipRecyclerView()
         updatePostings()
-        changeCategory()
-        getCategoryPostingList()
         changeAddress()
         swipeRefreshPostingList()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initCommunityType()
-        getCheckedbutton(binding.radiogroupTag.checkedRadioButtonId)
-        (requireActivity() as MainActivity).initialCommunityType = null
+        checkFilter()
+        changeZIP()
+//        changeFilterPosting()
+        fetchPaginationPostings()
+        fetchPostingDirectFromHome((requireActivity() as MainActivity).initialCommunityType)
     }
 
     private fun swipeRefreshPostingList() {
         binding.swipeRefreshLayout.apply {
             setOnRefreshListener {
+                resetPostingList()
                 viewModel.fetchPostingList()
             }
             viewModel.postingList.observe(viewLifecycleOwner) {
@@ -72,27 +69,9 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
         }
     }
 
-    private fun initCommunityType() {
-        val category = (requireActivity() as MainActivity).initialCommunityType
-        when(category) {
-            PostingType.JOINTPURCHASE.name -> {
-                binding.rbTabGroupPurchase.isChecked = true
-            }
-            PostingType.NEIGHBORHOODFRIEND.name -> {
-                binding.rbTagFriends.isChecked = true
-            }
-            PostingType.FREESHARING.name -> {
-                binding.rbTagFreeShare.isChecked = true
-            }
-            else -> {
-                binding.rbTagEverything.isChecked = true
-
-            }
-        }
-    }
-
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = ZipAdapter { posting ->
                 if (posting.isCompleted) {
                     showIsCompletedDialog(posting)
@@ -104,62 +83,109 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
         }
     }
 
-    private fun changeCategory() {
-        binding.radiogroupTag.setOnCheckedChangeListener { _, checkedId ->
-            getCheckedbutton(checkedId)
-        }
-    }
-
-    private fun getCheckedbutton(checkedId: Int) {
-        when (checkedId) {
-            binding.rbTagEverything.id -> {
-                viewModel.changeCategory(null)
-            }
-            binding.rbTabGroupPurchase.id -> {
-                viewModel.changeCategory(PostingType.JOINTPURCHASE.name)
-            }
-            binding.rbTagFreeShare.id -> {
-                viewModel.changeCategory(PostingType.FREESHARING.name)
-            }
-            binding.rbTagFriends.id -> {
-                viewModel.changeCategory(PostingType.NEIGHBORHOODFRIEND.name)
-            }
-        }
-    }
-
     private fun changeAddress() {
         viewModel.selectedAddress.observe(viewLifecycleOwner) {
+            Log.e("4444","44444")
+            resetPostingList()
             viewModel.fetchPostingList()
         }
     }
 
-    private fun getCategoryPostingList() {
-        viewModel.selectedCategory.observe(viewLifecycleOwner) {
-            if (!viewModel.addressList.value.isNullOrEmpty()) {
-                viewModel.fetchPostingList()
-            }
+    private fun checkFilter() {
+        binding.radiogroupTag.setOnCheckedChangeListener { radiogroup, isChecked ->
+            Log.e("3333","3333")
+            resetPostingList()
+            changeFilter(binding.radiogroupTag)
+            viewModel.fetchPostingList()
+            binding.rvStoryzip.scrollToPosition(0)
         }
     }
 
-    private fun updatePostings() {
-        viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
-            when (postingList.status) {
-                NetworkStatus.State.SUCCESS -> {
-                    updatePostingList(postingList.data)
-                    binding.rvStoryzip.smoothScrollToPosition(0)
+    private fun changeFilter(radiogroup: RadioGroup) {
+        when (radiogroup.checkedRadioButtonId) {
+            binding.rbTagEverything.id -> {
+                (requireActivity() as MainActivity).initialCommunityType = null
+                viewModel.changeSelectedFilter(null)
+            }
+            binding.rbTabGroupPurchase.id -> {
+                PostingType.JOINTPURCHASE.name.run {
+                    viewModel.changeSelectedFilter(this)
+                    (requireActivity() as MainActivity).initialCommunityType = this
+                }
+            }
+            binding.rbTagFreeShare.id -> {
+                PostingType.FREESHARING.name.run {
+                    viewModel.changeSelectedFilter(this)
+                    (requireActivity() as MainActivity).initialCommunityType = this
+                }
+            }
+            binding.rbTagFriends.id -> {
+                PostingType.NEIGHBORHOODFRIEND.name.run {
+                    viewModel.changeSelectedFilter(this)
+                    (requireActivity() as MainActivity).initialCommunityType = this
                 }
             }
         }
     }
 
-    private fun updatePostingList(updateData: List<PostingListModel>?) {
+//    private fun changeFilterPosting() {
+//        viewModel.selectedFilter.observe(viewLifecycleOwner) {
+//            Log.e("2222","2222")
+//            resetPostingList()
+//            viewModel.fetchPostingList()
+//        }
+//    }
+
+    private fun changeZIP() {
+        viewModel.currentFragmentId.observe(viewLifecycleOwner) {
+            Log.e("1111","11111")
+            resetPostingList()
+            changeFilter(binding.radiogroupTag)
+        }
+    }
+
+    private fun updatePostings() {
+        viewModel.postingList.observe(viewLifecycleOwner) { postingList ->
+            updatePostingList(postingList)
+        }
+    }
+
+    private fun updatePostingList(updateData: List<PostingListModel>) {
         val postingListAdapter = (binding.rvStoryzip.adapter as ZipAdapter)
-        if (!postingListAdapter.currentList.equals(updateData)) {
-            postingListAdapter.run {
-                submitList(updateData)
+        if (postingListAdapter.currentList != updateData) {
+            (binding.rvStoryzip.adapter as ZipAdapter).submitList(updateData)
+        }
+    }
+
+    private fun fetchPaginationPostings() {
+        binding.rvStoryzip.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisible = layoutManager.findLastCompletelyVisibleItemPosition()
+                if (lastVisible >= layoutManager.itemCount - 5) {
+                    Log.e("id", "${viewModel.currentFragmentId.value}")
+                    if(viewModel.currentFragmentId.value != 1 &&
+                        viewModel.paginationIdx.value != -1) {
+                        viewModel.fetchPostingList()
+                    }
+                }
             }
-            binding.rvStoryzip.layoutManager?.apply {
-                smoothScrollToPosition(binding.rvStoryzip, null, updateData!!.size -1)
+        })
+    }
+
+    private fun resetPostingList() {
+        viewModel.removePostingList()
+        viewModel.changePaginationIdx(0)
+    }
+
+    private fun fetchPostingDirectFromHome(type: String?) {
+        with(binding) {
+            when (type) {
+                PostingType.FREESHARING.name -> rbTagFreeShare.isChecked = true
+                PostingType.JOINTPURCHASE.name -> rbTabGroupPurchase.isChecked = true
+                PostingType.NEIGHBORHOODFRIEND.name -> rbTagFriends.isChecked = true
+                else -> rbTagEverything.isChecked = true
             }
         }
     }
@@ -189,9 +215,5 @@ class ZipFragment : BaseFragment<FragmentZipBinding>(){
             MainFrameFragmentDirections.actionMainFrameFragmentToPostingDetailFragment(posting)
         requireParentFragment().requireParentFragment().requireParentFragment()
             .requireParentFragment().findNavController().navigate(action)
-    }
-
-    private fun initPostingTag() {
-        binding.radiogroupTag.check(binding.rbTagEverything.id)
     }
 }

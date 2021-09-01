@@ -6,7 +6,7 @@ import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePosti
 import io.reactivex.Single
 
 interface PostingListDataSource {
-    fun getPosting(address: String, communityType: String?) : Single<ResponsePostingList>
+    fun getPosting(address: String, communityType: String?, page: Int?) : Single<ResponsePostingList>
     fun getMyZip(communityCategory: String?): Single<ResponseMyZipList>
     fun getPostingDetail(id: Int) : Single<ResponsePostingDetail>
 }
