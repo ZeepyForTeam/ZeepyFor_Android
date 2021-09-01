@@ -27,7 +27,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewPager(null)
+        initViewPager()
         configureBottomNavigation()
         observeViewModel()
     }
@@ -36,7 +36,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
         (requireActivity() as MainActivity).initialCommunityType = type
 
         viewModel.changePageIdx(2)
-        initViewPager(type)
+        initViewPager()
     }
 
     private fun observeViewModel() {
@@ -46,7 +46,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
         }
     }
 
-    private fun initViewPager(communityType: String?) = binding.viewpagerMain.run {
+    private fun initViewPager() = binding.viewpagerMain.run {
         offscreenPageLimit = 3
         adapter = MainFrameAdapter(this@MainFrameFragment)
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

@@ -27,6 +27,11 @@ class OnBoardingFrameFragment: BaseFragment<FragmentOnboardingFrameBinding>(){
         super.onViewCreated(view, savedInstanceState)
         checkIsAlreadyOnBoarded()
         setOnBoardingViewPagerAdapter()
+        controlLottieSpeed()
+    }
+
+    private fun controlLottieSpeed() {
+        binding.lottieAnimation.speed = 0.6f
     }
 
     private fun setOnBoardingViewPagerAdapter() {

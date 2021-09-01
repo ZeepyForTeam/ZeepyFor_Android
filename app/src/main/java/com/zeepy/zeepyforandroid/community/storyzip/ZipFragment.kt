@@ -52,7 +52,6 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         swipeRefreshPostingList()
         checkFilter()
         changeZIP()
-//        changeFilterPosting()
         fetchPaginationPostings()
         fetchPostingDirectFromHome((requireActivity() as MainActivity).initialCommunityType)
     }
@@ -85,7 +84,6 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     private fun changeAddress() {
         viewModel.selectedAddress.observe(viewLifecycleOwner) {
-            Log.e("4444","44444")
             resetPostingList()
             viewModel.fetchPostingList()
         }
@@ -93,7 +91,6 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     private fun checkFilter() {
         binding.radiogroupTag.setOnCheckedChangeListener { radiogroup, isChecked ->
-            Log.e("3333","3333")
             resetPostingList()
             changeFilter(binding.radiogroupTag)
             viewModel.fetchPostingList()
@@ -128,17 +125,8 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         }
     }
 
-//    private fun changeFilterPosting() {
-//        viewModel.selectedFilter.observe(viewLifecycleOwner) {
-//            Log.e("2222","2222")
-//            resetPostingList()
-//            viewModel.fetchPostingList()
-//        }
-//    }
-
     private fun changeZIP() {
         viewModel.currentFragmentId.observe(viewLifecycleOwner) {
-            Log.e("1111","11111")
             resetPostingList()
             changeFilter(binding.radiogroupTag)
         }
