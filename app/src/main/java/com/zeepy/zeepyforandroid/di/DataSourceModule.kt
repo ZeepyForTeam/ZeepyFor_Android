@@ -6,6 +6,8 @@ import com.zeepy.zeepyforandroid.address.datasource.SearchAddressDataSource
 import com.zeepy.zeepyforandroid.address.datasource.SearchAddressDataSourceImpl
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSource
 import com.zeepy.zeepyforandroid.community.data.remote.datasource.PostingListDataSourceImpl
+import com.zeepy.zeepyforandroid.lookaround.datasource.RemoteBuildingDataSource
+import com.zeepy.zeepyforandroid.lookaround.datasource.RemoteBuildingDataSourceImpl
 import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSource
 import com.zeepy.zeepyforandroid.map.datasource.RemoteBuildingsDataSourceImpl
 import com.zeepy.zeepyforandroid.myprofile.datasource.MyProfileRemoteDataSource
@@ -41,4 +43,8 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideMyProfileDataSource(@ZeepyService zeepyApiService: ZeepyApiService): MyProfileRemoteDataSource = MyProfileRemoteDataSourceImpl(zeepyApiService)
+
+    @Provides
+    @Singleton
+    fun provideLookAroundBuildingsDataSource(@ZeepyService zeepyApiService: ZeepyApiService): RemoteBuildingDataSource = RemoteBuildingDataSourceImpl(zeepyApiService)
 }

@@ -1,5 +1,9 @@
 package com.zeepy.zeepyforandroid.review.data.dto
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class ResponseReviewDTO(
     val communcationTendency: String,
     val furnitures: List<String>,
@@ -16,4 +20,4 @@ data class ResponseReviewDTO(
     val totalEvaluation: String,
     val user: User,
     val waterPressure: String
-)
+): Parcelable

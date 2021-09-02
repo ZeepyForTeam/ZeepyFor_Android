@@ -11,17 +11,22 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.MaterialSpinner
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private val viewModel by viewModels<LookAroundViewModel>()
+    @Inject lateinit var userPreferenceManager: UserPreferenceManager
+    private var selectedAddress: LocalAddressEntity? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -32,17 +37,34 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setToolbar()
+        viewModel.getAddressListFromServer()
+        changeAddress()
         initRecyclerView()
         updateBuildings()
+        setFilteringListener()
+
     }
 
-
+    private fun setFilteringListener() {
+        binding.rgFilterings.setOnCheckedChangeListener { group, checkedId ->
+            var lessorType = "BUSINESS"
+            when (checkedId) {
+                R.id.rb_business -> lessorType = "BUSINESS"
+                R.id.rb_kind -> lessorType = "KIND"
+                R.id.rb_graze -> lessorType = "GRAZE"
+                R.id.rb_softy -> lessorType = "SOFTY"
+                R.id.rb_bad -> lessorType = "BAD"
+            }
+            viewModel.getBuildingsByFiltering(lessorType)
+        }
+    }
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            setTitle("둘러보기")
+            setCommunityLocation()
             setRightButton(R.drawable.btn_map) {
                 Navigation.findNavController(binding.root)
                     .navigate(R.id.action_mainFrameFragment_to_mapFragment)
@@ -58,6 +80,29 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         }
     }
 
+    private fun changeAddress() {
+        binding.toolbar.binding.textviewToolbar.setOnClickListener {
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                if (viewModel.addressList.value.isNullOrEmpty()) {
+                    val action =
+                        MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                    action.isJustRegisterAddress = true
+                    findNavController().navigate(action)
+                } else {
+                    val addresses = viewModel.addressList.value!!.toTypedArray()
+                    val action =
+                        MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(
+                            addresses
+                        )
+                    requireParentFragment().requireParentFragment().findNavController()
+                        .navigate(action)
+                }
+            } else {
+                // 로그인 안된 상태 처리
+            }
+        }
+    }
+
     private fun initRecyclerView() {
         binding.rvBuildingList.apply {
             adapter = LookAroundListAdapter {
@@ -70,7 +115,32 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         }
     }
 
-    /** Spinner랑 필터링 미사용 */
+    private fun updateBuildings() {
+        viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
+            Log.e("buildingListData", it.toString())
+            (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it)
+        }
+        viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
+            selectedAddress = addresses.find { address -> address.isAddressCheck }
+            Log.e("selectedAddress in setToolbar", selectedAddress.toString())
+            if (selectedAddress != null) {
+                viewModel.searchBuildingAddress(selectedAddress!!.cityDistinct)
+            }
+            if (addresses.isNullOrEmpty()) {
+                binding.toolbar.setTitle("주소 등록하기")
+                binding.rvBuildingList.visibility = View.GONE
+                binding.layoutNoAddress.visibility = View.VISIBLE
+            } else {
+                selectedAddress?.let {
+                    binding.toolbar.setTitle(it.cityDistinct)
+                    binding.layoutNoAddress.visibility = View.GONE
+                    binding.rvBuildingList.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    /** Spinner 미사용 */
     /*
     private fun setSpinner() {
         ArrayAdapter.createFromResource(requireActivity(), R.array.lessor_personality_array, R.layout.item_lookaround_spinner).let {
@@ -94,6 +164,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 id: Long
             ) {
                 parent.focusSearch(View.FOCUS_UP)?.requestFocus()
+
             }
 
             override fun onNothingSelected(parent: MaterialSpinner) {
@@ -101,13 +172,4 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             }
         }
     }*/
-
-    private fun updateBuildings() {
-        viewModel.buildingList.observe(viewLifecycleOwner) {
-            (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it)
-            // TODO: 주소가 등록되지 않았을 경우 OR 조회되는 주소가 하나도 없을 경우 뷰 처리 어떻게?
-        }
-    }
-
-
 }

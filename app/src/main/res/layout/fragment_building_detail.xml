@@ -88,7 +88,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_deal_type"
             app:layout_constraintBottom_toBottomOf="@id/tv_deal_type"
             tools:text="전세"
-            android:text="@{viewModel.buildingSummary.dealType}"
+            android:text="@{viewModel.buildingSummary.buildingDeals[0].dealType}"
             android:textSize="14sp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
@@ -114,7 +114,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_characteristics"
             app:layout_constraintBottom_toBottomOf="@id/tv_characteristics"
             tools:text="에어컨, 세탁기, 신발장, 냉장고"
-            android:text="random"
+            android:text="@{viewModel.buildingSummary.reviews[0].furnitures[0]}"
             android:textSize="14sp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
@@ -156,7 +156,6 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(0).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -171,7 +170,6 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(1).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toStartOf="@id/image3"
                     app:layout_constraintTop_toTopOf="parent"
@@ -185,7 +183,6 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(2).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toEndOf="@id/image2"
                     app:layout_constraintEnd_toStartOf="@id/image_add"
@@ -199,7 +196,6 @@
                     android:layout_height="0dp"
                     app:shapeAppearanceOverlay="@style/roundedImage"
                     android:scaleType="centerCrop"
-                    load_shapeableimage="@{viewModel.buildingSummary.pictures.get(3).picture}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toEndOf="@id/image3"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -241,10 +237,10 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
+                <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/emoji_1_map"
+                    android:src="@drawable/emoji_1_map"
                     android:layout_marginBottom="5dp"/>
 
                 <TextView
@@ -273,10 +269,10 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
+                <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/emoji_1_map"
+                    android:src="@drawable/emoji_2_map"
                     android:layout_marginBottom="5dp"/>
 
                 <TextView
@@ -305,10 +301,10 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
+                <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/emoji_1_map"
+                    android:src="@drawable/emoji_3_map"
                     android:layout_marginBottom="5dp"/>
 
                 <TextView
@@ -337,10 +333,10 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
+                <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/emoji_1_map"
+                    android:background="@drawable/emoji_4_map"
                     android:layout_marginBottom="5dp"/>
 
                 <TextView
@@ -369,10 +365,10 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
+                <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/emoji_1_map"
+                    android:background="@drawable/emoji_5_map"
                     android:layout_marginBottom="5dp"/>
 
                 <TextView
@@ -453,6 +449,7 @@
         </androidx.cardview.widget.CardView>
 
         <Button
+            android:id="@+id/btn_show_all_reviews"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/box_blue5f_5dp"

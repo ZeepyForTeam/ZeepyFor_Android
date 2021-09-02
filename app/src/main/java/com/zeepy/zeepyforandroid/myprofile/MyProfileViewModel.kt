@@ -1,16 +1,10 @@
 package com.zeepy.zeepyforandroid.myprofile
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.zeepy.zeepyforandroid.base.BaseViewModel
-import com.zeepy.zeepyforandroid.map.usecase.util.data
-import com.zeepy.zeepyforandroid.map.usecase.util.succeeded
-import com.zeepy.zeepyforandroid.map.usecase.util.updateOnSuccessFromUnitResponse
 import com.zeepy.zeepyforandroid.myprofile.repository.MyProfileRepository
-import com.zeepy.zeepyforandroid.myprofile.usecase.LogoutUseCase
-import com.zeepy.zeepyforandroid.myprofile.usecase.WithdrawUseCase
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.signin.controller.UserDataController
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +17,7 @@ import javax.inject.Inject
 class MyProfileViewModel @Inject constructor(
     private val userDataController: UserDataController,
     private val userPreferenceManager: UserPreferenceManager,
-    private val repository: MyProfileRepository,
-    private val logoutUseCase: LogoutUseCase
+    private val repository: MyProfileRepository
 ) : BaseViewModel() {
 
     private val _isLoggedOut = MutableLiveData<Boolean?>()
@@ -54,8 +47,12 @@ class MyProfileViewModel @Inject constructor(
 
     fun submitWithdrawal() {
         viewModelScope.launch {
-            val result = repository.submitWithdrawal()
-            Log.e("result", "" + result)
+            try {
+                val result = repository.submitWithdrawal()
+                _isWithdrawn.value = true
+            } catch(e: Throwable) {
+                e.printStackTrace()
+            }
         }
     }
 

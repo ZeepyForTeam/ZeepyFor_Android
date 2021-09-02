@@ -26,8 +26,7 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            android:visibility="gone">
+            android:layout_marginTop="8dp">
 
             <com.zeepy.zeepyforandroid.customview.MaterialSpinner
                 android:id="@+id/spinner_lessor_personality"
@@ -44,7 +43,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="16dp" />
+                android:layout_marginStart="16dp"
+                android:visibility="gone"/>
 
             <HorizontalScrollView
                 android:layout_width="0dp"
@@ -54,7 +54,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/spinner_lessor_personality"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:scrollbars="none"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="16dp"
                 app:layout_constrainedWidth="true">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -62,79 +62,102 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/cb_standard_order"
-                        android:layout_width="wrap_content"
+                    <RadioGroup
+                        android:id="@+id/rg_filterings"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="기본순"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/nanum_square_round_bold"
-                        android:textColor="@color/zeepy_black_3b"
-                        android:textSize="12sp"
-                        android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="7dp"/>
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/cb_good_sound_insulation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="4dp"
-                        android:text="방음 굿"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/nanum_square_round_bold"
-                        android:textColor="@color/zeepy_black_3b"
-                        android:textSize="12sp"
-                        android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="7dp"/>
+                        <RadioButton
+                            android:id="@+id/rb_standard_order"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="모든 성향"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:textColor="@color/zeepy_black_3b"
+                            android:textSize="12sp"
+                            android:button="@null"
+                            android:background="@drawable/selector_grayf4_blue59_16dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="7dp"/>
 
-                    <CheckBox
-                        android:id="@+id/cb_good_pest"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="4dp"
-                        android:text="해충 제로"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/nanum_square_round_bold"
-                        android:textColor="@color/zeepy_black_3b"
-                        android:textSize="12sp"
-                        android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="7dp"/>
+                        <RadioButton
+                            android:id="@+id/rb_business"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:text="비즈니스형"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:textColor="@color/zeepy_black_3b"
+                            android:textSize="12sp"
+                            android:button="@null"
+                            android:background="@drawable/selector_grayf4_blue59_16dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="7dp"/>
 
-                    <CheckBox
-                        android:id="@+id/cb_good_sunlight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="4dp"
-                        android:text="채광 좋은"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/nanum_square_round_bold"
-                        android:textColor="@color/zeepy_black_3b"
-                        android:textSize="12sp"
-                        android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="7dp"/>
+                        <RadioButton
+                            android:id="@+id/rb_kind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:text="친절형"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:textColor="@color/zeepy_black_3b"
+                            android:textSize="12sp"
+                            android:button="@null"
+                            android:background="@drawable/selector_grayf4_blue59_16dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="7dp"/>
 
-                    <CheckBox
-                        android:id="@+id/cb_good_water_pressure"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="4dp"
-                        android:text="수압 완벽"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/nanum_square_round_bold"
-                        android:textColor="@color/zeepy_black_3b"
-                        android:textSize="12sp"
-                        android:button="@null"
-                        android:background="@drawable/selector_grayf4_blue59_16dp"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="7dp"/>
+                        <RadioButton
+                            android:id="@+id/rb_graze"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:text="방목형"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:textColor="@color/zeepy_black_3b"
+                            android:textSize="12sp"
+                            android:button="@null"
+                            android:background="@drawable/selector_grayf4_blue59_16dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="7dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_softy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:text="츤데레형"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:textColor="@color/zeepy_black_3b"
+                            android:textSize="12sp"
+                            android:button="@null"
+                            android:background="@drawable/selector_grayf4_blue59_16dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="7dp"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_bad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:text="할말하않"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:textColor="@color/zeepy_black_3b"
+                            android:textSize="12sp"
+                            android:button="@null"
+                            android:background="@drawable/selector_grayf4_blue59_16dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="7dp"/>
+                    </RadioGroup>
+
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -160,6 +183,32 @@
             tools:listitem="@layout/item_lookaround_building"
             tools:itemCount="3"/>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_no_address"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/box_grayf4_8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_menu"
+            app:layout_constraintDimensionRatio="3.49:1"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주소를 선택해주세요."
+                android:textSize="14sp"
+                android:fontFamily="@font/gilroy_extrabold"
+                android:textColor="@color/zeepy_gray_9a"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

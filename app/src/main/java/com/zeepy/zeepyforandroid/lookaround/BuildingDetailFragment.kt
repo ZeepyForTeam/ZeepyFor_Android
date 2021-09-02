@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
+import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentBuildingDetailBinding
+import com.zeepy.zeepyforandroid.enum.Options
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel
 
 class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
@@ -35,6 +38,14 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
 
         setToolbar()
         setOptions()
+        setPictures()
+
+        binding.btnShowAllReviews.setOnClickListener {
+            val action = BuildingDetailFragmentDirections.actionBuildingDetailFragmentToBuildingAllReviewsFragment(
+                args.buildingSummaryModel
+            )
+            findNavController().navigate(action)
+        }
     }
 
     private fun setToolbar() {
@@ -47,9 +58,17 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         }
     }
 
+
     private fun setOptions() {
-        binding.tvCharacteristicsContent.text = args.buildingSummaryModel.furnitures?.joinToString(separator = ", ") {
-            resources.getString(it.option)
+        binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews?.get(0)?.furnitures?.joinToString(separator = ", ") {
+            resources.getString(Options.getOptionFromString(it))
         }.toString()
+    }
+
+    private fun setPictures() {
+        binding.image1.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(0))
+        binding.image2.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(1))
+        binding.image1.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(2))
+        binding.imageAdd.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(3))
     }
 }

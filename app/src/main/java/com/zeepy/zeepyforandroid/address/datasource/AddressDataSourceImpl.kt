@@ -4,6 +4,7 @@ import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import io.reactivex.Single
+import retrofit2.Response
 import javax.inject.Inject
 
 class AddressDataSourceImpl @Inject constructor(

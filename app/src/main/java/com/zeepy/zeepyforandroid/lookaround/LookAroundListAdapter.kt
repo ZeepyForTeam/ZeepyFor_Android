@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.lookaround
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,24 @@ class LookAroundListAdapter(val listener: (BuildingSummaryModel) -> Unit): Recyc
         holder.binding.setVariable(BR.data, item)
         holder.binding.root.setOnClickListener {
             listener(item)
+        }
+
+        if (item.buildingType == "UNKNOWN" && item.reviews.isNullOrEmpty()) {
+            // pass
+        } else {
+            if (item.reviews?.get(0)?.roomCount == "ONE") {
+                holder.binding.tvOneroom.visibility = View.VISIBLE
+            }
+            if (item.reviews?.get(0)?.roomCount == "TWO") {
+                holder.binding.tvOneroom.visibility = View.VISIBLE
+            }
+            if (item.reviews?.get(0)?.roomCount == "THREE") {
+                holder.binding.tvOneroom.visibility = View.VISIBLE
+            }
+            if (item.buildingType != "UNKNOWN") {
+                holder.binding.tvBuildingType.text = item.buildingType
+                holder.binding.tvBuildingType.visibility = View.VISIBLE
+            }
         }
     }
 

@@ -153,6 +153,36 @@
         <argument
             android:name="buildingSummaryModel"
             app:argType="com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel"/>
+
+        <action
+            android:id="@+id/action_buildingDetailFragment_to_buildingAllReviewsFragment"
+            app:destination="@id/buildingAllReviewsFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/buildingAllReviewsFragment"
+        android:name="com.zeepy.zeepyforandroid.lookaround.BuildingAllReviewsFragment"
+        android:label="BuildingAllReviewsFragment"
+        tools:layout="@layout/fragment_lookaround_building_all_reviews">
+
+        <argument
+            android:name="buildingSummaryModel"
+            app:argType="com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel"/>
+
+        <action
+            android:id="@+id/action_buildingAllReviewsFragment_to_detailedReviewFragment"
+            app:destination="@id/detailedReviewFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailedReviewFragment"
+        android:name="com.zeepy.zeepyforandroid.lookaround.DetailedReviewFragment"
+        android:label="DetailedReviewFragment"
+        tools:layout="@layout/fragment_lookaround_detailed_review">
+
+        <argument
+            android:name="responseReview"
+            app:argType="com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO"/>
     </fragment>
 
     <fragment

@@ -1,5 +1,9 @@
 package com.zeepy.zeepyforandroid.building
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class BuildingDealDTO(
     val dealCost: Int,
     val dealDate: String,
@@ -8,4 +12,4 @@ data class BuildingDealDTO(
     val floor: Int,
     val id: Int,
     val monthlyRent: Int
-)
+): Parcelable
