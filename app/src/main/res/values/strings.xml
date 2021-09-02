@@ -105,4 +105,6 @@
     <string name="approve_personal_info">ZEEPY에서 제공하는 개인정보 처리방침에 동의합니다.</string>
     <string name="go_to_reviews_button">건물 리뷰 %s건 보러가기</string>
     <string name="go_to_reviews_button_none">아직 등록된 리뷰가 없습니다.</string>
+    <string name="officetel">오피스텔</string>
+    <string name="rowhouse">연립다세대</string>
 </resources>

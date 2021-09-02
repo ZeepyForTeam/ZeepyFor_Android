@@ -38,6 +38,7 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
             if (destination.id == R.id.mainFrameFragment
                 && childFragmentManager.findFragmentById(R.id.myprofile_nav_host_fragment)
                     ?.findNavController()?.previousBackStackEntry == null
+                && viewModel.pageIdx.value == 3
             ) {
                 viewModel.changePageIdx(0)
             }

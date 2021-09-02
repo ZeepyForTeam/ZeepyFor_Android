@@ -60,15 +60,54 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
 
 
     private fun setOptions() {
-        binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews?.get(0)?.furnitures?.joinToString(separator = ", ") {
-            resources.getString(Options.getOptionFromString(it))
-        }.toString()
+        args.buildingSummaryModel.reviews.let {
+            if (!it.isNullOrEmpty()) {
+                if (!it[0].furnitures.isNullOrEmpty()) {
+                    binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews?.get(0)?.furnitures?.joinToString(separator = ", ") { furniture ->
+                        resources.getString(Options.getOptionFromString(furniture))
+                    }.toString()
+                }
+            }
+        }
     }
 
+    // FIXME: Consider using an adapter..
     private fun setPictures() {
-        binding.image1.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(0))
-        binding.image2.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(1))
-        binding.image1.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(2))
-        binding.imageAdd.load(args.buildingSummaryModel.reviews?.get(0)?.imageUrls?.get(3))
+        args.buildingSummaryModel.reviews.let {
+            if (!it.isNullOrEmpty()) {
+                if (!it[0].imageUrls.isNullOrEmpty()) {
+                    it[0].imageUrls.let { images ->
+                        val imagesCount = images.size
+                        if (!it.isNullOrEmpty()) {
+                            when (imagesCount) {
+                                1 -> {
+                                    binding.image1.load(images[0])
+                                }
+                                2 -> {
+                                    binding.image1.load(images[0])
+                                    binding.image2.load(images[1])
+                                }
+                                3 -> {
+                                    binding.image1.load(images[0])
+                                    binding.image2.load(images[1])
+                                    binding.image3.load(images[2])
+                                }
+                                4 -> {
+                                    binding.image1.load(images[0])
+                                    binding.image2.load(images[1])
+                                    binding.image3.load(images[2])
+                                    binding.imageAdd.load(images[3])
+                                } else -> {
+                                binding.image1.load(images[0])
+                                binding.image2.load(images[1])
+                                binding.image3.load(images[2])
+                                binding.imageAdd.load(images[3])
+                            }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -122,73 +122,15 @@
             app:layout_constraintStart_toStartOf="@id/textview_building"
             app:layout_constraintTop_toBottomOf="@id/textview_building" />
 
-        <TextView
-            android:id="@+id/tv_oneroom"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_building_features"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/box_graye4_8dp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
-            android:text="원룸"
-            android:layout_marginTop="8dp"
-            android:paddingVertical="2.5dp"
-            android:paddingHorizontal="8dp"
             app:layout_constraintStart_toStartOf="@id/textview_building"
             app:layout_constraintTop_toBottomOf="@id/textview_building"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/tv_tworoom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/box_graye4_8dp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
-            android:text="투룸"
-            android:layout_marginStart="7dp"
-            android:paddingVertical="2.5dp"
-            android:paddingHorizontal="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_oneroom"
-            app:layout_constraintStart_toEndOf="@id/tv_oneroom"
-            app:layout_constraintTop_toTopOf="@id/tv_oneroom"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/tv_threeroom_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/box_graye4_8dp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
-            android:text="쓰리룸+"
-            android:layout_marginStart="7dp"
-            android:paddingVertical="2.5dp"
-            android:paddingHorizontal="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_tworoom"
-            app:layout_constraintStart_toEndOf="@id/tv_tworoom"
-            app:layout_constraintTop_toTopOf="@id/tv_tworoom"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/tv_building_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/box_graye4_8dp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
-            android:text="@{data.buildingType}"
-            android:layout_marginStart="7dp"
-            android:paddingVertical="2.5dp"
-            android:paddingHorizontal="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_tworoom"
-            app:layout_constraintStart_toEndOf="@id/tv_tworoom"
-            app:layout_constraintTop_toTopOf="@id/tv_tworoom"
-            tools:text="연립다세대"
-            android:visibility="gone"/>
+            android:layout_marginTop="8dp"
+            tools:listitem="@layout/item_building_feature"
+            tools:itemCount="3"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

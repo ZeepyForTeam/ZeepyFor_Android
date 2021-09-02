@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.lookaround.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -57,6 +58,7 @@ class LookAroundViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     fetchedAddressList = response as ArrayList<SearchAddressListModel>
+                    buildingList.clear()
                     fetchedAddressList.forEach {
                         getBuildingInfoById(it.id)
                     }
@@ -72,18 +74,23 @@ class LookAroundViewModel @Inject constructor(
     }
 
     fun getBuildingsByFiltering(lessorType: String) {
+        filteredBuildingList.clear()
         buildingList.forEach { building ->
-            when (building.reviews?.get(0)?.communcationTendency) {
-                lessorType -> filteredBuildingList.add(building)
+            if (!building.reviews.isNullOrEmpty()) {
+                when (building.reviews[0].communcationTendency) {
+                    lessorType -> filteredBuildingList.add(building)
+                }
             }
         }
-        _buildingListLiveData.value = buildingList
+        _buildingListLiveData.value = filteredBuildingList
     }
 
     fun getBuildingInfoById(id: Int) {
         viewModelScope.launch {
             try {
                 val result = buildingRepository.getBuildingsInfoById(id)
+                Log.e("BUILDING FETCHED", result.toString())
+                Log.e("BUILDING WITH REVIEWS", result?.reviews.toString())
                 addBuildingToList(result!!)
             } catch (e: Throwable) {
                 e.printStackTrace()

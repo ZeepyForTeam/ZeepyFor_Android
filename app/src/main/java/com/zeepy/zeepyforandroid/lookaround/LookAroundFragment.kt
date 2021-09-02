@@ -39,13 +39,20 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
+
         setToolbar()
+        updateBuildings()
         viewModel.getAddressListFromServer()
         changeAddress()
         initRecyclerView()
-        updateBuildings()
         setFilteringListener()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAddressListFromServer()
     }
 
     private fun setFilteringListener() {
@@ -84,10 +91,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         binding.toolbar.binding.textviewToolbar.setOnClickListener {
             if (userPreferenceManager.fetchIsAlreadyLogin()) {
                 if (viewModel.addressList.value.isNullOrEmpty()) {
-                    val action =
-                        MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
-                    action.isJustRegisterAddress = true
-                    findNavController().navigate(action)
+                    // 주소 등록 뷰로 가기
                 } else {
                     val addresses = viewModel.addressList.value!!.toTypedArray()
                     val action =
@@ -105,7 +109,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun initRecyclerView() {
         binding.rvBuildingList.apply {
-            adapter = LookAroundListAdapter {
+            adapter = LookAroundListAdapter(context) {
                 val action = MainFrameFragmentDirections.actionMainFrameFragmentToBuildingDetailFragment(
                     it
                 )
@@ -117,23 +121,21 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun updateBuildings() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
-            Log.e("buildingListData", it.toString())
             (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it)
         }
         viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
             selectedAddress = addresses.find { address -> address.isAddressCheck }
-            Log.e("selectedAddress in setToolbar", selectedAddress.toString())
             if (selectedAddress != null) {
                 viewModel.searchBuildingAddress(selectedAddress!!.cityDistinct)
             }
             if (addresses.isNullOrEmpty()) {
                 binding.toolbar.setTitle("주소 등록하기")
                 binding.rvBuildingList.visibility = View.GONE
-                binding.layoutNoAddress.visibility = View.VISIBLE
+                binding.tvNoAddress.visibility = View.VISIBLE
             } else {
                 selectedAddress?.let {
                     binding.toolbar.setTitle(it.cityDistinct)
-                    binding.layoutNoAddress.visibility = View.GONE
+                    binding.tvNoAddress.visibility = View.GONE
                     binding.rvBuildingList.visibility = View.VISIBLE
                 }
             }

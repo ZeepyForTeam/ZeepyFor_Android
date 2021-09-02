@@ -164,51 +164,43 @@
 
             </HorizontalScrollView>
 
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_building_list"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_menu"
-            android:layout_marginTop="16dp"
-            tools:listitem="@layout/item_lookaround_building"
-            tools:itemCount="3"/>
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_no_address"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/box_grayf4_8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_menu"
-            app:layout_constraintDimensionRatio="3.49:1"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_building_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_lookaround_building"
+                tools:itemCount="3"/>
 
             <TextView
+                android:id="@+id/tv_no_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="주소를 선택해주세요."
+                android:background="@drawable/box_grayf7_8dp"
+                android:paddingHorizontal="102dp"
+                android:paddingVertical="39dp"
                 android:textSize="14sp"
                 android:fontFamily="@font/gilroy_extrabold"
                 android:textColor="@color/zeepy_gray_9a"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:layout_centerInParent="true"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </RelativeLayout>
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
