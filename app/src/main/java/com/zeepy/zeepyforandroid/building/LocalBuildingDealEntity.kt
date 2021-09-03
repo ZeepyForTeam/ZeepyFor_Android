@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
         )
     ])
 data class LocalBuildingDealEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     val dealCost: Int,
     val dealDate: String,

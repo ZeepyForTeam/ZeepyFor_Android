@@ -5,4 +5,6 @@ import io.reactivex.Single
 
 interface SearchAddressDataSource {
     fun searchBuildingAddress(address: String): Single<ResponseSearchBuildingAddressDTO>
+    //coroutine
+    suspend fun searchBuildingsByAddress(address: String): ResponseSearchBuildingAddressDTO?
 }

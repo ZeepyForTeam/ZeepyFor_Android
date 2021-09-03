@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
         )
     ])
 data class LocalBuildingLikeEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     val email: String,
     val likeDate: String,

@@ -8,15 +8,15 @@ import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
+import com.zeepy.zeepyforandroid.lookaround.data.entity.SearchAddressForLookAroundModel
 import com.zeepy.zeepyforandroid.lookaround.repository.BuildingRepository
-import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
+import com.zeepy.zeepyforandroid.util.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,71 +25,57 @@ class LookAroundViewModel @Inject constructor(
     private val searchAddressListRepository: SearchAddressListRepository,
     private val buildingRepository: BuildingRepository,
     private val zeepyLocalRepository: ZeepyLocalRepository
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _addressList = MutableLiveData<List<LocalAddressEntity>>(mutableListOf())
     val addressList: LiveData<List<LocalAddressEntity>>
         get() = _addressList
 
-    private val _selectedAddress = MutableLiveData<LocalAddressEntity>()
-    val selectedAddress: LiveData<LocalAddressEntity>
+    private val _selectedAddress = SingleLiveData<LocalAddressEntity>()
+    val selectedAddress: SingleLiveData<LocalAddressEntity>
         get() = _selectedAddress
 
-    private val buildingList = ArrayList<BuildingSummaryModel>()
     private val filteredBuildingList = ArrayList<BuildingSummaryModel>()
 
-    private val _buildingListLiveData = MutableLiveData<List<BuildingSummaryModel>>()
-    val buildingListLiveData: LiveData<List<BuildingSummaryModel>>
+    private val _buildingListLiveData = MutableLiveData<MutableList<BuildingSummaryModel>>()
+    val buildingListLiveData: LiveData<MutableList<BuildingSummaryModel>>
         get() = _buildingListLiveData
 
     //TODO: Use Room DB for this too
-    private var fetchedAddressList = ArrayList<SearchAddressListModel>()
+    private val _fetchedAddressList = MutableLiveData<List<SearchAddressForLookAroundModel>>()
+    val fetchedAddressList: LiveData<List<SearchAddressForLookAroundModel>>
+        get() = _fetchedAddressList
 
-    private val _fetchedBuilding = MutableLiveData<BuildingSummaryModel?>()
-    val fetchedBuilding: LiveData<BuildingSummaryModel?>
-        get() = _fetchedBuilding
-
+    init {
+        getAddressListFromServer()
+    }
 
     /**
      * 현재 주소를 기준으로 빌딩 리스트 가져오기
      */
     fun searchBuildingsByAddress(address: String) {
-        addDisposable(
-            searchAddressListRepository.searchBuildingAddressList(address)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    saveAddressList(response as ArrayList<SearchAddressListModel>)
-                }, {
-                    it.printStackTrace()
-                })
-        )
-    }
+        _buildingListLiveData.value = mutableListOf()
+        viewModelScope.launch {
+            val result = searchAddressListRepository.searchBuildingsByAddress(address)
+            _fetchedAddressList.value = result!!
 
-    fun saveAddressList(addressList: ArrayList<SearchAddressListModel>) {
-        fetchedAddressList = addressList
-    }
+            val nums = arrayListOf<Int>()
 
-    fun getBuildings(address: String) {
-        Log.e("fetchedAddlist before api call", fetchedAddressList.toString())
-        fetchedAddressList.clear()
-        buildingList.clear()
-        searchBuildingsByAddress(address)
-        Log.e("fetchedAddlist", fetchedAddressList.toString())
-        fetchedAddressList.forEach {
-            Log.e("next building", "now")
-            getBuildingInfoById(it.id)
+            (_fetchedAddressList.value!!.indices).forEach {
+                nums.add(_fetchedAddressList.value!![it].id)
+            }
+            Log.e("nums", nums.toString())
+            nums.map { num ->
+                async {
+                    num to getBuildingInfoById(num)
+                }
+            }.map { it.await() }
         }
-        _buildingListLiveData.value = buildingList
-    }
-
-    fun addBuildingToList(building: BuildingSummaryModel) {
-        buildingList.add(building)
     }
 
     fun getBuildingsByFiltering(lessorType: String) {
         filteredBuildingList.clear()
-        buildingList.forEach { building ->
+        _buildingListLiveData.value?.forEach { building ->
             if (!building.reviews.isNullOrEmpty()) {
                 when (building.reviews[0].communcationTendency) {
                     lessorType -> filteredBuildingList.add(building)
@@ -99,31 +85,30 @@ class LookAroundViewModel @Inject constructor(
         _buildingListLiveData.value = filteredBuildingList
     }
 
-    fun getBuildingInfoById(id: Int) {
-        viewModelScope.launch {
-            try {
-                val result = buildingRepository.getBuildingsInfoById(id)
-                if (result != null) {
-                    insertBuildingInfoToLocal(result)
-                    getBuildingInfoFromLocal(id)
-                    Log.e("from if", "if")
-                    addBuildingToList(_fetchedBuilding.value!!)
-                } else {
-                    getBuildingInfoFromLocal(id)
-                    Log.e("from else", "else")
-                    addBuildingToList(_fetchedBuilding.value!!)
-                }
-            } catch (e: Throwable) {
-                e.printStackTrace()
-            }
+    suspend fun getBuildingInfoById(id: Int) {
+        val result = buildingRepository.getBuildingsInfoById(id)
+        if (result != null) {
+            insertBuildingInfoToLocal(result)
+            getBuildingInfoFromLocal(id)
+        } else {
+            getBuildingInfoFromLocal(id)
         }
     }
 
     suspend fun getBuildingInfoFromLocal(id: Int) {
-        zeepyLocalRepository.fetchBuildingById(id).collect {
-            _fetchedBuilding.value = it
-            Log.e("fetchedbuilding value", _fetchedBuilding.value.toString())
+        try {
+            zeepyLocalRepository.fetchBuildingById(id).collect {
+                _buildingListLiveData.plusAssign(it)
+            }
+        } catch (e: Throwable) {
+            e.printStackTrace()
         }
+    }
+
+    operator fun <T> MutableLiveData<MutableList<T>>.plusAssign(newValue: T) {
+        val value = this.value
+        value?.add(newValue)
+        this.value = value
     }
 
     suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {

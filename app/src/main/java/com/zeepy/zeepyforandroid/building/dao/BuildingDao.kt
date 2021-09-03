@@ -4,6 +4,8 @@ import androidx.room.*
 import com.zeepy.zeepyforandroid.building.BuildingPropertiesRelations
 import com.zeepy.zeepyforandroid.building.LocalBuildingEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface BuildingDao {
@@ -17,4 +19,7 @@ interface BuildingDao {
 
     @Query("DELETE FROM building_table WHERE id = :id")
     suspend fun deleteBuildingById(id: Int)
+
+    @Query("SELECT EXISTS(SELECT * FROM building_table WHERE id = :id)")
+    fun isRowExists(id: Int): Boolean
 }

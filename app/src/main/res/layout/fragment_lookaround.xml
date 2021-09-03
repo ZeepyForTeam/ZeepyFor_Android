@@ -80,7 +80,8 @@
                             android:button="@null"
                             android:background="@drawable/selector_grayf4_blue59_16dp"
                             android:paddingHorizontal="8dp"
-                            android:paddingVertical="7dp"/>
+                            android:paddingVertical="7dp"
+                            android:checked="true"/>
 
                         <RadioButton
                             android:id="@+id/rb_business"

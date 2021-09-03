@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
@@ -18,13 +19,13 @@ import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private val viewModel by viewModels<LookAroundViewModel>()
     @Inject lateinit var userPreferenceManager: UserPreferenceManager
-    private var selectedAddress: LocalAddressEntity? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -40,25 +41,21 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
         setToolbar()
-        updateBuildings()
+        subscribeObservers()
         changeAddress()
         initRecyclerView()
         setFilteringListener()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAddressListFromServer()
     }
 
     private fun setFilteringListener() {
-        binding.rgFilterings.setOnCheckedChangeListener { group, checkedId ->
+        binding.rgFilterings.setOnCheckedChangeListener { _, checkedId ->
             var lessorType = "BUSINESS"
             when (checkedId) {
                 R.id.rb_standard_order -> {
-                    if (selectedAddress != null) {
-                        viewModel.searchBuildingsByAddress(selectedAddress!!.cityDistinct)
+                    if (viewModel.selectedAddress.value != null) {
+                        // buildings order not preserved (refreshed from api call)
+                        Log.e("seletdaddres", viewModel.selectedAddress.value.toString())
+                        viewModel.searchBuildingsByAddress(viewModel.selectedAddress.value!!.cityDistinct)
                     }
                 }
                 R.id.rb_business -> lessorType = "BUSINESS"
@@ -127,26 +124,24 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         }
     }
 
-    private fun updateBuildings() {
+    private fun subscribeObservers() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
-            (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it)
+            (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it.toList())
         }
         viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
-            Log.e("is addresslist observer triggered?", "yes")
-            selectedAddress = addresses.find { address -> address.isAddressCheck }
-            if (selectedAddress != null) {
-                viewModel.getBuildings(selectedAddress!!.cityDistinct)
-            }
             if (addresses.isNullOrEmpty()) {
                 binding.toolbar.setTitle("주소 등록하기")
                 binding.rvBuildingList.visibility = View.GONE
                 binding.tvNoAddress.visibility = View.VISIBLE
             } else {
-                selectedAddress?.let {
-                    binding.toolbar.setTitle(it.cityDistinct)
-                    binding.tvNoAddress.visibility = View.GONE
-                    binding.rvBuildingList.visibility = View.VISIBLE
-                }
+                binding.toolbar.setTitle(viewModel.selectedAddress.value?.cityDistinct!!)
+                binding.tvNoAddress.visibility = View.GONE
+                binding.rvBuildingList.visibility = View.VISIBLE
+            }
+        }
+        viewModel.selectedAddress.observe(viewLifecycleOwner) {
+            if (it != null) {
+                viewModel.searchBuildingsByAddress(it.cityDistinct)
             }
         }
     }

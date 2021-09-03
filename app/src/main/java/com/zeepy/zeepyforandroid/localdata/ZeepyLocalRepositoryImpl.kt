@@ -5,8 +5,8 @@ import com.zeepy.zeepyforandroid.localdata.mapper.BuildingMapper.toDomain
 import com.zeepy.zeepyforandroid.localdata.mapper.BuildingMapper.toEntity
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import io.reactivex.Maybe
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ZeepyLocalRepositoryImpl @Inject constructor(
@@ -20,7 +20,8 @@ class ZeepyLocalRepositoryImpl @Inject constructor(
     override fun deleteEveryAddress() = zeepyDao.deleteEveryAddress()
 
     val buildingDao = zeepyLocalDatabase.buildingDao()
-    override fun fetchBuildingById(id: Int): Flow<BuildingSummaryModel> = buildingDao.getBuildingById(id).map { it.toDomain() }
+    override fun fetchBuildingById(id: Int): Flow<BuildingSummaryModel> = buildingDao.getBuildingById(id).map { it.toDomain() }.distinctUntilChanged()
     override suspend fun insertBuilding(building: BuildingSummaryModel) = building.toEntity().let { buildingDao.insertBuilding(it) }
     override suspend fun deleteBuilding(id: Int) = buildingDao.deleteBuildingById(id)
+    override fun isRowExists(id: Int): Boolean = buildingDao.isRowExists(id)
 }

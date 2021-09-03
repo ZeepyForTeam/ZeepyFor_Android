@@ -115,4 +115,7 @@
     <string name="onboarding_third_ment">우리 손으로 만드는\n집단 지성!</string>
     <string name="finish_onboarding_text">리뷰 작성하고 세상을 이롭게 하기</string>
     <string name="onboarding_first_ment">살아본 사람들의\n리얼후기 yes!</string>
+    <string name="monthly_pay">월세</string>
+    <string name="jeonse_pay">전세</string>
+    <string name="review_by_whom">%s님의 후기</string>
 </resources>

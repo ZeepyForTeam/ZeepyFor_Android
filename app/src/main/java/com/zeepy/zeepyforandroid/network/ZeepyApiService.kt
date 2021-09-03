@@ -66,6 +66,9 @@ interface ZeepyApiService {
     @GET("/api/buildings/addresses")
     fun searchBuildingAddress(@Query ("address")address: String): Single<ResponseSearchBuildingAddressDTO>
 
+    @GET("/api/buildings/addresses")
+    suspend fun searchBuildingsByAddress(@Query ("address")address: String): Response<ResponseSearchBuildingAddressDTO>
+
     @GET("/api/buildings/{id}")
     suspend fun getBuildingById(@Path ("id") id: Int): Response<ResponseBuildingInfoDTO>
 

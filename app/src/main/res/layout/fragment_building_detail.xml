@@ -27,450 +27,470 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/tv_building_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/box_blue5f_12dp"
-            android:text="@{viewModel.buildingSummary.buildingName}"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            tools:text="방화동 21번지"/>
-
-        <TextView
-            android:id="@+id/tv_building_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_building_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_building_name"
-            android:text="건물 유형"
-            android:textSize="14sp"
-            android:textColor="@color/zeepy_blue_5f"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:layout_marginTop="12dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/tv_building_type"
-            app:layout_constraintTop_toTopOf="@id/tv_building_type"
-            app:layout_constraintBottom_toBottomOf="@id/tv_building_type"
-            tools:text="원룸"
-            android:text="@{viewModel.buildingSummary.buildingType}"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanum_square_round_regular"
-            android:textColor="@color/zeepy_black_3b"
-            android:layout_marginStart="8dp"/>
-
-        <TextView
-            android:id="@+id/tv_deal_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_building_type"
-            app:layout_constraintTop_toBottomOf="@id/tv_building_type"
-            android:text="거래 종류"
-            android:textSize="14sp"
-            android:textColor="@color/zeepy_blue_5f"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/tv_deal_type"
-            app:layout_constraintTop_toTopOf="@id/tv_deal_type"
-            app:layout_constraintBottom_toBottomOf="@id/tv_deal_type"
-            tools:text="전세"
-            android:text="@{viewModel.buildingSummary.buildingDeals[0].dealType}"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanum_square_round_regular"
-            android:textColor="@color/zeepy_black_3b"
-            android:layout_marginStart="8dp"/>
-
-        <TextView
-            android:id="@+id/tv_characteristics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_deal_type"
-            app:layout_constraintTop_toBottomOf="@id/tv_deal_type"
-            android:text="특징"
-            android:textSize="14sp"
-            android:textColor="@color/zeepy_blue_5f"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/tv_characteristics_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/tv_characteristics"
-            app:layout_constraintTop_toTopOf="@id/tv_characteristics"
-            app:layout_constraintBottom_toBottomOf="@id/tv_characteristics"
-            tools:text="에어컨, 세탁기, 신발장, 냉장고"
-            android:text="@{viewModel.buildingSummary.reviews[0].furnitures[0]}"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanum_square_round_regular"
-            android:textColor="@color/zeepy_black_3b"
-            android:layout_marginStart="8dp"/>
-
-        <TextView
-            android:id="@+id/tv_photo_review"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_characteristics"
-            app:layout_constraintTop_toBottomOf="@id/tv_characteristics"
-            android:text="포토리뷰"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:layout_marginTop="12dp"/>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_photos"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_photo_review"
-            app:layout_constraintStart_toStartOf="@id/tv_photo_review"
             app:layout_constraintEnd_toEndOf="parent"
-            app:cardBackgroundColor="@color/zeepy_gray_f4"
-            app:cardCornerRadius="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:contentPadding="10dp"
-            app:cardElevation="0dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image1"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:shapeAppearanceOverlay="@style/roundedImage"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="1:1"
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/image2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.2134"
-                    app:layout_constraintHorizontal_chainStyle="spread_inside"/>
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image2"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:shapeAppearanceOverlay="@style/roundedImage"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toStartOf="@id/image3"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/image1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.2134" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image3"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:shapeAppearanceOverlay="@style/roundedImage"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toEndOf="@id/image2"
-                    app:layout_constraintEnd_toStartOf="@id/image_add"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.2134" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image_add"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:shapeAppearanceOverlay="@style/roundedImage"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toEndOf="@id/image3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.2134" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/tv_lessor_personality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/card_photos"
-            app:layout_constraintTop_toBottomOf="@id/card_photos"
-            android:text="임대인 성향"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:layout_marginTop="12dp"/>
-
-        <LinearLayout
-            android:id="@+id/layout_lessor_personality"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_lessor_personality"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="34dp">
-
-            <LinearLayout
-                android:id="@+id/option_one"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/emoji_1_map"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="비즈니스형"
-                    android:textSize="10sp"
+                    android:background="@drawable/box_blue5f_12dp"
+                    android:text=""
+                    android:textSize="14sp"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:textColor="@color/zeepy_black_3b"/>
+                    android:textColor="@color/zeepy_black_3b"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    tools:text="방화동 21번지"/>
 
                 <TextView
+                    android:id="@+id/tv_building_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1개"
-                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="@id/tv_address"
+                    app:layout_constraintTop_toBottomOf="@id/tv_address"
+                    android:text="건물 유형"
+                    android:textSize="14sp"
                     android:textColor="@color/zeepy_blue_5f"
-                    android:fontFamily="@font/nanum_square_round_bold"
-                    android:layout_marginTop="3dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/option_two"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/emoji_2_map"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="친절형"
-                    android:textSize="10sp"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:textColor="@color/zeepy_black_3b"/>
+                    android:layout_marginTop="12dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1개"
-                    android:textSize="10sp"
-                    android:textColor="@color/zeepy_blue_5f"
-                    android:fontFamily="@font/nanum_square_round_bold"
-                    android:layout_marginTop="3dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/option_three"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/emoji_3_map"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="방목형"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:textColor="@color/zeepy_black_3b"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1개"
-                    android:textSize="10sp"
-                    android:textColor="@color/zeepy_blue_5f"
-                    android:fontFamily="@font/nanum_square_round_bold"
-                    android:layout_marginTop="3dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/option_four"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/emoji_4_map"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="츤데레형"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:textColor="@color/zeepy_black_3b"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1개"
-                    android:textSize="10sp"
-                    android:textColor="@color/zeepy_blue_5f"
-                    android:fontFamily="@font/nanum_square_round_bold"
-                    android:layout_marginTop="3dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/option_five"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/emoji_5_map"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="할말하않"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:textColor="@color/zeepy_black_3b"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1개"
-                    android:textSize="10sp"
-                    android:textColor="@color/zeepy_blue_5f"
-                    android:fontFamily="@font/nanum_square_round_bold"
-                    android:layout_marginTop="3dp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_building_detailed_review"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_lessor_personality"
-            app:layout_constraintTop_toBottomOf="@id/layout_lessor_personality"
-            android:text="건물 상세리뷰"
-            android:textSize="14sp"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:layout_marginTop="12dp"/>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_building_detailed_review"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_building_detailed_review"
-            app:layout_constraintStart_toStartOf="@id/tv_building_detailed_review"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:cardBackgroundColor="@color/zeepy_gray_f4"
-            app:cardCornerRadius="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:contentPadding="16dp"
-            app:cardElevation="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_no_review"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="아직 작성된 리뷰가 없어요!"
-                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@id/tv_building_type"
+                    app:layout_constraintTop_toTopOf="@id/tv_building_type"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_building_type"
+                    tools:text="원룸"
+                    android:text="@{viewModel.buildingSummary.buildingType}"
+                    android:textSize="14sp"
                     android:fontFamily="@font/nanum_square_round_regular"
                     android:textColor="@color/zeepy_black_3b"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:layout_marginStart="8dp"/>
 
                 <TextView
+                    android:id="@+id/tv_deal_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="리뷰 쓰러 가기"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    app:layout_constraintStart_toStartOf="@id/tv_building_type"
+                    app:layout_constraintTop_toBottomOf="@id/tv_building_type"
+                    android:text="거래 종류"
+                    android:textSize="14sp"
                     android:textColor="@color/zeepy_blue_5f"
-                    app:layout_constraintStart_toStartOf="@id/tv_no_review"
-                    app:layout_constraintEnd_toEndOf="@id/tv_no_review"
-                    app:layout_constraintTop_toBottomOf="@id/tv_no_review"
-                    android:layout_marginTop="14dp"
-                    android:visibility="@{viewModel.buildingSummary.reviews.size() > 0 ? View.VISIBLE : View.GONE}"/>
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_deal_type_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/tv_deal_type"
+                    app:layout_constraintTop_toTopOf="@id/tv_deal_type"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_deal_type"
+                    tools:text="전세"
+                    android:text="@string/jeonse_pay"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/nanum_square_round_regular"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_characteristics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tv_deal_type"
+                    app:layout_constraintTop_toBottomOf="@id/tv_deal_type"
+                    android:text="특징"
+                    android:textSize="14sp"
+                    android:textColor="@color/zeepy_blue_5f"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_characteristics_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/tv_characteristics"
+                    app:layout_constraintTop_toTopOf="@id/tv_characteristics"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_characteristics"
+                    tools:text="에어컨, 세탁기, 신발장, 냉장고"
+                    android:text="@{viewModel.buildingSummary.reviews[0].furnitures[0]}"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/nanum_square_round_regular"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_photo_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tv_characteristics"
+                    app:layout_constraintTop_toBottomOf="@id/tv_characteristics"
+                    android:text="포토리뷰"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:layout_marginTop="12dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_photos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_photo_review"
+                    app:layout_constraintStart_toStartOf="@id/tv_photo_review"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/zeepy_gray_f4"
+                    app:cardCornerRadius="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:contentPadding="10dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/image1"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:shapeAppearanceOverlay="@style/roundedImage"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/image2"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintWidth_percent="0.2134"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/image2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:shapeAppearanceOverlay="@style/roundedImage"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toStartOf="@id/image3"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/image1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintWidth_percent="0.2134" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/image3"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:shapeAppearanceOverlay="@style/roundedImage"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintStart_toEndOf="@id/image2"
+                            app:layout_constraintEnd_toStartOf="@id/image_add"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintWidth_percent="0.2134" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/image_add"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:shapeAppearanceOverlay="@style/roundedImage"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintStart_toEndOf="@id/image3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintWidth_percent="0.2134" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_lessor_personality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/card_photos"
+                    app:layout_constraintTop_toBottomOf="@id/card_photos"
+                    android:text="임대인 성향"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:layout_marginTop="12dp"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_lessor_personality"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_lessor_personality"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="34dp">
+
+                    <LinearLayout
+                        android:id="@+id/option_one"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_1_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="비즈니스형"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+
+                        <TextView
+                            android:id="@+id/tv_business_likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1개"
+                            android:textSize="10sp"
+                            android:textColor="@color/zeepy_gray_c4"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_two"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_2_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="친절형"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+
+                        <TextView
+                            android:id="@+id/tv_kind_likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1개"
+                            android:textSize="10sp"
+                            android:textColor="@color/zeepy_gray_c4"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_three"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_3_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="방목형"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+
+                        <TextView
+                            android:id="@+id/tv_graze_likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1개"
+                            android:textSize="10sp"
+                            android:textColor="@color/zeepy_gray_c4"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_four"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/emoji_4_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="츤데레형"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+
+                        <TextView
+                            android:id="@+id/tv_softy_likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1개"
+                            android:textSize="10sp"
+                            android:textColor="@color/zeepy_gray_c4"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_five"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/emoji_5_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="할말하않"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+
+                        <TextView
+                            android:id="@+id/tv_bad_likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1개"
+                            android:textSize="10sp"
+                            android:textColor="@color/zeepy_gray_c4"
+                            android:fontFamily="@font/nanum_square_round_bold"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_building_detailed_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tv_lessor_personality"
+                    app:layout_constraintTop_toBottomOf="@id/layout_lessor_personality"
+                    android:text="건물리뷰"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/nanum_square_round_extrabold"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:layout_marginTop="12dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_building_detailed_review"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_building_detailed_review"
+                    app:layout_constraintStart_toStartOf="@id/tv_building_detailed_review"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/zeepy_gray_f4"
+                    app:cardCornerRadius="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:contentPadding="10dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_no_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="아직 작성된 리뷰가 없어요!"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/nanum_square_round_regular"
+                            android:textColor="@color/zeepy_black_3b"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tv_goto_write_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="리뷰 쓰러 가기"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_blue_5f"
+                            app:layout_constraintStart_toStartOf="@id/tv_no_review"
+                            app:layout_constraintEnd_toEndOf="@id/tv_no_review"
+                            app:layout_constraintTop_toBottomOf="@id/tv_no_review"
+                            android:layout_marginTop="14dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <include
+                        android:id="@+id/layout_sample_review"
+                        layout="@layout/item_building_review"
+                        android:visibility="gone"/>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btn_show_all_reviews"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/box_blue5f_5dp"
+                    tools:text="건물 평가 모두보기(22개)"
+                    android:text="@{@string/go_to_all_reviews(viewModel.buildingSummary.reviews.size())}"
+                    android:textSize="14sp"
+                    android:textColor="@color/zeepy_black_3b"
+                    android:fontFamily="@font/nanum_square_round_bold"
+                    app:layout_constraintStart_toStartOf="@id/card_building_detailed_review"
+                    app:layout_constraintEnd_toEndOf="@id/card_building_detailed_review"
+                    app:layout_constraintTop_toBottomOf="@id/card_building_detailed_review"
+                    android:layout_marginTop="16dp" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/btn_show_all_reviews"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/box_blue5f_5dp"
-            tools:text="@{@string/go_to_all_reviews(11)}"
-            android:text="@{@string/go_to_all_reviews(viewModel.buildingSummary.reviews.size())}"
-            android:textSize="14sp"
-            android:textColor="@color/zeepy_black_3b"
-            android:fontFamily="@font/nanum_square_round_bold"
-            app:layout_constraintStart_toStartOf="@id/card_building_detailed_review"
-            app:layout_constraintEnd_toEndOf="@id/card_building_detailed_review"
-            app:layout_constraintTop_toBottomOf="@id/card_building_detailed_review"
-            android:layout_marginTop="16dp"
-            android:visibility="@{viewModel.buildingSummary.reviews.size() > 0 ? View.VISIBLE : View.GONE}"/>
-
-
-
-
-
-
-
-
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
