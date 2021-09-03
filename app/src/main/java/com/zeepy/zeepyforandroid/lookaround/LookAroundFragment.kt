@@ -43,16 +43,10 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
         setToolbar()
         updateBuildings()
-        viewModel.getAddressListFromServer()
         changeAddress()
         initRecyclerView()
         setFilteringListener()
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAddressListFromServer()
     }
 
     private fun setFilteringListener() {

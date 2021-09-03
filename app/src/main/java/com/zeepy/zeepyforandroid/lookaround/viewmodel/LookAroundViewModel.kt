@@ -48,6 +48,10 @@ class LookAroundViewModel @Inject constructor(
     val resultSearchedAddress: LiveData<List<SearchAddressListModel>>
         get() = _resultFetchedAddresses
 
+    init {
+        getAddressListFromServer()
+    }
+
     /**
      * 현재 주소를 기준으로 빌딩 리스트 가져오기
      */

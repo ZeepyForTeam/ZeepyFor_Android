@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.databinding.ItemLookaroundBuildingBinding
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
@@ -16,11 +17,9 @@ import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingFeatureModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 
 
-class LookAroundListAdapter(val context: Context, val listener: (BuildingSummaryModel) -> Unit): RecyclerView.Adapter<LookAroundListAdapter.LookAroundListViewHolder>() {
-    private val diffCallback = DiffCallback<BuildingSummaryModel>()
-    private val differ = AsyncListDiffer(this, diffCallback)
-
-    fun submitList(list: List<BuildingSummaryModel>?) = differ.submitList(list)
+class LookAroundListAdapter(val context: Context, val listener: (BuildingSummaryModel) -> Unit): ListAdapter<BuildingSummaryModel, LookAroundListAdapter.LookAroundListViewHolder>(
+    DiffCallback<BuildingSummaryModel>()
+) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,7 +30,7 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
     }
 
     override fun onBindViewHolder(holder: LookAroundListViewHolder, position: Int) {
-        val item = differ.currentList[position]
+        val item = getItem(position)
         val features = arrayListOf<BuildingFeatureModel>()
 
         holder.binding.rvBuildingFeatures.apply {
@@ -61,8 +60,6 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
 
         holder.binding.rvBuildingFeatures.adapter = BuildingFeaturesAdapter(context, features)
     }
-
-    override fun getItemCount() = differ.currentList.size
 
     inner class LookAroundListViewHolder(val binding: ItemLookaroundBuildingBinding) : RecyclerView.ViewHolder(binding.root)
 }
