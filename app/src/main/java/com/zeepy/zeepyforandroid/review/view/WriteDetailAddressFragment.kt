@@ -21,8 +21,10 @@ import com.zeepy.zeepyforandroid.databinding.FragmentWriteDetailAddressBinding
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.zeepy.zeepyforandroid.util.ReviewNotice
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
     private val args: WriteDetailAddressFragmentArgs by navArgs()

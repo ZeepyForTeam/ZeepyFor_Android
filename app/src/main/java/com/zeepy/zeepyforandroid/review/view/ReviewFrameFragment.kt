@@ -38,6 +38,7 @@ class ReviewFrameFragment : BaseFragment<FragmentReviewFrameBinding>() {
         val navHostFragment = childFragmentManager.findFragmentById(R.id.review_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         viewModel.changeIsJustRegisterAddress(args.isJustRegisterAddress)
+        viewModel.changeIsCommunityTheme(args.isCommunityTheme)
         setToolbar()
     }
 

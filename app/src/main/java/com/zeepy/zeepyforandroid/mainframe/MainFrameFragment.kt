@@ -11,11 +11,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.databinding.FragmentMainFrameBinding
+import com.zeepy.zeepyforandroid.home.DirectTransitionListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.RuntimeException
 
 @AndroidEntryPoint
-class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
+class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransitionListener {
     private val viewModel: MainFrameViewModel by activityViewModels()
 
     override fun getFragmentBinding(
@@ -45,6 +46,13 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
         }
     }
 
+    override fun applyCommunityFilter(type: String) {
+        (requireActivity() as MainActivity).initialCommunityType = type
+
+        viewModel.changePageIdx(2)
+        initViewPager()
+    }
+
     private fun observeViewModel() {
         viewModel.pageIdx.observe(viewLifecycleOwner) { pageIdx ->
             binding.viewpagerMain.currentItem = pageIdx
@@ -58,7 +66,6 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>() {
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-
                 viewModel.changePageIdx(position)
             }
         })

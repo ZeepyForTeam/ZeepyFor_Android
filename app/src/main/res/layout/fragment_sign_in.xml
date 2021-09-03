@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.zeepy.zeepyforandroid.signin.SignInViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".signin.SignInFragment">
@@ -16,8 +16,9 @@
             android:id="@+id/view_login_background"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.25"
             android:background="@color/zeepy_lightgray_fb"
-            app:layout_constraintDimensionRatio="1:0.56"
+            app:layout_constraintDimensionRatio="1:0.56h"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -152,11 +153,12 @@
             android:id="@+id/textview_sns_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:fontFamily="@font/gilroy_extrabold"
             android:text="SNS Login"
+            app:layout_constraintVertical_bias="0.1"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/imageview_login"
             app:layout_constraintTop_toBottomOf="@id/view_btn_border" />
 
@@ -180,8 +182,9 @@
             app:layout_constraintDimensionRatio="1:0.16"
             android:foreground="@drawable/ic_btn_naver"
             app:layout_constraintTop_toBottomOf="@id/button_login_kakao"
-            app:layout_constraintStart_toStartOf="@id/button_login"
-            app:layout_constraintEnd_toEndOf="@id/button_login"/>
+            app:layout_constraintStart_toStartOf="@id/button_login_kakao"
+            app:layout_constraintEnd_toEndOf="@id/button_login_kakao"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -20,13 +20,27 @@
         xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
         <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
-            android:id="@+id/reviewSpannableTextView"
+            android:id="@+id/spannabletextview_notice_write_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_address"
             android:layout_marginTop="16dp"
             zeepy:start="0"
             zeepy:end="8"
+            android:visibility="@{viewModel.isJustRegisterAddress ? view.INVISIBLE : view.VISIBLE}"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_address_list"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/spannabletextview_notice_just_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_house"
+            android:visibility="@{viewModel.isJustRegisterAddress ? view.VISIBLE : view.INVISIBLE}"
+            android:layout_marginTop="16dp"
+            zeepy:start="0"
+            zeepy:end="9"
             android:fontFamily="@font/nanum_square_round_regular"
             app:layout_constraintStart_toStartOf="@+id/recyclerview_address_list"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +57,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/recyclerview_address_list"
-            app:layout_constraintTop_toBottomOf="@+id/reviewSpannableTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/spannabletextview_notice_write_review" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_register_address"

@@ -94,7 +94,7 @@
     <string name="withdraw_underlined"><u>회원탈퇴</u></string>
     <string name="report_confirm">정말 신고하시겠어요?</string>
     <string name="report_confirm_content">*신고 후에는 신고 내욜을 수정하거나\n취소하실 수 없습니다.\n\n*악의적인 의도나 허위로 신고할 경우에는\n서비스 이용이 제한될 수 있습니다.</string>
-    <string name="achievement_rate_format" >%d명/%d명</string>
+    <string name="achievement_rate_format">%d명/%d명</string>
     <string name="achievement_progress_count_format">%d명</string>
     <string name="change_password_confirm">새로운 비밀번호로 변경합니다.</string>
     <string name="withdraw_warning1">&#8226; ZEEPY 회원탈퇴 시 ZEEPY 서비스에서 탈퇴되며, 회원탈퇴 후 재가입하더라도 탈퇴 전의 회원정보, 게시글 및 목록, 찜 목록 등은 복구되지 않습니다.</string>
@@ -107,4 +107,12 @@
     <string name="go_to_reviews_button_none">아직 등록된 리뷰가 없습니다.</string>
     <string name="officetel">오피스텔</string>
     <string name="rowhouse">연립다세대</string>
+    <string name="select_house">거주하고 계신 집을\n선택해주세요.</string>
+    <string name="check_address_to_register">등록할 주소를\n확인해주세요.</string>
+    <string name="format_count_posting_content">(%d/1500자)</string>
+    <string name="onboarding_first_ment1">직접 뛰는 발품팔기 No!</string>
+    <string name="onboarding_second_ment">내가 남긴\n자취방 후기는\n500만 자취생에게\n도움이 될거에요.</string>
+    <string name="onboarding_third_ment">우리 손으로 만드는\n집단 지성!</string>
+    <string name="finish_onboarding_text">리뷰 작성하고 세상을 이롭게 하기</string>
+    <string name="onboarding_first_ment">살아본 사람들의\n리얼후기 yes!</string>
 </resources>

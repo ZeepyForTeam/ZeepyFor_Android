@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.community.frame.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,11 @@ import androidx.navigation.fragment.NavHostFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentCommunityFrameBinding
+import com.zeepy.zeepyforandroid.home.DirectTransitionListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CommunityFrameFragment: BaseFragment<FragmentCommunityFrameBinding>() {
+class CommunityFrameFragment(): BaseFragment<FragmentCommunityFrameBinding>() {
     private lateinit var navController: NavController
 
     override fun getFragmentBinding(

@@ -61,6 +61,7 @@ class ChangeAddressFragment : BaseFragment<FragmentChangeAddressBinding>() {
             val action =
                 ChangeAddressFragmentDirections.actionChangeAddressFragmentToReviewFrameFragment()
             action.isJustRegisterAddress = true
+            action.isCommunityTheme = args.isCommunityTheme
             findNavController().navigate(action)
         }
     }

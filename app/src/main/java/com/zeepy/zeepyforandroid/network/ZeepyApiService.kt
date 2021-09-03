@@ -70,7 +70,11 @@ interface ZeepyApiService {
     suspend fun getBuildingById(@Path ("id") id: Int): Response<ResponseBuildingInfoDTO>
 
     @GET("/api/community")
-    fun getCommunityPostingList(@Query ("address") address: String, @Query ("communityType") communityType: String?): Single<ResponsePostingList>
+    fun getCommunityPostingList(
+        @Query ("address") address: String,
+        @Query ("communityType") communityType: String?,
+        @Query("page") page: Int?
+    ): Single<ResponsePostingList>
 
     @GET("/api/community/myzip")
     fun getCommunityMyZipList(@Query ("communityCategory") communityCategory: String?): Single<ResponseMyZipList>

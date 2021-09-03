@@ -1,11 +1,9 @@
-package com.zeepy.zeepyforandroid.community.writeposting
+package com.zeepy.zeepyforandroid.community.writeposting.view
 
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.core.net.toFile
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
@@ -29,14 +25,14 @@ import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.review.view.HousePictureFragment.Companion.PERMISSION_REQUESTED
 import com.zeepy.zeepyforandroid.review.view.adapter.UploadPictureAdapter
 import com.zeepy.zeepyforandroid.util.FileConverter.asBitmap
+import com.zeepy.zeepyforandroid.util.FileConverter.asMultipart
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okio.BufferedSink
 import java.io.File
 
@@ -126,8 +122,10 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
                 val bitmap = uri.asBitmap(requireContext().contentResolver)
                 val requestBody = BitmapRequestBody(bitmap!!)
                 val multipartBody = MultipartBody.Part.createFormData("imgs","zeepy", requestBody)
+                val multipart = uri.asMultipart("imgs", requireContext().contentResolver)
 
-                viewModel.addRequestBodyList(multipartBody)
+
+                viewModel.addRequestBodyList(multipart)
                 pictures.add(PictureModel(bitmap))
                 viewModel.addUploadUriImages(uri)
                 viewModel.changeUploadPictures(pictures)
@@ -163,6 +161,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
             (binding.rvHousePictures.adapter as UploadPictureAdapter).apply {
                 submitList(viewModel.uploadBitmapImages.value?.toList())
             }
+            binding.btnRegister.setText("등록하기")
             changeVisibility()
         }
     }
@@ -179,12 +178,10 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
 
     private fun completeUpload() {
         binding.btnRegister.setOnClickListener { showPostingRegisterDialog() }
-        binding.tvSkip.setOnClickListener { showPostingRegisterDialog() }
     }
 
     private fun showPostingRegisterDialog() {
-        val parent = (parentFragment as NavHostFragment).parentFragment
-        val registerReviewDialog = ZeepyDialogBuilder("리뷰를 등록하시겠습니까?", "community")
+        val registerReviewDialog = ZeepyDialogBuilder("글을 등록하시겠습니까?", "community")
             .setContent("*공동구매 글의 경우 참여자가 1명 이상일\n경우 글을 삭제하거나 수정하실 수 없습니다.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.")
             .setLeftButton(R.drawable.box_grayf9_8dp,"취소")
             .setRightButton(R.drawable.box_green33_8dp,"확인")
@@ -201,8 +198,11 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     private fun uploadPosting() {
-        if(viewModel.uploadBitmapImages.value.isNullOrEmpty()) {
-//            viewModel.uploadPostingToZeepyServer()
+        Log.e("datas", "${viewModel.requestWritePosting.value}")
+
+        if(viewModel.requestBodyImages.value.isNullOrEmpty()) {
+            Log.e("datas", "${viewModel.requestWritePosting}")
+            viewModel.getPresignedUrl(requireContext().contentResolver)
         } else {
             viewModel.getPresignedUrl(requireContext().contentResolver)
 //            viewModel.uploadPostingToZeepyServer()
@@ -223,7 +223,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
-        override fun contentType(): MediaType = "image/jpeg".toMediaType()
+        override fun contentType(): MediaType = "multipart/form-data".toMediaType()
         override fun writeTo(sink: BufferedSink) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, sink.outputStream())
         }

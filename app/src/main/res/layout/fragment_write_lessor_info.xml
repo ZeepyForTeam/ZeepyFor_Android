@@ -17,7 +17,7 @@
         xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
         <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
-            android:id="@+id/reviewSpannableTextView"
+            android:id="@+id/spannabletextview_notice_write_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toStartOf="@+id/group_select_gender"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/et_detail_lessor_info"
-            app:layout_constraintTop_toBottomOf="@+id/reviewSpannableTextView"
+            app:layout_constraintTop_toBottomOf="@+id/spannabletextview_notice_write_review"
             app:layout_constraintVertical_bias="0.072" />
 
         <RadioGroup

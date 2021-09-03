@@ -5,22 +5,32 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.community.frame.view.CommunityFrameFragment
+import com.zeepy.zeepyforandroid.community.frame.view.CommunityMainFragment
+import com.zeepy.zeepyforandroid.community.storyzip.ZipFragment
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHomeBinding
+import com.zeepy.zeepyforandroid.enum.PostingType
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
+import com.zeepy.zeepyforandroid.mainframe.MainFrameFragment
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.ClassCastException
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment: BaseFragment<FragmentHomeBinding>() {
+    private var frameFragmentListener: DirectTransitionListener? = null
     private val viewModel by viewModels<HomeViewModel>()
     @Inject lateinit var userPreferenceManager: UserPreferenceManager
 
@@ -35,10 +45,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        onAttachToParentFragment(parentFragment, ZipFragment())
 
         writeReview()
         setFilterList()
         changeAddress()
+        goToCommunityTap()
     }
 
     override fun onResume() {
@@ -67,6 +79,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 if (viewModel.addressList.value.isNullOrEmpty()) {
                     val action =
                         MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                    action.isCommunityTheme = false
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)
                 } else {
@@ -122,5 +135,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             })
             .build()
             .show(childFragmentManager, this@HomeFragment.tag)
+    }
+
+    private fun onAttachToParentFragment(mainframe: Fragment?, community: Fragment?) {
+        try {
+            frameFragmentListener = mainframe as DirectTransitionListener
+        } catch (e: ClassCastException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun goToCommunityTap() {
+        binding.buttonFreeShare.setOnClickListener{
+            PostingType.FREESHARING.name.run {
+                setSelectCommunity(this)
+            }
+        }
+        binding.buttonFriends.setOnClickListener{
+            PostingType.NEIGHBORHOODFRIEND.name.run {
+                setSelectCommunity(this)
+            }
+        }
+        binding.buttonGroupPurchase.setOnClickListener{
+            PostingType.JOINTPURCHASE.name.run {
+                setSelectCommunity(this)
+            }
+        }
+    }
+
+    private fun setSelectCommunity(type: String) {
+        frameFragmentListener?.applyCommunityFilter(type)
     }
 }

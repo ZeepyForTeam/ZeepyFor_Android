@@ -18,11 +18,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Callback
 import javax.inject.Inject
 
@@ -38,16 +40,16 @@ class CommunityLoadPictureViewModel @Inject constructor(
     val uploadBitmapImages: LiveData<List<PictureModel>>
         get() = _uploadBitmapImages
 
-    private val _requestBodyImages = MutableLiveData<MutableList<MultipartBody.Part>>(mutableListOf())
-    val requestBodyImages: LiveData<MutableList<MultipartBody.Part>>
+    private val _requestBodyImages = MutableLiveData<MutableList<MultipartBody.Part?>>(mutableListOf())
+    val requestBodyImages: LiveData<MutableList<MultipartBody.Part?>>
         get() = _requestBodyImages
 
     private val _uploadUriImages = MutableLiveData<MutableList<Uri>?>(mutableListOf())
     val uploadUriImages: LiveData<MutableList<Uri>?>
         get() = _uploadUriImages
 
-    private val _requestBodyUrlPair = MutableLiveData<List<Pair<MultipartBody.Part, String>>>(listOf())
-    val requestBodyUrlPair: LiveData<List<Pair<MultipartBody.Part, String>>>
+    private val _requestBodyUrlPair = MutableLiveData<List<Pair<MultipartBody.Part?, String>>>(listOf())
+    val requestBodyUrlPair: LiveData<List<Pair<MultipartBody.Part?, String>>>
         get() = _requestBodyUrlPair
 
     private val _multipartBodyUrlPair =
@@ -67,7 +69,7 @@ class CommunityLoadPictureViewModel @Inject constructor(
     val successUpload: LiveData<Boolean>
         get() = _successUpload
 
-    fun addRequestBodyList(requestBody: MultipartBody.Part) {
+    fun addRequestBodyList(requestBody: MultipartBody.Part?) {
         val requestImages = _requestBodyImages.value
         requestImages?.add(requestBody)
     }
@@ -89,6 +91,7 @@ class CommunityLoadPictureViewModel @Inject constructor(
     fun getPresignedUrl(contentResolver: ContentResolver) {
         val imageCount = uploadBitmapImages.value?.size?.toLong() ?: 0
         _successUpload.value = false
+
         addDisposable(
             imageController.getPresignedUrl()
                 .repeat(imageCount)
@@ -99,15 +102,10 @@ class CommunityLoadPictureViewModel @Inject constructor(
                 }, {
                     it.printStackTrace()
                 }, {
-
-                    Log.e("image request bodies", "${requestBodyImages.value}")
                     val multipartBodies = requestBodyImages.value?.map { it!! }
                         ?.zip(presignedUrlList.value!!.toList())
 
                     _requestBodyUrlPair.value = multipartBodies!!
-
-                    Log.e("pair pair", "${requestBodyUrlPair.value}")
-
 
                     val multipartBodyMap = requestBodyUrlPair.value?.map {
 //            val requestbody = it.first.toRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -116,7 +114,6 @@ class CommunityLoadPictureViewModel @Inject constructor(
                     }
 
                     Log.e("pair paidsaf3112121r", "${multipartBodyUrlPair.value}")
-
                     _multipartBodyUrlPair.value = multipartBodyMap!!
                     Log.e("lastlast", "${requestBodyUrlPair.value}")
                     uploadToServerAmazonS3(contentResolver)
@@ -125,15 +122,19 @@ class CommunityLoadPictureViewModel @Inject constructor(
     }
 
     fun uploadToServerAmazonS3(contentResolver: ContentResolver) {
+        val completable : List<Single<ResponseBody>>? = multipartBodyUrlPair.value?.map {
+            Log.e("second", "${it.first} / ${it.second}")
 
-        val completable : List<Completable>? = multipartBodyUrlPair.value?.map {
-                createAmazonS3ApiService().uploadImageToPresignedUrl(
+            createAmazonS3ApiService().uploadImageToPresignedUrl(
                     it.second,
                     it.first!!
                 )
+
         }
 
+
         completable?.forEach {
+
             val disposable = CompositeDisposable()
             disposable.add(
                 it.subscribeOn(Schedulers.io())

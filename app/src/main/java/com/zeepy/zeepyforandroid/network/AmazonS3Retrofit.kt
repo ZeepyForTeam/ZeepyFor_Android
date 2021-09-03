@@ -1,6 +1,8 @@
 package com.zeepy.zeepyforandroid.network
 
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -14,16 +16,26 @@ object AmazonS3Retrofit {
         }
 
     val okhttpClient = OkHttpClient.Builder()
-        .connectTimeout(100, TimeUnit.SECONDS)
-        .writeTimeout(100, TimeUnit.SECONDS)
-        .readTimeout(100, TimeUnit.SECONDS)
-        .addInterceptor(loggingInterceptor)
+        .connectTimeout(200, TimeUnit.SECONDS)
+        .writeTimeout(200, TimeUnit.SECONDS)
+        .readTimeout(200, TimeUnit.SECONDS)
         .build()
+
+    val interceptor = object : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+                .newBuilder()
+                .build()
+            return chain.proceed(request)
+        }
+    }
+    val client = okhttpClient.newBuilder()
+        .addNetworkInterceptor(interceptor).build()
 
     fun createAmazonS3ApiService(): AmazonS3ApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl(S3_URL)
-            .client(okhttpClient)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()

@@ -4,6 +4,7 @@ import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.net.toFile
 import androidx.databinding.BindingAdapter
@@ -119,4 +120,5 @@ fun TextView.font(type: FontType) {
 fun ShapeableImageView.loadShapeableImage(url: String?) {
     load(url)
 }
+
 
