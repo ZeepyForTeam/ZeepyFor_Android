@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
-import com.zeepy.zeepyforandroid.customview.MaterialSpinner
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
@@ -49,17 +47,29 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAddressListFromServer()
+    }
+
     private fun setFilteringListener() {
         binding.rgFilterings.setOnCheckedChangeListener { group, checkedId ->
             var lessorType = "BUSINESS"
             when (checkedId) {
+                R.id.rb_standard_order -> {
+                    if (selectedAddress != null) {
+                        viewModel.searchBuildingsByAddress(selectedAddress!!.cityDistinct)
+                    }
+                }
                 R.id.rb_business -> lessorType = "BUSINESS"
                 R.id.rb_kind -> lessorType = "KIND"
                 R.id.rb_graze -> lessorType = "GRAZE"
                 R.id.rb_softy -> lessorType = "SOFTY"
                 R.id.rb_bad -> lessorType = "BAD"
             }
-            viewModel.getBuildingsByFiltering(lessorType)
+            if (checkedId != R.id.rb_standard_order) {
+                viewModel.getBuildingsByFiltering(lessorType)
+            }
         }
     }
 
@@ -85,7 +95,11 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         binding.toolbar.binding.textviewToolbar.setOnClickListener {
             if (userPreferenceManager.fetchIsAlreadyLogin()) {
                 if (viewModel.addressList.value.isNullOrEmpty()) {
-                    // 주소 등록 뷰로 가기
+                    val action =
+                        MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
+                    action.isCommunityTheme = false
+                    action.isJustRegisterAddress = true
+                    findNavController().navigate(action)
                 } else {
                     val addresses = viewModel.addressList.value!!.toTypedArray()
                     val action =
@@ -118,9 +132,10 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it)
         }
         viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
+            Log.e("is addresslist observer triggered?", "yes")
             selectedAddress = addresses.find { address -> address.isAddressCheck }
             if (selectedAddress != null) {
-                viewModel.searchBuildingAddress(selectedAddress!!.cityDistinct)
+                viewModel.getBuildings(selectedAddress!!.cityDistinct)
             }
             if (addresses.isNullOrEmpty()) {
                 binding.toolbar.setTitle("주소 등록하기")

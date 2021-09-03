@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.zeepy.zeepyforandroid.building.dao.BuildingDao
 import com.zeepy.zeepyforandroid.localdata.ZeepyDao
 import com.zeepy.zeepyforandroid.localdata.ZeepyDatabase
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
@@ -37,4 +38,7 @@ object AppModule {
     @Singleton
     fun provideZeepyLocalRepository(database: ZeepyDatabase): ZeepyLocalRepository = ZeepyLocalRepositoryImpl(database)
 
+    @Provides
+    @Singleton
+    fun provideBuildingDao(zeepyDatabase: ZeepyDatabase): BuildingDao = zeepyDatabase.buildingDao()
 }

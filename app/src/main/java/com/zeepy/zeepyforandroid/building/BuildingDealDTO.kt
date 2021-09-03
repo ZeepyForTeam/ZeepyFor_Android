@@ -11,5 +11,6 @@ data class BuildingDealDTO(
     val deposit: Int,
     val floor: Int,
     val id: Int,
-    val monthlyRent: Int
+    val monthlyRent: Int,
+    val buildingId: Int,
 ): Parcelable
