@@ -15,6 +15,7 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentBuildingDetailBinding
 import com.zeepy.zeepyforandroid.enum.DealType
 import com.zeepy.zeepyforandroid.enum.Options
+import com.zeepy.zeepyforandroid.enum.RoomCount
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import javax.inject.Inject
@@ -44,6 +45,7 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         setToolbar()
         renderOptions()
         renderPictures()
+        renderRoomCount()
         renderPaymentType()
         renderBuildingAddress()
         renderCommunicationTendency()
@@ -62,7 +64,7 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         }
     }
 
-    // FIXME: Change the rendering functions to View Binding Later
+    // FIXME: Change the rendering functions to Data Binding Later
 
     private fun setReviewContents() {
         args.buildingSummaryModel.reviews.let {
@@ -161,7 +163,15 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
     private fun renderPaymentType() {
         args.buildingSummaryModel.buildingDeals.let {
             if (!it.isNullOrEmpty()) {
-                binding.tvDealTypeContent.text = getString(DealType.findDealTypeFromString(it[0].dealType))
+                binding.tvDealTypeContent.text = resources.getString(DealType.findDealTypeFromString(it[0].dealType))
+            }
+        }
+    }
+
+    private fun renderRoomCount() {
+        args.buildingSummaryModel.reviews.let {
+            if (!it.isNullOrEmpty()) {
+                binding.tvRoomCount.text = resources.getString(RoomCount.findRoomCountFromString(it[0].roomCount))
             }
         }
     }

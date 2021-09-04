@@ -44,7 +44,7 @@
                     android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:background="@drawable/box_blue5f_12dp"
                     android:text=""
@@ -70,13 +70,14 @@
                     android:layout_marginTop="12dp"/>
 
                 <TextView
+                    android:id="@+id/tv_room_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/tv_building_type"
                     app:layout_constraintTop_toTopOf="@id/tv_building_type"
                     app:layout_constraintBottom_toBottomOf="@id/tv_building_type"
                     tools:text="원룸"
-                    android:text="@{viewModel.buildingSummary.buildingType}"
+                    android:text="원룸"
                     android:textSize="14sp"
                     android:fontFamily="@font/nanum_square_round_regular"
                     android:textColor="@color/zeepy_black_3b"
@@ -432,7 +433,7 @@
                     app:cardCornerRadius="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    app:contentPadding="10dp"
+                    app:contentPadding="16dp"
                     app:cardElevation="0dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -468,7 +469,7 @@
                     <include
                         android:id="@+id/layout_sample_review"
                         layout="@layout/item_building_review"
-                        android:visibility="gone"/>
+                        android:visibility="visible"/>
 
 
                 </androidx.cardview.widget.CardView>
