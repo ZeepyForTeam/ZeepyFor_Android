@@ -8,5 +8,6 @@ sealed class Result<out T> {
 val Result<*>.succeeded
     get() = this is Result.Success && data != null
 
+// TODO: Originally, data null exceptions were handled in get() but were removed for Unit? Responses to go through
 val <T> Result<T>.data
-    get() = (this as? Result.Success)?.data ?: throw Exception("Result data is null")
+    get() = (this as? Result.Success)?.data

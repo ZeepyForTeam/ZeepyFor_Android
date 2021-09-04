@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/box_grayf9_5dp">
+        android:background="@drawable/box_grayf4_8dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,13 +24,13 @@
             android:id="@+id/tv_reviewer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="서울쥐김자랑 님의 후기"
+            android:text="@string/review_by_whom"
             android:textSize="18sp"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_blue_5f"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="16dp"/>
 
         <TextView

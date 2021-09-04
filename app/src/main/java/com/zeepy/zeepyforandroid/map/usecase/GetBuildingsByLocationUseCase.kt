@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.map.usecase
 
+import android.util.Log
 import com.zeepy.zeepyforandroid.di.IoDispatcher
 import com.zeepy.zeepyforandroid.map.data.BuildingModel
 import com.zeepy.zeepyforandroid.map.repository.BuildingsRepository

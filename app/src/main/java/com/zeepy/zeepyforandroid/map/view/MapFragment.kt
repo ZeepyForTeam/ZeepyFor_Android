@@ -3,42 +3,55 @@ package com.zeepy.zeepyforandroid.map.view
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentMapBinding
-import com.zeepy.zeepyforandroid.map.data.Building
+import com.zeepy.zeepyforandroid.enum.CommunityTendency
+import com.zeepy.zeepyforandroid.enum.Options
+import com.zeepy.zeepyforandroid.enum.Preference
+import com.zeepy.zeepyforandroid.enum.TotalEvaluation
+import com.zeepy.zeepyforandroid.map.data.BuildingModel
+import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.MapHelper
 import com.zeepy.zeepyforandroid.util.MetricsConverter
 import com.zeepy.zeepyforandroid.util.WidthResizeAnimation
 import dagger.hilt.android.AndroidEntryPoint
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
+import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>() {
 
+    @Inject
+    lateinit var userPreferenceManager: UserPreferenceManager
     private lateinit var mapViewContainer: ViewGroup
     private lateinit var mapView: MapView
+    private var lastSelectedMarker: MapPOIItem = MapPOIItem()
     private lateinit var myLocationButton: ConstraintLayout
+    private lateinit var mapHelper: MapHelper
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private val permReqLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -53,9 +66,17 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     private lateinit var resizeAnimation: WidthResizeAnimation
     private val viewModel: MapViewModel by viewModels<MapViewModel>()
-    private var buildings = listOf<Building>()
+    private var buildings = listOf<BuildingModel>()
     private var markers = mutableListOf<MapPOIItem>()
-    private val eventListener = MarkerEventListener(context)
+    private var lastSelectedMarkerOriginalImage: Int = -1
+    private var existSelectedMarker = false
+    private val markerEventListener = MarkerEventListener(context)
+    private val mapViewEventListener = MapViewEventListener(context)
+    private var currentZoomLevel = 2
+    private var currentMapCenterPoint: MapPoint? = null
+    private var mapDisplayOffset: Float = 0F
+    private val firstTimeBeingAddedMarkerMap: HashMap<Int, Boolean> = HashMap()
+
 
     companion object {
         val LOCATION_PERMISSIONS = arrayOf(
@@ -77,6 +98,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.bottomSheetMap.viewModel = viewModel
 
         // 동적으로 지도뷰 & 지도 위 버튼들 추가
         mapView = MapView(activity)
@@ -89,66 +111,156 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             topMargin = MetricsConverter.dpToPixel(16F, context).toInt()
         }
 
-        // 현재위치 버튼 클릭 시 permission 요청 (수정될 수도)
+        // 현재위치 버튼 클릭 시 permission 요청 (TODO: 요청 시점 수정될 수도)
+        // FIXME: 아마 처음 지도 실행 시 현재위치 기준으로 mapCenterPoint를 가져와야 할 것 같음
         myLocationButton.setOnClickListener { getGpsLocation() }
 
-        //setMarkersObserver()
         setOptionButton()
         setToolbar()
-        mapView.setPOIItemEventListener(eventListener)
-        // 마커 띄우기 테스트
-        setMarker(37.505834449999995, 126.96320847343215, R.drawable.emoji_5_map)
-        setMarker(37.505634469999995, 126.96320857343215, R.drawable.emoji_1_map)
+        mapView.setPOIItemEventListener(markerEventListener)
+        mapView.setMapViewEventListener(mapViewEventListener)
 
-        // FIXME: Error accessing mapPointBounds
-        // Log.e("mapbounds", mapView.mapPointBounds.topRight.mapPointGeoCoord.longitude.toString())
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetMap.root)
+        bottomSheetBehavior.apply {
+            this.setPeekHeight(200, true)
+            this.isHideable = true
+            this.state = BottomSheetBehavior.STATE_HIDDEN
+            this.skipCollapsed = true
+        }
 
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
+
+        // FIXME: Make this an observer function
+        viewModel.fetchBuildingsResponse.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                is Result.Success -> {
+                    result.data.let {
+                        this.buildings = it
+                        setMarkersList()
+                    }
+                }
+                is Result.Error -> {
+                    if (result.exception.message == "401") {
+                        Log.e("Unauthorized User", result.toString())
+                    }
+                }
+            }
+        })
+        viewModel.buildingSelectedId.observe(viewLifecycleOwner, { id ->
+            // show bottomSheet Dialog
+            if (id != -1) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+
+        })
+        viewModel.buildingSelected.observe(viewLifecycleOwner, { building ->
+            binding.bottomSheetMap.tvBuildingDetailContent.text = building.reviews[0].furnitures.joinToString(separator = ", ") {
+                getString(Options.getOptionFromString(it))
+            }
+            binding.bottomSheetMap.buildingOwnerContent.text = getString(CommunityTendency.findTendencyFromString(building.reviews[0].communcationTendency))
+            binding.bottomSheetMap.tvOverallEvaluationContent.text = getString(TotalEvaluation.findTotalEvaluationFromString(building.reviews[0].totalEvaluation))
+
+            binding.bottomSheetMap.ivSoundproof.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].soundInsulation))
+            binding.bottomSheetMap.ivHygiene.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].pest))
+            binding.bottomSheetMap.ivSunlight.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].lightning))
+            binding.bottomSheetMap.ivWaterpressure.setImageResource(Preference.getDrawableIdFromString(building.reviews[0].waterPressure))
+
+            binding.bottomSheetMap.btnGotoReview.apply {
+                if (building.reviews.isEmpty()) {
+                    setText(getString(R.string.go_to_reviews_button_none))
+                    setUnUsableButton()
+                } else {
+                    setText(getString(R.string.go_to_reviews_button, building.reviews.size.toString()))
+                }
+            }
+        })
     }
 
-//    private fun setMarkersObserver() {
-//        mapViewModel.markers.observe(viewLifecycleOwner) { markers ->
-//            markers?.let {
-//                this.buildings = markers
-//                setMarkersList()
-//                mapView.setPOIItemEventListener(eventListener)
-//            }
-//        }
-//    }
+    /**
+     * Render markers
+     */
+    private fun setMarkersList() {
+        buildings.indices.forEach { index ->
+            if (buildings[index].reviews.isNotEmpty()) {
+                Log.e("markerMap", firstTimeBeingAddedMarkerMap[buildings[index].id].toString())
 
-    private fun setOptionButton() {
-        binding.optionBtnLayout.optionBtn.setOnClickListener {
-            resizeAnimation = WidthResizeAnimation(it, 800, false)
-            resizeAnimation.duration = 600
-            Log.d("original width", resizeAnimation.originalWidth.toString())
-            Log.d("target width", resizeAnimation.targetWidth.toString())
-            it.startAnimation(resizeAnimation)
-            it.visibility = View.GONE
-            Handler(Looper.getMainLooper()).postDelayed(object : Runnable {
-                override fun run() {
-                    binding.optionBtnLayout.optionOne.visibility = View.VISIBLE
-                    binding.optionBtnLayout.optionTwo.visibility = View.VISIBLE
-                    binding.optionBtnLayout.optionThree.visibility = View.VISIBLE
-                    binding.optionBtnLayout.optionFour.visibility = View.VISIBLE
-                    binding.optionBtnLayout.optionFive.visibility = View.VISIBLE
+                if (firstTimeBeingAddedMarkerMap[buildings[index].id] == null) {
+                    markers.add(
+                        MapPOIItem().apply {
+                            mapPoint = MapPoint.mapPointWithGeoCoord(buildings[index].latitude, buildings[index].longitude)
+                            itemName = "건물"
+                            tag = buildings[index].id
+                            setCustomImageAnchor(0.5F, 0.5F)
+                            markerType = MapPOIItem.MarkerType.CustomImage
+
+                            // 소통 성향별로 마커 이미지 설정
+                            when (buildings[index].reviews[0].communcationTendency) {
+                                "BUSINESS" -> {
+                                    customImageResourceId = R.drawable.emoji_1_map
+                                }
+                                "KIND" -> {
+                                    customImageResourceId = R.drawable.emoji_2_map
+                                }
+                                "GRAZE" -> {
+                                    customImageResourceId = R.drawable.emoji_3_map
+                                }
+                                "SOFTY" -> {
+                                    customImageResourceId = R.drawable.emoji_4_map
+                                }
+                                "BAD" -> {
+                                    customImageResourceId = R.drawable.emoji_5_map
+                                }
+                            }
+                            isCustomImageAutoscale = false
+                            isShowCalloutBalloonOnTouch = false
+                        }
+                    )
+                    firstTimeBeingAddedMarkerMap[buildings[index].id] = true
                 }
+            }
+        }
+        markers.forEach {
+            if (firstTimeBeingAddedMarkerMap[it.tag] == true) {
+                mapView.addPOIItem(it)
+            }
+            firstTimeBeingAddedMarkerMap[it.tag] = false
+        }
+    }
+
+    /**
+     * 지도 하단의 소통성향 옵션 뷰 설정
+     */
+    private fun setOptionButton() {
+        val metrics = DisplayMetrics()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val display = activity?.display
+            display?.getRealMetrics(metrics)
+        } else {
+            @Suppress("DEPRECATION")
+            val display = activity?.windowManager?.defaultDisplay
+            @Suppress("DEPRECATION")
+            (display?.getMetrics(metrics))
+        }
+
+        val displayWidth = metrics.widthPixels
+        val targetWidth = (displayWidth - MetricsConverter.dpToPixel(32F, context)).roundToInt()
+
+        binding.optionBtn.setOnClickListener {
+            resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, targetWidth, false)
+            resizeAnimation.duration = 600
+            binding.optionBtnLayout.startAnimation(resizeAnimation)
+            it.visibility = View.GONE
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.optionOne.visibility = View.VISIBLE
+                binding.optionTwo.visibility = View.VISIBLE
+                binding.optionThree.visibility = View.VISIBLE
+                binding.optionFour.visibility = View.VISIBLE
+                binding.optionFive.visibility = View.VISIBLE
             },300)
         }
-        binding.optionBtnLayout.optionBtn.setOnClickListener {
-            resizeAnimation = WidthResizeAnimation(it, 218, false)
-            resizeAnimation.duration = 600
-            Log.d("original width", resizeAnimation.originalWidth.toString())
-            Log.d("target width", resizeAnimation.targetWidth.toString())
-            it.startAnimation(resizeAnimation)
-            binding.optionBtnLayout.optionBtn.visibility = View.VISIBLE
-            binding.optionBtnLayout.optionOne.visibility = View.GONE
-            binding.optionBtnLayout.optionTwo.visibility = View.GONE
-            binding.optionBtnLayout.optionThree.visibility = View.GONE
-            binding.optionBtnLayout.optionFour.visibility = View.GONE
-            binding.optionBtnLayout.optionFive.visibility = View.GONE
-        }
     }
 
-    //툴바 세팅
     private fun setToolbar() {
         binding.mapToolbar.run {
             setTitle("지도로 검색하기")
@@ -158,36 +270,148 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         }
     }
 
-
-
-    //Add & Set markers from buildings
-    private fun setMarkersList() {
-        buildings.indices.forEach { index ->
-            markers.add(
-                MapPOIItem().apply {
-                    mapPoint = MapPoint.mapPointWithGeoCoord(buildings[index].latitude, buildings[index].longitude)
-                }
-            )
-        }
-    }
-
-    inner class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
-        // Set marker detail visibility
-        private fun setMarkerDetailVisibility(index: Int) {
-            viewModel.setMarkerClick(buildings[index].id)
+    /**
+     * MapView 이벤트 리스너 클래스
+     */
+    inner class MapViewEventListener(val context: Context?): MapView.MapViewEventListener {
+        override fun onMapViewInitialized(p0: MapView?) {
+            currentMapCenterPoint = p0?.mapCenterPoint
         }
 
-        private fun setMarkerDetailAnimation() {
-            if (binding.layoutMarkerDetail.visibility != View.VISIBLE) {
-                binding.layoutMarkerDetail.startAnimation(
-                    AnimationUtils.loadAnimation(requireContext(), R.anim.map_marker_detail_vertical_translation)
-                )
+        override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
+            currentMapCenterPoint = p1
+        }
+
+        override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
+            currentZoomLevel = p1
+            if (currentZoomLevel < 3) {
+                mapDisplayOffset = binding.mapToolbar.height + binding.edittextSearchMap.height + MetricsConverter.dpToPixel(16F, context)
+                mapHelper = MapHelper(requireActivity(), currentZoomLevel, currentMapCenterPoint!!, mapDisplayOffset)
+                mapHelper.setMapMetrics()
+                mapHelper.setFourPoints()
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
+                }, 1500)
             }
         }
 
+        override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            if (lastSelectedMarker.tag != 0) {
+                //Unselect marker
+                val markerUnselected = lastSelectedMarker.clone()
+                p0?.removePOIItem(lastSelectedMarker)
+
+                markerUnselected.setCustomImageAnchor(0.5F, 0.5F)
+                markerUnselected.customImageResourceId = lastSelectedMarkerOriginalImage
+
+                p0?.addPOIItem(markerUnselected)
+                existSelectedMarker = false
+            }
+
+            if (binding.optionBtn.visibility == View.GONE) {
+                resizeAnimation = WidthResizeAnimation(binding.optionBtnLayout, 218, false)
+                resizeAnimation.duration = 600
+                binding.optionBtnLayout.startAnimation(resizeAnimation)
+                binding.optionBtn.visibility = View.VISIBLE
+                binding.optionOne.visibility = View.GONE
+                binding.optionTwo.visibility = View.GONE
+                binding.optionThree.visibility = View.GONE
+                binding.optionFour.visibility = View.GONE
+                binding.optionFive.visibility = View.GONE
+            }
+
+        }
+
+        override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {
+        }
+
+        override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
+            if (currentZoomLevel < 3) {
+                mapDisplayOffset = binding.mapToolbar.height + binding.edittextSearchMap.height + MetricsConverter.dpToPixel(16F, context)
+                mapHelper = MapHelper(requireActivity(), currentZoomLevel, currentMapCenterPoint!!, mapDisplayOffset)
+                mapHelper.setMapMetrics()
+                mapHelper.setFourPoints()
+
+                viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
+            }
+
+        }
+
+        override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {
+        }
+
+    }
+
+
+    /**
+     * POIItem 이벤트 리스너 클래스
+     */
+    inner class MarkerEventListener(val context: Context?): MapView.POIItemEventListener {
+
         override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-            Log.e("map point after clicked", "" + p1?.mapPoint);
-            //TODO: marker info layout 띄우기
+
+            // 마커 선택시 이미지 변경을 하기 위한 workaround
+            if (!existSelectedMarker) {
+                lastSelectedMarker = p1!!.clone()
+                lastSelectedMarkerOriginalImage = p1.customImageResourceId
+                p0?.removePOIItem(p1)
+
+                lastSelectedMarker.setCustomImageAnchor(0.5F, 1F)
+                lastSelectedMarker.customImageResourceId = R.drawable.icon_map_act
+                viewModel.updateBuildingSelectedId(p1.tag)
+
+                // Consider improving search performance
+                buildings.indices.forEach { index ->
+                    if (buildings[index].id == p1.tag) {
+                        viewModel.updateBuildingSelected(buildings[index])
+                    }
+                }
+
+                p0?.addPOIItem(lastSelectedMarker)
+                mapView.setMapCenterPoint(lastSelectedMarker.mapPoint, false)
+                existSelectedMarker = true
+            } else {
+                if (p1?.tag != lastSelectedMarker.tag) {
+                    val markerUnselected = lastSelectedMarker.clone()
+                    p0?.removePOIItem(lastSelectedMarker)
+
+                    markerUnselected.setCustomImageAnchor(0.5F, 0.5F)
+                    markerUnselected.customImageResourceId = lastSelectedMarkerOriginalImage
+
+                    p0?.addPOIItem(markerUnselected)
+
+                    lastSelectedMarker = p1!!.clone()
+                    lastSelectedMarkerOriginalImage = p1.customImageResourceId
+                    p0?.removePOIItem(p1)
+
+                    lastSelectedMarker.setCustomImageAnchor(0.5F, 1F)
+                    lastSelectedMarker.customImageResourceId = R.drawable.icon_map_act
+                    viewModel.updateBuildingSelectedId(p1.tag)
+
+                    // Consider improving search performance
+                    buildings.indices.forEach { index ->
+                        if (buildings[index].id == p1.tag) {
+                            viewModel.updateBuildingSelected(buildings[index])
+                        }
+                    }
+
+                    p0?.addPOIItem(lastSelectedMarker)
+                    mapView.setMapCenterPoint(lastSelectedMarker.mapPoint, false)
+                    existSelectedMarker = true
+                } else {
+                    // show bottomSheet again
+                    viewModel.updateBuildingSelectedId(p1.tag)
+                }
+            }
+
         }
 
         override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
@@ -209,23 +433,20 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     }
 
-    // 지도에 마커 띄우기 (테스트 용도)
-    private fun setMarker(lat: Double, lng: Double, resourceID: Int) {
+    /**
+     * 마커 객체를 복사하는 함수
+     */
+    private fun MapPOIItem.clone(): MapPOIItem {
         val marker = MapPOIItem()
-        marker.apply {
-            itemName = "테스트 마커"
-            mapPoint = MapPoint.mapPointWithGeoCoord(lat, lng)
-            markerType = MapPOIItem.MarkerType.CustomImage
-            customImageResourceId = resourceID
-            setCustomImageAnchor(0.5F, 1F)
-            selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-            customSelectedImageResourceId = R.drawable.icon_map_act //FIXME: 이 이미지 사용했을 때 위치 오차가 발생 (이미지 크기 차이로 인해 발생하는 것으로 추정)
-            isCustomImageAutoscale = false
-            isShowCalloutBalloonOnTouch = false
+        marker.itemName = this.itemName
+        marker.tag = this.tag
+        marker.mapPoint = this.mapPoint
+        marker.markerType = this.markerType
+        marker.customImageResourceId = this.customImageResourceId
+        marker.isCustomImageAutoscale = this.isCustomImageAutoscale
+        marker.isShowCalloutBalloonOnTouch = this.isShowCalloutBalloonOnTouch
 
-        }
-        //draw marker
-        mapView.addPOIItem(marker)
+        return marker
     }
 
     private fun getGpsLocation() {

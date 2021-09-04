@@ -13,5 +13,11 @@ enum class RoomCount(@StringRes val roomCount: Int) {
         fun findRoomCount(roomCount: Int): String {
             return values().find { it.roomCount == roomCount }?.name ?: throw IllegalArgumentException("RoomCount Not Matched")
         }
+
+        fun findRoomCountFromString(text: String): Int {
+            return RoomCount.values().find {
+                it.name == text
+            }?.roomCount ?: throw IllegalArgumentException("String and Name Not Matched")
+        }
     }
 }

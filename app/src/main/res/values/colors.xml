@@ -19,9 +19,11 @@
     <color name="zeepy_blue_59">#5980ea</color>
     <color name="zeepy_blue_26">#265f86f1</color>
     <color name="zeepy_gray_9a">#9a9fa3</color>
+    <color name="zeepy_gray_c4">#c4c4c4</color>
     <color name="zeepy_gray_f4">#f4f4f4</color>
     <color name="zeepy_gray_ba">#bababa</color>
     <color name="zeepy_gray_f7">#f7f7f7</color>
+    <color name="zeepy_gray_e4">#e4e4e4</color>
     <color name="zeepy_white_f3">#fffbf3</color>
     <color name="zeepy_white_f0">#f0ede5</color>
     <color name ="colorControlHighlight">#BFBFBF</color>

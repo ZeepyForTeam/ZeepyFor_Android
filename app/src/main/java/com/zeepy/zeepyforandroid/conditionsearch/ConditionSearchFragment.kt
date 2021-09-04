@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.google.android.material.slider.LabelFormatter.LABEL_GONE
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
@@ -35,7 +36,7 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         setRangeSliderOnChangeListener()
         setOptionChoice()
         setNextButton()
-        removeSliderPadding()
+        initSliders()
 
     }
 
@@ -156,10 +157,12 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         }
     }
 
-    private fun removeSliderPadding() {
+    private fun initSliders() {
         binding.rsDeposit.setPadding(0, 0, 0, 0)
         binding.rsMonthlypay.setPadding(0, 0, 0, 0)
         binding.rsDeposit.setMinSeparationValue(1F)
         binding.rsMonthlypay.setMinSeparationValue(1F)
+        binding.rsDeposit.labelBehavior = LABEL_GONE
+        binding.rsMonthlypay.labelBehavior = LABEL_GONE
     }
 }

@@ -18,12 +18,14 @@ import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentSignInBinding
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment<FragmentSignInBinding>(){
     private val viewModel by viewModels<SignInViewModel>()
+    @Inject lateinit var userPreferenceManager: UserPreferenceManager
     @Inject lateinit var mOAuthLoginInstance: OAuthLogin
 
     override fun getFragmentBinding(
@@ -64,7 +66,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(){
     private fun loginZEEPY() {
         viewModel.loginSuccess.observe(viewLifecycleOwner) { success ->
             if (success) {
+                viewModel.getUserNicknameAndEmail(userPreferenceManager.fetchUserEmail())
                 findNavController().popBackStack()
+                Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
             } else {
                 Toast.makeText(requireContext(), "사용자를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
             }

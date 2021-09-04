@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_marker_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/map_floating_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:clickable="true">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp"/>
+
+        <ImageView
+            android:id="@+id/iv_building_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_building_address"
+            android:text="@{viewModel.buildingSelected.shortRoadNameAddress}"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/iv_building_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_building_icon"
+            app:layout_constraintStart_toEndOf="@id/iv_building_icon"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_building_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="건물 상세"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/iv_building_icon"
+            app:layout_constraintTop_toBottomOf="@id/iv_building_icon"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_building_detail_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            tools:text="화장실 1, 침실 1, 에어컨, 세탁기 옵션, 전자레인지, 발코니, 등등등등등등등등등등등 매우 많은 옵션을 가짐"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@id/tv_building_detail"
+            app:layout_constraintStart_toEndOf="@id/tv_building_detail"
+            app:layout_constraintEnd_toStartOf="@id/guideline_end"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_building_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="임대인"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/tv_building_detail"
+            app:layout_constraintTop_toBottomOf="@id/tv_building_detail_content"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/building_owner_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@id/tv_building_owner"
+            app:layout_constraintBottom_toBottomOf="@id/tv_building_owner"
+            app:layout_constraintStart_toEndOf="@id/tv_building_owner"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_soundproof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="방음"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/tv_building_owner"
+            app:layout_constraintTop_toBottomOf="@id/tv_building_owner"
+            android:layout_marginTop="8dp"/>
+
+        <ImageView
+            android:id="@+id/iv_soundproof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_icon"
+            app:layout_constraintTop_toTopOf="@id/tv_soundproof"
+            app:layout_constraintBottom_toBottomOf="@id/tv_soundproof"
+            app:layout_constraintStart_toEndOf="@id/tv_soundproof"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_hygiene"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="청결"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintTop_toTopOf="@id/iv_soundproof"
+            app:layout_constraintBottom_toBottomOf="@id/iv_soundproof"
+            app:layout_constraintStart_toEndOf="@id/iv_soundproof"
+            android:layout_marginStart="24dp"/>
+
+        <ImageView
+            android:id="@+id/iv_hygiene"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_icon"
+            app:layout_constraintTop_toTopOf="@id/tv_hygiene"
+            app:layout_constraintBottom_toBottomOf="@id/tv_hygiene"
+            app:layout_constraintStart_toEndOf="@id/tv_hygiene"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_sunlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채광"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintTop_toTopOf="@id/iv_hygiene"
+            app:layout_constraintBottom_toBottomOf="@id/iv_hygiene"
+            app:layout_constraintStart_toEndOf="@id/iv_hygiene"
+            android:layout_marginStart="24dp"/>
+
+        <ImageView
+            android:id="@+id/iv_sunlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_icon"
+            app:layout_constraintTop_toTopOf="@id/tv_sunlight"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sunlight"
+            app:layout_constraintStart_toEndOf="@id/tv_sunlight"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_waterpressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수압"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintTop_toTopOf="@id/iv_sunlight"
+            app:layout_constraintBottom_toBottomOf="@id/iv_sunlight"
+            app:layout_constraintStart_toEndOf="@id/iv_sunlight"
+            android:layout_marginStart="24dp"/>
+
+        <ImageView
+            android:id="@+id/iv_waterpressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_icon"
+            app:layout_constraintTop_toTopOf="@id/tv_waterpressure"
+            app:layout_constraintBottom_toBottomOf="@id/tv_waterpressure"
+            app:layout_constraintStart_toEndOf="@id/tv_waterpressure"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_overall_evaluation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="종합 평가"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toStartOf="@id/tv_soundproof"
+            app:layout_constraintTop_toBottomOf="@id/tv_soundproof"
+            android:layout_marginTop="14dp"/>
+
+        <TextView
+            android:id="@+id/tv_overall_evaluation_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@id/tv_overall_evaluation"
+            app:layout_constraintBottom_toBottomOf="@id/tv_overall_evaluation"
+            app:layout_constraintStart_toEndOf="@id/tv_overall_evaluation"
+            android:layout_marginStart="8dp"/>
+
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
+            android:id="@+id/btn_goto_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/tv_overall_evaluation_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -5,6 +5,7 @@ import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import java.net.HttpURLConnection
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -14,8 +15,6 @@ import okhttp3.Request
 import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Callback
-import java.net.HttpURLConnection
-import java.util.*
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
@@ -23,10 +22,14 @@ class AuthInterceptor @Inject constructor(
     private val userPreferenceManager: UserPreferenceManager,
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().newBuilder().addHeaders(userPreferenceManager.fetchUserAccessToken()).build()
-        var response = chain.proceed(request)
 
+    @Throws(Exception::class)
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request =
+            chain.request().newBuilder().addHeaders(userPreferenceManager.fetchUserAccessToken())
+                .build()
+
+        val response = chain.proceed(request)
         if (response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
             response.close()
             val accessToken = refreshAccessToken()

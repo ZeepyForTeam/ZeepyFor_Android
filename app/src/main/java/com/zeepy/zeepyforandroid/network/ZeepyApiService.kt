@@ -15,6 +15,7 @@ import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
+import com.zeepy.zeepyforandroid.signin.dto.response.ResponseNicknameAndEmailDTO
 import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import io.reactivex.Completable
@@ -65,6 +66,12 @@ interface ZeepyApiService {
     @GET("/api/buildings/addresses")
     fun searchBuildingAddress(@Query ("address")address: String): Single<ResponseSearchBuildingAddressDTO>
 
+    @GET("/api/buildings/addresses")
+    suspend fun searchBuildingsByAddress(@Query ("address")address: String): Response<ResponseSearchBuildingAddressDTO>
+
+    @GET("/api/buildings/{id}")
+    suspend fun getBuildingById(@Path ("id") id: Int): Response<ResponseBuildingInfoDTO>
+
     @GET("/api/community")
     fun getCommunityPostingList(
         @Query ("address") address: String,
@@ -85,6 +92,15 @@ interface ZeepyApiService {
         @Query("longitudeGreater") longitudeGreater: Double,
         @Query("longitudeLess") longitudeLess: Double
     ): Response<List<ResponseBuildingInfoDTO>>
+
+    @DELETE("/api/user/withdrawal")
+    suspend fun deleteAccount(): Response<Unit?>
+
+    @DELETE("/api/auth/logout")
+    suspend fun logout(): Response<Unit?>
+
+    @GET("/api/user/nickname/email")
+    fun getUserNicknameAndEmail(@Query("userEmail") userEmail: String): Single<ResponseNicknameAndEmailDTO>
 
     @POST("/api/user/registration")
     fun signUp(@Body requestSignUpDTO: RequestSignUpDTO): Completable

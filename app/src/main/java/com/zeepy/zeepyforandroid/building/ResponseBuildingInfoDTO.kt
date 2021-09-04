@@ -8,6 +8,7 @@ data class ResponseBuildingInfoDTO(
     val buildYear: Int,
     val buildingDeals: List<BuildingDealDTO>,
     val buildingLikes: List<BuildingLikeDTO>,
+    val buildingType: String,
     val exclusivePrivateArea: Double,
     val fullNumberAddress: String,
     val fullRoadNameAddress: String,

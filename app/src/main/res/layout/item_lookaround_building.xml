@@ -46,7 +46,7 @@
                 android:id="@+id/imageview_house"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                loadUrl="@{data.buildingPicture}"
+                android:src="@drawable/review_dummy"
                 android:scaleType="fitXY"/>
 
         </androidx.cardview.widget.CardView>
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_square_round_extrabold"
-            android:text="@{data.personalityReview}"
+            android:text="@{data.reviews[0].lessorReview}"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/textview_personality"
@@ -99,7 +99,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="12sp"
-            android:text="@{data.buildingReview}"
+            android:text="@{data.reviews[0].totalEvaluation}"
             android:layout_marginStart="15dp"
             app:layout_constraintVertical_bias="0.1"
             app:layout_constraintBottom_toBottomOf="@id/textview_building"
@@ -107,48 +107,30 @@
             app:layout_constraintTop_toTopOf="@id/textview_building"
             tools:text="여기서 살고싶어 여기" />
 
-
         <TextView
-            android:id="@+id/textview_building_type"
+            android:id="@+id/tv_waiting_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/box_graye4_8dp"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="12sp"
-            android:text="@{data.buildingType}"
+            android:text="정보 업데이트 준비 중"
             android:layout_marginTop="8dp"
+            android:paddingVertical="2.5dp"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintStart_toStartOf="@id/textview_building"
+            app:layout_constraintTop_toBottomOf="@id/textview_building" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_building_features"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/textview_building"
             app:layout_constraintTop_toBottomOf="@id/textview_building"
-            tools:text="빌라"/>
-
-        <TextView
-            android:id="@+id/textview_room_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
-            android:text="@{data.roomType}"
-            android:layout_marginStart="7dp"
-            app:layout_constraintBottom_toBottomOf="@id/textview_building_type"
-            app:layout_constraintStart_toEndOf="@id/textview_building_type"
-            app:layout_constraintTop_toTopOf="@id/textview_building_type"
-            tools:text="투룸"/>
-
-        <TextView
-            android:id="@+id/textview_floor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
-            android:text="@{data.floor}"
-            android:layout_marginStart="7dp"
-            app:layout_constraintBottom_toBottomOf="@id/textview_room_type"
-            app:layout_constraintStart_toEndOf="@id/textview_room_type"
-            app:layout_constraintTop_toTopOf="@id/textview_room_type"
-            tools:text="3층"/>
-
+            android:layout_marginTop="8dp"
+            tools:listitem="@layout/item_building_feature"
+            tools:itemCount="3"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

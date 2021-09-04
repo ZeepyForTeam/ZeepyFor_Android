@@ -41,8 +41,8 @@
     <string name="input_password_check_signup">비밀번호를 다시 입력해주세요</string>
     <string name="getting_info_to_email_signup">ZEEPY 서비스 마케팅 수신에 동의합니다. (선택)</string>
     <string name="input_email_signup">이메일ID를 입력해주세요</string>
-    <string name="myprofile_loggedout"><annotation clickable="true" color="zeepy_yellow_ee" font="nanum_square_round_extrabold"><u>로그인</u></annotation><annotation color="zeepy_black_3b" font="nanum_square_round_regular">을\n완료해주세요.</annotation></string>
-    <string name="myprofile_loggedin"><annotation color="zeepy_black_3b" font="nanum_square_round_regular">반가워요!\n</annotation><annotation args="0" clickable="true" color="zeepy_black_3b" font="nanum_square_round_extrabold"><u>%1$s</u></annotation> 지기님</string>
+    <string name="myprofile_loggedout"><annotation clickTo="signIn" font="nanum_square_round_extrabold" color="zeepy_yellow_ee" ><u>로그인</u></annotation><annotation font="nanum_square_round_regular" color="zeepy_black_3b">을\n완료해주세요.</annotation></string>
+    <string name="myprofile_loggedin"><annotation font="nanum_square_round_regular" color="zeepy_black_3b">반가워요!\n<annotation args="0" clickTo="editProfile" font="nanum_square_round_extrabold" color="zeepy_black_3b"><u>%1$s</u></annotation> 지기님</annotation></string>
     <string name="doesnt_match_password">비밀번호가 일치하지 않습니다.</string>
     <string name="lessor_business">칼 같은 우리 사이, 비즈니스형</string>
     <string name="lessor_kind">따뜻해 녹아내리는 중!, 친절형</string>
@@ -96,10 +96,17 @@
     <string name="report_confirm_content">*신고 후에는 신고 내욜을 수정하거나\n취소하실 수 없습니다.\n\n*악의적인 의도나 허위로 신고할 경우에는\n서비스 이용이 제한될 수 있습니다.</string>
     <string name="achievement_rate_format">%d명/%d명</string>
     <string name="achievement_progress_count_format">%d명</string>
+    <string name="change_password_confirm">새로운 비밀번호로 변경합니다.</string>
+    <string name="withdraw_warning1">&#8226; ZEEPY 회원탈퇴 시 ZEEPY 서비스에서 탈퇴되며, 회원탈퇴 후 재가입하더라도 탈퇴 전의 회원정보, 게시글 및 목록, 찜 목록 등은 복구되지 않습니다.</string>
+    <string name="withdraw_warning2">&#8226; ZEEPY 회원탈퇴 시 회원정보 및 서비스 이용기록은 모두 삭제되며, 삭제된 데이터는 복구가 불가능합니다. 다만 법령에 의하여 보관해야 하는 경우 또는 회원가입 남용, 서비스 부정사용 등을 위한 정보는 회원탈퇴 후에도 일정기간 보관됩니다.</string>
     <string name="posting_content_notice_community">*ZEEPY 이용정책에 위반되는 게시글의 경우\n무통보 게시글 삭제 및 이용이 제재될 수 있습니다.</string>
     <string name="purchase_introduce_hint">공동구매를 간단히 소개해주세요. (100자 이내)</string>
     <string name="purchase_introduce_write_community">공구 소개</string>
     <string name="approve_personal_info">ZEEPY에서 제공하는 개인정보 처리방침에 동의합니다.</string>
+    <string name="go_to_reviews_button">건물 리뷰 %s건 보러가기</string>
+    <string name="go_to_reviews_button_none">아직 등록된 리뷰가 없습니다.</string>
+    <string name="officetel">오피스텔</string>
+    <string name="rowhouse">연립다세대</string>
     <string name="select_house">거주하고 계신 집을\n선택해주세요.</string>
     <string name="check_address_to_register">등록할 주소를\n확인해주세요.</string>
     <string name="format_count_posting_content">(%d/1500자)</string>
@@ -108,4 +115,7 @@
     <string name="onboarding_third_ment">우리 손으로 만드는\n집단 지성!</string>
     <string name="finish_onboarding_text">리뷰 작성하고 세상을 이롭게 하기</string>
     <string name="onboarding_first_ment">살아본 사람들의\n리얼후기 yes!</string>
+    <string name="monthly_pay">월세</string>
+    <string name="jeonse_pay">전세</string>
+    <string name="review_by_whom">%s님의 후기</string>
 </resources>
