@@ -49,14 +49,14 @@ fun List<BuildingDealDTO>.hasDealType(dealType: String): Boolean {
     return false
 }
 
-fun List<BuildingDealDTO>.isWithinCost(minCost: Int, maxCost: Int) : Boolean {
-    try {
-        this.forEach {
-            if ()
-        }
-    } catch (e: Throwable) {
-
-    }
-}
+//fun List<BuildingDealDTO>.isWithinCost(minCost: Int, maxCost: Int) : Boolean {
+//    try {
+//        this.forEach {
+//            if ()
+//        }
+//    } catch (e: Throwable) {
+//
+//    }
+//}
 
 

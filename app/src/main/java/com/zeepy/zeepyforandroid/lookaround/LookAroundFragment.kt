@@ -53,6 +53,11 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         setFilteringListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchAddressListFromLocal() // this can be done on viewModel init?
+    }
+
     private fun setFilteringListener() {
         binding.rgFilterings.setOnCheckedChangeListener { _, checkedId ->
             var lessorType = "BUSINESS"

@@ -49,7 +49,7 @@ class LookAroundViewModel @Inject constructor(
         get() = _fetchedAddressList
 
     init {
-        getAddressListFromServer()
+
     }
 
     /**
@@ -87,16 +87,16 @@ class LookAroundViewModel @Inject constructor(
         _buildingListLiveData.value = filteredBuildingList
     }
 
-    fun setBuildingsByConditions(conditions: ConditionSetModel) {
-        filteredBuildingList.clear()
-        _buildingListLiveData.value?.forEach { building ->
-            if (!building.reviews.isNullOrEmpty() && !building.buildingDeals.isNullOrEmpty()) {
-                if (building.buildingType == conditions.buildingType
-                    && building.buildingDeals.hasDealType(conditions.dealType)
-                    && )
-            }
-        }
-    }
+//    fun setBuildingsByConditions(conditions: ConditionSetModel) {
+//        filteredBuildingList.clear()
+//        _buildingListLiveData.value?.forEach { building ->
+//            if (!building.reviews.isNullOrEmpty() && !building.buildingDeals.isNullOrEmpty()) {
+//                if (building.buildingType == conditions.buildingType
+//                    && building.buildingDeals.hasDealType(conditions.dealType)
+//                    && )
+//            }
+//        }
+//    }
 
     suspend fun getBuildingInfoById(id: Int) {
         val result = buildingRepository.getBuildingsInfoById(id)
@@ -152,6 +152,7 @@ class LookAroundViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ addressList ->
                     _addressList.postValue(addressList)
+                    Log.e("addressList", _addressList.toString())
                     addressList.let {
                         _selectedAddress.value = it.find { address -> address.isAddressCheck }
                     }
