@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.building.BuildingDealDTO
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragment
 import java.lang.RuntimeException
 
@@ -34,4 +35,28 @@ fun NavController.isOnBackStack(@IdRes id: Int): Boolean =
     } catch (e: Throwable) {
         false
     }
+
+fun List<BuildingDealDTO>.hasDealType(dealType: String): Boolean {
+    try {
+        this.forEach {
+            if (it.dealType == dealType) {
+                return true
+            }
+        }
+    } catch (e: Throwable) {
+        return false
+    }
+    return false
+}
+
+fun List<BuildingDealDTO>.isWithinCost(minCost: Int, maxCost: Int) : Boolean {
+    try {
+        this.forEach {
+            if ()
+        }
+    } catch (e: Throwable) {
+
+    }
+}
+
 

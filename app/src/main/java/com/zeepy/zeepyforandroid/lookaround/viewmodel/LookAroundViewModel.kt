@@ -6,11 +6,13 @@ import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.base.BaseViewModel
+import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.SearchAddressForLookAroundModel
 import com.zeepy.zeepyforandroid.lookaround.repository.BuildingRepository
 import com.zeepy.zeepyforandroid.util.SingleLiveData
+import com.zeepy.zeepyforandroid.util.ext.hasDealType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -73,7 +75,7 @@ class LookAroundViewModel @Inject constructor(
         }
     }
 
-    fun getBuildingsByFiltering(lessorType: String) {
+    fun setBuildingsByFiltering(lessorType: String) {
         filteredBuildingList.clear()
         _buildingListLiveData.value?.forEach { building ->
             if (!building.reviews.isNullOrEmpty()) {
@@ -83,6 +85,17 @@ class LookAroundViewModel @Inject constructor(
             }
         }
         _buildingListLiveData.value = filteredBuildingList
+    }
+
+    fun setBuildingsByConditions(conditions: ConditionSetModel) {
+        filteredBuildingList.clear()
+        _buildingListLiveData.value?.forEach { building ->
+            if (!building.reviews.isNullOrEmpty() && !building.buildingDeals.isNullOrEmpty()) {
+                if (building.buildingType == conditions.buildingType
+                    && building.buildingDeals.hasDealType(conditions.dealType)
+                    && )
+            }
+        }
     }
 
     suspend fun getBuildingInfoById(id: Int) {

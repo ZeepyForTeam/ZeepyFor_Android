@@ -7,19 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
-import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,6 +34,14 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navController = findNavController()
+
+        // Observe for conditions set in ConditionSearchFragment
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<ConditionSetModel>("conditions")
+            ?.observe(viewLifecycleOwner) {
+
+            }
+
         binding.lifecycleOwner = viewLifecycleOwner
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
@@ -65,7 +71,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 R.id.rb_bad -> lessorType = "BAD"
             }
             if (checkedId != R.id.rb_standard_order) {
-                viewModel.getBuildingsByFiltering(lessorType)
+                viewModel.setBuildingsByFiltering(lessorType)
             }
         }
     }

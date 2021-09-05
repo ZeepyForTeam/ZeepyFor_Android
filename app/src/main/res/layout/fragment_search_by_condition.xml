@@ -64,12 +64,13 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_building_type">
 
                     <RadioGroup
+                        android:id="@+id/rg_building_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/rb_option_building_type_all"
+                            android:id="@+id/rb_building_type_all"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableTop="@drawable/selector_option_1"
@@ -82,7 +83,7 @@
                             android:checked="@={viewModel.searchEntry.buildingTypes[viewModel.ALL].checked}"/>
 
                         <RadioButton
-                            android:id="@+id/rb_option_multihousehold"
+                            android:id="@+id/rb_rowhouse"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="연립다세대"
@@ -95,7 +96,7 @@
                             android:layout_marginEnd="8dp"/>
 
                         <RadioButton
-                            android:id="@+id/rb_option_officetel"
+                            android:id="@+id/rb_officetel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="오피스텔"
@@ -135,6 +136,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_trade_type">
 
                     <RadioGroup
+                        android:id="@+id/rg_deal_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
