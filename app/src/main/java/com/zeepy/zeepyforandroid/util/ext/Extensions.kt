@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.building.BuildingDealDTO
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragment
+import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 import java.lang.RuntimeException
 
 const val MAPQUE_PREF = "mapque_pref"
@@ -49,14 +50,57 @@ fun List<BuildingDealDTO>.hasDealType(dealType: String): Boolean {
     return false
 }
 
-//fun List<BuildingDealDTO>.isWithinCost(minCost: Int, maxCost: Int) : Boolean {
-//    try {
-//        this.forEach {
-//            if ()
-//        }
-//    } catch (e: Throwable) {
-//
-//    }
-//}
+fun List<BuildingDealDTO>.isWithinCost(monthly: Boolean, mMinCost: Int?, mMaxCost: Int?, deposit: Boolean, dMinCost: Int?, dMaxCost: Int?) : Boolean {
+    var result = true
+    try {
+        if (monthly && !deposit) {
+            run {
+                this.forEach {
+                    if (it.monthlyRent >= mMinCost!! && it.monthlyRent <= mMaxCost!!) {
+                        return@forEach
+                    } else {
+                        result = false
+                        return@run
+                    }
+                }
+            }
+        } else if (!monthly && deposit) {
+            run {
+                this.forEach {
+                    if (it.deposit >= dMinCost!! && it.deposit <= dMaxCost!!) {
+                        return@forEach
+                    } else {
+                        result = false
+                        return@run
+                    }
+                }
+            }
+        }
+        return result
+    } catch (e: Throwable) {
+        e.printStackTrace()
+        return false
+    }
+}
 
+// options를 모두 포함해야만 true 리턴
+fun List<ResponseReviewDTO>.hasOptions(options: List<String>): Boolean {
+    var result = false
+    try {
+        this.forEach loop1@ {
+            run {
+                options.forEach { option ->
+                    if (!it.furnitures.contains(option)) {
+                        return@run
+                    }
+                }
+                result = true
+                return result
+            }
+        }
+    } catch (e: Throwable) {
+        return false
+    }
+    return result
+}
 

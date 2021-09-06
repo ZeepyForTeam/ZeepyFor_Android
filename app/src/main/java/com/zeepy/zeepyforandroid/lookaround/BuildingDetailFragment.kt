@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.lookaround
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +19,10 @@ import com.zeepy.zeepyforandroid.enum.Options
 import com.zeepy.zeepyforandroid.enum.RoomCount
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
     private val viewModel by viewModels<BuildingDetailViewModel>()
     private val args: BuildingDetailFragmentArgs by navArgs()
@@ -70,17 +73,20 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         args.buildingSummaryModel.reviews.let {
             if (it.isNullOrEmpty()) {
                 binding.btnShowAllReviews.visibility = View.GONE
+                binding.layoutSampleReview.root.visibility = View.GONE
+                binding.layoutNoReview.visibility = View.VISIBLE
 
                 binding.tvGotoWriteReview.setOnClickListener {
                     // check for login status and then navigate
                     if (userPreferenceManager.fetchIsAlreadyLogin()) {
-                        requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_reviewFrameFragment)
+                        requireParentFragment().findNavController().navigate(R.id.action_buildingDetailFragment_to_reviewFrameFragment)
                     } else {
                         Toast.makeText(context, "로그인을 해주세요.", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                binding.cardBuildingDetailedReview.visibility = View.GONE
+                binding.layoutNoReview.visibility = View.GONE
+                binding.btnShowAllReviews.visibility = View.VISIBLE
                 binding.layoutSampleReview.root.visibility = View.VISIBLE
                 binding.layoutSampleReview.apply {
                     tvReviewerName.text = String.format(resources.getString(R.string.review_by_whom), it[0].user.name)

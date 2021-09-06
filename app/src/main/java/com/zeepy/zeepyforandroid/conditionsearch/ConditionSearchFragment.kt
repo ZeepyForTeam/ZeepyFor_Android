@@ -199,12 +199,48 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
             else -> "ALL"
         }
         // DepositPay
-        val depositPayStart: Float = binding.rsDeposit.values[0]
-        val depositPayEnd: Float = binding.rsDeposit.values[1]
+        val depositPayStart: Int = when (binding.rsDeposit.values[0]) {
+            0F -> 0
+            1F -> 500
+            2F -> 1000
+            3F -> 2500
+            4F -> 5000
+            5F -> 10000
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
+        val depositPayEnd: Int = when (binding.rsDeposit.values[1]) {
+            0F -> 0
+            1F -> 500
+            2F -> 1000
+            3F -> 2500
+            4F -> 5000
+            5F -> 10000
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
 
         // MonthlyPay
-        val monthlyPayStart: Float = binding.rsMonthlypay.values[0]
-        val monthlyPayEnd: Float = binding.rsMonthlypay.values[1]
+        val monthlyPayStart: Int = when (binding.rsMonthlypay.values[0]) {
+            0F -> 0
+            1F -> 25
+            2F -> 50
+            3F -> 75
+            4F -> 100
+            5F -> 125
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
+        val monthlyPayEnd: Int = when (binding.rsMonthlypay.values[1]) {
+            0F -> 0
+            1F -> 25
+            2F -> 50
+            3F -> 75
+            4F -> 100
+            5F -> 125
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
 
         // Options
         val options: List<String> = viewModel.selectedOptionList.value?.toList()!!

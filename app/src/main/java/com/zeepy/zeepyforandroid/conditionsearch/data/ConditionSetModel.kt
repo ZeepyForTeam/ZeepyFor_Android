@@ -1,13 +1,15 @@
 package com.zeepy.zeepyforandroid.conditionsearch.data
 
-import com.zeepy.zeepyforandroid.lookaround.data.entity.OptionModel
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class ConditionSetModel(
     val buildingType: String,
     val dealType: String,
-    val depositPayStart: Float,
-    val depositPayEnd: Float,
-    val monthlyPayStart: Float,
-    val monthlyPayEnd: Float,
+    val depositPayStart: Int,
+    val depositPayEnd: Int,
+    val monthlyPayStart: Int,
+    val monthlyPayEnd: Int,
     val options: List<String>
-)
+): Parcelable

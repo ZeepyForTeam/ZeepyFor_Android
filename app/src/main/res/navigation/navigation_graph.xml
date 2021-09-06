@@ -147,6 +147,10 @@
         <action
             android:id="@+id/action_buildingDetailFragment_to_buildingAllReviewsFragment"
             app:destination="@id/buildingAllReviewsFragment"/>
+
+        <action
+            android:id="@+id/action_buildingDetailFragment_to_reviewFrameFragment"
+            app:destination="@id/reviewFrameFragment"/>
     </fragment>
 
     <fragment

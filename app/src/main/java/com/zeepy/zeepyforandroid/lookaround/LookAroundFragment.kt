@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
@@ -32,6 +33,11 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         return FragmentLookaroundBinding.inflate(inflater, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getAddressListFromServer()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
@@ -39,7 +45,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         // Observe for conditions set in ConditionSearchFragment
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<ConditionSetModel>("conditions")
             ?.observe(viewLifecycleOwner) {
-
+                viewModel.setBuildingsByConditions(it)
             }
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -53,11 +59,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         setFilteringListener()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchAddressListFromLocal() // this can be done on viewModel init?
-    }
-
     private fun setFilteringListener() {
         binding.rgFilterings.setOnCheckedChangeListener { _, checkedId ->
             var lessorType = "BUSINESS"
@@ -65,7 +66,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 R.id.rb_standard_order -> {
                     if (viewModel.selectedAddress.value != null) {
                         // buildings order not preserved (refreshed from api call)
-                        Log.e("seletdaddres", viewModel.selectedAddress.value.toString())
                         viewModel.searchBuildingsByAddress(viewModel.selectedAddress.value!!.cityDistinct)
                     }
                 }
@@ -152,6 +152,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         }
         viewModel.selectedAddress.observe(viewLifecycleOwner) {
             if (it != null) {
+                Log.e("selectedAddress", " changed")
                 viewModel.searchBuildingsByAddress(it.cityDistinct)
             }
         }

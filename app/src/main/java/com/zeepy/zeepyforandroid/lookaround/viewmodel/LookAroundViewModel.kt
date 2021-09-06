@@ -11,8 +11,10 @@ import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.SearchAddressForLookAroundModel
 import com.zeepy.zeepyforandroid.lookaround.repository.BuildingRepository
-import com.zeepy.zeepyforandroid.util.SingleLiveData
+import com.zeepy.zeepyforandroid.util.SingleLiveEvent
 import com.zeepy.zeepyforandroid.util.ext.hasDealType
+import com.zeepy.zeepyforandroid.util.ext.hasOptions
+import com.zeepy.zeepyforandroid.util.ext.isWithinCost
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,8 +35,8 @@ class LookAroundViewModel @Inject constructor(
     val addressList: LiveData<List<LocalAddressEntity>>
         get() = _addressList
 
-    private val _selectedAddress = SingleLiveData<LocalAddressEntity>()
-    val selectedAddress: SingleLiveData<LocalAddressEntity>
+    private val _selectedAddress = SingleLiveEvent<LocalAddressEntity>()
+    val selectedAddress: LiveData<LocalAddressEntity>
         get() = _selectedAddress
 
     private val filteredBuildingList = ArrayList<BuildingSummaryModel>()
@@ -47,10 +49,6 @@ class LookAroundViewModel @Inject constructor(
     private val _fetchedAddressList = MutableLiveData<List<SearchAddressForLookAroundModel>>()
     val fetchedAddressList: LiveData<List<SearchAddressForLookAroundModel>>
         get() = _fetchedAddressList
-
-    init {
-
-    }
 
     /**
      * 현재 주소를 기준으로 빌딩 리스트 가져오기
@@ -87,16 +85,23 @@ class LookAroundViewModel @Inject constructor(
         _buildingListLiveData.value = filteredBuildingList
     }
 
-//    fun setBuildingsByConditions(conditions: ConditionSetModel) {
-//        filteredBuildingList.clear()
-//        _buildingListLiveData.value?.forEach { building ->
-//            if (!building.reviews.isNullOrEmpty() && !building.buildingDeals.isNullOrEmpty()) {
-//                if (building.buildingType == conditions.buildingType
-//                    && building.buildingDeals.hasDealType(conditions.dealType)
-//                    && )
-//            }
-//        }
-//    }
+    fun setBuildingsByConditions(conditions: ConditionSetModel) {
+        val monthly = conditions.dealType == "MONTHLY"
+        var deposit = conditions.dealType == "JEONSE"
+
+        filteredBuildingList.clear()
+        _buildingListLiveData.value?.forEach { building ->
+            if (!building.reviews.isNullOrEmpty() && !building.buildingDeals.isNullOrEmpty()) {
+                if (building.buildingType == conditions.buildingType
+                    && building.buildingDeals.hasDealType(conditions.dealType)
+                    && building.buildingDeals.isWithinCost(monthly, conditions.monthlyPayStart, conditions.monthlyPayEnd, deposit, conditions.depositPayStart, conditions.depositPayEnd)
+                    && building.reviews.hasOptions(conditions.options)) {
+                    filteredBuildingList.add(building)
+                }
+            }
+        }
+        _buildingListLiveData.value = filteredBuildingList
+    }
 
     suspend fun getBuildingInfoById(id: Int) {
         val result = buildingRepository.getBuildingsInfoById(id)

@@ -437,6 +437,7 @@
                     app:cardElevation="0dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_no_review"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -468,8 +469,7 @@
 
                     <include
                         android:id="@+id/layout_sample_review"
-                        layout="@layout/item_building_review"
-                        android:visibility="visible"/>
+                        layout="@layout/item_building_review" />
 
 
                 </androidx.cardview.widget.CardView>
