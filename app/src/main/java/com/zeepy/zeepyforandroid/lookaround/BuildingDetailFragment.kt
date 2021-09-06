@@ -44,6 +44,8 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        // 현재 빌딩 id로 뷰모델 데이터 업데이트
+        viewModel.changeBuildingId(args.buildingSummaryModel.id)
 
         setToolbar()
         renderOptions()
@@ -63,6 +65,13 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
             setLookaroundBuildingTitle()
             setBackButton {
                 findNavController().popBackStack()
+            }
+            setScrapButton {
+                if(binding.checkboxScrap.isChecked) {
+                    viewModel.scrapBuilding()
+                } else {
+                    viewModel.cancelScrapBuilding()
+                }
             }
         }
     }

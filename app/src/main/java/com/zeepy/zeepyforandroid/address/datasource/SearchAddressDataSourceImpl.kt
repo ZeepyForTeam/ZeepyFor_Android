@@ -11,7 +11,7 @@ class SearchAddressDataSourceImpl @Inject constructor(
     private val zeepyApiService: ZeepyApiService
 ): SearchAddressDataSource {
     override fun searchBuildingAddress(address: String): Single<ResponseSearchBuildingAddressDTO> = zeepyApiService.searchBuildingAddress(address)
-    override suspend fun searchBuildingsByAddress(address: String): ResponseSearchBuildingAddressDTO? = zeepyApiService.searchBuildingsByAddress(address).verify()
+    override suspend fun searchBuildingsByAddress(address: String, page: Int): ResponseSearchBuildingAddressDTO? = zeepyApiService.searchBuildingsByAddress(address, page).verify()
 
 }
 

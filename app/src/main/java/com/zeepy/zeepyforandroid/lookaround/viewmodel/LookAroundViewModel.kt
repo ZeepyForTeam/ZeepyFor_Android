@@ -46,30 +46,59 @@ class LookAroundViewModel @Inject constructor(
         get() = _buildingListLiveData
 
     //TODO: Use Room DB for this too
-    private val _fetchedAddressList = MutableLiveData<List<SearchAddressForLookAroundModel>>()
-    val fetchedAddressList: LiveData<List<SearchAddressForLookAroundModel>>
+    private val _fetchedAddressList = MutableLiveData<SearchAddressForLookAroundModel>()
+    val fetchedAddressList: LiveData<SearchAddressForLookAroundModel>
         get() = _fetchedAddressList
+
+    private val _paginationIdx = MutableLiveData<Int>(0)
+    val paginationIdx: LiveData<Int>
+        get() = _paginationIdx
+
+    private val _totalPages = MutableLiveData<Int>()
+    val totalPages: LiveData<Int>
+        get() = _totalPages
+
+    fun changePaginationIdx(idx: Int) {
+        _paginationIdx.value = idx
+    }
+
+    fun increasePageIdx() {
+        var page = paginationIdx.value
+        if (page != null) {
+            page += 1
+            _paginationIdx.value = page!!
+        }
+    }
+
+    fun removeBuildingsList() {
+        val buildings = _buildingListLiveData.value?.toMutableList()
+        buildings?.clear()
+        _buildingListLiveData.value = buildings!!
+    }
 
     /**
      * 현재 주소를 기준으로 빌딩 리스트 가져오기
      */
-    fun searchBuildingsByAddress(address: String) {
+    fun searchBuildingsByAddress() {
         _buildingListLiveData.value = mutableListOf()
         viewModelScope.launch {
-            val result = searchAddressListRepository.searchBuildingsByAddress(address)
-            _fetchedAddressList.value = result!!
+            val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.cityDistinct!!, _paginationIdx.value!!)
 
-            val nums = arrayListOf<Int>()
-
-            (_fetchedAddressList.value!!.indices).forEach {
-                nums.add(_fetchedAddressList.value!![it].id)
-            }
-            Log.e("nums", nums.toString())
-            nums.map { num ->
-                async {
-                    num to getBuildingInfoById(num)
+            if (result?.addresses.isNullOrEmpty()) {
+                _paginationIdx.value = -1
+            } else {
+                _totalPages.value = result?.totalPages
+                _fetchedAddressList.value = result!!
+                val nums = arrayListOf<Int>()
+                (_fetchedAddressList.value!!.addresses.indices).forEach {
+                    nums.add(_fetchedAddressList.value!!.addresses[it].id)
                 }
-            }.map { it.await() }
+                nums.map { num ->
+                    async {
+                        num to getBuildingInfoById(num)
+                    }
+                }.map { it.await() }
+            }
         }
     }
 
@@ -106,6 +135,7 @@ class LookAroundViewModel @Inject constructor(
     suspend fun getBuildingInfoById(id: Int) {
         val result = buildingRepository.getBuildingsInfoById(id)
         if (result != null) {
+            Log.e("what building is currently being fetched?", result.toString())
             insertBuildingInfoToLocal(result)
             getBuildingInfoFromLocal(id)
         } else {

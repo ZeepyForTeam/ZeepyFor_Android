@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
@@ -25,6 +28,7 @@ import javax.inject.Inject
 class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private val viewModel by viewModels<LookAroundViewModel>()
     @Inject lateinit var userPreferenceManager: UserPreferenceManager
+    private lateinit var buildingsAdapter: LookAroundListAdapter
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -52,11 +56,32 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
-        setToolbar()
         subscribeObservers()
+        setToolbar()
+        setSwipeRefreshLayout()
         changeAddress()
         initRecyclerView()
+        fetchPaginationBuildings()
         setFilteringListener()
+
+        Log.e("list size", binding.rvBuildingList.size.toString())
+    }
+
+    private fun resetPostingList() {
+        viewModel.removeBuildingsList()
+        viewModel.changePaginationIdx(0)
+    }
+
+    private fun setSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.apply {
+            setOnRefreshListener {
+                resetPostingList()
+                viewModel.searchBuildingsByAddress()
+            }
+            viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
+                isRefreshing = false
+            }
+        }
     }
 
     private fun setFilteringListener() {
@@ -66,7 +91,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 R.id.rb_standard_order -> {
                     if (viewModel.selectedAddress.value != null) {
                         // buildings order not preserved (refreshed from api call)
-                        viewModel.searchBuildingsByAddress(viewModel.selectedAddress.value!!.cityDistinct)
+                        viewModel.searchBuildingsByAddress()
                     }
                 }
                 R.id.rb_business -> lessorType = "BUSINESS"
@@ -123,14 +148,54 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         }
     }
 
+    private fun fetchPaginationBuildings() {
+        binding.rvBuildingList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = recyclerView.adapter!!.itemCount - 1
+
+                if (!binding.rvBuildingList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                    buildingsAdapter.deleteLoading()
+                }
+
+
+//                var loading = true
+//
+//                if (dy > 0) {
+//                    val visibleItemCount = layoutManager.childCount
+//                    val totalItemCount = layoutManager.itemCount
+//                    val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
+//
+//                    if (loading) {
+//                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+//                            loading = false
+//                            if (viewModel.paginationIdx.value!! < viewModel.totalPages.value!!) {
+//                                viewModel.increasePageIdx()
+//                                Log.e("You have reached", "THE LAST ITEM!")
+//                                viewModel.searchBuildingsByAddress()
+//                                loading = true
+//                            } else {
+//                                Log.e("No more items to be loaded", "!!")
+//                            }
+//                        }
+//                    }
+//                }
+            }
+        })
+    }
+
     private fun initRecyclerView() {
         binding.rvBuildingList.apply {
-            adapter = LookAroundListAdapter(context) {
+            buildingsAdapter = LookAroundListAdapter(context) {
                 val action = MainFrameFragmentDirections.actionMainFrameFragmentToBuildingDetailFragment(
                     it
                 )
                 requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
+            adapter = buildingsAdapter
             addItemDecoration(ItemDecoration(10, 0))
         }
     }
@@ -153,7 +218,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         viewModel.selectedAddress.observe(viewLifecycleOwner) {
             if (it != null) {
                 Log.e("selectedAddress", " changed")
-                viewModel.searchBuildingsByAddress(it.cityDistinct)
+                viewModel.searchBuildingsByAddress()
             }
         }
     }
