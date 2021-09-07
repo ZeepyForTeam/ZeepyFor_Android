@@ -63,8 +63,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         initRecyclerView()
         fetchPaginationBuildings()
         setFilteringListener()
-
-        Log.e("list size", binding.rvBuildingList.size.toString())
     }
 
     private fun resetPostingList() {
@@ -159,30 +157,9 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
                 if (!binding.rvBuildingList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
                     buildingsAdapter.deleteLoading()
+                    viewModel.increasePageIdx()
+                    viewModel.searchBuildingsByAddress()
                 }
-
-
-//                var loading = true
-//
-//                if (dy > 0) {
-//                    val visibleItemCount = layoutManager.childCount
-//                    val totalItemCount = layoutManager.itemCount
-//                    val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
-//
-//                    if (loading) {
-//                        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-//                            loading = false
-//                            if (viewModel.paginationIdx.value!! < viewModel.totalPages.value!!) {
-//                                viewModel.increasePageIdx()
-//                                Log.e("You have reached", "THE LAST ITEM!")
-//                                viewModel.searchBuildingsByAddress()
-//                                loading = true
-//                            } else {
-//                                Log.e("No more items to be loaded", "!!")
-//                            }
-//                        }
-//                    }
-//                }
             }
         })
     }
@@ -202,7 +179,14 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun subscribeObservers() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
-            (binding.rvBuildingList.adapter as LookAroundListAdapter).submitList(it.toList())
+            buildingsAdapter.setList(it)
+            Log.e("items in adapter", buildingsAdapter.itemCount.toString())
+            buildingsAdapter.notifyItemRangeInserted(
+                viewModel.fetchedBuildingsCount.value?.minus(
+                    viewModel.fetchedAddressList.value?.addresses?.size!!
+                )!!,
+                viewModel.fetchedAddressList.value?.addresses?.size!!
+            )
         }
         viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
             if (addresses.isNullOrEmpty()) {

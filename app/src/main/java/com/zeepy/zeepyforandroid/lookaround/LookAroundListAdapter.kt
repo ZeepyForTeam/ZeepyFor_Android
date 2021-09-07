@@ -28,19 +28,29 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): LookAroundListViewHolder {
-        val binding = ItemLookaroundBuildingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return LookAroundListViewHolder(binding)
+    ): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_ITEM -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemLookaroundBuildingBinding.inflate(layoutInflater, parent, false)
+                LookAroundListViewHolder(binding)
+            }
+            else -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemLoadingBinding.inflate(layoutInflater, parent, false)
+                LoadingViewHolder(binding)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = getItem(position)
-        val features = arrayListOf<BuildingFeatureModel>()
-
         if (holder is LookAroundListViewHolder) {
             holder.binding.rvBuildingFeatures.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             }
+            val safePosition = holder.bindingAdapterPosition
+            val item = items[safePosition]
+            val features = arrayListOf<BuildingFeatureModel>()
 
             holder.binding.setVariable(BR.data, item)
             holder.binding.root.setOnClickListener {

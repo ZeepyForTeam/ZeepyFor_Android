@@ -58,6 +58,10 @@ class LookAroundViewModel @Inject constructor(
     val totalPages: LiveData<Int>
         get() = _totalPages
 
+    private val _fetchedBuildingsCount = MutableLiveData<Int>(0)
+    val fetchedBuildingsCount: LiveData<Int>
+        get() = _fetchedBuildingsCount
+
     fun changePaginationIdx(idx: Int) {
         _paginationIdx.value = idx
     }
@@ -80,7 +84,6 @@ class LookAroundViewModel @Inject constructor(
      * 현재 주소를 기준으로 빌딩 리스트 가져오기
      */
     fun searchBuildingsByAddress() {
-        _buildingListLiveData.value = mutableListOf()
         viewModelScope.launch {
             val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.cityDistinct!!, _paginationIdx.value!!)
 
@@ -89,6 +92,7 @@ class LookAroundViewModel @Inject constructor(
             } else {
                 _totalPages.value = result?.totalPages
                 _fetchedAddressList.value = result!!
+                _fetchedBuildingsCount.value = _fetchedBuildingsCount.value?.plus(result.addresses.size)
                 val nums = arrayListOf<Int>()
                 (_fetchedAddressList.value!!.addresses.indices).forEach {
                     nums.add(_fetchedAddressList.value!!.addresses[it].id)
@@ -145,6 +149,7 @@ class LookAroundViewModel @Inject constructor(
 
     suspend fun getBuildingInfoFromLocal(id: Int) {
         try {
+            Log.e("buildingListLiveData", _buildingListLiveData.value.toString())
             zeepyLocalRepository.fetchBuildingById(id).collect {
                 _buildingListLiveData.plusAssign(it)
             }
@@ -154,9 +159,13 @@ class LookAroundViewModel @Inject constructor(
     }
 
     operator fun <T> MutableLiveData<MutableList<T>>.plusAssign(newValue: T) {
-        val value = this.value
-        value?.add(newValue)
-        this.value = value
+        if (this.value == null) {
+            this.value = mutableListOf(newValue)
+        } else {
+            val value = this.value
+            value?.add(newValue)
+            this.value = value
+        }
     }
 
     suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {
