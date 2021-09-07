@@ -12,7 +12,6 @@
         <variable
             name="view"
             type="android.view.View" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -296,7 +295,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:text="@string/approve_zeepy_terms_signup"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="11sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/checkbox_terms_approve"
             app:layout_constraintStart_toEndOf="@id/checkbox_terms_approve"
             app:layout_constraintTop_toTopOf="@id/checkbox_terms_approve" />
@@ -310,7 +309,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:text="@string/approve_personal_info"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="11sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/checkbox_approve_personal_info"
             app:layout_constraintStart_toEndOf="@id/checkbox_approve_personal_info"
             app:layout_constraintTop_toTopOf="@id/checkbox_approve_personal_info" />
@@ -365,7 +364,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="약관보기"
             android:textColor="@color/zeepy_blue_5f"
-            android:textSize="11sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/textview_terms_approve"
             app:layout_constraintStart_toEndOf="@+id/textview_terms_approve"
             app:layout_constraintTop_toTopOf="@id/textview_terms_approve" />
@@ -378,7 +377,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="약관보기"
             android:textColor="@color/zeepy_blue_5f"
-            android:textSize="11sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/textview_approve_personal_info"
             app:layout_constraintStart_toEndOf="@+id/textview_approve_personal_info"
             app:layout_constraintTop_toTopOf="@id/textview_approve_personal_info" />

@@ -15,10 +15,9 @@ import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import com.zeepy.zeepyforandroid.util.NetworkStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel

@@ -11,8 +11,6 @@ import com.zeepy.zeepyforandroid.map.usecase.GetBuildingsByLocationUseCase
 import com.zeepy.zeepyforandroid.map.usecase.util.data
 import com.zeepy.zeepyforandroid.map.usecase.util.succeeded
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

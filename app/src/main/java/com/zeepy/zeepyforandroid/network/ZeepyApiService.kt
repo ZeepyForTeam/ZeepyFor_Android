@@ -6,20 +6,20 @@ import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
-import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
-import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
-import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.*
 import com.zeepy.zeepyforandroid.imagecontrol.PreSignedUrlDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
-import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+
+
+import io.reactivex.rxjava3.core.Single
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -112,4 +112,11 @@ interface ZeepyApiService {
 
     @DELETE("/api/community/{id}")
     fun deletePosting(@Path ("id") communityId: Int): Completable
+
+
+    @Multipart
+    @Headers(value = ["Accept:*/*"])
+    @POST("api/s3")
+    fun postImages(@Part file: ArrayList<MultipartBody.Part?>): Single<ResponseImageUrls>
+
 }

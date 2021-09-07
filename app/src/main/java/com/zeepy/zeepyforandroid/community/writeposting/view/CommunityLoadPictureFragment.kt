@@ -1,5 +1,7 @@
 package com.zeepy.zeepyforandroid.community.writeposting.view
 
+import android.content.ContentResolver
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -26,9 +29,10 @@ import com.zeepy.zeepyforandroid.review.view.HousePictureFragment.Companion.PERM
 import com.zeepy.zeepyforandroid.review.view.adapter.UploadPictureAdapter
 import com.zeepy.zeepyforandroid.util.FileConverter.asBitmap
 import com.zeepy.zeepyforandroid.util.FileConverter.asMultipart
+import com.zeepy.zeepyforandroid.util.FileConverter.convertMultipart
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import com.zeepy.zeepyforandroid.util.UriHelper.getFileFromUri
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -55,10 +59,6 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changeRequestPosting(args.requestWritePosting)
-
-        viewModel.uploadUriImages.observe(viewLifecycleOwner) {
-            Log.e("uri ruiruir", "$it")
-        }
 
         setPictureList()
         setRegisterButton()
@@ -118,16 +118,19 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     private val galleryActivityLauncher =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { imageList ->
             imageList.forEach { uri ->
-                Log.e("dfjnrijgnwierbni", "${uri.path}")
-                val bitmap = uri.asBitmap(requireContext().contentResolver)
-                val requestBody = BitmapRequestBody(bitmap!!)
-                val multipartBody = MultipartBody.Part.createFormData("imgs","zeepy", requestBody)
-                val multipart = uri.asMultipart("imgs", requireContext().contentResolver)
+                Log.e("picture", "${uri}")
+                Log.e("picture", "${uri.path}")
+                val bitmap = PictureModel(uri.asBitmap(requireContext().contentResolver))
+                pictures.add(bitmap)
+                val bitmapRequestBody = BitmapRequestBody(bitmap.image!!)
+                val multipartBody = MultipartBody.Part.createFormData("img", "zeepy", bitmapRequestBody)
 
+                Log.e("file", "${getFileFromUri(requireContext(), uri)}")
+                viewModel.addFile(getFileFromUri(requireContext(), uri))
 
-                viewModel.addRequestBodyList(multipart)
-                pictures.add(PictureModel(bitmap))
-                viewModel.addUploadUriImages(uri)
+//                viewModel.addUploadMultipartBody(multipartBody)
+                viewModel.addUploadMultipartBody(uri.asMultipart(requireContext().contentResolver))
+
                 viewModel.changeUploadPictures(pictures)
             }
         }
@@ -135,9 +138,16 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     private val cameraActivityLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if (isSaved) {
-                pictures.add(PictureModel(pictureUri.asBitmap(requireContext().contentResolver)))
-//                viewModel.addRequestBodyList(BitmapRequestBody(pictureUri.asBitmap(requireContext().contentResolver)!!))
-                viewModel.addUploadUriImages(pictureUri)
+                Log.e("picture", "${pictureUri}")
+                Log.e("picture", "${pictureUri.path}")
+
+                viewModel.addFile(getFileFromUri(requireContext(), pictureUri))
+                val bitmap = pictureUri.asBitmap(requireContext().contentResolver)
+                pictures.add(PictureModel(bitmap))
+//                viewModel.addUploadMultipartBody(pictureUri.asMultipart("imgs", requireContext().contentResolver))
+
+                val multipartBody = MultipartBody.Part.createFormData("file", "zeepy", BitmapRequestBody(bitmap!!))
+                viewModel.addUploadMultipartBody(pictureUri.asMultipart(requireContext().contentResolver))
                 viewModel.changeUploadPictures(pictures)
             }
         }
@@ -157,9 +167,9 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     private fun stagePictures() {
-        viewModel.uploadBitmapImages.observe(viewLifecycleOwner) {
+        viewModel.bitmapImages.observe(viewLifecycleOwner) {
             (binding.rvHousePictures.adapter as UploadPictureAdapter).apply {
-                submitList(viewModel.uploadBitmapImages.value?.toList())
+                submitList(viewModel.bitmapImages.value?.toList())
             }
             binding.btnRegister.setText("등록하기")
             changeVisibility()
@@ -167,7 +177,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     private fun changeVisibility() {
-        if (viewModel.uploadBitmapImages.value.isNullOrEmpty()) {
+        if (viewModel.bitmapImages.value.isNullOrEmpty()) {
             binding.tvUploadImages.visibility = View.GONE
             binding.rvHousePictures.visibility = View.GONE
         } else {
@@ -191,26 +201,12 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
                 }
 
                 override fun clickRightButton(dialog: ZeepyDialog) {
-                    uploadPosting()
+                    viewModel.uploadImages()
+                    dialog.dismiss()
+                    findNavController().popBackStack()
                 }
             }).build()
         registerReviewDialog.show(childFragmentManager, this.tag)
-    }
-
-    private fun uploadPosting() {
-        Log.e("datas", "${viewModel.requestWritePosting.value}")
-
-        if(viewModel.requestBodyImages.value.isNullOrEmpty()) {
-            Log.e("datas", "${viewModel.requestWritePosting}")
-            viewModel.getPresignedUrl(requireContext().contentResolver)
-        } else {
-            viewModel.getPresignedUrl(requireContext().contentResolver)
-//            viewModel.uploadPostingToZeepyServer()
-        }
-
-        viewModel.multipartBodyUrlPair.observe(viewLifecycleOwner) {
-//            viewModel.uploadPostingToZeepyServer()
-        }
     }
 
     private fun successUpload() {
@@ -223,9 +219,37 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     }
 
     inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
-        override fun contentType(): MediaType = "multipart/form-data".toMediaType()
+        override fun contentType(): MediaType = "image/jpeg".toMediaType()
         override fun writeTo(sink: BufferedSink) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, sink.outputStream())
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, sink.outputStream())
+        }
+    }
+
+
+    companion object{
+        const val PICK_ANY_FILE = 100
+        /* get actual file name or extension */
+        fun Context.getFileExtension(uri: Uri): String? = when (uri.scheme) {
+            // get file extension
+            ContentResolver.SCHEME_FILE -> File(uri.path!!).extension
+            // get actual name of file
+            //ContentResolver.SCHEME_FILE -> File(uri.path!!).name
+            ContentResolver.SCHEME_CONTENT -> getCursorContent(uri)
+            else -> null
+        }
+
+        private fun Context.getCursorContent(uri: Uri): String? = try {
+            contentResolver.query(uri, null, null, null, null)?.let { cursor ->
+                cursor.run {
+                    val mimeTypeMap: MimeTypeMap = MimeTypeMap.getSingleton()
+                    if (moveToFirst()) mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
+                    // case for get actual name of file
+                    //if (moveToFirst()) getString(getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                    else null
+                }.also { cursor.close() }
+            }
+        } catch (e: Exception) {
+            null
         }
     }
 }

@@ -94,6 +94,12 @@
 
         <argument android:name="postingModel"
             app:argType="com.zeepy.zeepyforandroid.community.data.entity.PostingListModel"/>
+        <action
+            android:id="@+id/action_postingDetailFragment_to_writeShareOrFriendsFragment"
+            app:destination="@id/writeShareOrFriendsFragment" />
+        <action
+            android:id="@+id/action_postingDetailFragment_to_writeGroupPurchaseFragment"
+            app:destination="@id/writeGroupPurchaseFragment" />
 
     </fragment>
 
@@ -167,7 +173,8 @@
         tools:layout="@layout/fragment_write_group_purchase">
         <action
             android:id="@+id/action_writeGroupPurchaseFragment_to_communityLoadPictureFragment"
-            app:destination="@id/communityLoadPictureFragment" />
+            app:destination="@id/communityLoadPictureFragment"
+            app:popUpTo="@id/mainFrameFragment"/>
     </fragment>
 
     <fragment
@@ -180,7 +187,8 @@
             app:argType="string" />
         <action
             android:id="@+id/action_writeShareOrFriendsFragment_to_communityLoadPictureFragment"
-            app:destination="@id/communityLoadPictureFragment" />
+            app:destination="@id/communityLoadPictureFragment"
+            app:popUpTo="@id/mainFrameFragment"/>
     </fragment>
 
     <fragment

@@ -1,7 +1,8 @@
 package com.zeepy.zeepyforandroid.localdata
 
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
-import io.reactivex.Maybe
+import io.reactivex.rxjava3.core.Maybe
+
 
 interface ZeepyLocalRepository {
     fun fetchAddressList(): Maybe<List<LocalAddressEntity>>

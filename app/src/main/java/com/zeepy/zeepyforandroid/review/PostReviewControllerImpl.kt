@@ -2,7 +2,7 @@ package com.zeepy.zeepyforandroid.review
 
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class PostReviewControllerImpl @Inject constructor(

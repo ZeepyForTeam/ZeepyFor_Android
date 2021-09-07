@@ -17,6 +17,7 @@ import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
 import com.zeepy.zeepyforandroid.community.data.entity.CommentModel
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ParticipationDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
@@ -29,6 +30,7 @@ import com.zeepy.zeepyforandroid.util.NetworkStatus
 import com.zeepy.zeepyforandroid.util.ext.hideKeyboard
 import com.zeepy.zeepyforandroid.util.ext.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.IllegalArgumentException
 
 @AndroidEntryPoint
 class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
@@ -48,6 +50,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changePostingId(args.postingModel.id)
 
+
         setToolbar()
         setPictureRecyclerview()
         getPostingDetailContent()
@@ -60,6 +63,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         setComments()
         interceptBackPressed()
         modifyPosting()
+
     }
 
     private fun setToolbar() {
@@ -115,6 +119,8 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     private fun changePostingDatas() {
         viewModel.postingDetail.observe(viewLifecycleOwner) { postingdetail ->
+            Log.e("tag","${postingdetail.data?.typePosting}")
+
             when(postingdetail.status) {
                 NetworkStatus.State.LOADING -> {
                     controlLoadingAnimation(true)
@@ -286,7 +292,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.ivModifyPosting.setOnClickListener {
             val modifyBottomSheet = ModifyBottomSheetDialogFragment(object : ModifyBottomSheetDialogFragment.ModifyPostingListener{
                 override fun modify() {
-                    TODO("Not yet implemented")
+                    moveToModify()
                 }
 
                 override fun delete() {
@@ -299,6 +305,16 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
             if (isDeleted) {
                 findNavController().popBackStack()
             }
+        }
+    }
+
+    private fun moveToModify() {
+        when(viewModel.postingDetail.value?.data?.typePosting) {
+            "공구" ->
+                findNavController().navigate(R.id.action_postingDetailFragment_to_writeGroupPurchaseFragment)
+            "나눔", "친구" ->
+                findNavController().navigate(R.id.action_postingDetailFragment_to_writeGroupPurchaseFragment)
+            else -> throw IllegalArgumentException("error posting type")
         }
     }
 
