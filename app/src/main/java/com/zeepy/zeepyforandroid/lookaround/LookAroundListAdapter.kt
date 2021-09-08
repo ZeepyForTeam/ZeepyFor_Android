@@ -50,6 +50,7 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
             }
             val safePosition = holder.bindingAdapterPosition
             val item = items[safePosition]
+            Log.e("item in onBind", item.toString())
             val features = arrayListOf<BuildingFeatureModel>()
 
             holder.binding.setVariable(BR.data, item)
