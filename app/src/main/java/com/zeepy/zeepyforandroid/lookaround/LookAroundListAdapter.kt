@@ -48,9 +48,8 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
             holder.binding.rvBuildingFeatures.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             }
-            val safePosition = holder.bindingAdapterPosition
-            val item = items[safePosition]
-            Log.e("item in onBind", item.toString())
+
+            val item = items[position]
             val features = arrayListOf<BuildingFeatureModel>()
 
             holder.binding.setVariable(BR.data, item)
@@ -91,6 +90,14 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
     fun setList(buildings: MutableList<BuildingSummaryModel>) {
         items.addAll(buildings)
         items.add(BuildingSummaryModel(-1, " ", " ", " ", " ", " ", " ", -1, -1, -1.0, -1.0, -1.0, " "))
+    }
+
+    fun setListWithoutLoading(buildings: MutableList<BuildingSummaryModel>) {
+        items.addAll(buildings)
+    }
+
+    fun clearList() {
+        items.clear()
     }
 
     fun deleteLoading() {

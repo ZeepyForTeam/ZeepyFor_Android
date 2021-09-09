@@ -16,6 +16,7 @@ object AddressMapper {
                 it.toDomainModel()
             },
             totalPages,
+            last,
             number
         )
     }

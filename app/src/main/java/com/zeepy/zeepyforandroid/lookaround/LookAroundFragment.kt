@@ -39,7 +39,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getAddressListFromServer()
+        viewModel.fetchAddressListFromLocal()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,12 +68,15 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private fun resetPostingList() {
         viewModel.removeBuildingsList()
         viewModel.changePaginationIdx(0)
+        viewModel.resetIsLastPage()
     }
 
     private fun setSwipeRefreshLayout() {
         binding.swipeRefreshLayout.apply {
             setOnRefreshListener {
                 resetPostingList()
+                buildingsAdapter.clearList()
+                buildingsAdapter.notifyDataSetChanged()
                 viewModel.searchBuildingsByAddress()
             }
             viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
@@ -89,7 +92,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 R.id.rb_standard_order -> {
                     if (viewModel.selectedAddress.value != null) {
                         // buildings order not preserved (refreshed from api call)
-                        viewModel.searchBuildingsByAddress()
+                        //viewModel.searchBuildingsByAddress()
                     }
                 }
                 R.id.rb_business -> lessorType = "BUSINESS"
@@ -154,9 +157,13 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
                 val itemTotalCount = recyclerView.adapter!!.itemCount - 1
+                Log.e("lastVisibleItemPosition", lastVisibleItemPosition.toString())
+                Log.e("itemTotalCount", itemTotalCount.toString())
 
-                if (!binding.rvBuildingList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                if (!binding.rvBuildingList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && viewModel.isLastPage.value == false
+                    && buildingsAdapter.itemCount > 0) {
                     buildingsAdapter.deleteLoading()
+                    viewModel.buildingListLiveData.value?.clear()
                     viewModel.increasePageIdx()
                     viewModel.searchBuildingsByAddress()
                 }
@@ -179,14 +186,25 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun subscribeObservers() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
-            buildingsAdapter.setList(it)
-            Log.e("items in adapter", buildingsAdapter.itemCount.toString())
-            buildingsAdapter.notifyItemRangeInserted(
-                viewModel.fetchedBuildingsCount.value?.minus(
-                    viewModel.fetchedAddressList.value?.addresses?.size!!
-                )!!,
-                viewModel.fetchedAddressList.value?.addresses?.size!!
-            )
+            if (it.size == viewModel.fetchedBuildingsCount.value && it.size != 0) {
+                Log.e("page content?", viewModel.buildingListLiveData.value.toString())
+
+                Log.e("isLastPage", viewModel.isLastPage.value.toString())
+                buildingsAdapter.notifyItemRemoved(buildingsAdapter.itemCount)
+                val prevLastItemPosition = if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
+                if (viewModel.isLastPage.value != true) {
+                    buildingsAdapter.setList(it)
+                } else {
+                    buildingsAdapter.setListWithoutLoading(it)
+                }
+                Log.e("items in adapter", buildingsAdapter.itemCount.toString())
+                Log.e("prevLastItemPosition", prevLastItemPosition.toString())
+                Log.e("fetchedBuildingCount", (buildingsAdapter.itemCount - prevLastItemPosition).toString())
+                buildingsAdapter.notifyItemRangeInserted(
+                    prevLastItemPosition,
+                    buildingsAdapter.itemCount - prevLastItemPosition
+                )
+            }
         }
         viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
             if (addresses.isNullOrEmpty()) {

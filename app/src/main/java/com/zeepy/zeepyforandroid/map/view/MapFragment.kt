@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -100,6 +101,31 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         binding.viewModel = viewModel
         binding.bottomSheetMap.viewModel = viewModel
 
+        subscribeObservers()
+        setOptionButton()
+        setToolbar()
+        initMap()
+        initBottomSheet()
+
+        // 현재위치 버튼 클릭 시 permission 요청 (TODO: 요청 시점 수정될 수도)
+        // FIXME: 아마 처음 지도 실행 시 현재위치 기준으로 mapCenterPoint를 가져와야 할 것 같음
+        myLocationButton.setOnClickListener { getGpsLocation() }
+        mapView.setPOIItemEventListener(markerEventListener)
+        mapView.setMapViewEventListener(mapViewEventListener)
+        binding.edittextSearchMap.setOnClickListener {
+            findNavController().navigate(R.id.action_mapFragment_to_searchBuildingFragment)
+        }
+        binding.edittextSearchMap.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                findNavController().navigate(R.id.action_mapFragment_to_searchBuildingFragment)
+            }
+        }
+
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
+
+    }
+
+    private fun initMap() {
         // 동적으로 지도뷰 & 지도 위 버튼들 추가
         mapView = MapView(activity)
         mapViewContainer = binding.mapViewContainer
@@ -110,16 +136,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             marginStart = MetricsConverter.dpToPixel(16F, context).toInt()
             topMargin = MetricsConverter.dpToPixel(16F, context).toInt()
         }
+    }
 
-        // 현재위치 버튼 클릭 시 permission 요청 (TODO: 요청 시점 수정될 수도)
-        // FIXME: 아마 처음 지도 실행 시 현재위치 기준으로 mapCenterPoint를 가져와야 할 것 같음
-        myLocationButton.setOnClickListener { getGpsLocation() }
-
-        setOptionButton()
-        setToolbar()
-        mapView.setPOIItemEventListener(markerEventListener)
-        mapView.setMapViewEventListener(mapViewEventListener)
-
+    private fun initBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetMap.root)
         bottomSheetBehavior.apply {
             this.setPeekHeight(200, true)
@@ -127,10 +146,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             this.state = BottomSheetBehavior.STATE_HIDDEN
             this.skipCollapsed = true
         }
+    }
 
-        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
-
-        // FIXME: Make this an observer function
+    private fun subscribeObservers() {
         viewModel.fetchBuildingsResponse.observe(viewLifecycleOwner, { result ->
             when (result) {
                 is Result.Success -> {
@@ -290,6 +308,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 mapHelper.setMapMetrics()
                 mapHelper.setFourPoints()
 
+                //Log.e("four points", "" + mapHelper.bottomRightLat + " " + mapHelper.topLeftLat + " " + mapHelper.topLeftLng + " " + mapHelper.bottomRightLng)
                 Handler(Looper.getMainLooper()).postDelayed({
                     viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
                 }, 1500)

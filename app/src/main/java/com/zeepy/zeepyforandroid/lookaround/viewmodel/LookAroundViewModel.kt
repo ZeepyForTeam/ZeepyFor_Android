@@ -62,6 +62,14 @@ class LookAroundViewModel @Inject constructor(
     val fetchedBuildingsCount: LiveData<Int>
         get() = _fetchedBuildingsCount
 
+    private val _isLastPage = MutableLiveData<Boolean>(false)
+    val isLastPage: LiveData<Boolean>
+        get() = _isLastPage
+
+    fun resetIsLastPage() {
+        _isLastPage.value = false
+    }
+
     fun changePaginationIdx(idx: Int) {
         _paginationIdx.value = idx
     }
@@ -87,21 +95,27 @@ class LookAroundViewModel @Inject constructor(
         viewModelScope.launch {
             val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.cityDistinct!!, _paginationIdx.value!!)
 
-            if (result?.addresses.isNullOrEmpty()) {
-                _paginationIdx.value = -1
-            } else {
-                _totalPages.value = result?.totalPages
-                _fetchedAddressList.value = result!!
-                _fetchedBuildingsCount.value = _fetchedBuildingsCount.value?.plus(result.addresses.size)
-                val nums = arrayListOf<Int>()
-                (_fetchedAddressList.value!!.addresses.indices).forEach {
-                    nums.add(_fetchedAddressList.value!!.addresses[it].id)
+            when {
+                result?.addresses.isNullOrEmpty() -> {
+                    _paginationIdx.value = -1
                 }
-                nums.map { num ->
-                    async {
-                        num to getBuildingInfoById(num)
+                else -> {
+                    _totalPages.value = result?.totalPages
+                    _fetchedAddressList.value = result!!
+                    _fetchedBuildingsCount.value = result.addresses.size
+                    if (result.last) {
+                        _isLastPage.value = true
                     }
-                }.map { it.await() }
+                    val nums = arrayListOf<Int>()
+                    (_fetchedAddressList.value!!.addresses.indices).forEach {
+                        nums.add(_fetchedAddressList.value!!.addresses[it].id)
+                    }
+                    nums.map { num ->
+                        async {
+                            num to getBuildingInfoById(num)
+                        }
+                    }.map { it.await() }
+                }
             }
         }
     }

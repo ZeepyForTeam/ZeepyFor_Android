@@ -67,7 +67,18 @@
         android:id="@+id/mapFragment"
         android:name="com.zeepy.zeepyforandroid.map.view.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map"/>
+        tools:layout="@layout/fragment_map">
+
+        <action
+            android:id="@+id/action_mapFragment_to_searchBuildingFragment"
+            app:destination="@+id/searchBuildingFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchBuildingFragment"
+        android:name="com.zeepy.zeepyforandroid.map.view.SearchBuildingFragment"
+        android:label="fragment_search_building"
+        tools:layout="@layout/fragment_search_building"/>
 
     <fragment
         android:id="@+id/reviewFrameFragment"
