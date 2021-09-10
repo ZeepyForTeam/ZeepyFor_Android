@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.BR
 import com.zeepy.zeepyforandroid.databinding.ItemSearchAddressListBinding
+import com.zeepy.zeepyforandroid.databinding.ItemSearchBuildingListBinding
 import com.zeepy.zeepyforandroid.map.data.BuildingModel
 import com.zeepy.zeepyforandroid.map.data.ResultSearchKeyword
 import com.zeepy.zeepyforandroid.util.DiffCallback
@@ -18,7 +19,7 @@ class SearchBuildingAdapter(val listener: SelectBuildingInterface): ListAdapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchBuildingViewHolder {
-        val binding = ItemSearchAddressListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemSearchBuildingListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SearchBuildingViewHolder(binding)
     }
 
@@ -32,5 +33,5 @@ class SearchBuildingAdapter(val listener: SelectBuildingInterface): ListAdapter<
         }
     }
 
-    class SearchBuildingViewHolder(val binding: ItemSearchAddressListBinding): RecyclerView.ViewHolder(binding.root)
+    class SearchBuildingViewHolder(val binding: ItemSearchBuildingListBinding): RecyclerView.ViewHolder(binding.root)
 }

@@ -1,25 +1,25 @@
 package com.zeepy.zeepyforandroid.map.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentSearchBuildingBinding
 import com.zeepy.zeepyforandroid.map.SearchBuildingAdapter
 import com.zeepy.zeepyforandroid.map.data.BuildingModel
-import com.zeepy.zeepyforandroid.map.data.ResultSearchKeyword
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
-import com.zeepy.zeepyforandroid.review.view.adapter.SearchAddressAdapter
 import com.zeepy.zeepyforandroid.util.ext.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class SearchBuildingFragment : BaseFragment<FragmentSearchBuildingBinding>() {
-    private val viewModel by viewModels<MapViewModel>()
+    private val viewModel: MapViewModel by activityViewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -39,13 +39,14 @@ class SearchBuildingFragment : BaseFragment<FragmentSearchBuildingBinding>() {
     }
 
 
-
     private fun setSearchBuildingAdapter() {
         binding.layoutSearchAddress.recyclerviewResult.adapter = SearchBuildingAdapter(object : SearchBuildingAdapter.SelectBuildingInterface{
-            override fun selectAddress(address: BuildingModel) {
-                // viewModel call setPlaceOnMap
+            override fun selectAddress(building: BuildingModel) {
+                // go back to map with this building selected and and have Zeepy Buildings nearby show up too
+                viewModel.updatePlaceSelectedFromSearch(building)
 
                 // popBackStack to Map Fragment
+                findNavController().popBackStack()
             }
         })
         viewModel.resultSearchedBuildings.observe(viewLifecycleOwner) {
@@ -55,7 +56,12 @@ class SearchBuildingFragment : BaseFragment<FragmentSearchBuildingBinding>() {
 
     private fun setSearchOnClickListener() {
         binding.layoutSearchAddress.buttonSearch.setOnClickListener {
-            viewModel.searchBuilding(binding.layoutSearchAddress.etSearchAddress.text.toString())
+
+            viewModel.searchBuildingByKeyword(binding.layoutSearchAddress.etSearchAddress.text.toString())
+            if (viewModel.resultSearchedBuildings.value.isNullOrEmpty()) {
+                viewModel.searchBuildingByAddress(binding.layoutSearchAddress.etSearchAddress.text.toString())
+            }
+
         }
     }
 }

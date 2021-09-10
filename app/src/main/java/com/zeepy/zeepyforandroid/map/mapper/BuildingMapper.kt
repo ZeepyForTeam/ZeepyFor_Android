@@ -1,9 +1,7 @@
 package com.zeepy.zeepyforandroid.map.mapper
 
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
-import com.zeepy.zeepyforandroid.map.data.BuildingModel
-import com.zeepy.zeepyforandroid.map.data.Place
-import com.zeepy.zeepyforandroid.map.data.ResultSearchKeyword
+import com.zeepy.zeepyforandroid.map.data.*
 import com.zeepy.zeepyforandroid.map.mapper.BuildingMapper.toDomainModel
 
 object BuildingMapper {
@@ -23,6 +21,7 @@ object BuildingMapper {
             latitude = this.latitude,
             longitude = this.longitude,
             reviews = this.reviews,
+            fullNumberAddress = this.fullNumberAddress,
             fullRoadNameAddress = this.fullRoadNameAddress,
             shortRoadNameAddress = this.shortRoadNameAddress,
             buildYear = this.buildYear
@@ -40,13 +39,36 @@ object BuildingMapper {
             id = this.id.toInt(),
             apartmentName = this.place_name,
             areaCode = -1,
-            shortAddress = this.address_name,
+            fullNumberAddress = this.address_name,
             shortRoadNameAddress = this.road_address_name,
+            shortAddress = this.address_name,
             latitude = this.y.toDouble(),
             longitude = this.x.toDouble(),
             fullRoadNameAddress = this.road_address_name,
             buildYear = -1,
             reviews = emptyList()
+        )
+    }
+
+    fun ResultSearchAddress.toDomainModel(): List<BuildingModel> {
+        return this.documents.map {
+            it.toDomainModel()
+        }
+    }
+
+    fun Content.toDomainModel(): BuildingModel {
+        return BuildingModel(
+            id = -1,
+            fullRoadNameAddress = this.address_name,
+            fullNumberAddress = this.address_name,
+            areaCode = -1,
+            shortAddress = this.address_name,
+            latitude = this.y.toDouble(),
+            longitude = this.x.toDouble(),
+            buildYear = null,
+            reviews = emptyList(),
+            apartmentName = null,
+            shortRoadNameAddress = this.address_name
         )
     }
 }

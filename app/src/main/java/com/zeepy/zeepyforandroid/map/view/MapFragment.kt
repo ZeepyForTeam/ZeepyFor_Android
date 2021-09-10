@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -66,7 +67,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             }
         }
     private lateinit var resizeAnimation: WidthResizeAnimation
-    private val viewModel: MapViewModel by viewModels<MapViewModel>()
+    private val viewModel: MapViewModel by activityViewModels()
     private var buildings = listOf<BuildingModel>()
     private var markers = mutableListOf<MapPOIItem>()
     private var lastSelectedMarkerOriginalImage: Int = -1
@@ -74,10 +75,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private val markerEventListener = MarkerEventListener(context)
     private val mapViewEventListener = MapViewEventListener(context)
     private var currentZoomLevel = 2
-    private var currentMapCenterPoint: MapPoint? = null
     private var mapDisplayOffset: Float = 0F
     private val firstTimeBeingAddedMarkerMap: HashMap<Int, Boolean> = HashMap()
-
+    // TODO: Could probably use a single MapHelper instance declared here
 
     companion object {
         val LOCATION_PERMISSIONS = arrayOf(
@@ -115,13 +115,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         binding.edittextSearchMap.setOnClickListener {
             findNavController().navigate(R.id.action_mapFragment_to_searchBuildingFragment)
         }
-        binding.edittextSearchMap.setOnFocusChangeListener { v, hasFocus ->
+        binding.edittextSearchMap.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 findNavController().navigate(R.id.action_mapFragment_to_searchBuildingFragment)
             }
         }
-
-        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
     }
 
@@ -192,6 +190,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 }
             }
         })
+        viewModel.placeSelectedFromSearch.observe(viewLifecycleOwner) {
+            mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(it.latitude, it.longitude), false)
+
+            //Get the four corners and show ZEEPY buildings in this area, if there are any.
+            mapDisplayOffset = binding.mapToolbar.height + binding.edittextSearchMap.height + MetricsConverter.dpToPixel(16F, context)
+            mapHelper = MapHelper(requireActivity(), currentZoomLevel,
+                viewModel.currentCenterPoint.value!!, mapDisplayOffset)
+            mapHelper.setMapMetrics()
+            mapHelper.setFourPoints()
+        }
     }
 
     /**
@@ -293,18 +301,24 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
      */
     inner class MapViewEventListener(val context: Context?): MapView.MapViewEventListener {
         override fun onMapViewInitialized(p0: MapView?) {
-            currentMapCenterPoint = p0?.mapCenterPoint
+            viewModel.updateCenterPoint(p0?.mapCenterPoint!!)
+
+            // TODO: Thought about getting the Buildings data within the visible area on map initialization for the first time and again for different visible areas for space optimization
+            // TODO: But, for now just get the whole buildings data at once
+
+
         }
 
         override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
-            currentMapCenterPoint = p1
+            viewModel.updateCenterPoint(p1!!)
         }
 
         override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
             currentZoomLevel = p1
             if (currentZoomLevel < 3) {
                 mapDisplayOffset = binding.mapToolbar.height + binding.edittextSearchMap.height + MetricsConverter.dpToPixel(16F, context)
-                mapHelper = MapHelper(requireActivity(), currentZoomLevel, currentMapCenterPoint!!, mapDisplayOffset)
+                mapHelper = MapHelper(requireActivity(), currentZoomLevel,
+                    viewModel.currentCenterPoint.value!!, mapDisplayOffset)
                 mapHelper.setMapMetrics()
                 mapHelper.setFourPoints()
 
@@ -355,7 +369,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
             if (currentZoomLevel < 3) {
                 mapDisplayOffset = binding.mapToolbar.height + binding.edittextSearchMap.height + MetricsConverter.dpToPixel(16F, context)
-                mapHelper = MapHelper(requireActivity(), currentZoomLevel, currentMapCenterPoint!!, mapDisplayOffset)
+                mapHelper = MapHelper(requireActivity(), currentZoomLevel,
+                    viewModel.currentCenterPoint.value!!, mapDisplayOffset)
                 mapHelper.setMapMetrics()
                 mapHelper.setFourPoints()
 
@@ -448,9 +463,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     }
 
-    private fun setSelectedMarkerOverlay(index: Int) {
-
-    }
+//    private fun setSelectedMarkerOverlay(index: Int) {
+//
+//    }
 
     /**
      * 마커 객체를 복사하는 함수
