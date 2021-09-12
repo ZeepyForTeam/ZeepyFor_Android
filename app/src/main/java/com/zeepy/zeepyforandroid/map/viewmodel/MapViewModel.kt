@@ -97,7 +97,7 @@ class MapViewModel @Inject constructor(
 
     fun searchBuildingByKeyword(address: String) {
         kakaoApi.getSearchKeyword(
-            BuildConfig.KAKAO_REST_API_KEY,
+            "KakaoAK " + BuildConfig.KAKAO_REST_API_KEY,
             query = address,
             x = currentCenterPoint.value?.mapPointGeoCoord?.longitude?.toBigDecimal()?.toPlainString()!!,
             y = currentCenterPoint.value?.mapPointGeoCoord?.latitude?.toBigDecimal()?.toPlainString()!!
@@ -120,7 +120,9 @@ class MapViewModel @Inject constructor(
     }
 
     fun searchBuildingByAddress(address: String) {
-        kakaoApi.getSearchAddress(BuildConfig.KAKAO_REST_API_KEY, query = address)
+        kakaoApi.getSearchAddress(
+            "KakaoAK " + BuildConfig.KAKAO_REST_API_KEY,
+            query = address)
             .enqueue(object : retrofit2.Callback<ResultSearchAddress> {
                 override fun onResponse(
                     call: Call<ResultSearchAddress>,
