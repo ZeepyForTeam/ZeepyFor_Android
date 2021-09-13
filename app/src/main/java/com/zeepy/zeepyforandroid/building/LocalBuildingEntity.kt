@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.building
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.zeepy.zeepyforandroid.enum.BuildingType
@@ -10,8 +11,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "building_table")
 data class LocalBuildingEntity(
-    @PrimaryKey(autoGenerate = false)
-    var id: Int = 0,
+    @PrimaryKey
+    var id: Int,
     val fullNumberAddress: String,
     val fullRoadNameAddress: String,
     val shortNumberAddress: String,

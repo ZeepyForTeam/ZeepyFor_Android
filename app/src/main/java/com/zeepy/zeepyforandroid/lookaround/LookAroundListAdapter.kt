@@ -57,22 +57,21 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
                 listener(item)
             }
 
-            if (item.buildingType == "UNKNOWN" && item.reviews.isNullOrEmpty()) {
-                // pass
-            } else if (!item.reviews.isNullOrEmpty()) {
+            if (item.buildingType != "UNKNOWN" && !item.reviews.isNullOrEmpty()) {
                 features.add(BuildingFeatureModel(item.reviews[0].roomCount, "RoomCount"))
                 features.add(BuildingFeatureModel(item.buildingType, "BuildingType"))
 
                 holder.binding.tvWaitingUpdate.visibility = View.GONE
                 holder.binding.rvBuildingFeatures.visibility = View.VISIBLE
-
             } else {
+                Log.e("item detail", item.buildingType + " " + item.reviews?.size + " " + item.buildingName)
                 holder.binding.tvWaitingUpdate.visibility = View.VISIBLE
                 holder.binding.rvBuildingFeatures.visibility = View.GONE
             }
 
             holder.binding.rvBuildingFeatures.adapter = BuildingFeaturesAdapter(context, features)
-        } else {
+        }
+        else {
         }
     }
 
@@ -89,7 +88,7 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
 
     fun setList(buildings: MutableList<BuildingSummaryModel>) {
         items.addAll(buildings)
-        items.add(BuildingSummaryModel(-1, " ", " ", " ", " ", " ", " ", -1, -1, -1.0, -1.0, -1.0, " "))
+        items.add(BuildingSummaryModel(-1, " ", " ", " ", " ", " ", " ", -1, -1, -1.0, -1.0, -1.0, " ", listOf(), listOf(), listOf()))
     }
 
     fun setListWithoutLoading(buildings: MutableList<BuildingSummaryModel>) {

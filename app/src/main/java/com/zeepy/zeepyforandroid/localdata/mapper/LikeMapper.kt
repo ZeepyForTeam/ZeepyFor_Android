@@ -6,7 +6,7 @@ import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 object LikeMapper {
     fun LocalBuildingLikeEntity.toDomain(): BuildingLikeDTO = this.let {
         BuildingLikeDTO(
-            id = it.id,
+            id = it.likeId,
             email = it.email,
             likeDate = it.likeDate,
             buildingId = it.buildingId
@@ -15,7 +15,7 @@ object LikeMapper {
 
     fun BuildingLikeDTO.toEntity(): LocalBuildingLikeEntity = this.let {
         LocalBuildingLikeEntity(
-            id = it.id,
+            likeId = it.id,
             email = it.email,
             likeDate = it.likeDate,
             buildingId = it.buildingId

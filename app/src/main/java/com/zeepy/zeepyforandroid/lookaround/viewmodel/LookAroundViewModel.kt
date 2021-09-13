@@ -11,7 +11,7 @@ import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.SearchAddressForLookAroundModel
 import com.zeepy.zeepyforandroid.lookaround.repository.BuildingRepository
-import com.zeepy.zeepyforandroid.util.SingleLiveEvent
+import com.zeepy.zeepyforandroid.util.Event
 import com.zeepy.zeepyforandroid.util.ext.hasDealType
 import com.zeepy.zeepyforandroid.util.ext.hasOptions
 import com.zeepy.zeepyforandroid.util.ext.isWithinCost
@@ -35,8 +35,8 @@ class LookAroundViewModel @Inject constructor(
     val addressList: LiveData<List<LocalAddressEntity>>
         get() = _addressList
 
-    private val _selectedAddress = SingleLiveEvent<LocalAddressEntity>()
-    val selectedAddress: LiveData<LocalAddressEntity>
+    private val _selectedAddress = MutableLiveData<Event<LocalAddressEntity>>()
+    val selectedAddress: LiveData<Event<LocalAddressEntity>>
         get() = _selectedAddress
 
     private val filteredBuildingList = ArrayList<BuildingSummaryModel>()
@@ -93,7 +93,7 @@ class LookAroundViewModel @Inject constructor(
      */
     fun searchBuildingsByAddress() {
         viewModelScope.launch {
-            val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.cityDistinct!!, _paginationIdx.value!!)
+            val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.peekContent()?.cityDistinct!!, _paginationIdx.value!!)
 
             when {
                 result?.addresses.isNullOrEmpty() -> {
@@ -163,9 +163,9 @@ class LookAroundViewModel @Inject constructor(
 
     suspend fun getBuildingInfoFromLocal(id: Int) {
         try {
-            Log.e("buildingListLiveData", _buildingListLiveData.value.toString())
             zeepyLocalRepository.fetchBuildingById(id).collect {
                 _buildingListLiveData.plusAssign(it)
+                Log.e("FETCHED ==> building", it.toString())
             }
         } catch (e: Throwable) {
             e.printStackTrace()
@@ -184,6 +184,7 @@ class LookAroundViewModel @Inject constructor(
 
     suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {
         zeepyLocalRepository.insertBuilding(building)
+        Log.e("INSERTED <== building", building.toString())
     }
 
     fun getAddressListFromServer() {
@@ -211,8 +212,8 @@ class LookAroundViewModel @Inject constructor(
                 .subscribe({ addressList ->
                     _addressList.postValue(addressList)
                     Log.e("addressList", _addressList.toString())
-                    addressList.let {
-                        _selectedAddress.value = it.find { address -> address.isAddressCheck }
+                    addressList?.let {
+                        _selectedAddress.value = Event(it.find { address -> address.isAddressCheck }!!)
                     }
                 }, {
                     it.printStackTrace()

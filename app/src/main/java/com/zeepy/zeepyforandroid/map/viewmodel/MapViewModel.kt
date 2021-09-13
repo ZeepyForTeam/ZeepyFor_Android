@@ -11,6 +11,7 @@ import com.zeepy.zeepyforandroid.map.data.BuildingModel
 import com.zeepy.zeepyforandroid.map.data.ResultSearchAddress
 import com.zeepy.zeepyforandroid.map.data.ResultSearchKeyword
 import com.zeepy.zeepyforandroid.map.mapper.BuildingMapper.toDomainModel
+import com.zeepy.zeepyforandroid.map.usecase.GetBuildingsAllUseCase
 import com.zeepy.zeepyforandroid.map.usecase.GetBuildingsByLocationUseCase
 import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.usecase.util.data
@@ -25,7 +26,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val getBuildingsByLocationUseCase: GetBuildingsByLocationUseCase
+    private val getBuildingsByLocationUseCase: GetBuildingsByLocationUseCase,
+    private val getBuildingsAllUseCase: GetBuildingsAllUseCase
 ) : ViewModel() {
     private val _markers = MutableLiveData<List<BuildingModel>>()
     val markers: LiveData<List<BuildingModel>> = _markers
@@ -71,6 +73,19 @@ class MapViewModel @Inject constructor(
 
     fun updateBuildingSelectedId(id: Int) {
         _buildingSelectedId.value = id
+    }
+
+    fun getBuildingsAll() {
+        viewModelScope.launch {
+            val result = getBuildingsAllUseCase(
+                Any()
+            )
+
+            if (result.succeeded) {
+                _fetchBuildingsResponse.value = result
+                Log.e("GET ALL BUILDINGS RESPONSE", "" + result.data)
+            }
+        }
     }
 
     fun getBuildingsByLocation(

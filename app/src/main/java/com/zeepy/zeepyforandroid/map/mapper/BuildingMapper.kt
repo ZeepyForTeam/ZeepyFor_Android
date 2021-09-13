@@ -1,10 +1,18 @@
 package com.zeepy.zeepyforandroid.map.mapper
 
+import com.zeepy.zeepyforandroid.building.BuildingsAllDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
+import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.map.data.*
 import com.zeepy.zeepyforandroid.map.mapper.BuildingMapper.toDomainModel
 
 object BuildingMapper {
+    fun BuildingsAllDTO.toDomainModel(): List<BuildingModel> {
+        return this.content.map {
+            it.toDomainModel()
+        }
+    }
+
     fun List<ResponseBuildingInfoDTO>.toDomainModel(): List<BuildingModel> {
         return this.map {
             it.toDomainModel()

@@ -37,8 +37,8 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         return FragmentLookaroundBinding.inflate(inflater, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
         viewModel.fetchAddressListFromLocal()
     }
 
@@ -206,21 +206,21 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 )
             }
         }
+        viewModel.selectedAddress.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let {
+                Log.e("selectedAddress", " changed")
+                viewModel.searchBuildingsByAddress()
+            }
+        }
         viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
             if (addresses.isNullOrEmpty()) {
                 binding.toolbar.setTitle("주소 등록하기")
                 binding.rvBuildingList.visibility = View.GONE
                 binding.tvNoAddress.visibility = View.VISIBLE
             } else {
-                binding.toolbar.setTitle(viewModel.selectedAddress.value?.cityDistinct!!)
+                binding.toolbar.setTitle(viewModel.selectedAddress.value?.peekContent()?.cityDistinct!!)
                 binding.tvNoAddress.visibility = View.GONE
                 binding.rvBuildingList.visibility = View.VISIBLE
-            }
-        }
-        viewModel.selectedAddress.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Log.e("selectedAddress", " changed")
-                viewModel.searchBuildingsByAddress()
             }
         }
     }

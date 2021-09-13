@@ -69,6 +69,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private lateinit var resizeAnimation: WidthResizeAnimation
     private val viewModel: MapViewModel by activityViewModels()
     private var buildings = listOf<BuildingModel>()
+    private var visibleBuildings = mutableListOf<BuildingModel>()
     private var markers = mutableListOf<MapPOIItem>()
     private var lastSelectedMarkerOriginalImage: Int = -1
     private var existSelectedMarker = false
@@ -120,7 +121,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 findNavController().navigate(R.id.action_mapFragment_to_searchBuildingFragment)
             }
         }
-
     }
 
     private fun initMap() {
@@ -152,7 +152,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 is Result.Success -> {
                     result.data.let {
                         this.buildings = it
-                        setMarkersList()
+                        // setMarkersList() => Changed from rendering straight away each time camera moves to storing them and rendering when the camera changes.
                     }
                 }
                 is Result.Error -> {
@@ -205,22 +205,22 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     /**
      * Render markers
      */
-    private fun setMarkersList() {
-        buildings.indices.forEach { index ->
-            if (buildings[index].reviews.isNotEmpty()) {
-                Log.e("markerMap", firstTimeBeingAddedMarkerMap[buildings[index].id].toString())
+    private fun setMarkersList(visibleBuildings: MutableList<BuildingModel>) {
+        visibleBuildings.indices.forEach { index ->
+            if (visibleBuildings[index].reviews.isNotEmpty()) {
+                Log.e("markerMap", firstTimeBeingAddedMarkerMap[visibleBuildings[index].id].toString())
 
-                if (firstTimeBeingAddedMarkerMap[buildings[index].id] == null) {
+                if (firstTimeBeingAddedMarkerMap[visibleBuildings[index].id] == null) {
                     markers.add(
                         MapPOIItem().apply {
-                            mapPoint = MapPoint.mapPointWithGeoCoord(buildings[index].latitude, buildings[index].longitude)
+                            mapPoint = MapPoint.mapPointWithGeoCoord(visibleBuildings[index].latitude, visibleBuildings[index].longitude)
                             itemName = "건물"
-                            tag = buildings[index].id
+                            tag = visibleBuildings[index].id
                             setCustomImageAnchor(0.5F, 0.5F)
                             markerType = MapPOIItem.MarkerType.CustomImage
 
                             // 소통 성향별로 마커 이미지 설정
-                            when (buildings[index].reviews[0].communcationTendency) {
+                            when (visibleBuildings[index].reviews[0].communcationTendency) {
                                 "BUSINESS" -> {
                                     customImageResourceId = R.drawable.emoji_1_map
                                 }
@@ -306,6 +306,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
             // TODO: Thought about getting the Buildings data within the visible area on map initialization for the first time and again for different visible areas for space optimization
             // TODO: But, for now just get the whole buildings data at once
 
+            viewModel.getBuildingsAll()
+
 
         }
 
@@ -324,7 +326,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
                 //Log.e("four points", "" + mapHelper.bottomRightLat + " " + mapHelper.topLeftLat + " " + mapHelper.topLeftLng + " " + mapHelper.bottomRightLng)
                 Handler(Looper.getMainLooper()).postDelayed({
-                    viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
+                    //viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
                 }, 1500)
             }
         }
@@ -374,7 +376,18 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 mapHelper.setMapMetrics()
                 mapHelper.setFourPoints()
 
-                viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
+                visibleBuildings.clear()
+
+                buildings.forEach {
+                    if (it.latitude >= mapHelper.bottomLeftLat && it.latitude <= mapHelper.topLeftLat
+                        && it.longitude >= mapHelper.topLeftLng && it.longitude <= mapHelper.topRightLng) {
+                        visibleBuildings.add(it)
+                    }
+                }
+
+                setMarkersList(visibleBuildings)
+
+                //viewModel.getBuildingsByLocation(mapHelper.bottomRightLat, mapHelper.topLeftLat, mapHelper.topLeftLng, mapHelper.bottomRightLng)
             }
 
         }

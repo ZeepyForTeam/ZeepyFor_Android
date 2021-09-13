@@ -20,8 +20,8 @@ import com.zeepy.zeepyforandroid.review.data.dto.User
     ]
 )
 data class LocalReviewEntity(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    @PrimaryKey(autoGenerate = false)
+    var reviewId: Int,
     val communcationTendency: String,
     val furnitures: List<String>,
     val imageUrls: List<String>,
@@ -36,6 +36,6 @@ data class LocalReviewEntity(
     val totalEvaluation: String,
     val user: User,
     val waterPressure: String,
-    @ColumnInfo(name = "building_id")
+    @ColumnInfo(name = "building_id", index = true)
     var buildingId: Int
 )

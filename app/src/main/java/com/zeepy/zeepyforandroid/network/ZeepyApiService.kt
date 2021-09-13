@@ -3,6 +3,7 @@ package com.zeepy.zeepyforandroid.network
 import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
 import com.zeepy.zeepyforandroid.building.BuildingLikeRequestDTO
+import com.zeepy.zeepyforandroid.building.BuildingsAllDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
@@ -135,4 +136,7 @@ interface ZeepyApiService {
 
     @DELETE("/api/likes/buildings/{id}")
     suspend fun cancelScrapBuilding(@Path ("id") buildingId: Int): Response<Unit?>
+
+    @GET("/api/buildings")
+    suspend fun getBuildingsAll(): Response<BuildingsAllDTO>
 }

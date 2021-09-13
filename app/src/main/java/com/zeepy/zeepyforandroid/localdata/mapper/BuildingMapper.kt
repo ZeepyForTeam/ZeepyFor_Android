@@ -1,6 +1,8 @@
 package com.zeepy.zeepyforandroid.localdata.mapper
 
+import com.zeepy.zeepyforandroid.building.BuildingDealDTO
 import com.zeepy.zeepyforandroid.building.BuildingPropertiesRelations
+import com.zeepy.zeepyforandroid.building.LocalBuildingDealEntity
 import com.zeepy.zeepyforandroid.building.LocalBuildingEntity
 import com.zeepy.zeepyforandroid.localdata.mapper.DealMapper.toDomain
 import com.zeepy.zeepyforandroid.localdata.mapper.LikeMapper.toDomain
@@ -22,7 +24,10 @@ object BuildingMapper {
             shortRoadNameAddress = it.shortRoadNameAddress,
             shortNumberAddress = it.shortNumberAddress,
             fullNumberAddress = it.fullNumberAddress,
-            fullRoadNameAddress = it.fullRoadNameAddress
+            fullRoadNameAddress = it.fullRoadNameAddress,
+            buildingDeals = listOf(),
+            buildingLikes = listOf(),
+            reviews = listOf()
         )
     }
 

@@ -7,7 +7,7 @@ import com.zeepy.zeepyforandroid.review.data.dto.User
 object ReviewMapper {
     fun LocalReviewEntity.toDomain(): ResponseReviewDTO = this.let {
         ResponseReviewDTO(
-            id = it.id,
+            id = it.reviewId,
             communcationTendency = it.communcationTendency,
             furnitures = it.furnitures,
             imageUrls = it.imageUrls,

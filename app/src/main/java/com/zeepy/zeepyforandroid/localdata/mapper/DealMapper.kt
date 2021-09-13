@@ -8,7 +8,7 @@ import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 object DealMapper {
     fun LocalBuildingDealEntity.toDomain(): BuildingDealDTO = this.let {
         BuildingDealDTO(
-            id = it.id,
+            id = it.dealId,
             dealCost = it.dealCost,
             dealDate = it.dealDate,
             dealType = it.dealType,
@@ -21,7 +21,7 @@ object DealMapper {
 
     fun BuildingDealDTO.toEntity(): LocalBuildingDealEntity = this.let {
         LocalBuildingDealEntity(
-            id = it.id,
+            dealId = it.id,
             dealCost = it.dealCost,
             dealDate = it.dealDate,
             dealType = it.dealType,

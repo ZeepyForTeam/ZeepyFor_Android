@@ -21,7 +21,7 @@ data class BuildingSummaryModel (
     val latitude: Double,
     val longitude: Double,
     val shortAddress: String,
-    val buildingDeals: List<BuildingDealDTO> = emptyList(),
-    val buildingLikes: List<BuildingLikeDTO> = emptyList(),
-    val reviews: List<ResponseReviewDTO>? = emptyList()
+    val buildingDeals: List<BuildingDealDTO>,
+    val buildingLikes: List<BuildingLikeDTO>,
+    val reviews: List<ResponseReviewDTO>
 ): Parcelable
