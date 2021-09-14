@@ -6,6 +6,7 @@ import com.zeepy.zeepyforandroid.building.LocalReviewEntity
 import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 
 object DealMapper {
+
     fun LocalBuildingDealEntity.toDomain(): BuildingDealDTO = this.let {
         BuildingDealDTO(
             id = it.dealId,
@@ -19,7 +20,13 @@ object DealMapper {
         )
     }
 
-    fun BuildingDealDTO.toEntity(): LocalBuildingDealEntity = this.let {
+    fun List<BuildingDealDTO>.toEntity(buildingId: Int): List<LocalBuildingDealEntity> = this.let {
+        it.map { buildingDeal ->
+            buildingDeal.toEntity(buildingId)
+        }
+    }
+
+    private fun BuildingDealDTO.toEntity(buildingId: Int): LocalBuildingDealEntity = this.let {
         LocalBuildingDealEntity(
             dealId = it.id,
             dealCost = it.dealCost,
@@ -28,7 +35,7 @@ object DealMapper {
             deposit = it.deposit,
             floor = it.floor,
             monthlyRent = it.monthlyRent,
-            buildingId = it.buildingId
+            buildingId = buildingId
         )
     }
 }

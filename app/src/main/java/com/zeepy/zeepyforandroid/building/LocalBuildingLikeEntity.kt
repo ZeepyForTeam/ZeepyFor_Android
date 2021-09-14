@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
 data class LocalBuildingLikeEntity(
     @PrimaryKey(autoGenerate = false)
     var likeId: Int,
-    val email: String,
+    val userId: String,
     val likeDate: String,
     @ColumnInfo(name = "building_id", index = true)
     var buildingId: Int

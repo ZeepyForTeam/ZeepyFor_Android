@@ -31,8 +31,8 @@ class LookAroundViewModel @Inject constructor(
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
 
-    private val _addressList = MutableLiveData<List<LocalAddressEntity>>(mutableListOf())
-    val addressList: LiveData<List<LocalAddressEntity>>
+    private val _addressList = MutableLiveData<Event<List<LocalAddressEntity>>>(Event(mutableListOf()))
+    val addressList: LiveData<Event<List<LocalAddressEntity>>>
         get() = _addressList
 
     private val _selectedAddress = MutableLiveData<Event<LocalAddressEntity>>()
@@ -65,6 +65,15 @@ class LookAroundViewModel @Inject constructor(
     private val _isLastPage = MutableLiveData<Boolean>(false)
     val isLastPage: LiveData<Boolean>
         get() = _isLastPage
+
+    init {
+        Log.e("Viewmodel LOOKAROUND", "INITIALIZED")
+        getAddressListFromServer()
+    }
+
+    fun changeSelectedAddress(address: LocalAddressEntity) {
+        _selectedAddress.value = Event(address)
+    }
 
     fun resetIsLastPage() {
         _isLastPage.value = false
@@ -134,7 +143,7 @@ class LookAroundViewModel @Inject constructor(
 
     fun setBuildingsByConditions(conditions: ConditionSetModel) {
         val monthly = conditions.dealType == "MONTHLY"
-        var deposit = conditions.dealType == "JEONSE"
+        val deposit = conditions.dealType == "JEONSE"
 
         filteredBuildingList.clear()
         _buildingListLiveData.value?.forEach { building ->
@@ -183,7 +192,12 @@ class LookAroundViewModel @Inject constructor(
     }
 
     suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {
-        zeepyLocalRepository.insertBuilding(building)
+        if (!zeepyLocalRepository.isRowExists(building.id)) {
+            zeepyLocalRepository.insertBuilding(building)
+            zeepyLocalRepository.insertBuildingDeals(building, building.id)
+            zeepyLocalRepository.insertBuildingDeals(building, building.id)
+            zeepyLocalRepository.insertBuildingDeals(building, building.id)
+        }
         Log.e("INSERTED <== building", building.toString())
     }
 
@@ -210,11 +224,8 @@ class LookAroundViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ addressList ->
-                    _addressList.postValue(addressList)
+                    _addressList.postValue(Event(addressList))
                     Log.e("addressList", _addressList.toString())
-                    addressList?.let {
-                        _selectedAddress.value = Event(it.find { address -> address.isAddressCheck }!!)
-                    }
                 }, {
                     it.printStackTrace()
                 })

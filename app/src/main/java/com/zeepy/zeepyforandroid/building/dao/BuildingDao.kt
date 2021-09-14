@@ -29,5 +29,5 @@ interface BuildingDao {
     suspend fun deleteBuildingById(id: Int)
 
     @Query("SELECT EXISTS(SELECT * FROM building_table WHERE id = :id)")
-    fun isRowExists(id: Int): Boolean
+    suspend fun isRowExists(id: Int): Boolean
 }

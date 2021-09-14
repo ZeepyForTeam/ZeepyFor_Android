@@ -1,12 +1,16 @@
 package com.zeepy.zeepyforandroid.localdata
 
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
+import com.zeepy.zeepyforandroid.building.BuildingDealDTO
+import com.zeepy.zeepyforandroid.building.BuildingLikeDTO
 import com.zeepy.zeepyforandroid.localdata.mapper.BuildingMapper.toDomain
 import com.zeepy.zeepyforandroid.localdata.mapper.BuildingMapper.toEntity
 import com.zeepy.zeepyforandroid.localdata.mapper.DealMapper.toEntity
+import com.zeepy.zeepyforandroid.localdata.mapper.LikeMapper.toEntity
+import com.zeepy.zeepyforandroid.localdata.mapper.ReviewMapper.toEntity
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
+import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 import io.reactivex.Maybe
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -24,8 +28,20 @@ class ZeepyLocalRepositoryImpl @Inject constructor(
     override fun fetchBuildingById(id: Int): Flow<BuildingSummaryModel> = buildingDao.getBuildingById(id).map { it.toDomain() }.distinctUntilChanged()
     override suspend fun insertBuilding(building: BuildingSummaryModel) {
         building.toEntity().let { buildingDao.insertBuilding(it) }
-        building.buildingDeals.toEntity()...
     }
+
+    override suspend fun insertBuildingDeals(building: BuildingSummaryModel, buildingId: Int) {
+        building.buildingDeals.toEntity(buildingId).forEach { buildingDao.insertBuildingDeals(it) }
+    }
+
+    override suspend fun insertBuildingLikes(building: BuildingSummaryModel, buildingId: Int) {
+        building.buildingLikes.toEntity(buildingId).forEach { buildingDao.insertBuildingLikes(it) }
+    }
+
+    override suspend fun insertBuildingReviews(building: BuildingSummaryModel, buildingId: Int) {
+        building.reviews.toEntity(buildingId).forEach { buildingDao.insertBuildingReviews(it) }
+    }
+
     override suspend fun deleteBuilding(id: Int) = buildingDao.deleteBuildingById(id)
-    override fun isRowExists(id: Int): Boolean = buildingDao.isRowExists(id)
+    override suspend fun isRowExists(id: Int): Boolean = buildingDao.isRowExists(id)
 }

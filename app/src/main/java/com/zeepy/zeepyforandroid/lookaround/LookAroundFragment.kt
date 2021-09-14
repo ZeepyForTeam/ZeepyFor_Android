@@ -14,12 +14,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.R
+import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.Event
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -39,7 +41,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.fetchAddressListFromLocal()
+        updateToolbar(viewModel.selectedAddress.value?.peekContent()?.cityDistinct!!, true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,8 +58,8 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
-        subscribeObservers()
         setToolbar()
+        subscribeObservers()
         setSwipeRefreshLayout()
         changeAddress()
         initRecyclerView()
@@ -78,8 +80,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 buildingsAdapter.clearList()
                 buildingsAdapter.notifyDataSetChanged()
                 viewModel.searchBuildingsByAddress()
-            }
-            viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
                 isRefreshing = false
             }
         }
@@ -128,14 +128,14 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private fun changeAddress() {
         binding.toolbar.binding.textviewToolbar.setOnClickListener {
             if (userPreferenceManager.fetchIsAlreadyLogin()) {
-                if (viewModel.addressList.value.isNullOrEmpty()) {
+                if (viewModel.addressList.value?.peekContent().isNullOrEmpty()) {
                     val action =
                         MainFrameFragmentDirections.actionMainFrameFragmentToReviewFrameFragment()
                     action.isCommunityTheme = false
                     action.isJustRegisterAddress = true
                     findNavController().navigate(action)
                 } else {
-                    val addresses = viewModel.addressList.value!!.toTypedArray()
+                    val addresses = viewModel.addressList.value!!.peekContent().toTypedArray()
                     val action =
                         MainFrameFragmentDirections.actionMainFrameFragmentToChangeAddressFragment(
                             addresses
@@ -186,6 +186,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun subscribeObservers() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
+            Log.e("buildinglist when come back", it.size.toString())
             if (it.size == viewModel.fetchedBuildingsCount.value && it.size != 0) {
                 Log.e("page content?", viewModel.buildingListLiveData.value.toString())
 
@@ -206,22 +207,40 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 )
             }
         }
-        viewModel.selectedAddress.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let {
-                Log.e("selectedAddress", " changed")
+        viewModel.selectedAddress.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let {
+                Log.e("selectedAddress", it.cityDistinct)
                 viewModel.searchBuildingsByAddress()
             }
         }
         viewModel.addressList.observe(viewLifecycleOwner) { addresses ->
-            if (addresses.isNullOrEmpty()) {
-                binding.toolbar.setTitle("주소 등록하기")
-                binding.rvBuildingList.visibility = View.GONE
-                binding.tvNoAddress.visibility = View.VISIBLE
-            } else {
-                binding.toolbar.setTitle(viewModel.selectedAddress.value?.peekContent()?.cityDistinct!!)
-                binding.tvNoAddress.visibility = View.GONE
-                binding.rvBuildingList.visibility = View.VISIBLE
+            addresses.getContentIfNotHandled()?.let {
+                val selectedAddress = it.find { address -> address.isAddressCheck }
+                if (selectedAddress != null) {
+                    Log.e("addressList", "changed")
+                    viewModel.changeSelectedAddress(selectedAddress)
+                }
+                if (it.isNullOrEmpty()) {
+                    updateToolbar("주소 등록하기", false)
+                } else {
+                    selectedAddress?.let { address ->
+                        updateToolbar(address.cityDistinct, true)
+                    }
+                }
             }
+        }
+    }
+
+    private fun updateToolbar(title: String, isAddressSelected: Boolean) {
+        binding.toolbar.apply {
+            setTitle(title)
+        }
+        if (isAddressSelected) {
+            binding.tvNoAddress.visibility = View.GONE
+            binding.rvBuildingList.visibility = View.VISIBLE
+        } else {
+            binding.rvBuildingList.visibility = View.GONE
+            binding.tvNoAddress.visibility = View.VISIBLE
         }
     }
 
