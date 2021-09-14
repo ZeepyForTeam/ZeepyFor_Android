@@ -72,6 +72,10 @@
         <action
             android:id="@+id/action_mapFragment_to_searchBuildingFragment"
             app:destination="@+id/searchBuildingFragment"/>
+
+        <action
+            android:id="@+id/action_mapFragment_to_buildingAllReviewsFragment"
+            app:destination="@+id/buildingAllReviewsFragment"/>
     </fragment>
 
     <fragment

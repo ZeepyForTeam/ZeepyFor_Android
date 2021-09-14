@@ -187,6 +187,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                 } else {
                     setText(getString(R.string.go_to_reviews_button, building.reviews.size.toString()))
                 }
+                setOnClickListener {
+                    findNavController().navigate(R.id.action_mapFragment_to_buildingAllReviewsFragment)
+                }
             }
         })
         viewModel.placeSelectedFromSearch.observe(viewLifecycleOwner) {
@@ -207,6 +210,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private fun setMarkersList(visibleBuildings: MutableList<BuildingModel>) {
         visibleBuildings.indices.forEach { index ->
             if (visibleBuildings[index].reviews.isNotEmpty()) {
+                Log.e("bulidings to be ADDED", visibleBuildings[index].toString())
                 Log.e("markerMap", firstTimeBeingAddedMarkerMap[visibleBuildings[index].id].toString())
 
                 if (firstTimeBeingAddedMarkerMap[visibleBuildings[index].id] == null) {
@@ -240,7 +244,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
                             isShowCalloutBalloonOnTouch = false
                         }
                     )
-                    firstTimeBeingAddedMarkerMap[buildings[index].id] = true
+                    firstTimeBeingAddedMarkerMap[visibleBuildings[index].id] = true
                 }
             }
         }

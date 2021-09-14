@@ -78,7 +78,9 @@ class MapViewModel @Inject constructor(
     fun getBuildingsAll() {
         viewModelScope.launch {
             val result = getBuildingsAllUseCase(
-                Any()
+                GetBuildingsAllUseCase.Params(
+                    22 // FIXME: Iterate Page
+                )
             )
 
             if (result.succeeded) {

@@ -138,5 +138,5 @@ interface ZeepyApiService {
     suspend fun cancelScrapBuilding(@Path ("id") buildingId: Int): Response<Unit?>
 
     @GET("/api/buildings")
-    suspend fun getBuildingsAll(): Response<BuildingsAllDTO>
+    suspend fun getBuildingsAll(@Query ("page") page: Int): Response<BuildingsAllDTO>
 }

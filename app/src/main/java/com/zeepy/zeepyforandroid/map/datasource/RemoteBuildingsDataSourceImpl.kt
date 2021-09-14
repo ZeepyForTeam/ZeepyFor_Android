@@ -13,8 +13,8 @@ class RemoteBuildingsDataSourceImpl @Inject constructor(
         return zeepyApiService.getBuildingsByLocation(latitudeGreater, latitudeLess, longitudeGreater, longitudeLess).verify()
     }
 
-    override suspend fun getBuildingsAll(): BuildingsAllDTO {
-        return zeepyApiService.getBuildingsAll().verify()
+    override suspend fun getBuildingsAll(page: Int): BuildingsAllDTO {
+        return zeepyApiService.getBuildingsAll(page).verify()
     }
 }
 

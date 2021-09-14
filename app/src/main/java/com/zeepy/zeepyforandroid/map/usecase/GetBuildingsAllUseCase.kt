@@ -10,10 +10,14 @@ import javax.inject.Inject
 class GetBuildingsAllUseCase @Inject constructor(
     private val repository: BuildingsRepository,
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher
-) : CoroutineUseCase<Any, List<BuildingModel>>(coroutineDispatcher) {
+) : CoroutineUseCase<GetBuildingsAllUseCase.Params, List<BuildingModel>>(coroutineDispatcher) {
 
-    override suspend fun execute(parameter: Any): List<BuildingModel> {
-        return repository.getBuildingsAll()
+    override suspend fun execute(parameter: Params): List<BuildingModel> {
+        return repository.getBuildingsAll(parameter.page)
     }
+
+    data class Params(
+        val page: Int
+    )
 
 }

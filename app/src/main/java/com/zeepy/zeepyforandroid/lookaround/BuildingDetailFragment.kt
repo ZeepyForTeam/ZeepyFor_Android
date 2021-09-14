@@ -18,6 +18,7 @@ import com.zeepy.zeepyforandroid.enum.Options
 import com.zeepy.zeepyforandroid.enum.RoomCount
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -81,7 +82,7 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         args.buildingSummaryModel.reviews.let {
             if (it.isNullOrEmpty()) {
                 binding.btnShowAllReviews.visibility = View.GONE
-                binding.layoutSampleReview.root.visibility = View.GONE
+                binding.layoutRepReview.root.visibility = View.GONE
                 binding.layoutNoReview.visibility = View.VISIBLE
 
                 binding.tvGotoWriteReview.setOnClickListener {
@@ -95,8 +96,8 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
             } else {
                 binding.layoutNoReview.visibility = View.GONE
                 binding.btnShowAllReviews.visibility = View.VISIBLE
-                binding.layoutSampleReview.root.visibility = View.VISIBLE
-                binding.layoutSampleReview.apply {
+                binding.layoutRepReview.root.visibility = View.VISIBLE
+                binding.layoutRepReview.apply {
                     tvReviewerName.text = String.format(resources.getString(R.string.review_by_whom), it[0].user.name)
                     tvLessorReviewOneLiner.text = it[0].lessorGender
                     tvLessorReviewMsg.text = it[0].lessorReview

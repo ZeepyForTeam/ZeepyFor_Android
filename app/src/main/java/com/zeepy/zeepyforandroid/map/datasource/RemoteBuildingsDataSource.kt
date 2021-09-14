@@ -5,5 +5,5 @@ import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 
 interface RemoteBuildingsDataSource {
     suspend fun getBuildingsInfoByLocation(latitudeGreater: Double, latitudeLess: Double, longitudeGreater: Double, longitudeLess: Double): List<ResponseBuildingInfoDTO>
-    suspend fun getBuildingsAll(): BuildingsAllDTO
+    suspend fun getBuildingsAll(page: Int): BuildingsAllDTO
 }
