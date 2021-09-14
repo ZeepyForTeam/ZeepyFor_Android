@@ -60,7 +60,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="24dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_building_type">
 
                     <RadioGroup
@@ -132,7 +132,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="24dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_trade_type">
 
                     <RadioGroup
@@ -226,7 +226,7 @@
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_price"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
                     android:visibility="@{(viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked || viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked) ? View.VISIBLE : View.GONE}"/>
 
@@ -240,7 +240,7 @@
                     android:background="@drawable/box_grayf7_14dp"
                     app:layout_constraintStart_toStartOf="@id/tv_deposit"
                     app:layout_constraintTop_toBottomOf="@id/tv_deposit"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:paddingRight="8dp"
                     android:paddingLeft="8dp"
                     android:paddingTop="5dp"
@@ -347,7 +347,7 @@
                     android:background="@drawable/box_grayf7_14dp"
                     app:layout_constraintStart_toStartOf="@id/tv_monthlypay"
                     app:layout_constraintTop_toBottomOf="@id/tv_monthlypay"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:paddingRight="8dp"
                     android:paddingLeft="8dp"
                     android:paddingTop="5dp"

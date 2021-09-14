@@ -165,7 +165,7 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
 
     private fun setNextButton() {
         binding.btnNext.run {
-            setText("다음으로")
+            setText("완료")
             setUsableButton()
             onClick {
                 // Go back to 둘러보기 with filters applied
