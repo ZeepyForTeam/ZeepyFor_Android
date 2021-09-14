@@ -19,8 +19,8 @@ class Converters {
     fun stringToUser(string: String?): User = Gson().fromJson(string, User::class.java)
 
     @TypeConverter
-    fun buildingDealToJson(deal: BuildingDealDTO): String = Gson().toJson(deal)
+    fun buildingDealToJson(value: List<BuildingDealDTO>?): String = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonToBuildingDeal(string: String?): BuildingDealDTO = Gson().fromJson(string, BuildingDealDTO::class.java)
+    fun jsonToBuildingDeal(value: String?) = Gson().fromJson(value, Array<BuildingDealDTO>::class.java).toList()
 }

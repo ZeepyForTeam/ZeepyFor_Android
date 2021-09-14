@@ -15,10 +15,14 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentBuildingDetailBinding
 import com.zeepy.zeepyforandroid.enum.DealType
 import com.zeepy.zeepyforandroid.enum.Options
+import com.zeepy.zeepyforandroid.enum.RoomCount
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.util.ItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
     private val viewModel by viewModels<BuildingDetailViewModel>()
     private val args: BuildingDetailFragmentArgs by navArgs()
@@ -40,10 +44,13 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        // 현재 빌딩 id로 뷰모델 데이터 업데이트
+        viewModel.changeBuildingId(args.buildingSummaryModel.id)
 
         setToolbar()
         renderOptions()
         renderPictures()
+        renderRoomCount()
         renderPaymentType()
         renderBuildingAddress()
         renderCommunicationTendency()
@@ -59,28 +66,38 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
             setBackButton {
                 findNavController().popBackStack()
             }
+            setScrapButton {
+                if(binding.checkboxScrap.isChecked) {
+                    viewModel.scrapBuilding()
+                } else {
+                    viewModel.cancelScrapBuilding()
+                }
+            }
         }
     }
 
-    // FIXME: Change the rendering functions to View Binding Later
+    // FIXME: Change the rendering functions to Data Binding Later
 
     private fun setReviewContents() {
         args.buildingSummaryModel.reviews.let {
             if (it.isNullOrEmpty()) {
                 binding.btnShowAllReviews.visibility = View.GONE
+                binding.layoutRepReview.root.visibility = View.GONE
+                binding.layoutNoReview.visibility = View.VISIBLE
 
                 binding.tvGotoWriteReview.setOnClickListener {
                     // check for login status and then navigate
                     if (userPreferenceManager.fetchIsAlreadyLogin()) {
-                        requireParentFragment().findNavController().navigate(R.id.action_mainFrameFragment_to_reviewFrameFragment)
+                        requireParentFragment().findNavController().navigate(R.id.action_buildingDetailFragment_to_reviewFrameFragment)
                     } else {
                         Toast.makeText(context, "로그인을 해주세요.", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                binding.cardBuildingDetailedReview.visibility = View.GONE
-                binding.layoutSampleReview.root.visibility = View.VISIBLE
-                binding.layoutSampleReview.apply {
+                binding.layoutNoReview.visibility = View.GONE
+                binding.btnShowAllReviews.visibility = View.VISIBLE
+                binding.layoutRepReview.root.visibility = View.VISIBLE
+                binding.layoutRepReview.apply {
                     tvReviewerName.text = String.format(resources.getString(R.string.review_by_whom), it[0].user.name)
                     tvLessorReviewOneLiner.text = it[0].lessorGender
                     tvLessorReviewMsg.text = it[0].lessorReview
@@ -161,7 +178,15 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
     private fun renderPaymentType() {
         args.buildingSummaryModel.buildingDeals.let {
             if (!it.isNullOrEmpty()) {
-                binding.tvDealTypeContent.text = getString(DealType.findDealTypeFromString(it[0].dealType))
+                binding.tvDealTypeContent.text = resources.getString(DealType.findDealTypeFromString(it[0].dealType))
+            }
+        }
+    }
+
+    private fun renderRoomCount() {
+        args.buildingSummaryModel.reviews.let {
+            if (!it.isNullOrEmpty()) {
+                binding.tvRoomCount.text = resources.getString(RoomCount.findRoomCountFromString(it[0].roomCount))
             }
         }
     }
@@ -170,9 +195,9 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         args.buildingSummaryModel.reviews.let {
             if (!it.isNullOrEmpty()) {
                 if (!it[0].furnitures.isNullOrEmpty()) {
-                    binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews?.get(0)?.furnitures?.joinToString(separator = ", ") { furniture ->
+                    binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews[0].furnitures.joinToString(separator = ", ") { furniture ->
                         resources.getString(Options.getOptionFromString(furniture))
-                    }.toString()
+                    }
                 }
             }
         }

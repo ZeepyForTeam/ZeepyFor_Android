@@ -6,11 +6,15 @@ import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.address.repository.SearchAddressListRepository
 import com.zeepy.zeepyforandroid.base.BaseViewModel
+import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.SearchAddressForLookAroundModel
 import com.zeepy.zeepyforandroid.lookaround.repository.BuildingRepository
-import com.zeepy.zeepyforandroid.util.SingleLiveData
+import com.zeepy.zeepyforandroid.util.Event
+import com.zeepy.zeepyforandroid.util.ext.hasDealType
+import com.zeepy.zeepyforandroid.util.ext.hasOptions
+import com.zeepy.zeepyforandroid.util.ext.isWithinCost
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,67 +31,165 @@ class LookAroundViewModel @Inject constructor(
     private val zeepyLocalRepository: ZeepyLocalRepository
 ) : BaseViewModel() {
 
-    private val _addressList = MutableLiveData<List<LocalAddressEntity>>(mutableListOf())
-    val addressList: LiveData<List<LocalAddressEntity>>
+    private val _addressList = MutableLiveData<Event<List<LocalAddressEntity>>>(Event(mutableListOf()))
+    val addressList: LiveData<Event<List<LocalAddressEntity>>>
         get() = _addressList
 
-    private val _selectedAddress = SingleLiveData<LocalAddressEntity>()
-    val selectedAddress: SingleLiveData<LocalAddressEntity>
+    private val _selectedAddress = MutableLiveData<Event<LocalAddressEntity>>()
+    val selectedAddress: LiveData<Event<LocalAddressEntity>>
         get() = _selectedAddress
 
-    private val filteredBuildingList = ArrayList<BuildingSummaryModel>()
+    private val _filteredBuildingList = MutableLiveData<MutableList<BuildingSummaryModel>>()
+    val filteredBuildingList: LiveData<MutableList<BuildingSummaryModel>>
+        get() = _filteredBuildingList
 
     private val _buildingListLiveData = MutableLiveData<MutableList<BuildingSummaryModel>>()
     val buildingListLiveData: LiveData<MutableList<BuildingSummaryModel>>
         get() = _buildingListLiveData
 
     //TODO: Use Room DB for this too
-    private val _fetchedAddressList = MutableLiveData<List<SearchAddressForLookAroundModel>>()
-    val fetchedAddressList: LiveData<List<SearchAddressForLookAroundModel>>
+    private val _fetchedAddressList = MutableLiveData<SearchAddressForLookAroundModel>()
+    val fetchedAddressList: LiveData<SearchAddressForLookAroundModel>
         get() = _fetchedAddressList
 
+    private val _paginationIdx = MutableLiveData<Int>(0)
+    val paginationIdx: LiveData<Int>
+        get() = _paginationIdx
+
+    private val _totalPages = MutableLiveData<Int>()
+    val totalPages: LiveData<Int>
+        get() = _totalPages
+
+    private val _fetchedBuildingsCount = MutableLiveData<Int>(0)
+    val fetchedBuildingsCount: LiveData<Int>
+        get() = _fetchedBuildingsCount
+
+    private val _isLastPage = MutableLiveData<Boolean>(false)
+    val isLastPage: LiveData<Boolean>
+        get() = _isLastPage
+
+    private val _isOnFiltered = MutableLiveData<Boolean>(false)
+    val isOnFiltered: LiveData<Boolean>
+        get() = _isOnFiltered
+
+    private val _filterChecked = MutableLiveData<String>()
+    val filterChecked: LiveData<String>
+        get() = _filterChecked
+
+    private val _isFetchDone = MutableLiveData<Boolean>(false)
+    val isFetchDone: LiveData<Boolean>
+        get() = _isFetchDone
+
     init {
+        Log.e("Viewmodel LOOKAROUND", "INITIALIZED")
         getAddressListFromServer()
+    }
+
+    fun resetIsFetchDone() {
+        _isFetchDone.value = false
+    }
+
+    fun setFilterChecked(filterName: String) {
+        _filterChecked.value = filterName
+    }
+
+    fun changeFilteredStatus(flag: Boolean) {
+        _isOnFiltered.value = flag
+    }
+
+    fun changeSelectedAddress(address: LocalAddressEntity) {
+        _selectedAddress.value = Event(address)
+    }
+
+    fun resetIsLastPage() {
+        _isLastPage.value = false
+    }
+
+    fun changePaginationIdx(idx: Int) {
+        _paginationIdx.value = idx
+    }
+
+    fun increasePageIdx() {
+        var page = paginationIdx.value
+        if (page != null) {
+            page += 1
+            _paginationIdx.value = page!!
+        }
+    }
+
+    fun removeBuildingsList(list: MutableLiveData<MutableList<BuildingSummaryModel>>) {
+        if (!list.value.isNullOrEmpty()) {
+            val buildings = list.value
+            buildings?.clear()
+            list.value = buildings
+        }
     }
 
     /**
      * 현재 주소를 기준으로 빌딩 리스트 가져오기
      */
-    fun searchBuildingsByAddress(address: String) {
-        _buildingListLiveData.value = mutableListOf()
+    fun searchBuildingsByAddress() {
         viewModelScope.launch {
-            val result = searchAddressListRepository.searchBuildingsByAddress(address)
-            _fetchedAddressList.value = result!!
+            val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.peekContent()?.cityDistinct!!, _paginationIdx.value!!)
 
-            val nums = arrayListOf<Int>()
-
-            (_fetchedAddressList.value!!.indices).forEach {
-                nums.add(_fetchedAddressList.value!![it].id)
-            }
-            Log.e("nums", nums.toString())
-            nums.map { num ->
-                async {
-                    num to getBuildingInfoById(num)
+            when {
+                result?.addresses.isNullOrEmpty() -> {
+                    _paginationIdx.value = -1
                 }
-            }.map { it.await() }
+                else -> {
+                    _totalPages.value = result?.totalPages
+                    _fetchedAddressList.value = result!!
+                    _fetchedBuildingsCount.value = result.addresses.size
+                    if (result.last) {
+                        _isLastPage.value = true
+                    }
+                    val nums = arrayListOf<Int>()
+                    (_fetchedAddressList.value!!.addresses.indices).forEach {
+                        nums.add(_fetchedAddressList.value!!.addresses[it].id)
+                    }
+                    nums.map { num ->
+                        async {
+                            num to getBuildingInfoById(num)
+                        }
+                    }.map { it.await() }
+                }
+            }
+            _isFetchDone.value = true
         }
     }
 
-    fun getBuildingsByFiltering(lessorType: String) {
-        filteredBuildingList.clear()
+    fun setBuildingsByFiltering(lessorType: String) {
+        Log.e("what is buildingslistlivedata hereeeeeeeeeeee", _buildingListLiveData.value?.size.toString())
         _buildingListLiveData.value?.forEach { building ->
             if (!building.reviews.isNullOrEmpty()) {
                 when (building.reviews[0].communcationTendency) {
-                    lessorType -> filteredBuildingList.add(building)
+                    lessorType -> _filteredBuildingList.plusAssign(building)
                 }
             }
         }
-        _buildingListLiveData.value = filteredBuildingList
+        _isFetchDone.value = true
     }
 
-    suspend fun getBuildingInfoById(id: Int) {
+    fun setBuildingsByConditions(conditions: ConditionSetModel) {
+        val monthly = conditions.dealType == "MONTHLY"
+        val deposit = conditions.dealType == "JEONSE"
+
+        _buildingListLiveData.value?.forEach { building ->
+            if (!building.reviews.isNullOrEmpty() && !building.buildingDeals.isNullOrEmpty()) {
+                if (building.buildingType == conditions.buildingType
+                    && building.buildingDeals.hasDealType(conditions.dealType)
+                    && building.buildingDeals.isWithinCost(monthly, conditions.monthlyPayStart, conditions.monthlyPayEnd, deposit, conditions.depositPayStart, conditions.depositPayEnd)
+                    && building.reviews.hasOptions(conditions.options)) {
+                    _filteredBuildingList.plusAssign(building)
+                }
+            }
+        }
+    }
+
+    private suspend fun getBuildingInfoById(id: Int) {
         val result = buildingRepository.getBuildingsInfoById(id)
         if (result != null) {
+            Log.e("what building is currently being fetched?", result.toString())
             insertBuildingInfoToLocal(result)
             getBuildingInfoFromLocal(id)
         } else {
@@ -95,10 +197,11 @@ class LookAroundViewModel @Inject constructor(
         }
     }
 
-    suspend fun getBuildingInfoFromLocal(id: Int) {
+    private suspend fun getBuildingInfoFromLocal(id: Int) {
         try {
             zeepyLocalRepository.fetchBuildingById(id).collect {
                 _buildingListLiveData.plusAssign(it)
+                Log.e("FETCHED ==> building", it.toString())
             }
         } catch (e: Throwable) {
             e.printStackTrace()
@@ -106,16 +209,26 @@ class LookAroundViewModel @Inject constructor(
     }
 
     operator fun <T> MutableLiveData<MutableList<T>>.plusAssign(newValue: T) {
-        val value = this.value
-        value?.add(newValue)
-        this.value = value
+        if (this.value == null) {
+            this.value = mutableListOf(newValue)
+        } else {
+            val value = this.value
+            value?.add(newValue)
+            this.value = value
+        }
     }
 
-    suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {
-        zeepyLocalRepository.insertBuilding(building)
+    private suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {
+        if (!zeepyLocalRepository.isRowExists(building.id)) {
+            zeepyLocalRepository.insertBuilding(building)
+            zeepyLocalRepository.insertBuildingDeals(building, building.id)
+            zeepyLocalRepository.insertBuildingLikes(building, building.id)
+            zeepyLocalRepository.insertBuildingReviews(building, building.id)
+            Log.e("INSERTED <== building", building.toString())
+        }
     }
 
-    fun getAddressListFromServer() {
+    private fun getAddressListFromServer() {
         addDisposable(
             addressDataSource.fetchAddressList()
                 .subscribeOn(Schedulers.io())
@@ -132,16 +245,14 @@ class LookAroundViewModel @Inject constructor(
         )
     }
 
-    fun fetchAddressListFromLocal() {
+    private fun fetchAddressListFromLocal() {
         addDisposable(
             zeepyLocalRepository.fetchAddressList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ addressList ->
-                    _addressList.postValue(addressList)
-                    addressList.let {
-                        _selectedAddress.value = it.find { address -> address.isAddressCheck }
-                    }
+                    _addressList.postValue(Event(addressList))
+                    Log.e("addressList", _addressList.toString())
                 }, {
                     it.printStackTrace()
                 })

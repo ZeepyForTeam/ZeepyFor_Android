@@ -19,13 +19,13 @@ import androidx.room.PrimaryKey
     ])
 data class LocalBuildingDealEntity(
     @PrimaryKey(autoGenerate = false)
-    var id: Int = 0,
+    var dealId: Int,
     val dealCost: Int,
     val dealDate: String,
     val dealType: String,
     val deposit: Int,
     val floor: Int,
     val monthlyRent: Int,
-    @ColumnInfo(name = "building_id")
+    @ColumnInfo(name = "building_id", index = true)
     var buildingId: Int
 )

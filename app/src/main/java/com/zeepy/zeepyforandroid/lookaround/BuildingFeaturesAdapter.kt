@@ -12,7 +12,7 @@ import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingFeatureModel
 
 
 class BuildingFeaturesAdapter(val context: Context, _features: List<BuildingFeatureModel>) : RecyclerView.Adapter<BuildingFeaturesAdapter.BuildingFeaturesViewHolder>() {
-    val features: List<BuildingFeatureModel> = _features
+    private val features: List<BuildingFeatureModel> = _features
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

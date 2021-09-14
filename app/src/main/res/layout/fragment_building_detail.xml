@@ -44,7 +44,7 @@
                     android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:background="@drawable/box_blue5f_12dp"
                     android:text=""
@@ -70,13 +70,14 @@
                     android:layout_marginTop="12dp"/>
 
                 <TextView
+                    android:id="@+id/tv_room_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/tv_building_type"
                     app:layout_constraintTop_toTopOf="@id/tv_building_type"
                     app:layout_constraintBottom_toBottomOf="@id/tv_building_type"
                     tools:text="원룸"
-                    android:text="@{viewModel.buildingSummary.buildingType}"
+                    android:text="원룸"
                     android:textSize="14sp"
                     android:fontFamily="@font/nanum_square_round_regular"
                     android:textColor="@color/zeepy_black_3b"
@@ -128,7 +129,6 @@
                     app:layout_constraintTop_toTopOf="@id/tv_characteristics"
                     app:layout_constraintBottom_toBottomOf="@id/tv_characteristics"
                     tools:text="에어컨, 세탁기, 신발장, 냉장고"
-                    android:text="@{viewModel.buildingSummary.reviews[0].furnitures[0]}"
                     android:textSize="14sp"
                     android:fontFamily="@font/nanum_square_round_regular"
                     android:textColor="@color/zeepy_black_3b"
@@ -432,10 +432,11 @@
                     app:cardCornerRadius="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    app:contentPadding="10dp"
+                    app:contentPadding="16dp"
                     app:cardElevation="0dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_no_review"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -466,9 +467,8 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <include
-                        android:id="@+id/layout_sample_review"
-                        layout="@layout/item_building_review"
-                        android:visibility="gone"/>
+                        android:id="@+id/layout_rep_review"
+                        layout="@layout/layout_representative_review" />
 
 
                 </androidx.cardview.widget.CardView>
@@ -486,7 +486,9 @@
                     app:layout_constraintStart_toStartOf="@id/card_building_detailed_review"
                     app:layout_constraintEnd_toEndOf="@id/card_building_detailed_review"
                     app:layout_constraintTop_toBottomOf="@id/card_building_detailed_review"
-                    android:layout_marginTop="16dp" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

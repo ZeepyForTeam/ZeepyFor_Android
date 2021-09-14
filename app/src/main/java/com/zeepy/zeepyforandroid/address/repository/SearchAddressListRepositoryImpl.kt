@@ -1,9 +1,6 @@
 package com.zeepy.zeepyforandroid.address.repository
 
-import com.zeepy.zeepyforandroid.address.datasource.AddressDataSource
 import com.zeepy.zeepyforandroid.address.datasource.SearchAddressDataSource
-import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
-import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.data.entity.SearchAddressForLookAroundModel
 import com.zeepy.zeepyforandroid.lookaround.mapper.AddressMapper.toDomainModel
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
@@ -21,8 +18,8 @@ class SearchAddressListRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchBuildingsByAddress(address: String): List<SearchAddressForLookAroundModel>? {
-        return searchAddressDataSource.searchBuildingsByAddress(address)?.toDomainModel()
+    override suspend fun searchBuildingsByAddress(address: String, page: Int): SearchAddressForLookAroundModel? {
+        return searchAddressDataSource.searchBuildingsByAddress(address, page)?.toDomainModel()
     }
 
 }

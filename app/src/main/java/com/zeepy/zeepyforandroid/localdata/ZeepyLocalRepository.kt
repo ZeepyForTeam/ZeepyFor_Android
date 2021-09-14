@@ -1,7 +1,10 @@
 package com.zeepy.zeepyforandroid.localdata
 
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
+import com.zeepy.zeepyforandroid.building.BuildingDealDTO
+import com.zeepy.zeepyforandroid.building.BuildingLikeDTO
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
+import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 import io.reactivex.Maybe
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +19,9 @@ interface ZeepyLocalRepository {
 
     fun fetchBuildingById(id: Int): Flow<BuildingSummaryModel>
     suspend fun insertBuilding(building: BuildingSummaryModel)
+    suspend fun insertBuildingDeals(building: BuildingSummaryModel, buildingId: Int)
+    suspend fun insertBuildingLikes(building: BuildingSummaryModel, buildingId: Int)
+    suspend fun insertBuildingReviews(building: BuildingSummaryModel, buildingId: Int)
     suspend fun deleteBuilding(id: Int)
-    fun isRowExists(id: Int): Boolean
+    suspend fun isRowExists(id: Int): Boolean
 }

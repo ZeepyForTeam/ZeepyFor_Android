@@ -9,5 +9,5 @@ import io.reactivex.Single
 interface SearchAddressListRepository {
     fun searchBuildingAddressList(address: String): Single<List<SearchAddressListModel>>
     //coroutine
-    suspend fun searchBuildingsByAddress(address: String): List<SearchAddressForLookAroundModel>?
+    suspend fun searchBuildingsByAddress(address: String, page: Int): SearchAddressForLookAroundModel?
 }
