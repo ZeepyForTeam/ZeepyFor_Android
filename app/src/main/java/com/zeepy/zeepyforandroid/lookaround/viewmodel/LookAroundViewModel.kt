@@ -39,7 +39,9 @@ class LookAroundViewModel @Inject constructor(
     val selectedAddress: LiveData<Event<LocalAddressEntity>>
         get() = _selectedAddress
 
-    private val filteredBuildingList = ArrayList<BuildingSummaryModel>()
+    private val _filteredBuildingList = MutableLiveData<MutableList<BuildingSummaryModel>>()
+    val filteredBuildingList: LiveData<MutableList<BuildingSummaryModel>>
+        get() = _filteredBuildingList
 
     private val _buildingListLiveData = MutableLiveData<MutableList<BuildingSummaryModel>>()
     val buildingListLiveData: LiveData<MutableList<BuildingSummaryModel>>
@@ -66,9 +68,33 @@ class LookAroundViewModel @Inject constructor(
     val isLastPage: LiveData<Boolean>
         get() = _isLastPage
 
+    private val _isOnFiltered = MutableLiveData<Boolean>(false)
+    val isOnFiltered: LiveData<Boolean>
+        get() = _isOnFiltered
+
+    private val _filterChecked = MutableLiveData<String>()
+    val filterChecked: LiveData<String>
+        get() = _filterChecked
+
+    private val _isFetchDone = MutableLiveData<Boolean>(false)
+    val isFetchDone: LiveData<Boolean>
+        get() = _isFetchDone
+
     init {
         Log.e("Viewmodel LOOKAROUND", "INITIALIZED")
         getAddressListFromServer()
+    }
+
+    fun resetIsFetchDone() {
+        _isFetchDone.value = false
+    }
+
+    fun setFilterChecked(filterName: String) {
+        _filterChecked.value = filterName
+    }
+
+    fun changeFilteredStatus(flag: Boolean) {
+        _isOnFiltered.value = flag
     }
 
     fun changeSelectedAddress(address: LocalAddressEntity) {
@@ -91,10 +117,12 @@ class LookAroundViewModel @Inject constructor(
         }
     }
 
-    fun removeBuildingsList() {
-        val buildings = _buildingListLiveData.value?.toMutableList()
-        buildings?.clear()
-        _buildingListLiveData.value = buildings!!
+    fun removeBuildingsList(list: MutableLiveData<MutableList<BuildingSummaryModel>>) {
+        if (!list.value.isNullOrEmpty()) {
+            val buildings = list.value
+            buildings?.clear()
+            list.value = buildings
+        }
     }
 
     /**
@@ -126,37 +154,35 @@ class LookAroundViewModel @Inject constructor(
                     }.map { it.await() }
                 }
             }
+            _isFetchDone.value = true
         }
     }
 
     fun setBuildingsByFiltering(lessorType: String) {
-        filteredBuildingList.clear()
         _buildingListLiveData.value?.forEach { building ->
             if (!building.reviews.isNullOrEmpty()) {
                 when (building.reviews[0].communcationTendency) {
-                    lessorType -> filteredBuildingList.add(building)
+                    lessorType -> _filteredBuildingList.plusAssign(building)
                 }
             }
         }
-        _buildingListLiveData.value = filteredBuildingList
+        _isFetchDone.value = true
     }
 
     fun setBuildingsByConditions(conditions: ConditionSetModel) {
         val monthly = conditions.dealType == "MONTHLY"
         val deposit = conditions.dealType == "JEONSE"
 
-        filteredBuildingList.clear()
         _buildingListLiveData.value?.forEach { building ->
             if (!building.reviews.isNullOrEmpty() && !building.buildingDeals.isNullOrEmpty()) {
                 if (building.buildingType == conditions.buildingType
                     && building.buildingDeals.hasDealType(conditions.dealType)
                     && building.buildingDeals.isWithinCost(monthly, conditions.monthlyPayStart, conditions.monthlyPayEnd, deposit, conditions.depositPayStart, conditions.depositPayEnd)
                     && building.reviews.hasOptions(conditions.options)) {
-                    filteredBuildingList.add(building)
+                    _filteredBuildingList.plusAssign(building)
                 }
             }
         }
-        _buildingListLiveData.value = filteredBuildingList
     }
 
     suspend fun getBuildingInfoById(id: Int) {

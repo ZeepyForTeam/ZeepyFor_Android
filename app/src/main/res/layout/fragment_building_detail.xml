@@ -129,7 +129,6 @@
                     app:layout_constraintTop_toTopOf="@id/tv_characteristics"
                     app:layout_constraintBottom_toBottomOf="@id/tv_characteristics"
                     tools:text="에어컨, 세탁기, 신발장, 냉장고"
-                    android:text="@{viewModel.buildingSummary.reviews[0].furnitures[0]}"
                     android:textSize="14sp"
                     android:fontFamily="@font/nanum_square_round_regular"
                     android:textColor="@color/zeepy_black_3b"

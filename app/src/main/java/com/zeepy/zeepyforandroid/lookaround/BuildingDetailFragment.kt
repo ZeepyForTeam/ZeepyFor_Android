@@ -195,9 +195,9 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         args.buildingSummaryModel.reviews.let {
             if (!it.isNullOrEmpty()) {
                 if (!it[0].furnitures.isNullOrEmpty()) {
-                    binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews?.get(0)?.furnitures?.joinToString(separator = ", ") { furniture ->
+                    binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews[0].furnitures.joinToString(separator = ", ") { furniture ->
                         resources.getString(Options.getOptionFromString(furniture))
-                    }.toString()
+                    }
                 }
             }
         }
