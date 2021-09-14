@@ -159,6 +159,7 @@ class LookAroundViewModel @Inject constructor(
     }
 
     fun setBuildingsByFiltering(lessorType: String) {
+        Log.e("what is buildingslistlivedata hereeeeeeeeeeee", _buildingListLiveData.value?.size.toString())
         _buildingListLiveData.value?.forEach { building ->
             if (!building.reviews.isNullOrEmpty()) {
                 when (building.reviews[0].communcationTendency) {
@@ -185,7 +186,7 @@ class LookAroundViewModel @Inject constructor(
         }
     }
 
-    suspend fun getBuildingInfoById(id: Int) {
+    private suspend fun getBuildingInfoById(id: Int) {
         val result = buildingRepository.getBuildingsInfoById(id)
         if (result != null) {
             Log.e("what building is currently being fetched?", result.toString())
@@ -196,7 +197,7 @@ class LookAroundViewModel @Inject constructor(
         }
     }
 
-    suspend fun getBuildingInfoFromLocal(id: Int) {
+    private suspend fun getBuildingInfoFromLocal(id: Int) {
         try {
             zeepyLocalRepository.fetchBuildingById(id).collect {
                 _buildingListLiveData.plusAssign(it)
@@ -217,17 +218,17 @@ class LookAroundViewModel @Inject constructor(
         }
     }
 
-    suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {
+    private suspend fun insertBuildingInfoToLocal(building: BuildingSummaryModel) {
         if (!zeepyLocalRepository.isRowExists(building.id)) {
             zeepyLocalRepository.insertBuilding(building)
             zeepyLocalRepository.insertBuildingDeals(building, building.id)
-            zeepyLocalRepository.insertBuildingDeals(building, building.id)
-            zeepyLocalRepository.insertBuildingDeals(building, building.id)
+            zeepyLocalRepository.insertBuildingLikes(building, building.id)
+            zeepyLocalRepository.insertBuildingReviews(building, building.id)
+            Log.e("INSERTED <== building", building.toString())
         }
-        Log.e("INSERTED <== building", building.toString())
     }
 
-    fun getAddressListFromServer() {
+    private fun getAddressListFromServer() {
         addDisposable(
             addressDataSource.fetchAddressList()
                 .subscribeOn(Schedulers.io())
@@ -244,7 +245,7 @@ class LookAroundViewModel @Inject constructor(
         )
     }
 
-    fun fetchAddressListFromLocal() {
+    private fun fetchAddressListFromLocal() {
         addDisposable(
             zeepyLocalRepository.fetchAddressList()
                 .subscribeOn(Schedulers.io())

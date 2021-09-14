@@ -1,11 +1,7 @@
 package com.zeepy.zeepyforandroid.localdata.mapper
 
-import com.zeepy.zeepyforandroid.building.BuildingDealDTO
-import com.zeepy.zeepyforandroid.building.LocalBuildingDealEntity
 import com.zeepy.zeepyforandroid.building.LocalReviewEntity
-import com.zeepy.zeepyforandroid.localdata.mapper.DealMapper.toEntity
 import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
-import com.zeepy.zeepyforandroid.review.data.dto.User
 
 object ReviewMapper {
     fun LocalReviewEntity.toDomain(): ResponseReviewDTO = this.let {

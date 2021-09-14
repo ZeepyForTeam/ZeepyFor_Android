@@ -16,10 +16,10 @@ interface BuildingDao {
     suspend fun insertBuildingDeals(buildingDeal: LocalBuildingDealEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBuildingLikes(buildingDeal: LocalBuildingLikeEntity)
+    suspend fun insertBuildingLikes(buildingLike: LocalBuildingLikeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBuildingReviews(buildingDeal: LocalReviewEntity)
+    suspend fun insertBuildingReviews(buildingReview: LocalReviewEntity)
 
     @Transaction
     @Query("SELECT * FROM building_table WHERE id = :id")

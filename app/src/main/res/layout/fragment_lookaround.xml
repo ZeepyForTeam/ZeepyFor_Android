@@ -166,11 +166,12 @@
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp">
 
@@ -195,6 +196,7 @@
                 android:fontFamily="@font/gilroy_extrabold"
                 android:textColor="@color/zeepy_gray_9a"
                 android:layout_centerInParent="true"/>
+
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

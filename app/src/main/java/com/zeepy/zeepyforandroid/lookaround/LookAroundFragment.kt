@@ -27,8 +27,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private val viewModel by viewModels<LookAroundViewModel>()
-    @Inject lateinit var userPreferenceManager: UserPreferenceManager
+    @Inject
+    lateinit var userPreferenceManager: UserPreferenceManager
     private lateinit var buildingsAdapter: LookAroundListAdapter
+    val isRefreshedFromFilteredList: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -39,7 +41,9 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     override fun onResume() {
         super.onResume()
-        updateToolbar(viewModel.selectedAddress.value?.peekContent()?.cityDistinct!!, true)
+        viewModel.selectedAddress.value?.peekContent()?.cityDistinct?.let {
+            updateToolbar(it, true)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +70,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     }
 
     private fun resetPostingList(buildingList: MutableLiveData<MutableList<BuildingSummaryModel>>) {
-        viewModel.removeBuildingsList(buildingList)
+        buildingList.value?.clear()
         viewModel.changePaginationIdx(0)
         viewModel.resetIsLastPage()
         buildingsAdapter.clearList()
@@ -76,18 +80,13 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private fun setSwipeRefreshLayout() {
         binding.swipeRefreshLayout.apply {
             setOnRefreshListener {
-                when (viewModel.isOnFiltered.value) {
-                    false -> {
-                        resetPostingList(viewModel.buildingListLiveData as MutableLiveData<MutableList<BuildingSummaryModel>>)
-                        viewModel.searchBuildingsByAddress()
-                    }
-                    else -> {
-                        resetPostingList(viewModel.filteredBuildingList as MutableLiveData<MutableList<BuildingSummaryModel>>)
-                        viewModel.setBuildingsByFiltering(viewModel.filterChecked.value!!)
-                    }
+                if (binding.rgFilterings.checkedRadioButtonId != R.id.rb_standard_order) {
+                    binding.rgFilterings.check(R.id.rb_standard_order)
+                } else {
+                    resetPostingList(viewModel.buildingListLiveData as MutableLiveData<MutableList<BuildingSummaryModel>>)
+                    viewModel.searchBuildingsByAddress()
                 }
                 isRefreshing = false
-                Log.e("isRefreshing", isRefreshing.toString())
             }
         }
     }
@@ -99,8 +98,28 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 R.id.rb_standard_order -> {
                     if (viewModel.selectedAddress.value != null) {
                         viewModel.changeFilteredStatus(false)
-                        resetPostingList(viewModel.buildingListLiveData as MutableLiveData<MutableList<BuildingSummaryModel>>)
-                        viewModel.searchBuildingsByAddress()
+
+                        // TODO: Modularize
+                        viewModel.changePaginationIdx(0)
+                        viewModel.resetIsLastPage()
+                        buildingsAdapter.clearList()
+                        buildingsAdapter.notifyDataSetChanged()
+                        viewModel.buildingListLiveData.value?.let {
+                            if (it.size != 0) {
+                                buildingsAdapter.notifyItemRemoved(buildingsAdapter.itemCount)
+                                val prevLastItemPosition =
+                                    if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
+                                if (viewModel.isLastPage.value != true) {
+                                    buildingsAdapter.setList(it)
+                                } else {
+                                    buildingsAdapter.setListWithoutLoading(it)
+                                }
+                                buildingsAdapter.notifyItemRangeInserted(
+                                    prevLastItemPosition,
+                                    buildingsAdapter.itemCount - prevLastItemPosition
+                                )
+                            }
+                        }
                     }
                 }
                 R.id.rb_business -> lessorType = "BUSINESS"
@@ -172,15 +191,12 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 Log.e("itemTotalCount", itemTotalCount.toString())
 
                 if (!binding.rvBuildingList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && viewModel.isLastPage.value == false
-                    && buildingsAdapter.itemCount > 0) {
+                    && itemTotalCount > 0) {
+                    Log.e("When is scroll not possible", "NOW")
                     buildingsAdapter.deleteLoading()
-                    if (viewModel.isOnFiltered.value == false) {
-                        viewModel.buildingListLiveData.value?.clear()
-                        viewModel.increasePageIdx()
-                        viewModel.searchBuildingsByAddress()
-                    } else {
-                        // TODO: Paging for Filtered Lists
-                    }
+                    viewModel.buildingListLiveData.value?.clear()
+                    viewModel.increasePageIdx()
+                    viewModel.searchBuildingsByAddress()
                 }
             }
         })
@@ -189,9 +205,10 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     private fun initRecyclerView() {
         binding.rvBuildingList.apply {
             buildingsAdapter = LookAroundListAdapter(context) {
-                val action = MainFrameFragmentDirections.actionMainFrameFragmentToBuildingDetailFragment(
-                    it
-                )
+                val action =
+                    MainFrameFragmentDirections.actionMainFrameFragmentToBuildingDetailFragment(
+                        it
+                    )
                 requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }
             adapter = buildingsAdapter
@@ -201,10 +218,12 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun subscribeObservers() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
+            Log.e("buildinglistlivedata in observer SIZEEEEEEEE", it.size.toString())
             if (it.size == viewModel.fetchedBuildingsCount.value) {
                 if (it.size != 0) {
                     buildingsAdapter.notifyItemRemoved(buildingsAdapter.itemCount)
-                    val prevLastItemPosition = if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
+                    val prevLastItemPosition =
+                        if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
                     if (viewModel.isLastPage.value != true) {
                         buildingsAdapter.setList(it)
                     } else {
@@ -218,8 +237,10 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             }
         }
         viewModel.filteredBuildingList.observe(viewLifecycleOwner) {
+            Log.e("filtered List size", it.size.toString())
             if (it.size != 0) {
-                val prevLastItemPosition = if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
+                val prevLastItemPosition =
+                    if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
                 // TODO: Paging 처리 for Filtered List
                 buildingsAdapter.setListWithoutLoading(it)
                 buildingsAdapter.notifyItemRangeInserted(
