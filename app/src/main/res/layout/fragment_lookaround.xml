@@ -73,7 +73,7 @@
                             android:text="@string/tendency_all"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_bold"
-                            android:textColor="@color/zeepy_black_3b"
+                            android:textColor="@color/zeepy_white_f0"
                             android:textSize="12sp"
                             android:button="@null"
                             android:background="@drawable/selector_grayf4_blue59_16dp"
