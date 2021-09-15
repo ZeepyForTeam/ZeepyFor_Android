@@ -202,4 +202,6 @@
     <string name="manage_address">주소 관리</string>
     <string name="manage_reviews">리뷰 관리</string>
     <string name="wishlist">찜 목록</string>
+    <string name="my_reviews">내가 작성한 리뷰</string>
+    <string name="house">집</string>
 </resources>

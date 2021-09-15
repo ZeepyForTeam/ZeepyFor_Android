@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.zeepy.zeepyforandroid.base.BaseViewModel
+import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.myprofile.repository.MyProfileRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.signin.controller.UserDataController
@@ -27,9 +28,17 @@ class MyProfileViewModel @Inject constructor(
     private val _isWithdrawn = MutableLiveData<Boolean?>()
     val isWithdrawn: LiveData<Boolean?> = _isWithdrawn
 
+    private val _userReviews = MutableLiveData<SimpleReviewDTOList>()
+    val userReviews: LiveData<SimpleReviewDTOList>
+        get() = _userReviews
+
     init {
         _isWithdrawn.value = false
         _isLoggedOut.value = !userPreferenceManager.fetchIsAlreadyLogin()
+    }
+
+    init {
+        getUserReviews()
     }
 
     fun getUserNicknameAndEmail(email: String) {
@@ -45,12 +54,23 @@ class MyProfileViewModel @Inject constructor(
         )
     }
 
+    fun getUserReviews() {
+        viewModelScope.launch {
+            try {
+                val result = repository.getUserReviews()
+                _userReviews.value = result
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun submitWithdrawal() {
         viewModelScope.launch {
             try {
                 val result = repository.submitWithdrawal()
                 _isWithdrawn.value = true
-            } catch(e: Throwable) {
+            } catch (e: Throwable) {
                 e.printStackTrace()
             }
         }

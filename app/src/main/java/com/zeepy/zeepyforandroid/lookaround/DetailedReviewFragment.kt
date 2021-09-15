@@ -32,6 +32,4 @@ class DetailedReviewFragment: BaseFragment<FragmentLookaroundDetailedReviewBindi
             }
         }
     }
-
-
 }

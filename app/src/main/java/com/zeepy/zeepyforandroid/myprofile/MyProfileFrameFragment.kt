@@ -52,6 +52,10 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
                 } else {
                     clearButton()
                     setTitle("마이페이지")
+                    // TODO: Below visibility setting can be deleted (Already done in ManageReviewFragment)
+                    if (visibility == View.GONE) {
+                        visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -60,8 +64,8 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
     private fun unsetBottomNavigationBar() {
         val navBar = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        navController.addOnDestinationChangedListener { _, _, _ ->
-            if (navController.previousBackStackEntry != null) {
+        navController.addOnDestinationChangedListener { navController, destination, _ ->
+            if (destination.id != R.id.myProfileFragment && navController.previousBackStackEntry != null) {
                 navBar?.visibility = View.GONE
             } else {
                 navBar?.visibility = View.VISIBLE
