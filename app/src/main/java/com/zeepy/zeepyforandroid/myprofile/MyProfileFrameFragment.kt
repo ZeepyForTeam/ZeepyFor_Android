@@ -51,6 +51,7 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
                     }
                 } else {
                     clearButton()
+                    setTitle("마이페이지")
                 }
             }
         }

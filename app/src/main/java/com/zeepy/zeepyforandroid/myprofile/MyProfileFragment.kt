@@ -44,25 +44,14 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
         return FragmentMyProfileBinding.inflate(inflater, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        setToolbar()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        setToolbar()
         setButtonsOnClickListener()
         setOptionsRecyclerView()
         setMainMsg()
-    }
-
-    private fun setToolbar() {
-        requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
-            ?.setTitle("마이페이지")
     }
 
     private fun setButtonsOnClickListener() {
