@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
@@ -34,6 +35,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         setToolbar()
+        setOnBackPressed()
         setOnClickListeners()
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
         Log.e("parent of EditMyProfileFragment", parentFragment.toString())
@@ -88,6 +90,12 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
         binding.tvWithdraw.setOnClickListener {
             viewModel.submitWithdrawal()
+        }
+    }
+
+    private fun setOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
         }
     }
 }

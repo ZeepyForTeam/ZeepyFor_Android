@@ -58,7 +58,7 @@
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_blue_5f"
             android:textSize="12sp"
-            android:text="집주인 성향"
+            android:text="@string/lessor_tendency"
             app:layout_constraintVertical_bias="0.18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/textview_name_house"
@@ -86,7 +86,7 @@
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_blue_5f"
             android:textSize="12sp"
-            android:text="건물 평가"
+            android:text="@string/evaluation_building"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/textview_personality"
             app:layout_constraintTop_toBottomOf="@id/textview_personality_review" />

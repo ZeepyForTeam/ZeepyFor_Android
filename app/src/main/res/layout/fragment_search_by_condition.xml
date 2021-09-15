@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:text="건물 유형"
+                    android:text="@string/building_type"
                     android:textColor="@color/zeepy_black_3b"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +76,7 @@
                             android:drawableTop="@drawable/selector_option_1"
                             android:drawablePadding="8dp"
                             android:button="@null"
-                            android:text="전체"
+                            android:text="@string/all"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:layout_marginEnd="8dp"
@@ -86,7 +86,7 @@
                             android:id="@+id/rb_rowhouse"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="연립다세대"
+                            android:text="@string/rowhouse"
                             android:checked="@={viewModel.searchEntry.buildingTypes[viewModel.MULTIHOUSEHOLD].checked}"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
@@ -99,7 +99,7 @@
                             android:id="@+id/rb_officetel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="오피스텔"
+                            android:text="@string/officetel"
                             android:checked="@={viewModel.searchEntry.buildingTypes[viewModel.OFFICETEL].checked}"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:text="거래 종류"
+                    android:text="@string/deal_type"
                     android:textColor="@color/zeepy_black_3b"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
-                            android:text="전체"
+                            android:text="@string/all"
                             android:checked="@={viewModel.searchEntry.tradeTypes[viewModel.ALL].checked}"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
@@ -159,7 +159,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
-                            android:text="월세"
+                            android:text="@string/monthly_pay"
                             android:checked="@={viewModel.searchEntry.tradeTypes[viewModel.MONTHLYPAYMENT].checked}"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
@@ -172,7 +172,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
-                            android:text="전세"
+                            android:text="@string/jeonse_pay"
                             android:checked="@={viewModel.searchEntry.tradeTypes[viewModel.DEPOSITPAYMENT].checked}"
                             android:textAlignment="center"
                             android:fontFamily="@font/nanum_square_round_extrabold"
@@ -186,7 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
-                            android:text="매매"
+                            android:text="@string/trade"
                             android:checked="false"
                             android:clickable="false"
                             android:textAlignment="center"
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:text="가격"
+                    android:text="@string/price"
                     android:textColor="@color/zeepy_black_3b"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -221,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:text="보증금"
+                    android:text="@string/deposit"
                     android:textColor="@color/zeepy_blue_5f"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -234,7 +234,7 @@
                     android:id="@+id/tv_deposit_range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전체"
+                    android:text="@string/all"
                     android:textSize="16sp"
                     android:fontFamily="@font/nanum_square_round_extrabold"
                     android:background="@drawable/box_grayf7_14dp"
@@ -286,7 +286,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="최소"/>
+                        android:text="@string/min"/>
 
                     <View
                         android:layout_width="0dp"
@@ -297,7 +297,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="1천만"/>
+                        android:text="@string/ten_million"/>
 
                     <View
                         android:layout_width="0dp"
@@ -308,7 +308,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="5천만"/>
+                        android:text="@string/fifty_million"/>
 
                     <View
                         android:layout_width="0dp"
@@ -319,7 +319,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="최대"/>
+                        android:text="@string/max"/>
 
                 </LinearLayout>
 
@@ -328,7 +328,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:text="월세"
+                    android:text="@string/monthly_pay"
                     android:textColor="@color/zeepy_blue_5f"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -341,7 +341,7 @@
                     android:id="@+id/tv_monthlypay_range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전체"
+                    android:text="@string/all"
                     android:textSize="16sp"
                     android:fontFamily="@font/nanum_square_round_extrabold"
                     android:background="@drawable/box_grayf7_14dp"
@@ -393,7 +393,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="최소"/>
+                        android:text="@string/min"/>
 
                     <View
                         android:layout_width="0dp"
@@ -404,7 +404,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="50만"/>
+                        android:text="@string/five_hundred_thousand"/>
 
                     <View
                         android:layout_width="0dp"
@@ -415,7 +415,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="100만"/>
+                        android:text="@string/one_million"/>
 
                     <View
                         android:layout_width="0dp"
@@ -426,7 +426,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="최대"/>
+                        android:text="@string/max"/>
 
                 </LinearLayout>
 
@@ -435,7 +435,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanum_square_round_extrabold"
-                    android:text="가구옵션"
+                    android:text="@string/furniture_options"
                     android:layout_marginTop="28dp"
                     android:layout_marginStart="16dp"
                     android:textColor="@color/zeepy_black_3b"

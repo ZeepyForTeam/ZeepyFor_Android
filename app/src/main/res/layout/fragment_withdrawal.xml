@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="유의사항"
+            android:text="@string/warning_title"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="16sp"
             android:textColor="@color/zeepy_black_3b"
@@ -28,7 +28,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_gray_9a"
-            android:text="회원 탈퇴 전에 꼭 확인해주세요."
+            android:text="@string/check_before_withdrawl"
             android:layout_marginTop="8dp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout

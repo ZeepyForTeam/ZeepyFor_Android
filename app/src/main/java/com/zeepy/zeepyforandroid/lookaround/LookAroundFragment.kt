@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
@@ -30,7 +31,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     @Inject
     lateinit var userPreferenceManager: UserPreferenceManager
     private lateinit var buildingsAdapter: LookAroundListAdapter
-    val isRefreshedFromFilteredList: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -96,6 +96,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             var lessorType = "BUSINESS"
             when (checkedId) {
                 R.id.rb_standard_order -> {
+                    binding.rbStandardOrder.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f0))
                     if (viewModel.selectedAddress.value != null) {
                         viewModel.changeFilteredStatus(false)
 
@@ -122,11 +123,26 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                         }
                     }
                 }
-                R.id.rb_business -> lessorType = "BUSINESS"
-                R.id.rb_kind -> lessorType = "KIND"
-                R.id.rb_graze -> lessorType = "GRAZE"
-                R.id.rb_softy -> lessorType = "SOFTY"
-                R.id.rb_bad -> lessorType = "BAD"
+                R.id.rb_business -> {
+                    binding.rbBusiness.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f0))
+                    lessorType = "BUSINESS"
+                }
+                R.id.rb_kind -> {
+                    binding.rbKind.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f0))
+                    lessorType = "KIND"
+                }
+                R.id.rb_graze -> {
+                    binding.rbGraze.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f0))
+                    lessorType = "GRAZE"
+                }
+                R.id.rb_softy -> {
+                    binding.rbSofty.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f0))
+                    lessorType = "SOFTY"
+                }
+                R.id.rb_bad -> {
+                    binding.rbBad.setTextColor(ContextCompat.getColor(requireContext(), R.color.zeepy_white_f0))
+                    lessorType = "BAD"
+                }
             }
             if (checkedId != R.id.rb_standard_order) {
                 viewModel.setFilterChecked(lessorType)

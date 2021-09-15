@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -22,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
     private val viewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+    private val args: SearchAddressFragmentArgs by navArgs()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -44,6 +46,10 @@ class SearchAddressFragment : BaseFragment<FragmentSearchAddressBinding>() {
             override fun selectAddress(address: SearchAddressListModel) {
                 viewModel.changeSelectedBuildingId(address.id)
                 val addressEntity = LocalAddressEntity(address.cityDistinct, false, address.primaryAddress)
+
+                // 마이프로필에서 주소 등록하기 위한 파라미터 설정
+                viewModel.changeIsRegisterAddressFromMyProfile(args.isRegisterAddressFromMyProfile)
+
                 val action = SearchAddressFragmentDirections.actionSearchAddressFragmentToWriteDetailAddressFragment(addressEntity)
                 findNavController().navigate(action)
             }

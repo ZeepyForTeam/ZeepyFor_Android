@@ -23,7 +23,6 @@
             android:textColor="@color/zeepy_black_3b"
             android:textSize="12sp"
             tools:text="원룸"
-            android:text="피쳐"
             android:paddingVertical="2.5dp"
             android:paddingHorizontal="8dp"
             app:layout_constraintStart_toStartOf="parent"

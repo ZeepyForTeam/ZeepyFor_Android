@@ -479,7 +479,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/box_blue5f_5dp"
                     tools:text="건물 평가 모두보기(22개)"
-                    android:text="@{@string/go_to_all_reviews(viewModel.buildingSummary.reviews.size())}"
+                    android:text="@{@string/go_to_all_reviews_btn(viewModel.buildingSummary.reviews.size())}"
                     android:textSize="14sp"
                     android:textColor="@color/zeepy_black_3b"
                     android:fontFamily="@font/nanum_square_round_bold"

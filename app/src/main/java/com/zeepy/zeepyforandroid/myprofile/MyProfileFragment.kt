@@ -20,6 +20,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentMyProfileBinding
 import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
 import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
@@ -43,14 +44,25 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
         return FragmentMyProfileBinding.inflate(inflater, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        setToolbar()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
 
+        setToolbar()
         setButtonsOnClickListener()
         setOptionsRecyclerView()
         setMainMsg()
+    }
+
+    private fun setToolbar() {
+        requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
+            ?.setTitle("마이페이지")
     }
 
     private fun setButtonsOnClickListener() {

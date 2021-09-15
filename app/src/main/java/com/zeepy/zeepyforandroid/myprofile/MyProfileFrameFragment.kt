@@ -1,18 +1,17 @@
 package com.zeepy.zeepyforandroid.myprofile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
-import com.zeepy.zeepyforandroid.databinding.FragmentCommunityFrameBinding
 import com.zeepy.zeepyforandroid.databinding.FragmentMyprofileFrameBinding
 
 class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
@@ -31,12 +30,12 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
             childFragmentManager.findFragmentById(R.id.myprofile_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        initToolbar()
+        setToolbar()
         unsetBottomNavigationBar()
         swipeOnlyOnMain()
     }
 
-    private fun initToolbar() {
+    private fun setToolbar() {
         binding.toolbar.run {
             setTitle("마이페이지")
 
@@ -75,9 +74,5 @@ class MyProfileFrameFragment : BaseFragment<FragmentMyprofileFrameBinding>() {
         navController.addOnDestinationChangedListener { _, _, _ ->
             viewPager?.isUserInputEnabled = navController.previousBackStackEntry == null
         }
-    }
-
-    private fun onResumeToMainFrameFragment() {
-
     }
 }
