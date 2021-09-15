@@ -86,7 +86,7 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:${Versions.RETROFIT_VERSION}"
     implementation "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT_VERSION}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${Versions.RETROFIT_VERSION}"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:${Versions.RETROFIT_VERSION}"
     implementation "com.google.code.gson:gson:${Versions.GSON_VERSION}"
 
 

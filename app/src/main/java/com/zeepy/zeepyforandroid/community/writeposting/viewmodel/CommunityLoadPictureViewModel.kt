@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.community.controller.WritePostingController
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
+import com.zeepy.zeepyforandroid.community.writeposting.view.CommunityLoadPictureFragment
 import com.zeepy.zeepyforandroid.imagecontrol.ImageController
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel

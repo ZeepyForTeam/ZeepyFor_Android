@@ -115,7 +115,6 @@ interface ZeepyApiService {
 
 
     @Multipart
-    @Headers(value = ["Accept:*/*"])
     @POST("api/s3")
     fun postImages(@Part file: ArrayList<MultipartBody.Part?>): Single<ResponseImageUrls>
 

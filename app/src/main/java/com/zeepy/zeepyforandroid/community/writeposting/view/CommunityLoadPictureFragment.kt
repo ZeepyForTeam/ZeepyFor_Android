@@ -138,12 +138,15 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     private val cameraActivityLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSaved ->
             if (isSaved) {
-                Log.e("picture", "${pictureUri}")
-                Log.e("picture", "${pictureUri.path}")
-
                 viewModel.addFile(getFileFromUri(requireContext(), pictureUri))
                 val bitmap = pictureUri.asBitmap(requireContext().contentResolver)
                 pictures.add(PictureModel(bitmap))
+                val bitmapRequestBody = bitmap?.let { BitmapRequestBody(it) }
+                if (bitmapRequestBody != null) {
+                    viewModel.addUploadMultipartBody(MultipartBody.Part.createFormData("file", "zeepy", bitmapRequestBody))
+
+                }
+
 //                viewModel.addUploadMultipartBody(pictureUri.asMultipart("imgs", requireContext().contentResolver))
 
                 val multipartBody = MultipartBody.Part.createFormData("file", "zeepy", BitmapRequestBody(bitmap!!))
