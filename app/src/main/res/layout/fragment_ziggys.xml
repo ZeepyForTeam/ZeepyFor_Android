@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="기획"
+            android:text="@string/planner"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
@@ -29,7 +29,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
-            android:text="하기스" />
+            android:text="@string/huggies" />
 
         <TextView
             android:id="@+id/tv_hyerin"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_1"
             android:drawablePadding="12dp"
-            android:text="류혜린"
+            android:text="@string/hyerin"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_2"
             android:drawablePadding="12dp"
-            android:text="강수미"
+            android:text="@string/sumi"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/tv_huggies"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="디자인"
+            android:text="@string/designer"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_3"
             android:drawablePadding="12dp"
-            android:text="김자영"
+            android:text="@string/jayoung"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -99,7 +99,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
-            android:text="하우디" />
+            android:text="@string/howdy" />
 
         <TextView
             android:id="@+id/tv_marketer"
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_hyerin"
-            android:text="마케팅"
+            android:text="@string/marketer"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
@@ -125,7 +125,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
-            android:text="하마" />
+            android:text="@string/hama" />
 
         <TextView
             android:id="@+id/tv_eunjin"
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_4"
             android:drawablePadding="12dp"
-            android:text="곽은진"
+            android:text="@string/eunjin"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_5"
             android:drawablePadding="12dp"
-            android:text="박주영"
+            android:text="@string/juyoung"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_eunjin"
-            android:text="서버"
+            android:text="@string/server"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
@@ -180,7 +180,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
-            android:text="하버드" />
+            android:text="@string/harvard" />
 
         <TextView
             android:id="@+id/tv_minkyu"
@@ -188,7 +188,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_6"
             android:drawablePadding="12dp"
-            android:text="이민규"
+            android:text="@string/minkyu"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -202,7 +202,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_7"
             android:drawablePadding="12dp"
-            android:text="이예인"
+            android:text="@string/yein"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -217,7 +217,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_8"
             android:drawablePadding="12dp"
-            android:text="이현종"
+            android:text="@string/hyunjong"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -232,7 +232,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_9"
             android:drawablePadding="12dp"
-            android:text="황보경"
+            android:text="@string/bokyoung"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -247,7 +247,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_minkyu"
-            android:text="클라이언트"
+            android:text="@string/client"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
@@ -265,7 +265,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
-            android:text="하우두유두, 하와요" />
+            android:text="@string/howdoyoudo_hawayo" />
 
         <TextView
             android:id="@+id/tv_jeongrok"
@@ -273,7 +273,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_10"
             android:drawablePadding="12dp"
-            android:text="서정록"
+            android:text="@string/jeongrok"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -287,7 +287,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_11"
             android:drawablePadding="12dp"
-            android:text="손평화"
+            android:text="@string/pyeonghwa"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -302,7 +302,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_12"
             android:drawablePadding="12dp"
-            android:text="김주은"
+            android:text="@string/jueun"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -316,7 +316,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_13"
             android:drawablePadding="12dp"
-            android:text="김태훈"
+            android:text="@string/taehoon"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"
@@ -331,7 +331,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/people_14"
             android:drawablePadding="12dp"
-            android:text="노한솔"
+            android:text="@string/hansol"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_gray_9a"
             android:textAlignment="center"

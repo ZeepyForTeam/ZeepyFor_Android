@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.myprofile.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.databinding.ItemMyprofileOptionBinding
@@ -22,7 +23,7 @@ class MyProfileOptionsAdapter(private val dataSet: Array<String>):
 
             when (position) {
                 0 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_settingsFragment)
-                2 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_reportFragment)
+                2 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_reportFragment) //TODO: Remove this Report Option
                 3 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_ziggysFragment)
             }
         }

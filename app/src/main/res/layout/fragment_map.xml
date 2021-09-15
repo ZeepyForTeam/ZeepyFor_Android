@@ -41,7 +41,7 @@
                 android:paddingStart="15dp"
                 android:drawableLeft="@drawable/icon_search"
                 android:drawablePadding="10dp"
-                android:hint="지역, 동, 지하철역으로 입력해주세요"
+                android:hint="@string/hint_map_search"
                 android:textColor="@color/zeepy_black_2a"
                 app:layout_constraintStart_toStartOf="parent"
                 android:background="@drawable/edittext_box"
@@ -53,7 +53,7 @@
                 android:id="@+id/button_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="검색"
+                android:text="@string/search"
                 android:textColor="@color/zeepy_blue_5f"
                 android:fontFamily="@font/nanum_square_round_extrabold"
                 app:layout_constraintTop_toTopOf="@id/edittext_search_map"
@@ -92,7 +92,7 @@
                         android:id="@+id/option_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="소통유형별"
+                        android:text="@string/communication_type"
                         android:fontFamily="@font/nanum_square_round_extrabold"
                         android:textSize="9sp"
                         android:textColor="@color/zeepy_black_3b"
@@ -121,7 +121,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="비즈니스형"
+                            android:text="@string/tendency_business"
                             android:textSize="10sp"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:textColor="@color/zeepy_black_3b"/>
@@ -146,7 +146,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="친절형"
+                            android:text="@string/tendency_kind"
                             android:textSize="10sp"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:textColor="@color/zeepy_black_3b"/>
@@ -171,7 +171,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="방목형"
+                            android:text="@string/tendency_graze"
                             android:textSize="10sp"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:textColor="@color/zeepy_black_3b"/>
@@ -196,7 +196,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="츤데레형"
+                            android:text="@string/tendency_softy"
                             android:textSize="10sp"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:textColor="@color/zeepy_black_3b"/>
@@ -221,7 +221,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="할말하않"
+                            android:text="@string/tendency_bad"
                             android:textSize="10sp"
                             android:fontFamily="@font/nanum_square_round_extrabold"
                             android:textColor="@color/zeepy_black_3b"/>

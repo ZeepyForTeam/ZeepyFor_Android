@@ -12,6 +12,7 @@ import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZip
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
 import com.zeepy.zeepyforandroid.imagecontrol.PreSignedUrlDTO
+import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
 import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
@@ -139,4 +140,7 @@ interface ZeepyApiService {
 
     @GET("/api/buildings")
     suspend fun getBuildingsAll(@Query ("page") page: Int): Response<BuildingsAllDTO>
+
+    @GET("/api/review/user")
+    suspend fun getUserReviews(): Response<SimpleReviewDTOList>
 }

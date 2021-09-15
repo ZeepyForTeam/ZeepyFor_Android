@@ -5,7 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.children
+import androidx.core.view.forEach
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
@@ -30,7 +35,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     @Inject
     lateinit var userPreferenceManager: UserPreferenceManager
     private lateinit var buildingsAdapter: LookAroundListAdapter
-    val isRefreshedFromFilteredList: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -91,11 +95,21 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         }
     }
 
+    private fun changeTextColor(idx: Int) {
+        (binding.rgFilterings[idx] as RadioButton).setTextColor((ContextCompat.getColor(requireContext(), R.color.zeepy_white_f0)))
+        binding.rgFilterings.children.forEachIndexed { index, child ->
+            if (index != idx) {
+                (child as RadioButton).setTextColor((ContextCompat.getColor(requireContext(), R.color.zeepy_black_3b)))
+            }
+        }
+    }
+
     private fun setFilteringListener() {
         binding.rgFilterings.setOnCheckedChangeListener { _, checkedId ->
             var lessorType = "BUSINESS"
             when (checkedId) {
                 R.id.rb_standard_order -> {
+                    changeTextColor(0)
                     if (viewModel.selectedAddress.value != null) {
                         viewModel.changeFilteredStatus(false)
 
@@ -122,11 +136,26 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                         }
                     }
                 }
-                R.id.rb_business -> lessorType = "BUSINESS"
-                R.id.rb_kind -> lessorType = "KIND"
-                R.id.rb_graze -> lessorType = "GRAZE"
-                R.id.rb_softy -> lessorType = "SOFTY"
-                R.id.rb_bad -> lessorType = "BAD"
+                R.id.rb_business -> {
+                    changeTextColor(1)
+                    lessorType = "BUSINESS"
+                }
+                R.id.rb_kind -> {
+                    changeTextColor(2)
+                    lessorType = "KIND"
+                }
+                R.id.rb_graze -> {
+                    changeTextColor(3)
+                    lessorType = "GRAZE"
+                }
+                R.id.rb_softy -> {
+                    changeTextColor(4)
+                    lessorType = "SOFTY"
+                }
+                R.id.rb_bad -> {
+                    changeTextColor(5)
+                    lessorType = "BAD"
+                }
             }
             if (checkedId != R.id.rb_standard_order) {
                 viewModel.setFilterChecked(lessorType)

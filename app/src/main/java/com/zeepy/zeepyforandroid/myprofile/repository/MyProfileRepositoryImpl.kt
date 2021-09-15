@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.myprofile.repository
 
+import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.myprofile.datasource.MyProfileRemoteDataSource
 import javax.inject.Inject
 
@@ -12,5 +13,9 @@ class MyProfileRepositoryImpl @Inject constructor(
 
     override suspend fun logout(): Unit? {
         return dataSource.logout()
+    }
+
+    override suspend fun getUserReviews(): SimpleReviewDTOList {
+        return dataSource.getUserReviews()
     }
 }

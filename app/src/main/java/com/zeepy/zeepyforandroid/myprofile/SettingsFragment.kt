@@ -8,6 +8,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -27,6 +28,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setOnBackPressed()
         setToolbar()
 
         binding.tvAlarmSettingsChange.setOnClickListener {
@@ -44,5 +47,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     private fun setToolbar() {
         requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
             ?.setTitle("환경설정")
+    }
+
+    private fun setOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
     }
 }

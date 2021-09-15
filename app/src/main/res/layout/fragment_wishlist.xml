@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="내가 찜한 자취방"
+            android:text="@string/my_wishlist"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="16sp"
             android:textColor="@color/zeepy_black_3b"

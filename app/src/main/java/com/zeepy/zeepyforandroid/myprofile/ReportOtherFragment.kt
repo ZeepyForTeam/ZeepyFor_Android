@@ -8,6 +8,8 @@ import androidx.core.widget.doAfterTextChanged
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentReportOtherBinding
 import android.view.WindowManager
+import androidx.activity.addCallback
+import androidx.navigation.fragment.findNavController
 
 
 class ReportOtherFragment: BaseFragment<FragmentReportOtherBinding>() {
@@ -29,6 +31,7 @@ class ReportOtherFragment: BaseFragment<FragmentReportOtherBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setOnBackPressed()
         setSendButton()
         setButtonChangeListener()
     }
@@ -60,6 +63,12 @@ class ReportOtherFragment: BaseFragment<FragmentReportOtherBinding>() {
                 binding.btnNext.setMyProfileUsableButtion()
             else
                 binding.btnNext.setUnUsableButton()
+        }
+    }
+
+    private fun setOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
         }
     }
 }

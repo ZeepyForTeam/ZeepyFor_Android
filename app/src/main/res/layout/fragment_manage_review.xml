@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="내가 작성한 리뷰"
+            android:text="@string/my_reviews"
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textSize="16sp"
             android:textColor="@color/zeepy_black_3b"
@@ -33,16 +33,6 @@
             android:layout_marginTop="24dp"
             tools:listitem="@layout/item_review_summary"
             tools:itemCount="3"/>
-
-
-
-
-
-
-
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
