@@ -21,8 +21,11 @@ import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
+import com.zeepy.zeepyforandroid.enum.CommunityTendency
+import com.zeepy.zeepyforandroid.enum.PostingType
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
@@ -71,6 +74,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         initRecyclerView()
         fetchPaginationBuildings()
         setFilteringListener()
+        fetchBuildingsDirectFromHome((requireActivity() as MainActivity).initialCommunityType)
     }
 
     private fun resetPostingList(buildingList: MutableLiveData<MutableList<BuildingSummaryModel>>) {
@@ -100,6 +104,19 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         binding.rgFilterings.children.forEachIndexed { index, child ->
             if (index != idx) {
                 (child as RadioButton).setTextColor((ContextCompat.getColor(requireContext(), R.color.zeepy_black_3b)))
+            }
+        }
+    }
+
+    private fun fetchBuildingsDirectFromHome(type: String?) {
+        with(binding) {
+            when (type) {
+                CommunityTendency.BUSINESS.name -> rbBusiness.isChecked = true
+                CommunityTendency.KIND.name -> rbKind.isChecked = true
+                CommunityTendency.GRAZE.name -> rbGraze.isChecked = true
+                CommunityTendency.SOFTY.name -> rbSofty.isChecked = true
+                CommunityTendency.BAD.name -> rbBad.isChecked = true
+                else -> rbStandardOrder.isChecked = true
             }
         }
     }

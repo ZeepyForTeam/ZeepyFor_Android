@@ -7,7 +7,7 @@ import com.zeepy.zeepyforandroid.BR
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.databinding.ItemHomeSelectFilterBinding
 
-class HomeFilterAdapter: RecyclerView.Adapter<HomeFilterAdapter.HomeFilterViewHolder>() {
+class HomeFilterAdapter(val listener: (FilterImageEntity) -> Unit): RecyclerView.Adapter<HomeFilterAdapter.HomeFilterViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFilterViewHolder {
         val binding = ItemHomeSelectFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HomeFilterViewHolder(binding)
@@ -16,6 +16,9 @@ class HomeFilterAdapter: RecyclerView.Adapter<HomeFilterAdapter.HomeFilterViewHo
     override fun onBindViewHolder(holder: HomeFilterViewHolder, position: Int) {
         val item = filters[position]
         holder.binding.setVariable(BR.data, item)
+        holder.binding.root.setOnClickListener {
+            listener(item)
+        }
     }
 
     override fun getItemCount() = filters.size

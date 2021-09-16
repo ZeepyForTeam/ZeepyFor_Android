@@ -54,6 +54,13 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
         initViewPager()
     }
 
+    override fun applyLookAroundFilter(type: String) {
+        (requireActivity() as MainActivity).initialLookAroundType = type
+
+        viewModel.changePageIdx(1)
+        initViewPager()
+    }
+
     private fun observeViewModel() {
         viewModel.pageIdx.observe(viewLifecycleOwner) { pageIdx ->
             binding.viewpagerMain.currentItem = pageIdx
