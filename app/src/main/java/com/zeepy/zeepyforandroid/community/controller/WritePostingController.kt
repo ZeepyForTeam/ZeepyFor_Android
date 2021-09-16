@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.community.controller
 
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestReportDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseImageUrls
@@ -17,4 +18,5 @@ interface WritePostingController {
     fun cancelParticipation(postingId: Int): Completable
     fun deletePosting(postingId: Int): Completable
     fun uploadImages(imageList: ArrayList<MultipartBody.Part?>): Single<ResponseImageUrls>
+    fun reportComment(requestReportDTO: RequestReportDTO): Completable
 }

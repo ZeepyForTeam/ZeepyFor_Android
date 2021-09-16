@@ -23,6 +23,7 @@ data class ResponsePostingDetail(
     val participants: List<Participant>,
     val imageUrls: List<String>,
     val createdTime: String,
+    val instructions: String,
     val isCompleted: Boolean,
     val productPrice: String?,
     val purchasePlace: String?
@@ -38,6 +39,7 @@ data class ResponsePostingDetail(
             content,
             isCompleted,
             isLiked,
+            instructions,
             productName,
             isParticipant,
             purchasePlace,

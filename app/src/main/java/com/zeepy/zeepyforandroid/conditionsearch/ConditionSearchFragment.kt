@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import com.google.android.material.slider.LabelFormatter.LABEL_GONE
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.adapter.ConditionOptionAdapter
 import com.zeepy.zeepyforandroid.databinding.FragmentSearchByConditionBinding
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.google.android.material.slider.RangeSlider
+import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.enum.Options
+import com.zeepy.zeepyforandroid.lookaround.data.entity.OptionModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,11 +36,21 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        setToolbar()
         setRangeSliderOnChangeListener()
         setOptionChoice()
         setNextButton()
-        removeSliderPadding()
+        initSliders()
 
+    }
+
+    private fun setToolbar() {
+        binding.conditionSearchToolbar.apply {
+            setTitle("조건 검색")
+            setBackButton {
+                findNavController().popBackStack()
+            }
+        }
     }
 
     private fun setRangeSliderOnChangeListener() {
@@ -151,15 +165,95 @@ class ConditionSearchFragment : BaseFragment<FragmentSearchByConditionBinding>()
 
     private fun setNextButton() {
         binding.btnNext.run {
-            setText("다음으로")
+            setText("완료")
             setUsableButton()
+            onClick {
+                // Go back to 둘러보기 with filters applied
+                // Send the filter conditions to parent fragment(LookAroundFragment) and the parent fragment will refresh the list.
+                // NOTE: If filter conditions are set at the point of changing address or tendency filters,
+                //   when address change -> get new list for address and then apply filter conditions.
+                //   when tendency filters change -> the second filtering is done on the first filtered list.
+
+                // Change the value that needs to be passed back to LookAroundFragment
+
+                val navController = findNavController()
+                navController.previousBackStackEntry?.savedStateHandle?.set("conditions", getCurrentlyCheckedConditions())
+                navController.popBackStack()
+            }
         }
     }
 
-    private fun removeSliderPadding() {
+    private fun getCurrentlyCheckedConditions(): ConditionSetModel {
+        // BuildingType
+        val buildingType: String = when (binding.rgBuildingType.checkedRadioButtonId) {
+            R.id.rb_building_type_all -> "ALL"
+            R.id.rb_rowhouse -> "ROWHOUSE"
+            R.id.rb_officetel -> "OFFICETEL"
+            else -> "ALL"
+        }
+        // DealType
+        val dealType: String = when (binding.rgDealType.checkedRadioButtonId) {
+            R.id.rb_option_trade_type_all -> "ALL"
+            R.id.rb_option_walsae -> "MONTHLY"
+            R.id.rb_option_jeonsae -> "JEONSE"
+            else -> "ALL"
+        }
+        // DepositPay
+        val depositPayStart: Int = when (binding.rsDeposit.values[0]) {
+            0F -> 0
+            1F -> 500
+            2F -> 1000
+            3F -> 2500
+            4F -> 5000
+            5F -> 10000
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
+        val depositPayEnd: Int = when (binding.rsDeposit.values[1]) {
+            0F -> 0
+            1F -> 500
+            2F -> 1000
+            3F -> 2500
+            4F -> 5000
+            5F -> 10000
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
+
+        // MonthlyPay
+        val monthlyPayStart: Int = when (binding.rsMonthlypay.values[0]) {
+            0F -> 0
+            1F -> 25
+            2F -> 50
+            3F -> 75
+            4F -> 100
+            5F -> 125
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
+        val monthlyPayEnd: Int = when (binding.rsMonthlypay.values[1]) {
+            0F -> 0
+            1F -> 25
+            2F -> 50
+            3F -> 75
+            4F -> 100
+            5F -> 125
+            6F -> Int.MAX_VALUE
+            else -> -1
+        }
+
+        // Options
+        val options: List<String> = viewModel.selectedOptionList.value?.toList()!!
+
+        return ConditionSetModel(buildingType, dealType, depositPayStart, depositPayEnd, monthlyPayStart, monthlyPayEnd, options)
+    }
+
+    private fun initSliders() {
         binding.rsDeposit.setPadding(0, 0, 0, 0)
         binding.rsMonthlypay.setPadding(0, 0, 0, 0)
         binding.rsDeposit.setMinSeparationValue(1F)
         binding.rsMonthlypay.setMinSeparationValue(1F)
+        binding.rsDeposit.labelBehavior = LABEL_GONE
+        binding.rsMonthlypay.labelBehavior = LABEL_GONE
     }
 }

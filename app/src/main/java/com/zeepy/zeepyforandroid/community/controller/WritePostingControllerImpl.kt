@@ -1,6 +1,7 @@
 package com.zeepy.zeepyforandroid.community.controller
 
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestReportDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseImageUrls
@@ -42,4 +43,7 @@ class WritePostingControllerImpl @Inject constructor(
 
     override fun uploadImages(imageList: ArrayList<MultipartBody.Part?>): Single<ResponseImageUrls> =
         zeepyApiService.postImages(imageList)
+
+    override fun reportComment(requestReportDTO: RequestReportDTO): Completable =
+        zeepyApiService.reportComment(requestReportDTO)
 }

@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
@@ -24,9 +26,10 @@ import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     // 리뷰 뷰모델 인스턴스
-    private val sharedViewModel by activityViewModels<WriteReviewViewModel>()
+    private val sharedViewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -40,6 +43,7 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
         binding.viewModel = sharedViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        setOnBackPressed()
         setToolbar()
         initView()
         setDatas()
@@ -87,7 +91,7 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
 
     private fun setDatas() {
         sharedViewModel.addressListRegistered.observe(viewLifecycleOwner){
-            (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it)
+            (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it.map { it.copy() })
         }
     }
 
@@ -98,7 +102,7 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     }
 
     private fun goToSearchAddress() {
-        val uri = Uri.parse("myapp://search")
+        val uri = Uri.parse("myapp://search/true")
         binding.tvRegisterAddress.setOnClickListener {
             sharedViewModel.addressListRegistered.value?.let { addresses ->
                 if (addresses.count() >= 3) {
@@ -118,6 +122,12 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
         }
         binding.textviewRegisterAddressNoAddress.setOnClickListener {
             findNavController().navigate(uri)
+        }
+    }
+
+    private fun setOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
         }
     }
 

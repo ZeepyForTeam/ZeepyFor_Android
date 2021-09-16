@@ -25,6 +25,7 @@ android {
         buildConfigField "String", "NAVER_CLIENT_SECRET_ID", properties['naver_client_secret_id']
         buildConfigField "String", "KAKAO_APP_KEY", properties['kakao_app_key_string']
         buildConfigField "String", "BASE_URL", properties['base_url']
+        buildConfigField "String", "KAKAO_REST_API_KEY", properties['kakao_rest_api_key_string']
 
         resValue "string", "KAKAO_NATVIE_APP_KEY", properties['kakao_native_app_key']
         resValue "string", "KAKAO_APP_KEY", properties['kakao_app_key']
@@ -33,7 +34,7 @@ android {
 
         //Kakao map
         ndk {
-            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86'
+            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
         }
     }
 
@@ -57,14 +58,12 @@ android {
         jvmTarget = '1.8'
     }
 
-    // lint 에러 임시방편
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
     }
-
 }
 
 dependencies {
@@ -138,7 +137,6 @@ dependencies {
     //Kakao map
     implementation files('libs/libDaumMapAndroid.jar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs/libDaumMapAndroid.jar')
 
     //Naver Login
     implementation files('libs/naveridlogin_android_sdk_4.2.6.aar')
@@ -148,6 +146,12 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:${Versions.KAKAO_SDK_USER_VERSION}"
     implementation "com.kakao.sdk:v2-talk:2.5.2"
 
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.5.2"
+
     implementation 'com.tbuonomo:dotsindicator:4.2'
+
 
 }

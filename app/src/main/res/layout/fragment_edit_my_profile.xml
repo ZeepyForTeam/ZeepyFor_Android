@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_marginStart="16dp"
-            android:text="닉네임"
+            android:text="@string/nickname"
             android:layout_marginTop="27.5dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
@@ -31,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:text="zeepy.official@gmail.com"
+            tools:text="zeepy.official@gmail.com"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
             app:layout_constraintTop_toBottomOf="@id/tv_nickname"
@@ -53,7 +54,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_marginStart="16dp"
-            android:text="이메일 ID"
+            android:text="@string/email"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
@@ -76,7 +77,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:layout_marginStart="8dp"
-            android:text="zeepy.official@gmail.com"
+            tools:text="zeepy.official@gmail.com"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
             app:layout_constraintStart_toEndOf="@id/iv_sns_logo"
@@ -97,7 +98,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_marginStart="16dp"
-            android:text="비밀번호 변경"
+            android:text="@string/change_password"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
@@ -127,7 +128,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignBottom="@id/btn_submit_change"
-                android:layout_toLeftOf="@id/btn_submit_change"/>
+                android:layout_toStartOf="@id/btn_submit_change"/>
 
             <Button
                 android:id="@+id/btn_submit_change"
@@ -135,13 +136,13 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/zeepy_yellow_4d"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:text="변경"
+                android:text="@string/confirm_change"
                 android:textColor="@color/zeepy_black_3b"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -167,6 +168,7 @@
             android:layout_marginStart="16dp"/>
 
         <TextView
+            android:id="@+id/tv_withdraw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tv_logout"
@@ -176,13 +178,6 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:layout_marginStart="12dp"/>
-
-
-
-
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

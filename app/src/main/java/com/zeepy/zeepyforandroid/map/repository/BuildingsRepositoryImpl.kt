@@ -17,4 +17,8 @@ class BuildingsRepositoryImpl @Inject constructor(
     ): List<BuildingModel> {
         return dataSource.getBuildingsInfoByLocation(latitudeGreater, latitudeLess, longitudeGreater, longitudeLess).toDomainModel()
     }
+
+    override suspend fun getBuildingsAll(page: Int): List<BuildingModel> {
+        return dataSource.getBuildingsAll(page).toDomainModel()
+    }
 }

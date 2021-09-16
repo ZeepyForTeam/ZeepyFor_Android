@@ -6,10 +6,15 @@ import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 
 // FIXME: Add the remaining necessary fields
 data class BuildingModel(
-    val apartmentName: String,
-    val areaCode: Int,
     val id: Int,
+    val buildYear: Int?,
+    val apartmentName: String?,
+    val shortAddress: String?,
+    val fullNumberAddress: String,
+    val fullRoadNameAddress: String,
+    val shortRoadNameAddress: String?,
+    val areaCode: Int,
     val latitude: Double,
     val longitude: Double,
-    val shortAddress: String,
+    val reviews: List<ResponseReviewDTO>
 )

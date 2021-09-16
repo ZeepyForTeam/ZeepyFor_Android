@@ -12,286 +12,232 @@
             type="com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".map.view.MapFragment">
-
-        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
-            android:id="@+id/map_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <EditText
-            android:id="@+id/edittext_search_map"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="8.5:1"
-            android:layout_marginTop="12dp"
-            android:textSize="12sp"
-            android:paddingStart="15dp"
-            android:drawableLeft="@drawable/icon_search"
-            android:drawablePadding="10dp"
-            android:hint="지역, 동, 지하철역으로 입력해주세요"
-            android:textColor="@color/zeepy_black_2a"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/edittext_box"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="18dp"
-            app:layout_constraintTop_toBottomOf="@+id/map_toolbar"/>
-
-        <TextView
-            android:id="@+id/button_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="검색"
-            android:textColor="@color/zeepy_blue_5f"
-            android:fontFamily="@font/nanum_square_round_extrabold"
-            app:layout_constraintTop_toTopOf="@id/edittext_search_map"
-            app:layout_constraintBottom_toBottomOf="@id/edittext_search_map"
-            app:layout_constraintEnd_toEndOf="@id/edittext_search_map"
-            app:layout_constraintStart_toStartOf="@id/edittext_search_map"
-            app:layout_constraintHorizontal_bias="0.96"/>
-
-        <RelativeLayout
-            android:id="@+id/map_view_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edittext_search_map"
-            android:layout_marginTop="16dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp">
-
-            <include
-                android:id="@+id/option_btn_layout"
-                layout="@layout/layout_option_buttons"/>
-
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_marker_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/map_floating_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="@{viewModel.buildingId != -1? View.VISIBLE : View.GONE}">
+            android:layout_height="match_parent"
+            tools:context=".map.view.MapFragment">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_start"
-                android:layout_width="wrap_content"
+            <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
+                android:id="@+id/map_toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp"/>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="16dp"/>
-
-            <ImageView
-                android:id="@+id/iv_building_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/map_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"/>
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/edittext_search_map"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="8.5:1"
+                android:layout_marginTop="12dp"
+                android:textSize="12sp"
+                android:paddingStart="15dp"
+                android:drawableLeft="@drawable/icon_search"
+                android:drawablePadding="10dp"
+                android:hint="@string/hint_map_search"
+                android:textColor="@color/zeepy_black_2a"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/edittext_box"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="18dp"
+                app:layout_constraintTop_toBottomOf="@+id/map_toolbar"/>
 
             <TextView
-                android:id="@+id/tv_building_address"
-                android:text="Some building address"
+                android:id="@+id/button_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:textColor="@color/zeepy_blue_5f"
                 android:fontFamily="@font/nanum_square_round_extrabold"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/iv_building_icon"
-                app:layout_constraintTop_toTopOf="@id/iv_building_icon"
-                app:layout_constraintStart_toEndOf="@id/iv_building_icon"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toTopOf="@id/edittext_search_map"
+                app:layout_constraintBottom_toBottomOf="@id/edittext_search_map"
+                app:layout_constraintEnd_toEndOf="@id/edittext_search_map"
+                app:layout_constraintStart_toStartOf="@id/edittext_search_map"
+                app:layout_constraintHorizontal_bias="0.96"/>
 
-            <TextView
-                android:id="@+id/tv_building_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="건물 상세"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                app:layout_constraintStart_toStartOf="@id/iv_building_icon"
-                app:layout_constraintTop_toBottomOf="@id/iv_building_icon"
-                android:layout_marginTop="20dp"/>
+            <RelativeLayout
+                android:id="@+id/map_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edittext_search_map"
+                android:layout_marginTop="16dp"/>
 
-            <TextView
-                android:id="@+id/tv_building_detail_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="some random building detail"
-                android:fontFamily="@font/nanum_square_round_regular"
-                app:layout_constraintTop_toTopOf="@id/tv_building_detail"
-                app:layout_constraintBottom_toBottomOf="@id/tv_building_detail"
-                app:layout_constraintStart_toEndOf="@id/tv_building_detail"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_building_owner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="임대인"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                app:layout_constraintStart_toStartOf="@id/tv_building_detail"
-                app:layout_constraintTop_toBottomOf="@id/tv_building_detail"
-                android:layout_marginTop="8dp"/>
-
-            <TextView
-                android:id="@+id/building_owner_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="따듯해 녹아내리는 중! 친절형"
-                android:fontFamily="@font/nanum_square_round_regular"
-                app:layout_constraintTop_toTopOf="@id/tv_building_owner"
-                app:layout_constraintBottom_toBottomOf="@id/tv_building_owner"
-                app:layout_constraintStart_toEndOf="@id/tv_building_owner"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_soundproof"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="방음"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                app:layout_constraintStart_toStartOf="@id/tv_building_owner"
-                app:layout_constraintTop_toBottomOf="@id/tv_building_owner"
-                android:layout_marginTop="8dp"/>
-
-            <ImageView
-                android:id="@+id/iv_soundproof"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/map_icon"
-                app:layout_constraintTop_toTopOf="@id/tv_soundproof"
-                app:layout_constraintBottom_toBottomOf="@id/tv_soundproof"
-                app:layout_constraintStart_toEndOf="@id/tv_soundproof"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_hygiene"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="청결"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                app:layout_constraintTop_toTopOf="@id/iv_soundproof"
-                app:layout_constraintBottom_toBottomOf="@id/iv_soundproof"
-                app:layout_constraintStart_toEndOf="@id/iv_soundproof"
-                android:layout_marginStart="24dp"/>
-
-            <ImageView
-                android:id="@+id/iv_hygiene"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/map_icon"
-                app:layout_constraintTop_toTopOf="@id/tv_hygiene"
-                app:layout_constraintBottom_toBottomOf="@id/tv_hygiene"
-                app:layout_constraintStart_toEndOf="@id/tv_hygiene"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_sunlight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="채광"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                app:layout_constraintTop_toTopOf="@id/iv_hygiene"
-                app:layout_constraintBottom_toBottomOf="@id/iv_hygiene"
-                app:layout_constraintStart_toEndOf="@id/iv_hygiene"
-                android:layout_marginStart="24dp"/>
-
-            <ImageView
-                android:id="@+id/iv_sunlight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/map_icon"
-                app:layout_constraintTop_toTopOf="@id/tv_sunlight"
-                app:layout_constraintBottom_toBottomOf="@id/tv_sunlight"
-                app:layout_constraintStart_toEndOf="@id/tv_sunlight"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_waterpressure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="수압"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                app:layout_constraintTop_toTopOf="@id/iv_sunlight"
-                app:layout_constraintBottom_toBottomOf="@id/iv_sunlight"
-                app:layout_constraintStart_toEndOf="@id/iv_sunlight"
-                android:layout_marginStart="24dp"/>
-
-            <ImageView
-                android:id="@+id/iv_waterpressure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/map_icon"
-                app:layout_constraintTop_toTopOf="@id/tv_waterpressure"
-                app:layout_constraintBottom_toBottomOf="@id/tv_waterpressure"
-                app:layout_constraintStart_toEndOf="@id/tv_waterpressure"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_overall_evaluation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="종합 평가"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                app:layout_constraintStart_toStartOf="@id/tv_soundproof"
-                app:layout_constraintTop_toBottomOf="@id/tv_soundproof"
-                android:layout_marginTop="14dp"/>
-
-            <TextView
-                android:id="@+id/tv_overall_evaluation_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="다음에도 여기 살고 싶어요."
-                android:fontFamily="@font/nanum_square_round_regular"
-                app:layout_constraintTop_toTopOf="@id/tv_overall_evaluation"
-                app:layout_constraintBottom_toBottomOf="@id/tv_overall_evaluation"
-                app:layout_constraintStart_toEndOf="@id/tv_overall_evaluation"
-                android:layout_marginStart="8dp"/>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_horizontal"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="176dp"/>
-
-            <com.zeepy.zeepyforandroid.customview.ZeepyButton
-                android:id="@+id/btn_goto_review"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:id="@+id/option_btn_layout"
+                    android:layout_width="83dp"
+                    android:layout_height="76dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/map_floating_button"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/option_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/communication_type"
+                        android:fontFamily="@font/nanum_square_round_extrabold"
+                        android:textSize="9sp"
+                        android:textColor="@color/zeepy_black_3b"
+                        android:gravity="center|bottom"
+                        android:background="@drawable/map_floating_button"
+                        app:backgroundTint="@null"
+                        android:drawableTop="@drawable/icon_more_map"
+                        android:stateListAnimator="@null"/>
+
+                    <LinearLayout
+                        android:id="@+id/option_one"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_1_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tendency_business"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_two"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_2_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tendency_kind"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_three"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_3_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tendency_graze"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_four"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_4_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tendency_softy"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/option_five"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:clickable="true">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/emoji_5_map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tendency_bad"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nanum_square_round_extrabold"
+                            android:textColor="@color/zeepy_black_3b"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/bottom_sheet_map"
+            layout="@layout/bottomsheet_map_building_detail"
+            android:visibility="@{viewModel.buildingSelectedId != -1? View.VISIBLE : View.GONE}"/>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.R
@@ -30,6 +31,20 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
         initViewPager()
         configureBottomNavigation()
         observeViewModel()
+        setDestListener()
+    }
+
+    private fun setDestListener() {
+        // 로그인 후 홈뷰로 이동
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.mainFrameFragment
+                && childFragmentManager.findFragmentById(R.id.myprofile_nav_host_fragment)
+                    ?.findNavController()?.previousBackStackEntry == null
+                && viewModel.pageIdx.value == 3
+            ) {
+                viewModel.changePageIdx(0)
+            }
+        }
     }
 
     override fun applyCommunityFilter(type: String) {

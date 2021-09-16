@@ -63,7 +63,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         setComments()
         interceptBackPressed()
         modifyPosting()
-
     }
 
     private fun setToolbar() {
@@ -194,7 +193,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
     }
 
     private fun setCommentsRecyclerView() {
-        binding.rvComments.addItemDecoration(ItemDecoration(8,0))
+        binding.rvComments.addItemDecoration(ItemDecoration(12,0))
         viewModel.commentList.observe(viewLifecycleOwner) { comments ->
             binding.rvComments.apply {
                 adapter = CommentsAdapter(
@@ -207,6 +206,10 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
                             viewModel.changeSuperCommentId(item.commentId)
                             binding.etComment.requestFocus()
                             requireContext().showKeyboard(binding.etComment)
+                        }
+
+                        override fun report(item: CommentModel) {
+                            findNavController().navigate(R.id.action_postingDetailFragment_to_reportFragment3)
                         }
                     }
                 )
@@ -320,5 +323,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     companion object {
         private const val PERCENTAGE = 100
+
     }
 }

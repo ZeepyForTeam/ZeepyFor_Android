@@ -64,10 +64,15 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
 
     private fun hideDetailAddressBox() {
         binding.layoutDetailAddress.etAddressDetail.run {
+            Log.e("arg", viewModel.isRegisterAddressFromMyProfile.value.toString())
             visibility = if (viewModel.isJustRegisterAddress.value != true) {
                 View.VISIBLE
             } else {
                 View.GONE
+            }
+            // 마이프로필에서 접근
+            if (viewModel.isRegisterAddressFromMyProfile.value == true) {
+                visibility = View.GONE
             }
         }
     }
@@ -77,6 +82,12 @@ class WriteDetailAddressFragment : BaseFragment<FragmentWriteDetailAddressBindin
             if (viewModel.isJustRegisterAddress.value == true) {
                 viewModel.addAddress(args.selectedAddress.toAddressListDTO())
                 requireParentFragment().requireParentFragment().findNavController().popBackStack()
+            }
+            // 마이프로필에서 주소 등록할 경우 이동 처리
+            else if (viewModel.isRegisterAddressFromMyProfile.value == true) {
+                viewModel.addAddress(args.selectedAddress.toAddressListDTO())
+                findNavController().popBackStack(R.id.manageAddressFragment, false)
+                viewModel.changeIsRegisterAddressFromMyProfile(false)
             } else {
                 val fullAddress = "${args.selectedAddress.cityDistinct} ${args.selectedAddress.primaryAddress} ${binding.layoutDetailAddress.etAddressDetail.text}"
                 viewModel.changeFullReviewAddress(fullAddress)

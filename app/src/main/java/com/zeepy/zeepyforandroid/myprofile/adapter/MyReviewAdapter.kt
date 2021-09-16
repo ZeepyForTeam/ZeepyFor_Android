@@ -1,84 +1,30 @@
 package com.zeepy.zeepyforandroid.myprofile.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.zeepy.zeepyforandroid.BR
 import com.zeepy.zeepyforandroid.databinding.ItemReviewSummaryBinding
-import com.zeepy.zeepyforandroid.myprofile.data.MyReviewData
+import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTO
+import com.zeepy.zeepyforandroid.util.DiffCallback
 
-//class MyReviewAdapter(private var reviewList: List<MyReviewData>): RecyclerView.Adapter<MyReviewAdapter.MyReviewHolder>() {
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewHolder {
-//        val binding = ItemReviewSummaryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        return MyReviewHolder(binding)
-//    }
-//
-//    override fun onBindViewHolder(holder: MyReviewHolder, position: Int) {
-//        val review = reviewList[position]
-//        holder.bind(review)
-//    }
-//
-//    override fun getItemCount(): Int = reviewList.size
-//
-//    class MyReviewHolder(private val binding: ItemReviewSummaryBinding): RecyclerView.ViewHolder(binding.root) {
-//        fun bind(review: MyReviewData) {
-//            binding.tvBuildingName.text = review.buildingName
-//            binding.tvDatetime.text = review.dateTime
-//            binding.tvBuildingOwnerReview.text = review.lessorReview
-//            binding.tvHouseReview.text = review.houseReview.toString() //TODO: 각 원소 고려
-//        }
-//    }
-//
-//    fun submitList(newData: List<MyReviewData>) {
-//        reviewList = newData
-//        notifyDataSetChanged()
-//    }
-//
-//}
+class MyReviewAdapter(val listener: (SimpleReviewDTO) -> Unit): ListAdapter<SimpleReviewDTO, MyReviewAdapter.MyReviewViewHolder>(
+    DiffCallback<SimpleReviewDTO>()
+) {
 
-class MyReviewAdapter : ListAdapter<MyReviewData, MyReviewAdapter.MyReviewViewHolder>(diffCallback) {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): MyReviewAdapter.MyReviewViewHolder {
-        return MyReviewViewHolder(
-            ItemReviewSummaryBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ),
-            parent.context
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewViewHolder {
+        val binding = ItemReviewSummaryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyReviewViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyReviewAdapter.MyReviewViewHolder, position: Int) {
-        getItem(position)?.let{
-            holder.bind(it)
+    override fun onBindViewHolder(holder: MyReviewViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.binding.setVariable(BR.data, item)
+        holder.binding.root.setOnClickListener{
+            listener(item)
         }
     }
 
-    inner class MyReviewViewHolder(private val binding: ItemReviewSummaryBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(review: MyReviewData) {
-            binding.tvBuildingName.text = review.buildingName
-            binding.tvDatetime.text = review.dateTime
-            binding.tvBuildingOwnerReview.text = review.lessorReview
-            binding.tvHouseReview.text = review.houseReview.toString() //TODO: 각 원소 고려
-        }
-    }
-
-    companion object{
-        val diffCallback = object : DiffUtil.ItemCallback<MyReviewData>(){
-            override fun areItemsTheSame(oldItem: MyReviewData, newItem: MyReviewData): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
-            }
-
-            override fun areContentsTheSame(oldItem: MyReviewData, newItem: MyReviewData): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
-
+    class MyReviewViewHolder(val binding: ItemReviewSummaryBinding): RecyclerView.ViewHolder(binding.root)
 }

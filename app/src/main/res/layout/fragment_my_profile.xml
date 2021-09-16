@@ -35,7 +35,7 @@
             android:id="@+id/tv_manage_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="주소 관리"
+            android:text="@string/manage_address"
             android:textAlignment="center"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textSize="12sp"
@@ -52,13 +52,13 @@
             app:layout_constraintStart_toEndOf="@id/iv_manage_address"
             app:layout_constraintTop_toTopOf="@id/iv_manage_address"
             app:layout_constraintBottom_toBottomOf="@id/iv_manage_address"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <TextView
             android:id="@+id/tv_manage_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="리뷰 관리"
+            android:text="@string/manage_reviews"
             android:textAlignment="center"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textSize="12sp"
@@ -75,13 +75,13 @@
             app:layout_constraintStart_toEndOf="@id/iv_manage_review"
             app:layout_constraintTop_toTopOf="@id/iv_manage_review"
             app:layout_constraintBottom_toBottomOf="@id/iv_manage_review"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <TextView
             android:id="@+id/tv_wishlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="리뷰 관리"
+            android:text="@string/wishlist"
             android:textAlignment="center"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textSize="12sp"

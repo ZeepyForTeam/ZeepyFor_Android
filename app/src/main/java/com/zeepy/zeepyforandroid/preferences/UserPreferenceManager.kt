@@ -42,6 +42,14 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         return sharedPreferencesManager.getSharedPrefs(USER_EMAIL, "")
     }
 
+    fun saveUserNickname(nickname: String) {
+        sharedPreferencesManager.putSharedPref(USER_NICKNAME, nickname)
+    }
+
+    fun fetchUserNickname(): String {
+        return sharedPreferencesManager.getSharedPrefs(USER_NICKNAME, "")
+    }
+
     fun saveOnboard(onBoard: Boolean) {
         sharedPreferencesManager.putSharedPref(ON_BOARD, onBoard)
     }
@@ -56,6 +64,7 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         private const val IS_ALREADY_LOGIN = "isAlreadyLogin"
         private const val USER_ID = "user_id"
         private const val USER_EMAIL = "user_email"
+        private const val USER_NICKNAME = "nickname"
         private const val ON_BOARD = "on_board"
     }
 }

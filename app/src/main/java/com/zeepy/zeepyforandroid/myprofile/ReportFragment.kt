@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.zeepy.zeepyforandroid.R
+import androidx.activity.addCallback
+import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
-import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.COMMUNITY
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentReportBinding
-import com.zeepy.zeepyforandroid.databinding.FragmentSettingsBinding
-import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
 import com.zeepy.zeepyforandroid.myprofile.adapter.ReportOptionsAdapter
 
 class ReportFragment: BaseFragment<FragmentReportBinding>() {
@@ -23,6 +25,7 @@ class ReportFragment: BaseFragment<FragmentReportBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setOnBackPressed()
         setToolbar()
         setOptionsRecyclerView()
     }
@@ -38,7 +41,12 @@ class ReportFragment: BaseFragment<FragmentReportBinding>() {
     }
 
     private fun setToolbar() {
-        requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
-            ?.setTitle("신고하기")
+        binding.toolbar.setTitle("신고하기")
+    }
+
+    private fun setOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
     }
 }

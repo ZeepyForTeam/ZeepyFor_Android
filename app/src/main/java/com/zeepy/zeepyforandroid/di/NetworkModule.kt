@@ -5,6 +5,7 @@ import android.content.Context
 import com.nhn.android.naverlogin.OAuthLogin
 import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.localdata.ZeepyLocalRepository
+import com.zeepy.zeepyforandroid.network.KakaoApiService
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.network.auth.AuthInterceptor
 import com.zeepy.zeepyforandroid.network.auth.controller.TokenController
@@ -118,4 +119,17 @@ object NetworkModule {
         )
         return mOAuthLoginInstance
     }
+
+    private val kakaoRetrofit: Retrofit.Builder by lazy {
+        Retrofit.Builder()
+            .baseUrl(KakaoApiService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+    }
+
+    val kakaoApiService: KakaoApiService by lazy {
+        kakaoRetrofit
+            .build()
+            .create(KakaoApiService::class.java)
+    }
+
 }

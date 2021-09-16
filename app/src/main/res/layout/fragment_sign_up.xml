@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -17,7 +16,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".signup.SignUpFragment">
+        tools:context=".signup.SignUpFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
 
         <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
             android:id="@+id/toolbar"
@@ -36,7 +36,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="이름"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
@@ -53,7 +53,7 @@
             android:text="@={viewModel.name}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintDimensionRatio="1:0.12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="닉네임"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="@id/edittext_name"
             app:layout_constraintTop_toBottomOf="@id/edittext_name" />
 
@@ -78,7 +78,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="@string/nickname_repetition_signup"
             android:textColor="@color/zeepy_red_fb"
-            android:textSize="10sp"
+            android:textSize="10dp"
             android:visibility="@{viewModel.isNickNameRepetition == true ? view.VISIBLE : view.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/textview_nickname"
             app:layout_constraintEnd_toEndOf="@+id/button_check_nickname_repetition"
@@ -96,7 +96,7 @@
             android:text="@={viewModel.nickname}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintDimensionRatio="1:0.152"
             app:layout_constraintEnd_toStartOf="@+id/button_check_nickname_repetition"
@@ -113,7 +113,7 @@
             android:onClick="@{() -> viewModel.checkNickNameRepetition()}"
             android:text="@string/check_repetition_signup"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/edittext_nickname"
             app:layout_constraintEnd_toEndOf="@+id/edittext_name"
             app:layout_constraintHorizontal_bias="0.5"
@@ -128,7 +128,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="이메일"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="@id/edittext_nickname"
             app:layout_constraintTop_toBottomOf="@id/edittext_nickname" />
 
@@ -139,7 +139,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="@string/email_repetition_signup"
             android:textColor="@color/zeepy_red_fb"
-            android:textSize="10sp"
+            android:textSize="10dp"
             android:visibility="@{viewModel.isEmailRepetition() == true ? view.VISIBLE : view.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/textview_email"
             app:layout_constraintEnd_toEndOf="@+id/edittext_name"
@@ -157,7 +157,7 @@
             android:text="@={viewModel.email}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintDimensionRatio="1:0.152"
             app:layout_constraintEnd_toEndOf="@id/edittext_nickname"
             app:layout_constraintStart_toStartOf="@id/edittext_nickname"
@@ -172,7 +172,7 @@
             android:onClick="@{() -> viewModel.checkEmailRepetition()}"
             android:text="@string/check_repetition_signup"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/edittext_email"
             app:layout_constraintEnd_toEndOf="@+id/button_check_nickname_repetition"
             app:layout_constraintStart_toStartOf="@+id/button_check_nickname_repetition"
@@ -186,7 +186,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="비밀번호"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="@id/edittext_email"
             app:layout_constraintTop_toBottomOf="@id/edittext_email" />
 
@@ -197,7 +197,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="@string/input_password_upper_eight_signup"
             android:textColor="@color/zeepy_red_fb"
-            android:textSize="10sp"
+            android:textSize="10dp"
             android:visibility="@{viewModel.password.length() >= 8 ? view.GONE : view.VISIBLE }"
             app:layout_constraintBottom_toBottomOf="@id/textview_password"
             app:layout_constraintEnd_toEndOf="@+id/edittext_password"
@@ -216,7 +216,7 @@
             android:text="@={viewModel.password}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintDimensionRatio="1:0.12"
             app:layout_constraintEnd_toEndOf="@+id/edittext_name"
             app:layout_constraintStart_toStartOf="@id/edittext_email"
@@ -230,7 +230,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="비밀번호 확인"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="@id/edittext_password"
             app:layout_constraintTop_toBottomOf="@id/edittext_password" />
 
@@ -247,7 +247,7 @@
             android:text="@={viewModel.passwordCheck}"
             android:textColor="@color/zeepy_black_3b"
             android:textColorHint="@color/zeepy_gray_9a"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintDimensionRatio="1:0.12"
             app:layout_constraintEnd_toEndOf="@id/edittext_password"
             app:layout_constraintStart_toStartOf="@id/edittext_password"
@@ -271,8 +271,8 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="@string/doesnt_match_password"
             android:textColor="@color/zeepy_red_fb"
-            android:textSize="10sp"
-            android:visibility="@{viewModel.isPasswordMatched == true ? view.GONE : view.VISIBLE}"
+            android:textSize="10dp"
+            android:visibility="@{viewModel.isPasswordMatched == false ? view.VISIBLE : view.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/textview_password_check"
             app:layout_constraintEnd_toEndOf="@id/edittext_password_check"
             app:layout_constraintTop_toTopOf="@id/textview_password_check" />
@@ -295,7 +295,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:text="@string/approve_zeepy_terms_signup"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/checkbox_terms_approve"
             app:layout_constraintStart_toEndOf="@id/checkbox_terms_approve"
             app:layout_constraintTop_toTopOf="@id/checkbox_terms_approve" />
@@ -309,7 +309,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:text="@string/approve_personal_info"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/checkbox_approve_personal_info"
             app:layout_constraintStart_toEndOf="@id/checkbox_approve_personal_info"
             app:layout_constraintTop_toTopOf="@id/checkbox_approve_personal_info" />
@@ -340,7 +340,7 @@
             android:fontFamily="@font/nanum_square_round_regular"
             android:text="@string/getting_info_to_email_signup"
             android:textColor="@color/zeepy_black_3b"
-            android:textSize="11sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/checkbox_approve_email"
             app:layout_constraintStart_toStartOf="@id/textview_approve_personal_info"
             app:layout_constraintTop_toTopOf="@+id/checkbox_approve_email" />
@@ -364,7 +364,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="약관보기"
             android:textColor="@color/zeepy_blue_5f"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/textview_terms_approve"
             app:layout_constraintStart_toEndOf="@+id/textview_terms_approve"
             app:layout_constraintTop_toTopOf="@id/textview_terms_approve" />
@@ -377,7 +377,7 @@
             android:fontFamily="@font/nanum_square_round_bold"
             android:text="약관보기"
             android:textColor="@color/zeepy_blue_5f"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="@id/textview_approve_personal_info"
             app:layout_constraintStart_toEndOf="@+id/textview_approve_personal_info"
             app:layout_constraintTop_toTopOf="@id/textview_approve_personal_info" />

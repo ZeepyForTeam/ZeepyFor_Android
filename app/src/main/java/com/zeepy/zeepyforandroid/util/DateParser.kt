@@ -6,7 +6,7 @@ import java.util.*
 
 object DateParser {
     private val serverDateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS")
-    private val localDateFormat = SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분")
+    private val localDateFormat = SimpleDateFormat("yyyy.MM.dd hh:mm")
     private val commentDateFormat = SimpleDateFormat("yyyy.MM.dd")
 
     fun getCurrentDateComment(): String{

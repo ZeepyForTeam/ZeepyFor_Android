@@ -25,23 +25,23 @@ class SignUpViewModel @Inject constructor(
     val termsApprove = MutableLiveData<Boolean>(false)
     val personalInfoApprove = MutableLiveData<Boolean>(false)
 
-    private val _isPasswordMatched = MutableLiveData<Boolean>(false)
+    private val _isPasswordMatched = MutableLiveData<Boolean>()
     val isPasswordMatched: LiveData<Boolean>
         get() = _isPasswordMatched
 
-    private val _signUpSuccess = MutableLiveData<Boolean>(false)
+    private val _signUpSuccess = MutableLiveData<Boolean>()
     val signUpSuccess: LiveData<Boolean>
         get() = _signUpSuccess
 
-    private val _isEmailRepetition = MutableLiveData<Boolean>(true)
+    private val _isEmailRepetition = MutableLiveData<Boolean>()
     val isEmailRepetition: LiveData<Boolean>
         get() = _isEmailRepetition
 
-    private val _isNickNameRepetition = MutableLiveData<Boolean>(true)
+    private val _isNickNameRepetition = MutableLiveData<Boolean>()
     val isNickNameRepetition: LiveData<Boolean>
         get() = _isNickNameRepetition
 
-    private val _isInputEverything = MutableLiveData<Boolean>(false)
+    private val _isInputEverything = MutableLiveData<Boolean>()
     val isInputEverythig: LiveData<Boolean>
         get() = _isInputEverything
 

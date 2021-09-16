@@ -19,5 +19,9 @@ enum class Options(@StringRes val furniture: Int) {
         fun findOptions(furniture: Int): String {
             return values().find { it.furniture == furniture }?.name ?: throw IllegalArgumentException("Furniture Not Found")
         }
+
+        fun getOptionFromString(text: String): Int {
+            return values().find { it.name == text }?.furniture ?: throw IllegalArgumentException("Furniture Not Matched")
+        }
     }
 }
