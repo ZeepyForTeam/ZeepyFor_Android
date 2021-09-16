@@ -102,7 +102,7 @@ class CommunityLoadPictureViewModel @Inject constructor(
 
         addDisposable(
             writePostingController.uploadImages(
-                requestList!!
+                uploadMultiparts.value!!
             ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -113,7 +113,6 @@ class CommunityLoadPictureViewModel @Inject constructor(
                 })
         )
     }
-
 
     fun uploadPostingToZeepyServer() {
         addDisposable(
@@ -128,6 +127,5 @@ class CommunityLoadPictureViewModel @Inject constructor(
                     Log.e("fail posting", "fail")
                 })
         )
-
     }
 }

@@ -127,9 +127,8 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
 
                 Log.e("file", "${getFileFromUri(requireContext(), uri)}")
                 viewModel.addFile(getFileFromUri(requireContext(), uri))
-
 //                viewModel.addUploadMultipartBody(multipartBody)
-                viewModel.addUploadMultipartBody(uri.asMultipart(requireContext().contentResolver))
+                viewModel.addUploadMultipartBody(multipartBody)
 
                 viewModel.changeUploadPictures(pictures)
             }
@@ -144,7 +143,6 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
                 val bitmapRequestBody = bitmap?.let { BitmapRequestBody(it) }
                 if (bitmapRequestBody != null) {
                     viewModel.addUploadMultipartBody(MultipartBody.Part.createFormData("file", "zeepy", bitmapRequestBody))
-
                 }
 
 //                viewModel.addUploadMultipartBody(pictureUri.asMultipart("imgs", requireContext().contentResolver))
@@ -206,7 +204,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
                 override fun clickRightButton(dialog: ZeepyDialog) {
                     viewModel.uploadImages()
                     dialog.dismiss()
-                    findNavController().popBackStack()
+//                    findNavController().popBackStack()
                 }
             }).build()
         registerReviewDialog.show(childFragmentManager, this.tag)
@@ -224,7 +222,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
         override fun contentType(): MediaType = "image/jpeg".toMediaType()
         override fun writeTo(sink: BufferedSink) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, sink.outputStream())
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, sink.outputStream())
         }
     }
 
