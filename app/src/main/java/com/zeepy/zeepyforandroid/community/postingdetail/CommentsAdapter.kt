@@ -17,6 +17,7 @@ class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel,
 ) {
     interface WriteNestedCommentListener{
         fun write(item: CommentModel)
+        fun report(item: CommentModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentsViewHolder {
@@ -41,20 +42,17 @@ class CommentsAdapter(private val authenticatedUsers: CommentAuthenticatedModel,
                     item.commentWriterIdx
                 )
             )
-            addItemDecoration(ItemDecoration(8, 0))
-
-            if (item.nestedComments.isNullOrEmpty()) {
-                this.visibility = View.GONE
-            } else {
-                this.visibility = View.VISIBLE
-                (adapter as NestedCommentsAdapter).submitList(item.nestedComments)
-            }
+            addItemDecoration(ItemDecoration(10, 0))
+            item.nestedComments?.let { (adapter as NestedCommentsAdapter).submitList(it) }
         }
     }
 
     private fun writeNestedComment(holder: CommentsViewHolder, item: CommentModel) {
-        holder.binding.ivChat.setOnClickListener {
+        holder.binding.tvNestedComment.setOnClickListener {
             listener.write(item)
+        }
+        holder.binding.tvReport.setOnClickListener {
+            listener.report(item)
         }
     }
 

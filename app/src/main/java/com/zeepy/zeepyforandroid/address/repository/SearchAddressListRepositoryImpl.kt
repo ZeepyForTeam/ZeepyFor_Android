@@ -4,7 +4,7 @@ import com.zeepy.zeepyforandroid.address.datasource.SearchAddressDataSource
 import com.zeepy.zeepyforandroid.lookaround.data.entity.SearchAddressForLookAroundModel
 import com.zeepy.zeepyforandroid.lookaround.mapper.AddressMapper.toDomainModel
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class SearchAddressListRepositoryImpl @Inject constructor(

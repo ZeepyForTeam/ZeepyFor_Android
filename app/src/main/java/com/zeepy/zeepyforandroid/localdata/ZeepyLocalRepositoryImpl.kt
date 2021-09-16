@@ -1,17 +1,16 @@
 package com.zeepy.zeepyforandroid.localdata
 
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
-import com.zeepy.zeepyforandroid.building.BuildingDealDTO
-import com.zeepy.zeepyforandroid.building.BuildingLikeDTO
 import com.zeepy.zeepyforandroid.localdata.mapper.BuildingMapper.toDomain
 import com.zeepy.zeepyforandroid.localdata.mapper.BuildingMapper.toEntity
 import com.zeepy.zeepyforandroid.localdata.mapper.DealMapper.toEntity
 import com.zeepy.zeepyforandroid.localdata.mapper.LikeMapper.toEntity
 import com.zeepy.zeepyforandroid.localdata.mapper.ReviewMapper.toEntity
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
-import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
-import io.reactivex.Maybe
-import kotlinx.coroutines.flow.*
+import io.reactivex.rxjava3.core.Maybe
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ZeepyLocalRepositoryImpl @Inject constructor(

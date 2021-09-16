@@ -1,13 +1,16 @@
 package com.zeepy.zeepyforandroid.network
 
+
 import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
 import com.zeepy.zeepyforandroid.building.BuildingLikeRequestDTO
 import com.zeepy.zeepyforandroid.building.BuildingsAllDTO
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
-import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestReportDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseImageUrls
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZipList
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
@@ -19,11 +22,11 @@ import com.zeepy.zeepyforandroid.review.data.dto.RequestWriteReview
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestLoginDTO
 import com.zeepy.zeepyforandroid.signin.dto.request.RequestSocialSigninDTO
 import com.zeepy.zeepyforandroid.signin.dto.response.ResponseNicknameAndEmailDTO
-import com.zeepy.zeepyforandroid.signin.dto.response.ResponseSocialSignInDTO
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -132,6 +135,10 @@ interface ZeepyApiService {
     @DELETE("/api/community/{id}")
     fun deletePosting(@Path ("id") communityId: Int): Completable
 
+    @Multipart
+    @POST("api/s3")
+    fun postImages(@Part file: ArrayList<MultipartBody.Part?>): Single<ResponseImageUrls>
+
     @POST("/api/likes/buildings")
     suspend fun scrapBuilding(@Body buildingLikeRequestDTO: BuildingLikeRequestDTO): Response<Unit?>
 
@@ -143,4 +150,7 @@ interface ZeepyApiService {
 
     @GET("/api/review/user")
     suspend fun getUserReviews(): Response<SimpleReviewDTOList>
+
+    @POST("/api/reports")
+    fun reportComment(@Body requestReportDTO:RequestReportDTO): Completable
 }

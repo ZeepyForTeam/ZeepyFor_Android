@@ -7,8 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import com.zeepy.zeepyforandroid.signup.controller.SignUpController
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,23 +25,23 @@ class SignUpViewModel @Inject constructor(
     val termsApprove = MutableLiveData<Boolean>(false)
     val personalInfoApprove = MutableLiveData<Boolean>(false)
 
-    private val _isPasswordMatched = MutableLiveData<Boolean>(false)
+    private val _isPasswordMatched = MutableLiveData<Boolean>()
     val isPasswordMatched: LiveData<Boolean>
         get() = _isPasswordMatched
 
-    private val _signUpSuccess = MutableLiveData<Boolean>(false)
+    private val _signUpSuccess = MutableLiveData<Boolean>()
     val signUpSuccess: LiveData<Boolean>
         get() = _signUpSuccess
 
-    private val _isEmailRepetition = MutableLiveData<Boolean>(true)
+    private val _isEmailRepetition = MutableLiveData<Boolean>()
     val isEmailRepetition: LiveData<Boolean>
         get() = _isEmailRepetition
 
-    private val _isNickNameRepetition = MutableLiveData<Boolean>(true)
+    private val _isNickNameRepetition = MutableLiveData<Boolean>()
     val isNickNameRepetition: LiveData<Boolean>
         get() = _isNickNameRepetition
 
-    private val _isInputEverything = MutableLiveData<Boolean>(false)
+    private val _isInputEverything = MutableLiveData<Boolean>()
     val isInputEverythig: LiveData<Boolean>
         get() = _isInputEverything
 

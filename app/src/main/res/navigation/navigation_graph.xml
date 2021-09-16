@@ -111,6 +111,15 @@
 
         <argument android:name="postingModel"
             app:argType="com.zeepy.zeepyforandroid.community.data.entity.PostingListModel"/>
+        <action
+            android:id="@+id/action_postingDetailFragment_to_writeShareOrFriendsFragment"
+            app:destination="@id/writeShareOrFriendsFragment" />
+        <action
+            android:id="@+id/action_postingDetailFragment_to_writeGroupPurchaseFragment"
+            app:destination="@id/writeGroupPurchaseFragment" />
+        <action
+            android:id="@+id/action_postingDetailFragment_to_reportFragment3"
+            app:destination="@id/reportFragment3" />
 
     </fragment>
 
@@ -221,7 +230,8 @@
         tools:layout="@layout/fragment_write_group_purchase">
         <action
             android:id="@+id/action_writeGroupPurchaseFragment_to_communityLoadPictureFragment"
-            app:destination="@id/communityLoadPictureFragment" />
+            app:destination="@id/communityLoadPictureFragment"
+            app:popUpTo="@id/mainFrameFragment"/>
     </fragment>
 
     <fragment
@@ -234,7 +244,8 @@
             app:argType="string" />
         <action
             android:id="@+id/action_writeShareOrFriendsFragment_to_communityLoadPictureFragment"
-            app:destination="@id/communityLoadPictureFragment" />
+            app:destination="@id/communityLoadPictureFragment"
+            app:popUpTo="@id/mainFrameFragment"/>
     </fragment>
 
     <fragment
@@ -268,5 +279,21 @@
             app:popUpTo="@id/onBoardingFrameFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/reportFragment3"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ReportFragment"
+        android:label="ReportFragment"
+        tools:layout="@layout/fragment_report">
+        <action
+            android:id="@+id/action_reportFragment3_to_reportOtherFragment3"
+            app:destination="@id/reportOtherFragment3"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/reportFragment3"/>
+    </fragment>
+    <fragment
+        android:id="@+id/reportOtherFragment3"
+        android:name="com.zeepy.zeepyforandroid.myprofile.ReportOtherFragment"
+        android:label="ReportOtherFragment"
+        tools:layout="@layout/fragment_report_other"/>
 
 </navigation>

@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.util
 
 import android.content.ContentResolver
 import android.content.ContentUris
+import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,17 +11,22 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import androidx.annotation.RequiresApi
 import androidx.core.graphics.rotationMatrix
 import com.zeepy.zeepyforandroid.loadUrl
-import io.reactivex.Observable
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okio.BufferedSink
 import okio.IOException
 import okio.source
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.InputStream
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
@@ -39,7 +45,7 @@ object FileConverter {
 
     }
 
-    fun Uri.asMultipart(name: String, contentResolver: ContentResolver): MultipartBody.Part? {
+    fun Uri.asMultipart(contentResolver: ContentResolver): MultipartBody.Part? {
         return contentResolver.query(this, null, null, null, null)?.let {
             if (it.moveToNext()) {
                 val displayName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME));
@@ -54,12 +60,34 @@ object FileConverter {
                     }
                 }
                 it.close()
-                MultipartBody.Part.createFormData(name, displayName, requestBody)
+                MultipartBody.Part.createFormData("file", displayName, requestBody)
             } else {
                 it.close()
                 null
             }
         }
+    }
+
+    fun Uri.convertMultipart(contentResolver: ContentResolver): MultipartBody.Part {
+        val path = this.tofile(contentResolver)
+        val file = File(path)
+        var inputStream: InputStream? = null
+
+        try {
+            inputStream = contentResolver.openInputStream(this)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG ,80, byteArrayOutputStream)
+
+        return MultipartBody.Part.createFormData(
+            name = "zeepy",
+            filename = file.name,
+            body = file.asRequestBody("image/*".toMediaType())
+        )
     }
 
     fun Uri.asBitmap(contentResolver: ContentResolver): Bitmap? {
@@ -75,6 +103,7 @@ object FileConverter {
         }
         return bitmap
     }
+
 
     fun convertUrlToBitmap(urlString: String): Bitmap? {
         val bitmap: Bitmap? = null

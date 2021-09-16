@@ -38,6 +38,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/button_group_purchase"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:button="@null"
+                android:text="공동 구매"
+                android:textColor="@color/selector_black_gray9a"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/selector_grayf4_green33_10dp"/>
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/button_free_share"
@@ -54,20 +68,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/selector_grayf4_green33_10dp"/>
 
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/button_group_purchase"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:button="@null"
-                android:text="공동 구매"
-                android:textColor="@color/selector_black_gray9a"
-                android:fontFamily="@font/nanum_square_round_extrabold"
-                android:textSize="16sp"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/selector_grayf4_green33_10dp"/>
+
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radiobutton_friends"

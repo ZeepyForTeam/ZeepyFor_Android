@@ -51,6 +51,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         setFilterList()
         changeAddress()
         goToCommunityTap()
+
+        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
+
     }
 
     override fun onResume() {

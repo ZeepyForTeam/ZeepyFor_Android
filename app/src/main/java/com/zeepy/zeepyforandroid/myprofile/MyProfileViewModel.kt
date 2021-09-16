@@ -9,8 +9,9 @@ import com.zeepy.zeepyforandroid.myprofile.repository.MyProfileRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.signin.controller.UserDataController
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

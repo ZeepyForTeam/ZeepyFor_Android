@@ -1,9 +1,6 @@
 package com.zeepy.zeepyforandroid.imagecontrol
 
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import okhttp3.MultipartBody
+import io.reactivex.rxjava3.core.Observable
 
 interface ImageController {
     fun getPresignedUrl(): Observable<PreSignedUrlDTO>

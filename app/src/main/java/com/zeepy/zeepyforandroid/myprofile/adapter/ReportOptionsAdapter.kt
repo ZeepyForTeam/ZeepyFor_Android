@@ -24,7 +24,7 @@ class ReportOptionsAdapter(private val dataSet: Array<String>, private val myFra
 
             when (position) {
                 0, 1, 2, 3 -> reportShowConfirmDialog(myFragment)
-                4 -> holder.itemView.findNavController().navigate(R.id.action_reportFragment_to_reportOtherFragment)
+                4 -> holder.itemView.findNavController().navigate(R.id.action_reportFragment3_to_reportOtherFragment3)
             }
         }
     }

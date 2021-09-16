@@ -2,11 +2,11 @@ object Versions {
     const val KOTLIN_VERSION = "1.5.0"
 
     const val RETROFIT_VERSION = "2.9.0"
-    const val OKHTTP_VERSION = "4.9.0"
-    const val GSON_VERSION = "2.8.6"
+    const val OKHTTP_VERSION = "4.9.1"
+    const val GSON_VERSION = "2.8.8"
 
-    const val RXJAVA_VERSION = "2.1.9"
-    const val RXANDROID_VERSION = "2.0.2"
+    const val RXJAVA_VERSION = "3.0.0"
+    const val RXANDROID_VERSION = "3.0.0"
 
     const val ROOM_VERSION = "2.4.0-alpha03"
     const val DAGGER_VERSION = "2.37"

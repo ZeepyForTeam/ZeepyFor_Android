@@ -1,10 +1,14 @@
 package com.zeepy.zeepyforandroid.community.controller
 
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestParticipationDTO
+import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestReportDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWriteCommentDTO
 import com.zeepy.zeepyforandroid.community.data.remote.requestDTO.RequestWritePosting
+import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseImageUrls
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class WritePostingControllerImpl @Inject constructor(
@@ -36,4 +40,10 @@ class WritePostingControllerImpl @Inject constructor(
 
     override fun deletePosting(postingId: Int): Completable =
         zeepyApiService.deletePosting(postingId)
+
+    override fun uploadImages(imageList: ArrayList<MultipartBody.Part?>): Single<ResponseImageUrls> =
+        zeepyApiService.postImages(imageList)
+
+    override fun reportComment(requestReportDTO: RequestReportDTO): Completable =
+        zeepyApiService.reportComment(requestReportDTO)
 }
