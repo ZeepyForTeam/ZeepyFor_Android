@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
-import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
-import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.COMMUNITY
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentReportBinding
-import com.zeepy.zeepyforandroid.databinding.FragmentSettingsBinding
-import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
 import com.zeepy.zeepyforandroid.myprofile.adapter.ReportOptionsAdapter
 
 class ReportFragment: BaseFragment<FragmentReportBinding>() {
@@ -41,8 +41,7 @@ class ReportFragment: BaseFragment<FragmentReportBinding>() {
     }
 
     private fun setToolbar() {
-        requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
-            ?.setTitle("신고하기")
+        binding.toolbar.setTitle("신고하기")
     }
 
     private fun setOnBackPressed() {

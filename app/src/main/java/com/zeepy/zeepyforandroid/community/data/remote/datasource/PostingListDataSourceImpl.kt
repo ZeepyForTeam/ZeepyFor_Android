@@ -4,7 +4,7 @@ import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZip
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class PostingListDataSourceImpl @Inject constructor(

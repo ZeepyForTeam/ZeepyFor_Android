@@ -6,6 +6,10 @@
         <variable
             name="data"
             type="com.zeepy.zeepyforandroid.community.data.entity.CommentModel" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -63,21 +67,37 @@
                 app:layout_constraintTop_toTopOf="@id/iv_profile"
                 app:layout_constraintBottom_toBottomOf="@id/iv_profile"
                 app:layout_constraintStart_toEndOf="@id/iv_profile"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:text="@{data.nickname}"
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/nanum_square_round_extrabold"
                 android:textColor="@color/zeepy_black_3b"
                 tools:text="서울쥐김자랑"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_chat"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/icon_chat"
+                android:text="신고"
+                android:textSize="12dp"
+                android:textColor="@color/zeepy_gray_9a"
+                android:fontFamily="@font/nanum_square_round_bold"
                 app:layout_constraintTop_toTopOf="@id/tv_writer"
                 app:layout_constraintBottom_toBottomOf="@id/tv_writer"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_nested_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="답글"
+                android:textSize="12dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/zeepy_gray_9a"
+                android:fontFamily="@font/nanum_square_round_bold"
+                app:layout_constraintTop_toTopOf="@id/tv_report"
+                app:layout_constraintBottom_toBottomOf="@id/tv_report"
+                app:layout_constraintEnd_toStartOf="@id/tv_report"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end"
@@ -97,7 +117,7 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/nanum_square_round_regular"
                 android:textColor="@color/zeepy_black_3b"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/iv_profile"
@@ -110,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="10dp"
-                android:textSize="10sp"
+                android:textSize="10dp"
                 android:text="@{data.date}"
                 android:fontFamily="@font/nanum_square_round_regular"
                 android:textColor="@color/zeepy_gray_9a"
@@ -128,13 +148,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="4dp"
+            android:visibility="@{data.nestedComments.empty ? view.GONE : view.VISIBLE }"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/item_nested_comment"
             app:layout_constraintStart_toStartOf="@id/guideline_nested_comment"
             app:layout_constraintTop_toBottomOf="@id/layout_comment" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

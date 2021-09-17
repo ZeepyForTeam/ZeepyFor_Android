@@ -204,4 +204,5 @@
     <string name="wishlist">찜 목록</string>
     <string name="my_reviews">내가 작성한 리뷰</string>
     <string name="house">집</string>
+    <string name="instructions_format">[%s]+비밀글로 남겨주세요!</string>
 </resources>

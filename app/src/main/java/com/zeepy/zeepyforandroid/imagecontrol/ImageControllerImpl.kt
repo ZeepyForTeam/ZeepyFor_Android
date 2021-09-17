@@ -1,9 +1,8 @@
 package com.zeepy.zeepyforandroid.imagecontrol
 
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+
 import okhttp3.MultipartBody
 import javax.inject.Inject
 

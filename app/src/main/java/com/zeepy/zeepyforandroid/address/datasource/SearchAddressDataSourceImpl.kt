@@ -1,9 +1,8 @@
 package com.zeepy.zeepyforandroid.address.datasource
 
 import com.zeepy.zeepyforandroid.address.dto.ResponseSearchBuildingAddressDTO
-import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import javax.inject.Inject
 

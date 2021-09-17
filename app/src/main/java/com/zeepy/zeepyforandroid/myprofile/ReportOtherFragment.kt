@@ -51,7 +51,7 @@ class ReportOtherFragment: BaseFragment<FragmentReportOtherBinding>() {
             isReportReasonFilled = it!!.isNotEmpty()
 
             if (isReportReasonFilled && isDetailInfoFilled)
-                binding.btnNext.setMyProfileUsableButtion()
+                binding.btnNext.setCommunityUsableButton()
             else
                 binding.btnNext.setUnUsableButton()
         }
@@ -60,7 +60,7 @@ class ReportOtherFragment: BaseFragment<FragmentReportOtherBinding>() {
             isDetailInfoFilled = it!!.isNotEmpty()
 
             if (isReportReasonFilled && isDetailInfoFilled)
-                binding.btnNext.setMyProfileUsableButtion()
+                binding.btnNext.setCommunityUsableButton()
             else
                 binding.btnNext.setUnUsableButton()
         }

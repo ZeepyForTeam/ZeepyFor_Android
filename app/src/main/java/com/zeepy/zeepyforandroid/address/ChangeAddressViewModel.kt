@@ -6,8 +6,8 @@ import com.zeepy.zeepyforandroid.address.controller.AddressController
 import com.zeepy.zeepyforandroid.address.dto.AddressListDTO
 import com.zeepy.zeepyforandroid.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel

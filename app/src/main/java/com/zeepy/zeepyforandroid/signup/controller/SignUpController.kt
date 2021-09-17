@@ -1,7 +1,7 @@
 package com.zeepy.zeepyforandroid.signup.controller
 
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import retrofit2.http.Body
 
 interface SignUpController {

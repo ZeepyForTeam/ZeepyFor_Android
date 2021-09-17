@@ -3,7 +3,7 @@ package com.zeepy.zeepyforandroid.signup.controller
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import com.zeepy.zeepyforandroid.signup.RequestSignUpDTO
 import com.zeepy.zeepyforandroid.signup.controller.SignUpController
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 import javax.inject.Inject
 
 class SignUpControllerImpl @Inject constructor(

@@ -16,9 +16,9 @@ import com.zeepy.zeepyforandroid.util.ext.hasDealType
 import com.zeepy.zeepyforandroid.util.ext.hasOptions
 import com.zeepy.zeepyforandroid.util.ext.isWithinCost
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
