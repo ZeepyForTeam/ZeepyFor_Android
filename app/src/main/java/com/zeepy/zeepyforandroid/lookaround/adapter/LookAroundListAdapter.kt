@@ -1,11 +1,10 @@
-package com.zeepy.zeepyforandroid.lookaround
+package com.zeepy.zeepyforandroid.lookaround.adapter
 
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,6 @@ import com.zeepy.zeepyforandroid.util.DiffCallback
 import com.zeepy.zeepyforandroid.BR
 import com.zeepy.zeepyforandroid.databinding.ItemLoadingBinding
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingFeatureModel
-import com.zeepy.zeepyforandroid.util.ItemDecoration
 
 
 class LookAroundListAdapter(val context: Context, val listener: (BuildingSummaryModel) -> Unit): ListAdapter<BuildingSummaryModel, RecyclerView.ViewHolder>(

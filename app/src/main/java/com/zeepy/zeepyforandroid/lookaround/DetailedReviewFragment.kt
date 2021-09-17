@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundDetailedReviewBinding
 
-
 class DetailedReviewFragment: BaseFragment<FragmentLookaroundDetailedReviewBinding>() {
+    private val args: DetailedReviewFragmentArgs by navArgs()
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

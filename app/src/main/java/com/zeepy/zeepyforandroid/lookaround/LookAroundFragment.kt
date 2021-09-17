@@ -9,7 +9,6 @@ import android.widget.RadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -22,7 +21,7 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
 import com.zeepy.zeepyforandroid.enum.CommunityTendency
-import com.zeepy.zeepyforandroid.enum.PostingType
+import com.zeepy.zeepyforandroid.lookaround.adapter.LookAroundListAdapter
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
 import com.zeepy.zeepyforandroid.mainframe.MainActivity

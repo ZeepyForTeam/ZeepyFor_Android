@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.lookaround
+package com.zeepy.zeepyforandroid.lookaround.adapter
 
 
 import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO

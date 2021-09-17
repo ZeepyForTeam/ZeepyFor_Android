@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBuildingAllReviewsBinding
-import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
+import com.zeepy.zeepyforandroid.lookaround.adapter.BuildingAllReviewsAdapter
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 
