@@ -12,8 +12,10 @@ import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.databinding.FragmentMainFrameBinding
 import com.zeepy.zeepyforandroid.home.DirectTransitionListener
+import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransitionListener {
@@ -58,6 +60,11 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
         (requireActivity() as MainActivity).initialLookAroundType = type
 
         viewModel.changePageIdx(1)
+        initViewPager()
+    }
+
+    override fun comeBackHome() {
+        viewModel.changePageIdx(0)
         initViewPager()
     }
 

@@ -7,20 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentEditMyProfileBinding
+import com.zeepy.zeepyforandroid.home.DirectTransitionListener
+import com.zeepy.zeepyforandroid.home.HomeFragment
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.ClassCastException
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
     private val viewModel by viewModels<MyProfileViewModel>()
     @Inject lateinit var userPreferenceManager: UserPreferenceManager
+    private var frameFragmentListener: DirectTransitionListener? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -34,13 +39,13 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
+        onAttachToParentFragment(parentFragment?.parentFragment?.parentFragment, HomeFragment())
+
+
         setToolbar()
         setOnBackPressed()
         setOnClickListeners()
-        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
-        Log.e("parent of EditMyProfileFragment", parentFragment.toString())
-        Log.e("parent of parent of EditMyProfileFragment", parentFragment?.parentFragment.toString())
-        Log.e("parent of parent of parent of EditMyProfileFragment", parentFragment?.parentFragment?.parentFragment.toString())
+
         // Observers
         viewModel.isWithdrawn.observe(viewLifecycleOwner, {
             if (it == true) {
@@ -69,8 +74,18 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
                 }
 
                 findNavController().popBackStack()
+                frameFragmentListener?.comeBackHome()
+
             }
         })
+    }
+
+    private fun onAttachToParentFragment(mainframe: Fragment?, frag: Fragment?) {
+        try {
+            frameFragmentListener = mainframe as DirectTransitionListener
+        } catch (e: ClassCastException) {
+            e.printStackTrace()
+        }
     }
 
     private fun setToolbar() {

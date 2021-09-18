@@ -80,10 +80,6 @@ class LookAroundViewModel @Inject constructor(
     val isFetchDone: LiveData<Boolean>
         get() = _isFetchDone
 
-    init {
-        getAddressListFromServer()
-    }
-
     fun resetIsFetchDone() {
         _isFetchDone.value = false
     }
@@ -224,6 +220,13 @@ class LookAroundViewModel @Inject constructor(
             zeepyLocalRepository.insertBuildingLikes(building, building.id)
             zeepyLocalRepository.insertBuildingReviews(building, building.id)
             Log.e("INSERTED <== building", building.toString())
+        }
+    }
+
+    fun getAddressList() {
+        fetchAddressListFromLocal()
+        if (_addressList.value == null) {
+            getAddressListFromServer()
         }
     }
 

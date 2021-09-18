@@ -45,6 +45,13 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         return FragmentLookaroundBinding.inflate(inflater, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (userPreferenceManager.fetchIsAlreadyLogin()) {
+            viewModel.getAddressList()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
@@ -58,7 +65,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
-
 
         setToolbar()
         initRecyclerView()
@@ -79,8 +85,12 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
     }
 
     private fun setSwipeRefreshLayout() {
-        if (userPreferenceManager.fetchIsAlreadyLogin()) {
-            binding.swipeRefreshLayout.apply {
+        binding.swipeRefreshLayout.apply {
+            if (!userPreferenceManager.fetchIsAlreadyLogin()) {
+                isEnabled = false
+                isRefreshing = false
+            } else {
+                isEnabled = true
                 setOnRefreshListener {
                     if (binding.rgFilterings.checkedRadioButtonId != R.id.rb_standard_order) {
                         binding.rgFilterings.check(R.id.rb_standard_order)
@@ -91,6 +101,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                     isRefreshing = false
                 }
             }
+
         }
     }
 
