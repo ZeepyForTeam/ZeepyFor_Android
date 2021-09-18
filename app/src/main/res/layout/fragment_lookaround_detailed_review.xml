@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="data"
+            type="com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,6 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="2021.04.01 13:32"
+                    android:text=""
                     android:textSize="10sp"
                     android:fontFamily="@font/nanum_square_round_regular"
                     app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +71,8 @@
                     android:textColor="@color/zeepy_gray_9a"
                     android:fontFamily="@font/nanum_square_round_regular"
                     app:layout_constraintStart_toEndOf="@id/tv_reviewer_name"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_reviewer_name"/>
+                    app:layout_constraintBottom_toBottomOf="@id/tv_reviewer_name"
+                    android:visibility="invisible"/>
 
 
                 <TextView
@@ -128,19 +137,17 @@
                         android:layout_marginTop="8dp"/>
 
                     <TextView
+                        android:id="@+id/tv_lessor_communication_review"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/box_yellowff_8dp"
                         tools:text="츤데레형"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:textColor="@color/zeepy_black_3b"
                         android:fontFamily="@font/nanum_square_round_extrabold"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="2.5dp"
                         app:layout_constraintStart_toEndOf="@id/tv_lessor_communication"
                         app:layout_constraintTop_toTopOf="@id/tv_lessor_communication"
                         app:layout_constraintBottom_toBottomOf="@id/tv_lessor_communication"
-                        android:layout_marginStart="8dp"/>
+                        android:layout_marginStart="6dp"/>
 
 
                     <TextView

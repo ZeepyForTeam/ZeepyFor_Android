@@ -205,4 +205,5 @@
     <string name="my_reviews">내가 작성한 리뷰</string>
     <string name="house">집</string>
     <string name="instructions_format">[%s]+비밀글로 남겨주세요!</string>
+    <string name="unknown_lessor_personality">미지의 인물형</string>
 </resources>

@@ -46,6 +46,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        resetPostingList()
         setStoryZipRecyclerView()
         updatePostings()
         changeAddress()
@@ -55,6 +56,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         fetchPaginationPostings()
         fetchPostingDirectFromHome((requireActivity() as MainActivity).initialCommunityType)
     }
+
 
     private fun swipeRefreshPostingList() {
         binding.swipeRefreshLayout.apply {
@@ -86,6 +88,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         viewModel.selectedAddress.observe(viewLifecycleOwner) {
             resetPostingList()
             viewModel.fetchPostingList()
+            resetPostingList()
         }
     }
 
@@ -94,6 +97,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
             resetPostingList()
             changeFilter(binding.radiogroupTag)
             viewModel.fetchPostingList()
+            resetPostingList()
             binding.rvStoryzip.scrollToPosition(0)
         }
     }
@@ -151,10 +155,10 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastVisible = layoutManager.findLastCompletelyVisibleItemPosition()
-                if (lastVisible >= layoutManager.itemCount - 5) {
-                    Log.e("id", "${viewModel.currentFragmentId.value}")
+                if (lastVisible >= layoutManager.itemCount-2) {
                     if(viewModel.currentFragmentId.value != 1 &&
                         viewModel.paginationIdx.value != -1) {
+                        viewModel.changePaginationIdx(viewModel.paginationIdx.value!! + 1)
                         viewModel.fetchPostingList()
                     }
                 }

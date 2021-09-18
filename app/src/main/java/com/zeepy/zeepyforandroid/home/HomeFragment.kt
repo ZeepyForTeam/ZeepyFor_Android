@@ -18,6 +18,7 @@ import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentHomeBinding
+import com.zeepy.zeepyforandroid.enum.CommunityTendency
 import com.zeepy.zeepyforandroid.enum.PostingType
 import com.zeepy.zeepyforandroid.mainframe.MainActivity
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragment
@@ -104,7 +105,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
 
     private fun setFilterList() {
         binding.recyclerviewFilter.run {
-            adapter = HomeFilterAdapter()
+            adapter = HomeFilterAdapter {
+                setSelectLookAround(CommunityTendency.findTendency(it.tendency))
+            }
             (adapter as HomeFilterAdapter).notifyDataSetChanged()
             addItemDecoration(ItemDecoration(0, 8))
         }
@@ -172,5 +175,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         frameFragmentListener?.applyCommunityFilter(type)
     }
 
-
+    private fun setSelectLookAround(type: String) {
+        frameFragmentListener?.applyLookAroundFilter(type)
+    }
 }

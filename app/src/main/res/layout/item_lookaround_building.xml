@@ -58,25 +58,34 @@
             android:fontFamily="@font/nanum_square_round_extrabold"
             android:textColor="@color/zeepy_blue_5f"
             android:textSize="12sp"
-            android:text="@string/lessor_personality"
+            android:text="@string/lessor_tendency"
             app:layout_constraintVertical_bias="0.18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/textview_name_house"
             app:layout_constraintTop_toBottomOf="@id/textview_name_house" />
+
+        <ImageView
+            android:id="@+id/iv_personality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/emoji_1_map"
+            app:layout_constraintTop_toTopOf="@id/textview_personality"
+            app:layout_constraintBottom_toBottomOf="@id/textview_personality"
+            app:layout_constraintStart_toEndOf="@id/textview_personality"
+            android:layout_marginStart="6dp"/>
 
         <TextView
             android:id="@+id/textview_personality_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_square_round_extrabold"
-            android:text="@{data.reviews[0].lessorReview}"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/textview_personality"
-            app:layout_constraintStart_toStartOf="@+id/textview_building_review"
-            app:layout_constraintTop_toTopOf="@id/textview_personality"
-            app:layout_constraintVertical_bias="0.1"
-            tools:text="비즈니스형" />
+            app:layout_constraintBottom_toBottomOf="@id/iv_personality"
+            app:layout_constraintStart_toEndOf="@id/iv_personality"
+            app:layout_constraintTop_toTopOf="@id/iv_personality"
+            android:layout_marginStart="6dp"
+            android:text="@string/unknown_lessor_personality"/>
 
 
         <TextView
@@ -94,18 +103,23 @@
 
         <TextView
             android:id="@+id/textview_building_review"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
             android:textSize="12sp"
-            android:text="@{data.reviews[0].totalEvaluation}"
-            android:layout_marginStart="15dp"
+            android:text="@{(data.reviews.empty == true) ? &quot;아직 작성된 리뷰가 없어요&quot; : data.reviews[0].review}"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
             app:layout_constraintVertical_bias="0.1"
             app:layout_constraintBottom_toBottomOf="@id/textview_building"
             app:layout_constraintStart_toEndOf="@id/textview_building"
             app:layout_constraintTop_toTopOf="@id/textview_building"
-            tools:text="여기서 살고싶어 여기" />
+            app:layout_constraintEnd_toStartOf="@id/cardview_image_house"
+            app:layout_constraintHorizontal_bias="0"
+            tools:text="여기서 살고싶어 여기"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/tv_waiting_update"
@@ -116,11 +130,11 @@
             android:textColor="@color/zeepy_black_3b"
             android:textSize="12sp"
             android:text="@string/preparing_for_update"
-            android:layout_marginTop="8dp"
             android:paddingVertical="2.5dp"
             android:paddingHorizontal="8dp"
             app:layout_constraintStart_toStartOf="@id/textview_building"
-            app:layout_constraintTop_toBottomOf="@id/textview_building" />
+            app:layout_constraintTop_toBottomOf="@id/textview_building"
+            app:layout_constraintBottom_toBottomOf="@id/cardview_image_house"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_building_features"
@@ -128,7 +142,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/textview_building"
             app:layout_constraintTop_toBottomOf="@id/textview_building"
-            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/cardview_image_house"
             tools:listitem="@layout/item_building_feature"
             tools:itemCount="3"/>
 

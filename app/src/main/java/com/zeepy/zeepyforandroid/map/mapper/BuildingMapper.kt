@@ -7,6 +7,34 @@ import com.zeepy.zeepyforandroid.map.data.*
 import com.zeepy.zeepyforandroid.map.mapper.BuildingMapper.toDomainModel
 
 object BuildingMapper {
+
+    fun BuildingsAllDTO.toBuildingSummaryDomainModel(): List<BuildingSummaryModel> {
+        return this.content.map {
+            it.toBuildingSummaryDomainModel()
+        }
+    }
+
+    private fun ResponseBuildingInfoDTO.toBuildingSummaryDomainModel(): BuildingSummaryModel {
+        return BuildingSummaryModel(
+            id = this.id,
+            buildingName = this.apartmentName,
+            areaCode = this.areaCode,
+            shortAddress = this.shortAddress,
+            latitude = this.latitude,
+            longitude = this.longitude,
+            reviews = this.reviews,
+            fullNumberAddress = this.fullNumberAddress,
+            fullRoadNameAddress = this.fullRoadNameAddress,
+            shortRoadNameAddress = this.shortRoadNameAddress,
+            buildYear = this.buildYear,
+            buildingDeals = this.buildingDeals,
+            buildingLikes = this.buildingLikes,
+            buildingType = this.buildingType,
+            exclusivePrivateArea = this.exclusivePrivateArea,
+            shortNumberAddress = this.shortNumberAddress
+        )
+    }
+
     fun BuildingsAllDTO.toDomainModel(): List<BuildingModel> {
         return this.content.map {
             it.toDomainModel()

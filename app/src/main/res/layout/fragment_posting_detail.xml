@@ -175,7 +175,8 @@
                             android:layout_marginTop="10dp"
                             android:visibility="@{viewModel.isGroupPurchase ? view.VISIBLE : view.GONE}"
                             app:layout_constraintTop_toBottomOf="@id/tv_content_posting"
-                            app:layout_constraintStart_toStartOf="@id/tv_content_posting">
+                            app:layout_constraintStart_toStartOf="@id/tv_content_posting"
+                            app:layout_constraintEnd_toEndOf="@id/tv_content_posting">
                             
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/textview_productname_key"
@@ -265,13 +266,15 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/textview_notice_value"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:textSize="14dp"
                                 android:text="@{@string/instructions_format(viewModel.postingDetail.data.instructions)}"
                                 android:layout_marginStart="8dp"
+                                android:lineSpacingExtra="7dp"
                                 android:fontFamily="@font/nanum_square_round_regular"
                                 android:textColor="@color/zeepy_black_3b"
+                                app:layout_constraintEnd_toEndOf="@id/constriant_group_purchase_content"
                                 app:layout_constraintTop_toTopOf="@id/textview_notice_key"
                                 app:layout_constraintStart_toEndOf="@id/textview_notice_key"
                                 tools:text="[닉네임/제품명/구매개수/총 가격]+비밀글로 남겨주세요!"/>

@@ -9,7 +9,6 @@ import android.widget.RadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -21,8 +20,11 @@ import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.conditionsearch.data.ConditionSetModel
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBinding
+import com.zeepy.zeepyforandroid.enum.CommunityTendency
+import com.zeepy.zeepyforandroid.lookaround.adapter.LookAroundListAdapter
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.LookAroundViewModel
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
@@ -45,8 +47,8 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.selectedAddress.value?.peekContent()?.cityDistinct?.let {
-            updateToolbar(it, true)
+        if (userPreferenceManager.fetchIsAlreadyLogin()) {
+            viewModel.getAddressList()
         }
     }
 
@@ -65,12 +67,13 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
         setToolbar()
+        initRecyclerView()
         subscribeObservers()
         setSwipeRefreshLayout()
         changeAddress()
-        initRecyclerView()
         fetchPaginationBuildings()
         setFilteringListener()
+        fetchBuildingsDirectFromHome((requireActivity() as MainActivity).initialLookAroundType)
     }
 
     private fun resetPostingList(buildingList: MutableLiveData<MutableList<BuildingSummaryModel>>) {
@@ -83,15 +86,22 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun setSwipeRefreshLayout() {
         binding.swipeRefreshLayout.apply {
-            setOnRefreshListener {
-                if (binding.rgFilterings.checkedRadioButtonId != R.id.rb_standard_order) {
-                    binding.rgFilterings.check(R.id.rb_standard_order)
-                } else {
-                    resetPostingList(viewModel.buildingListLiveData as MutableLiveData<MutableList<BuildingSummaryModel>>)
-                    viewModel.searchBuildingsByAddress()
-                }
+            if (!userPreferenceManager.fetchIsAlreadyLogin()) {
+                isEnabled = false
                 isRefreshing = false
+            } else {
+                isEnabled = true
+                setOnRefreshListener {
+                    if (binding.rgFilterings.checkedRadioButtonId != R.id.rb_standard_order) {
+                        binding.rgFilterings.check(R.id.rb_standard_order)
+                    } else {
+                        resetPostingList(viewModel.buildingListLiveData as MutableLiveData<MutableList<BuildingSummaryModel>>)
+                        viewModel.searchBuildingsByAddress()
+                    }
+                    isRefreshing = false
+                }
             }
+
         }
     }
 
@@ -100,6 +110,19 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
         binding.rgFilterings.children.forEachIndexed { index, child ->
             if (index != idx) {
                 (child as RadioButton).setTextColor((ContextCompat.getColor(requireContext(), R.color.zeepy_black_3b)))
+            }
+        }
+    }
+
+    private fun fetchBuildingsDirectFromHome(type: String?) {
+        with(binding) {
+            when (type) {
+                CommunityTendency.BUSINESS.name -> rbBusiness.isChecked = true
+                CommunityTendency.KIND.name -> rbKind.isChecked = true
+                CommunityTendency.GRAZE.name -> rbGraze.isChecked = true
+                CommunityTendency.SOFTY.name -> rbSofty.isChecked = true
+                CommunityTendency.BAD.name -> rbBad.isChecked = true
+                else -> rbStandardOrder.isChecked = true
             }
         }
     }
@@ -168,6 +191,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun setToolbar() {
         binding.toolbar.apply {
+            setTitle("주소 등록하기")
             setCommunityLocation()
             setRightButton(R.drawable.btn_map) {
                 Navigation.findNavController(binding.root)
@@ -216,12 +240,12 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
                 val itemTotalCount = recyclerView.adapter!!.itemCount - 1
-                Log.e("lastVisibleItemPosition", lastVisibleItemPosition.toString())
-                Log.e("itemTotalCount", itemTotalCount.toString())
+                //Log.e("lastVisibleItemPosition", lastVisibleItemPosition.toString())
+                //Log.e("itemTotalCount", itemTotalCount.toString())
 
                 if (!binding.rvBuildingList.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && viewModel.isLastPage.value == false
                     && itemTotalCount > 0) {
-                    Log.e("When is scroll not possible", "NOW")
+                    //Log.e("When is scroll not possible", "NOW")
                     buildingsAdapter.deleteLoading()
                     viewModel.buildingListLiveData.value?.clear()
                     viewModel.increasePageIdx()
@@ -247,8 +271,8 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun subscribeObservers() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
-            Log.e("buildinglistlivedata in observer SIZEEEEEEEE", it.size.toString())
-            if (it.size == viewModel.fetchedBuildingsCount.value) {
+            //Log.e("buildinglistlivedata in observer SIZEEEEEEEE", it.size.toString())
+            if (it.size == viewModel.fetchedBuildingsCount.value && viewModel.isOnFiltered.value == false) {
                 if (it.size != 0) {
                     buildingsAdapter.notifyItemRemoved(buildingsAdapter.itemCount)
                     val prevLastItemPosition =
@@ -266,7 +290,7 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             }
         }
         viewModel.filteredBuildingList.observe(viewLifecycleOwner) {
-            Log.e("filtered List size", it.size.toString())
+            //Log.e("filtered List size", it.size.toString())
             if (it.size != 0) {
                 val prevLastItemPosition =
                     if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
@@ -278,9 +302,14 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 )
             }
         }
-        viewModel.selectedAddress.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let {
-                Log.e("selectedAddress", it.cityDistinct)
+        viewModel.selectedAddress.observe(viewLifecycleOwner) {
+            binding.tvNoAddress.visibility = View.GONE
+            binding.rvBuildingList.visibility = View.VISIBLE
+            binding.toolbar.apply {
+                setTitle(it.cityDistinct)
+            }
+            //Log.e("selectedAddress", it.cityDistinct)
+            if (viewModel.buildingListLiveData.value.isNullOrEmpty()) {
                 viewModel.searchBuildingsByAddress()
             }
         }
@@ -291,59 +320,13 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                     viewModel.changeSelectedAddress(selectedAddress)
                 }
                 if (it.isNullOrEmpty()) {
-                    updateToolbar("주소 등록하기", false)
-                } else {
-                    selectedAddress?.let { address ->
-                        updateToolbar(address.cityDistinct, true)
+                    binding.tvNoAddress.visibility = View.VISIBLE
+                    binding.rvBuildingList.visibility = View.GONE
+                    binding.toolbar.apply {
+                        setTitle("주소 등록하기")
                     }
                 }
             }
         }
     }
-
-    private fun updateToolbar(title: String, isAddressSelected: Boolean) {
-        binding.toolbar.apply {
-            setTitle(title)
-        }
-        if (isAddressSelected) {
-            binding.tvNoAddress.visibility = View.GONE
-            binding.rvBuildingList.visibility = View.VISIBLE
-        } else {
-            binding.rvBuildingList.visibility = View.GONE
-            binding.tvNoAddress.visibility = View.VISIBLE
-        }
-    }
-
-    /** Spinner 미사용 */
-    /*
-    private fun setSpinner() {
-        ArrayAdapter.createFromResource(requireActivity(), R.array.lessor_personality_array, R.layout.item_lookaround_spinner).let {
-            it.setDropDownViewResource(R.layout.item_lookaround_spinner_dropdown)
-            binding.spinnerLessorPersonality.apply {
-                adapter = it
-                onItemSelectedListener = itemSelectedListener
-                onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
-                    Log.v("MaterialSpinner", "onFocusChange hasFocus=$hasFocus")
-                }
-            }
-        }
-    }
-
-    private val itemSelectedListener by lazy {
-        object : MaterialSpinner.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: MaterialSpinner,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                parent.focusSearch(View.FOCUS_UP)?.requestFocus()
-
-            }
-
-            override fun onNothingSelected(parent: MaterialSpinner) {
-                Log.e("MaterialSpinner", "onNothingSelected parent=${parent.id}")
-            }
-        }
-    }*/
 }

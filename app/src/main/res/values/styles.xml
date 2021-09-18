@@ -75,8 +75,9 @@
         <item name="cornerSize">6dp</item>
     </style>
 
-    <style name="SwitchButtonStyle">
-        <item name="background">@color/zeepy_yellow_ef</item>
+    <style name="SwitchButtonStyle" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="thumbTint">@color/selector_custom_switch</item>
+        <item name="trackTint">@color/selector_custom_switch</item>
         <item name="android:paddingHorizontal">2.7dp</item>
         <item name="android:paddingVertical">9.3dp</item>
     </style>

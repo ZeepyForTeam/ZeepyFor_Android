@@ -12,6 +12,4 @@
         tools:layout="@layout/fragment_community_main">
     </fragment>
 
-
-
 </navigation>

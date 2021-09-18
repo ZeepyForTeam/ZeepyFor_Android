@@ -16,6 +16,10 @@ class RemoteBuildingsDataSourceImpl @Inject constructor(
     override suspend fun getBuildingsAll(page: Int): BuildingsAllDTO {
         return zeepyApiService.getBuildingsAll(page).verify()
     }
+
+    override suspend fun getBuildingsUserLike(page: Int): BuildingsAllDTO {
+        return zeepyApiService.getBuildingsUserLike(page).verify()
+    }
 }
 
 fun Response<List<ResponseBuildingInfoDTO>>.verify(): List<ResponseBuildingInfoDTO> {

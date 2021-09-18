@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.community.frame.viewmodel
 
 import android.app.Application
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -116,7 +117,6 @@ class CommunityFrameViewModel @Inject constructor(
                         _paginationIdx.value = -1
                     } else {
                         addPostingList(it)
-                        increasePageIdx()
                     }
                 }, {
                     _paginationIdx.value = -1
@@ -140,6 +140,7 @@ class CommunityFrameViewModel @Inject constructor(
     }
 
     private fun increasePageIdx() {
+        Log.e("up", "up")
         var page = paginationIdx.value
         if (page != null) {
             page += 1
@@ -189,19 +190,6 @@ class CommunityFrameViewModel @Inject constructor(
                     if (!response.isNullOrEmpty()) {
                         _selectedAddress.postValue(response.filter { it.isAddressCheck }.first()?.cityDistinct.toString())
                     }
-                }, {
-                    it.printStackTrace()
-                })
-        )
-    }
-
-    fun searchBuildingAddress(address: String) {
-        addDisposable (
-            searchAddressListRepository.searchBuildingAddressList(address)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    _resultSearchedAddress.postValue(response)
                 }, {
                     it.printStackTrace()
                 })

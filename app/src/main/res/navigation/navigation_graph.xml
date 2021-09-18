@@ -177,6 +177,10 @@
         <action
             android:id="@+id/action_buildingDetailFragment_to_reviewFrameFragment"
             app:destination="@id/reviewFrameFragment"/>
+
+        <deepLink
+            android:id="@+id/buildingDetailFragmentDeepLink"
+            app:uri="myapp://buildingDetail"/>
     </fragment>
 
     <fragment
@@ -200,12 +204,17 @@
         android:label="DetailedReviewFragment"
         tools:layout="@layout/fragment_lookaround_detailed_review">
 
-        <deepLink android:id="@+id/detailedReviewFragmentDeepLink"
+        <deepLink
+            android:id="@+id/detailedReviewFragmentDeepLink"
             app:uri="myapp://detailedReview"/>
 
         <argument
             android:name="responseReview"
             app:argType="com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO"/>
+
+        <argument
+            android:name="buildingName"
+            app:argType="string"/>
     </fragment>
 
     <fragment
