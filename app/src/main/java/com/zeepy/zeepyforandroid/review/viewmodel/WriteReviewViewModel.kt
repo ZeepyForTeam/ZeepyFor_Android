@@ -115,6 +115,10 @@ class WriteReviewViewModel @Inject constructor(
     val sexChecked = MutableLiveData<Int>()
     val reviewOfHouse = MutableLiveData<String>()
 
+    private val _isPostSuccess = MutableLiveData<Boolean>()
+    val isPostSuccess: LiveData<Boolean>
+        get() = _isPostSuccess
+
     init {
         getAddress()
     }
@@ -191,7 +195,6 @@ class WriteReviewViewModel @Inject constructor(
         return (reviewOfHouse.value.isNullOrEmpty() || houseTotalEvaluation.value.isNullOrEmpty())
     }
 
-    @SuppressLint("CheckResult")
     fun postReviewToServer() {
         postReviewController.postReview(
             RequestWriteReview(
@@ -214,9 +217,10 @@ class WriteReviewViewModel @Inject constructor(
         ).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
+                       _isPostSuccess.postValue(true)
             }, {
-
+                it.printStackTrace()
+                _isPostSuccess.postValue(false)
             })
     }
 
