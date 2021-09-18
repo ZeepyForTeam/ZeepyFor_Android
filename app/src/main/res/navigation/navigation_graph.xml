@@ -211,6 +211,10 @@
         <argument
             android:name="responseReview"
             app:argType="com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO"/>
+
+        <argument
+            android:name="buildingName"
+            app:argType="string"/>
     </fragment>
 
     <fragment

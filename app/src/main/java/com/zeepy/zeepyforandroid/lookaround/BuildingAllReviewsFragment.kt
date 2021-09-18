@@ -12,8 +12,9 @@ import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundBuildingAllReview
 import com.zeepy.zeepyforandroid.lookaround.adapter.BuildingAllReviewsAdapter
 import com.zeepy.zeepyforandroid.map.viewmodel.MapViewModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class BuildingAllReviewsFragment: BaseFragment<FragmentLookaroundBuildingAllReviewsBinding>() {
     private val args: BuildingAllReviewsFragmentArgs by navArgs()
     private val viewModel: MapViewModel by activityViewModels()
@@ -41,9 +42,10 @@ class BuildingAllReviewsFragment: BaseFragment<FragmentLookaroundBuildingAllRevi
 
     private fun initRecyclerView() {
         binding.rvReviewList.apply {
-            reviewsAdapter = BuildingAllReviewsAdapter {
+            reviewsAdapter = BuildingAllReviewsAdapter(context) {
                 val action = BuildingAllReviewsFragmentDirections.actionBuildingAllReviewsFragmentToDetailedReviewFragment(
-                    it
+                    it,
+                    args.buildingSummaryModel.buildingName
                 )
                 findNavController().navigate(action)
             }
@@ -54,7 +56,7 @@ class BuildingAllReviewsFragment: BaseFragment<FragmentLookaroundBuildingAllRevi
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            setTitle("건물리뷰")
+            setTitle("건물리뷰(" + args.buildingSummaryModel.reviews.size + ")")
             setBackButton {
                 findNavController().popBackStack()
             }

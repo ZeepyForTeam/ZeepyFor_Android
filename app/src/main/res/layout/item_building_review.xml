@@ -61,7 +61,6 @@
             app:layout_constraintStart_toEndOf="@id/tv_summary_lessor_review"
             android:background="@drawable/box_grayba_8dp"
             tools:text="30대 남자로 보여요."
-            android:text="@{data.lessorAge}"
             android:textSize="10sp"
             android:fontFamily="@font/nanum_square_round_bold"
             android:textColor="@color/zeepy_black_3b"
@@ -116,7 +115,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="좋아요"
-            android:text="@{data.soundInsulation}"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_regular"
@@ -143,7 +141,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="좋아요"
-            android:text="@{data.pest}"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_regular"
@@ -170,7 +167,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="좋아요"
-            android:text="@{data.lightning}"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_regular"
@@ -197,7 +193,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="좋아요"
-            android:text="@{data.waterPressure}"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
             android:fontFamily="@font/nanum_square_round_regular"
@@ -255,6 +250,7 @@
             android:lineSpacingExtra="6dp"/>
 
         <TextView
+            android:id="@+id/tv_view_all_reviews"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/go_to_all_reviews"

@@ -52,10 +52,11 @@ class ManageReviewFragment: BaseFragment<FragmentManageReviewBinding>() {
         val uri = Uri.parse("myapp://detailedReview")
         binding.rvReviewList.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = MyReviewAdapter {
-                findNavController().navigate(uri)
-                requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
-                    ?.visibility = View.GONE
+            adapter = MyReviewAdapter(context) {
+                // FIXME: Disabling onClick for now
+//                findNavController().navigate(uri)
+//                requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
+//                    ?.visibility = View.GONE
             }
             addItemDecoration(ItemDecoration(8, 0))
         }

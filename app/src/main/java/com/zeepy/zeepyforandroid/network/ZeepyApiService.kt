@@ -153,4 +153,7 @@ interface ZeepyApiService {
 
     @POST("/api/reports")
     fun reportComment(@Body requestReportDTO:RequestReportDTO): Completable
+
+    @GET("api/buildings/like")
+    suspend fun getBuildingsUserLike(@Query ("page") page: Int): Response<BuildingsAllDTO>
 }

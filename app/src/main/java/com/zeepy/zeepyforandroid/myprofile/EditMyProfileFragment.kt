@@ -46,6 +46,9 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
         setOnBackPressed()
         setOnClickListeners()
 
+        binding.tvNicknameContent.text = userPreferenceManager.fetchUserNickname()
+        binding.tvEmailContent.text = userPreferenceManager.fetchUserEmail()
+
         // Observers
         viewModel.isWithdrawn.observe(viewLifecycleOwner, {
             if (it == true) {

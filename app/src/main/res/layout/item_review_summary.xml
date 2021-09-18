@@ -55,7 +55,7 @@
             android:id="@+id/tv_building_owner_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{data.lessorAge}"
+            tools:text="30대 남자 같아요."
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
@@ -80,7 +80,7 @@
             android:id="@+id/tv_lessor_communication_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{data.communcationTendency}"
+            tools:text="비즈니스형"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textSize="12sp"
             android:textColor="@color/zeepy_black_3b"
@@ -100,6 +100,110 @@
             app:layout_constraintStart_toStartOf="@id/tv_lessor_communication"
             app:layout_constraintTop_toBottomOf="@id/tv_lessor_communication"
             android:layout_marginTop="9dp"/>
+
+        <TextView
+            android:id="@+id/tv_sound_insulation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sound_insulation"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toEndOf="@id/tv_house"
+            app:layout_constraintTop_toTopOf="@id/tv_house"
+            app:layout_constraintBottom_toBottomOf="@id/tv_house"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_sound_insulation_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@id/tv_sound_insulation"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sound_insulation"
+            app:layout_constraintStart_toEndOf="@id/tv_sound_insulation"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_pest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pest"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toEndOf="@id/tv_sound_insulation_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_sound_insulation_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sound_insulation_rating"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_pest_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@+id/tv_pest"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pest"
+            app:layout_constraintStart_toEndOf="@+id/tv_pest"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_sunlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lighting"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toEndOf="@id/tv_pest_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_pest_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_pest_rating"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_sunlight_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@+id/tv_sunlight"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sunlight"
+            app:layout_constraintStart_toEndOf="@+id/tv_sunlight"
+            android:layout_marginStart="3dp"/>
+
+        <TextView
+            android:id="@+id/tv_waterpressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/water_pressure"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintStart_toEndOf="@id/tv_sunlight_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_sunlight_rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sunlight_rating"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_waterpressure_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="좋아요"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toTopOf="@+id/tv_waterpressure"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_waterpressure"
+            app:layout_constraintStart_toEndOf="@+id/tv_waterpressure"
+            android:layout_marginStart="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
