@@ -16,5 +16,9 @@ enum class LessorAge(val age: String) {
         fun findLessorAge(age: String): String {
             return values().find { it.age == age }?.name ?: throw IllegalArgumentException("Age Not Matched")
         }
+
+        fun findLessorAgeFromLiteralString(ageLiteral: String): String {
+            return values().find { it.name == ageLiteral }?.age ?: throw IllegalArgumentException("Age Not Matched From Literal String")
+        }
     }
 }

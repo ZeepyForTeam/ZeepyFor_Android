@@ -29,8 +29,7 @@
             android:textColor="@color/zeepy_blue_5f"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/tv_summary_lessor_review"
@@ -72,7 +71,6 @@
             app:layout_constraintTop_toBottomOf="@id/tv_summary_lessor_review"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0"
             android:lineSpacingExtra="6dp"/>
@@ -204,7 +202,6 @@
             app:layout_constraintTop_toBottomOf="@id/tv_sound_insulation"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0"
             android:lineSpacingExtra="6dp"/>
@@ -225,7 +222,7 @@
             android:id="@+id/tv_overall_evaluation_msg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!에도 여기 살고 싶어요!다음에도 여기 살고 싶어요!"
+            tools:text="좋아요"
             android:textSize="12sp"
             android:fontFamily="@font/nanum_square_round_regular"
             android:textColor="@color/zeepy_black_3b"
@@ -233,7 +230,6 @@
             app:layout_constraintTop_toBottomOf="@id/tv_overall_evaluation"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0"
             android:lineSpacingExtra="6dp"/>
@@ -248,8 +244,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_overall_evaluation_msg"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:layout_marginTop="8dp"/>
         
     </androidx.constraintlayout.widget.ConstraintLayout>

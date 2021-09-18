@@ -35,8 +35,8 @@ class LookAroundViewModel @Inject constructor(
     val addressList: LiveData<Event<List<LocalAddressEntity>>>
         get() = _addressList
 
-    private val _selectedAddress = MutableLiveData<Event<LocalAddressEntity>>()
-    val selectedAddress: LiveData<Event<LocalAddressEntity>>
+    private val _selectedAddress = MutableLiveData<LocalAddressEntity>()
+    val selectedAddress: LiveData<LocalAddressEntity>
         get() = _selectedAddress
 
     private val _filteredBuildingList = MutableLiveData<MutableList<BuildingSummaryModel>>()
@@ -81,7 +81,6 @@ class LookAroundViewModel @Inject constructor(
         get() = _isFetchDone
 
     init {
-        Log.e("Viewmodel LOOKAROUND", "INITIALIZED")
         getAddressListFromServer()
     }
 
@@ -98,7 +97,7 @@ class LookAroundViewModel @Inject constructor(
     }
 
     fun changeSelectedAddress(address: LocalAddressEntity) {
-        _selectedAddress.value = Event(address)
+        _selectedAddress.value = address
     }
 
     fun resetIsLastPage() {
@@ -130,7 +129,7 @@ class LookAroundViewModel @Inject constructor(
      */
     fun searchBuildingsByAddress() {
         viewModelScope.launch {
-            val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.peekContent()?.cityDistinct!!, _paginationIdx.value!!)
+            val result = searchAddressListRepository.searchBuildingsByAddress(selectedAddress.value?.cityDistinct!!, _paginationIdx.value!!)
 
             when {
                 result?.addresses.isNullOrEmpty() -> {
@@ -228,7 +227,7 @@ class LookAroundViewModel @Inject constructor(
         }
     }
 
-    private fun getAddressListFromServer() {
+    fun getAddressListFromServer() {
         addDisposable(
             addressDataSource.fetchAddressList()
                 .subscribeOn(Schedulers.io())

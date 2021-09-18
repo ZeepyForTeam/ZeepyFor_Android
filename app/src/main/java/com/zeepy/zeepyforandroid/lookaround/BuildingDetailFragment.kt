@@ -13,12 +13,11 @@ import coil.load
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentBuildingDetailBinding
-import com.zeepy.zeepyforandroid.enum.DealType
-import com.zeepy.zeepyforandroid.enum.Options
-import com.zeepy.zeepyforandroid.enum.RoomCount
+import com.zeepy.zeepyforandroid.enum.*
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.ItemDecoration
+import com.zeepy.zeepyforandroid.util.ZeepyStringBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -50,7 +49,7 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         setToolbar()
         renderOptions()
         renderPictures()
-        renderRoomCount()
+        renderBuildingType()
         renderPaymentType()
         renderBuildingAddress()
         renderCommunicationTendency()
@@ -99,12 +98,12 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
                 binding.layoutRepReview.root.visibility = View.VISIBLE
                 binding.layoutRepReview.apply {
                     tvReviewerName.text = String.format(resources.getString(R.string.review_by_whom), it[0].user.name)
-                    tvLessorReviewOneLiner.text = it[0].lessorGender
+                    tvLessorReviewOneLiner.text = ZeepyStringBuilder.buildLessorAgeAndGenderStmt(LessorAge.findLessorAgeFromLiteralString(it[0].lessorAge), it[0].lessorGender)
                     tvLessorReviewMsg.text = it[0].lessorReview
-                    tvSoundInsulationRating.text = it[0].soundInsulation
-                    tvPestRating.text = it[0].pest
-                    tvSunlightRating.text = it[0].lightning
-                    tvWaterpressureRating.text = it[0].waterPressure
+                    tvSoundInsulationRating.text = getString(Preference.getIdFromString(it[0].soundInsulation))
+                    tvPestRating.text = getString(Preference.getIdFromString(it[0].pest))
+                    tvSunlightRating.text = getString(Preference.getIdFromString(it[0].lightning))
+                    tvWaterpressureRating.text = getString(Preference.getIdFromString(it[0].waterPressure))
                     tvHouseReviewMsg.text = it[0].review
                     tvOverallEvaluationMsg.text = it[0].totalEvaluation
                 }
@@ -183,12 +182,8 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         }
     }
 
-    private fun renderRoomCount() {
-        args.buildingSummaryModel.reviews.let {
-            if (!it.isNullOrEmpty()) {
-                binding.tvRoomCount.text = resources.getString(RoomCount.findRoomCountFromString(it[0].roomCount))
-            }
-        }
+    private fun renderBuildingType() {
+        binding.tvBuildingTypeContent.text = getString(BuildingType.findBuildingTypeFromString(args.buildingSummaryModel.buildingType))
     }
 
     private fun renderOptions() {
