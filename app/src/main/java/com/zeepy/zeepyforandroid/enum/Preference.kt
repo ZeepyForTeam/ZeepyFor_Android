@@ -18,5 +18,9 @@ enum class Preference(@StringRes val prefer: Int, @DrawableRes val drawableId: I
         fun getDrawableIdFromString(text: String): Int {
             return values().find { it.name == text }?.drawableId ?: throw IllegalArgumentException("Image Not Matched")
         }
+
+        fun getIdFromString(text: String): Int {
+            return values().find { it.name == text}?.prefer ?: throw IllegalArgumentException("Preference not found")
+        }
     }
 }

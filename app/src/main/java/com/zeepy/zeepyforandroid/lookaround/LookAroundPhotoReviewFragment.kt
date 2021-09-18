@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentLookaroundPhotoReviewBinding
+import com.zeepy.zeepyforandroid.lookaround.adapter.PhotoReviewAdapter
 import com.zeepy.zeepyforandroid.review.data.entity.PictureModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 

@@ -182,23 +182,27 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_lookaround_building"
-                tools:itemCount="3"/>
-
-            <TextView
-                android:id="@+id/tv_no_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pick_address"
-                android:background="@drawable/box_grayf7_8dp"
-                android:paddingHorizontal="102dp"
-                android:paddingVertical="39dp"
-                android:textSize="14sp"
-                android:fontFamily="@font/gilroy_extrabold"
-                android:textColor="@color/zeepy_gray_9a"
-                android:layout_centerInParent="true"/>
-
+                tools:itemCount="3"
+                android:visibility="gone"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_no_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_address"
+            android:background="@drawable/box_grayf7_8dp"
+            android:paddingHorizontal="102dp"
+            android:paddingVertical="39dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_menu"
+            android:layout_marginTop="30dp"
+            android:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

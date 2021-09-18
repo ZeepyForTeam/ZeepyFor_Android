@@ -6,20 +6,20 @@ import androidx.core.content.ContextCompat
 import com.zeepy.zeepyforandroid.R
 import java.lang.IllegalArgumentException
 
-enum class CommunityTendency(@StringRes val tendency: Int) {
-    BUSINESS(R.string.lessor_business),
-    KIND(R.string.lessor_kind),
-    GRAZE(R.string.lessor_graze),
-    SOFTY(R.string.lessor_softy),
-    BAD(R.string.lessor_bad);
+enum class CommunicationTendencySimple(@StringRes val tendency: Int) {
+    BUSINESS(R.string.tendency_business),
+    KIND(R.string.tendency_kind),
+    GRAZE(R.string.tendency_graze),
+    SOFTY(R.string.tendency_softy),
+    BAD(R.string.tendency_bad);
 
     companion object {
-        fun findTendency(tendency: Int): String {
+        fun findTendencyStringFromId(tendency: Int): String {
             return values().find { it.tendency == tendency }?.name
                 ?: throw IllegalArgumentException("Tendency Not Matched")
         }
 
-        fun findTendencyFromString(text: String): Int {
+        fun findTendencyIdFromString(text: String): Int {
             return values().find {
                 it.name == text
             }?.tendency ?: throw IllegalArgumentException("String and Name Not Matched")

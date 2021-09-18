@@ -1,21 +1,23 @@
-package com.zeepy.zeepyforandroid.lookaround
+package com.zeepy.zeepyforandroid.lookaround.adapter
 
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.zeepy.zeepyforandroid.databinding.ItemLookaroundBuildingBinding
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.util.DiffCallback
 import com.zeepy.zeepyforandroid.BR
+import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.databinding.ItemLoadingBinding
+import com.zeepy.zeepyforandroid.enum.CommunicationTendencySimple
+import com.zeepy.zeepyforandroid.enum.CommunityTendency
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingFeatureModel
-import com.zeepy.zeepyforandroid.util.ItemDecoration
 
 
 class LookAroundListAdapter(val context: Context, val listener: (BuildingSummaryModel) -> Unit): ListAdapter<BuildingSummaryModel, RecyclerView.ViewHolder>(
@@ -55,6 +57,19 @@ class LookAroundListAdapter(val context: Context, val listener: (BuildingSummary
             holder.binding.setVariable(BR.data, item)
             holder.binding.root.setOnClickListener {
                 listener(item)
+            }
+
+            if (!item.reviews.isNullOrEmpty()) {
+                // TODO: CommunityTendency Enum 클래스를 xml파일에서 데이터 바인딩을 시도하였으나 cannot resolve type 에러가 나옴 (추후에 조사 후 수정)
+                holder.binding.textviewPersonalityReview.text = context.getString(CommunicationTendencySimple.findTendencyIdFromString(item.reviews[0].communcationTendency))
+
+                when (item.reviews[0].communcationTendency) {
+                    "KIND" -> holder.binding.ivPersonality.load(R.drawable.emoji_2_map)
+                    "GRAZE" -> holder.binding.ivPersonality.load(R.drawable.emoji_3_map)
+                    "SOFTY" -> holder.binding.ivPersonality.load(R.drawable.emoji_4_map)
+                    "BAD" -> holder.binding.ivPersonality.load(R.drawable.emoji_5_map)
+                    else -> holder.binding.ivPersonality.load(R.drawable.emoji_1_map)
+                }
             }
 
             if (item.buildingType != "UNKNOWN" && !item.reviews.isNullOrEmpty()) {
