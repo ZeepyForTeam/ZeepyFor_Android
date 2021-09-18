@@ -14,8 +14,10 @@ import androidx.navigation.Navigation
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteLessorInfoBinding
+import com.zeepy.zeepyforandroid.enum.LessorAge
 import com.zeepy.zeepyforandroid.enum.LessorAge.Companion.findLessorAge
 import com.zeepy.zeepyforandroid.enum.LessorGender.Companion.findGender
+import com.zeepy.zeepyforandroid.review.AgeSelectListener
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 
 class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
@@ -33,18 +35,15 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        setSpinner()
         setNextButton()
         enableButton()
         goToReviewHouse()
         selectGender()
+        showLessorAgeInfo()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.lessorAge.value?.values?.find { it == 0 }?.let { binding.spinnerAge.setSelection(it) }
-
-        setSpinner()
         binding.groupSelectGender.clearCheck()
     }
 
@@ -65,28 +64,15 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
         }
     }
 
-    private fun setSpinner() {
-        ArrayAdapter.createFromResource(requireContext(), R.array.lessor_age_values, R.layout.item_spinner_age).also { spinnerAdapter ->
-            binding.spinnerAge.run {
-                adapter = spinnerAdapter
-                onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        viewModel.changeLessorAge(mapOf(findLessorAge((view as AppCompatTextView).text.toString()) to position))
-                    }
-                    override fun onNothingSelected(p0: AdapterView<*>?) {}
-                }
-            }
-        }
-    }
-
     private fun enableButton() {
-        viewModel.reviewOfLessor.observe(viewLifecycleOwner){
+        viewModel.reviewOfLessor.observe(viewLifecycleOwner) {
             checkInputAll()
         }
         viewModel.lessorGender.observe(viewLifecycleOwner) {
             checkInputAll()
         }
     }
+
     private fun checkInputAll() {
         if (viewModel.checkInputEveryLessorInfo()) {
             binding.btnNext.setUsableButton()
@@ -97,7 +83,27 @@ class WriteLessorInfoFragment : BaseFragment<FragmentWriteLessorInfoBinding>() {
 
     private fun goToReviewHouse() {
         binding.btnNext.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.action_writeLessorInfoFragment_to_houseReviewFragment)
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_writeLessorInfoFragment_to_houseReviewFragment)
+        }
+    }
+
+    private fun showLessorAgeInfo() {
+        binding.tvAgeIntegerValue.setOnClickListener {
+            val bottom = LessorAgeBottomSheetFragment(object : AgeSelectListener {
+                override fun selectAge(lessorAgeGroup: LessorAge) {
+                    setSelectedLessorAge(lessorAgeGroup.age)
+                    viewModel.changeLessorAge(lessorAgeGroup.name)
+                }
+            })
+            bottom.show(childFragmentManager, this.tag)
+        }
+    }
+
+    private fun setSelectedLessorAge(age: String?) {
+        binding.tvAgeIntegerValue.text = when (age) {
+            LessorAge.UNKNOWN.age -> "00"
+            else -> age?.substring(0, 2)
         }
     }
 }

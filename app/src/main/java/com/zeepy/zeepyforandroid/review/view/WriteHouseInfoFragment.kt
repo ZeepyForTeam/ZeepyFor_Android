@@ -13,6 +13,7 @@ import com.zeepy.zeepyforandroid.customview.ZeepyDialog
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentWriteHouseInfoBinding
 import com.zeepy.zeepyforandroid.enum.TotalEvaluation.Companion.findTotalEvaluation
+import com.zeepy.zeepyforandroid.review.AgeSelectListener
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
 
 class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
@@ -50,7 +51,7 @@ class WriteHouseInfoFragment : BaseFragment<FragmentWriteHouseInfoBinding>() {
             requireParentFragment().requireParentFragment().findNavController().popBackStack()
         }
     }
-    
+
     private fun showUploadReviewDialog() {
         val registerReviewDialog = ZeepyDialogBuilder( "리뷰를 등록하시겠습니까?",null)
             .setContent("*리뷰 등록 후에는 수정하거나 삭제하실 수\n없으니 글 작성에 유의해주세요.\n\n*허위/중복/성의없는 정보 또는 비방글을\n작성할 경우, 서비스 이용이 제한될 수 있습니다.")
