@@ -48,7 +48,6 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        changeIsFromPostingDetail()
         resetPostingList()
         setStoryZipRecyclerView()
         updatePostings()
@@ -58,13 +57,6 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         changeZIP()
         fetchPaginationPostings()
         fetchPostingDirectFromHome((requireActivity() as MainActivity).initialCommunityType)
-    }
-
-    private fun changeIsFromPostingDetail() {
-        val mainFrameFragment =
-            requireParentFragment().requireParentFragment().requireParentFragment()
-                .requireParentFragment()
-
     }
 
     private fun swipeRefreshPostingList() {
