@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintWidth_percent="0.3"
+            android:background="@drawable/shape_bottom_sheet_top_line"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10 대"
+            android:gravity="center"
+            android:layout_marginTop="14dp"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="18dp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_twenty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20 대"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="18dp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/textview_ten"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_thirty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="30 대"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="18dp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/textview_twenty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_fourty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="40 대"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="18dp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/textview_thirty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_fifty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="50 대"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="18dp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/textview_fourty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_sixty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="60 대 이상"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="18dp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/textview_fifty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_unknown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="모르겠어요"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="18dp"
+            android:textColor="@color/zeepy_black_3b"
+            app:layout_constraintTop_toBottomOf="@id/textview_sixty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

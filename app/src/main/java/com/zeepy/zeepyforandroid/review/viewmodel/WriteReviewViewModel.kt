@@ -73,8 +73,8 @@ class WriteReviewViewModel @Inject constructor(
     val lessorGender: LiveData<String>
         get() = _lessorGender
 
-    private val _lessorAge = MutableLiveData(mapOf(LessorAge.TEN.age to 0))
-    val lessorAge: LiveData<Map<String, Int>>
+    private val _lessorAge = MutableLiveData<String>()
+    val lessorAge: LiveData<String>
         get() = _lessorAge
 
     private val _roomType = MutableLiveData<String>()
@@ -114,6 +114,10 @@ class WriteReviewViewModel @Inject constructor(
     val detailAddress = MutableLiveData<String>()
     val sexChecked = MutableLiveData<Int>()
     val reviewOfHouse = MutableLiveData<String>()
+
+    private val _isPostSuccess = MutableLiveData<Boolean>()
+    val isPostSuccess: LiveData<Boolean>
+        get() = _isPostSuccess
 
     init {
         getAddress()
@@ -167,7 +171,7 @@ class WriteReviewViewModel @Inject constructor(
         _lessorGender.value = gender
     }
 
-    fun changeLessorAge(age: Map<String, Int>) {
+    fun changeLessorAge(age: String) {
         _lessorAge.value = age
     }
 
@@ -191,7 +195,6 @@ class WriteReviewViewModel @Inject constructor(
         return (reviewOfHouse.value.isNullOrEmpty() || houseTotalEvaluation.value.isNullOrEmpty())
     }
 
-    @SuppressLint("CheckResult")
     fun postReviewToServer() {
         postReviewController.postReview(
             RequestWriteReview(
@@ -200,7 +203,7 @@ class WriteReviewViewModel @Inject constructor(
                 lessorPersonality.value!!,
                 selectedOptionList.value!!,
                 houseURLImages.value!!,
-                lessorAge.value!!.keys.first(),
+                lessorAge.value!!,
                 lessorGender.value!!,
                 reviewOfLessor.value!!,
                 reviewPreference.value!!["lightning"]!!,
@@ -214,9 +217,10 @@ class WriteReviewViewModel @Inject constructor(
         ).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
+                       _isPostSuccess.postValue(true)
             }, {
-
+                it.printStackTrace()
+                _isPostSuccess.postValue(false)
             })
     }
 

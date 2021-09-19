@@ -288,6 +288,7 @@
             app:popUpTo="@id/onBoardingFrameFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/reportFragment3"
         android:name="com.zeepy.zeepyforandroid.myprofile.ReportFragment"
@@ -299,6 +300,7 @@
             app:popUpToInclusive="true"
             app:popUpTo="@id/reportFragment3"/>
     </fragment>
+
     <fragment
         android:id="@+id/reportOtherFragment3"
         android:name="com.zeepy.zeepyforandroid.myprofile.ReportOtherFragment"

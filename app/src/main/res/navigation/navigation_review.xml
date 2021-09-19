@@ -81,7 +81,10 @@
         tools:layout="@layout/fragment_house_review">
         <action
             android:id="@+id/action_houseReviewFragment_to_writeHouseInfoFragment"
-            app:destination="@id/writeHouseInfoFragment" />
+            app:destination="@id/writeHouseInfoFragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/selectAddressFragment"/>
     </fragment>
 
     <fragment

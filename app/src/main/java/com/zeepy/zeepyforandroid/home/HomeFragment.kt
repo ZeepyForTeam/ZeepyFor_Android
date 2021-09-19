@@ -24,6 +24,8 @@ import com.zeepy.zeepyforandroid.mainframe.MainActivity
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragment
 import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.review.AgeSelectListener
+import com.zeepy.zeepyforandroid.review.view.LessorAgeBottomSheetFragment
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ClassCastException
@@ -52,9 +54,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         setFilterList()
         changeAddress()
         goToCommunityTap()
-
-        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
-
     }
 
     override fun onResume() {
