@@ -13,6 +13,7 @@ import androidx.core.text.color
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.data.entity.CommentAuthenticatedModel
@@ -49,6 +50,7 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.changePostingId(args.postingModel.id)
+        findNavController().previousBackStackEntry?.savedStateHandle?.set("fromPostingDetail", true)
 
 
         setToolbar()
@@ -118,8 +120,6 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     private fun changePostingDatas() {
         viewModel.postingDetail.observe(viewLifecycleOwner) { postingdetail ->
-            Log.e("tag","${postingdetail.data?.typePosting}")
-
             when(postingdetail.status) {
                 NetworkStatus.State.LOADING -> {
                     controlLoadingAnimation(true)
@@ -323,6 +323,5 @@ class PostingDetailFragment: BaseFragment<FragmentPostingDetailBinding>() {
 
     companion object {
         private const val PERCENTAGE = 100
-
     }
 }

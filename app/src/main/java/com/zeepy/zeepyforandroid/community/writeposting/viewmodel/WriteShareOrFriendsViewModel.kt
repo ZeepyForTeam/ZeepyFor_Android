@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.community.writeposting.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zeepy.zeepyforandroid.base.BaseViewModel
@@ -29,17 +30,13 @@ class WriteShareOrFriendsViewModel@Inject constructor(
     val selectedAddress: LiveData<String>
         get() = _selectedAddress
 
-    private val _isEveryInfoEntered = MutableLiveData<Boolean>()
-    val isEveryInfoEntered: LiveData<Boolean>
-        get() = _isEveryInfoEntered
-
     private val _uploadImages = MutableLiveData<List<String>>(listOf())
     val uploadImages: LiveData<List<String>>
         get() = _uploadImages
 
-    private val _requestWritePosting = MutableLiveData<RequestWritePosting>()
-    val requestWritePosting: LiveData<RequestWritePosting>
-        get() = _requestWritePosting
+    private val _successUpload = MutableLiveData<Boolean>()
+    val successUpload: LiveData<Boolean>
+        get() = _successUpload
 
     init {
         fetchAddressList()
@@ -68,7 +65,7 @@ class WriteShareOrFriendsViewModel@Inject constructor(
         )
     }
 
-    fun sendRequestData() {
+    fun uploadPostingToZeepyServer() {
         val requestData = RequestWritePosting(
             selectedAddress.value!!,
             postingType.value!!,
@@ -82,6 +79,18 @@ class WriteShareOrFriendsViewModel@Inject constructor(
             null,
             title.value
         )
-        _requestWritePosting.value = requestData
+
+        addDisposable(
+            writePostingController.uploadPosting(
+                requestData
+            ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _successUpload.postValue(true)
+                }, {
+                    _successUpload.postValue(false)
+                    it.printStackTrace()
+                })
+        )
     }
 }

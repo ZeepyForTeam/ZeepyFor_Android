@@ -2,6 +2,7 @@ package com.zeepy.zeepyforandroid.community.frame.viewmodel
 
 import android.app.Application
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,9 +25,8 @@ import javax.inject.Inject
 class CommunityFrameViewModel @Inject constructor(
     private val addressDataSource: AddressDataSource,
     private val postingListRepository: PostingListRepository,
-    private val zeepyLocalRepository: ZeepyLocalRepository,
-    private val searchAddressListRepository: SearchAddressListRepository
-    ) : BaseViewModel() {
+    private val zeepyLocalRepository: ZeepyLocalRepository
+) : BaseViewModel() {
     private val _paginationIdx = MutableLiveData<Int>(0)
     val paginationIdx: LiveData<Int>
         get() = _paginationIdx
@@ -51,20 +51,16 @@ class CommunityFrameViewModel @Inject constructor(
     val selectedAddress: LiveData<String>
         get() = _selectedAddress
 
-    private val _resultSearchedAddress = MutableLiveData<List<SearchAddressListModel>>()
-    val resultSearchedAddress: LiveData<List<SearchAddressListModel>>
-        get() = _resultSearchedAddress
-
-    private val _selectedBuildingId = MutableLiveData<Int>()
-    val selectedBuildingId: LiveData<Int>
-        get() = _selectedBuildingId
+    private val _savedLayoutManager = MutableLiveData<Int>()
+    val savedLayoutManager: LiveData<Int>
+        get() = _savedLayoutManager
 
     init {
         getAddressListFromLocal()
     }
 
-    fun changeSelectedBuildingId(id: Int) {
-        _selectedBuildingId.value = id
+    fun changeSavedLayoutManager(layoutManager: Int) {
+        _savedLayoutManager.value = layoutManager
     }
 
     fun changePaginationIdx(idx: Int) {
@@ -79,11 +75,7 @@ class CommunityFrameViewModel @Inject constructor(
         _selectedFilter.value = filter
     }
 
-    fun changeSelectedAddress(address: String) {
-        _selectedAddress.value = address
-    }
-
-    fun addPostingList(newPostings: List<PostingListModel>?) {
+    private fun addPostingList(newPostings: List<PostingListModel>?) {
         val joinedPostingList: MutableList<PostingListModel> = arrayListOf()
         postingList.value?.let { joinedPostingList.addAll(it.toTypedArray()) }
         newPostings?.let { joinedPostingList.addAll(it) }
@@ -98,7 +90,7 @@ class CommunityFrameViewModel @Inject constructor(
 
     fun fetchPostingList() {
         if (paginationIdx.value != -1) {
-            when(currentFragmentId.value) {
+            when (currentFragmentId.value) {
                 0 -> getStoryZipPostingList()
                 1 -> getMyZipList()
             }
@@ -107,8 +99,12 @@ class CommunityFrameViewModel @Inject constructor(
 
     private fun getStoryZipPostingList() {
         val type = selectedFilter.value
-        addDisposable (
-            postingListRepository.getPostingList(selectedAddress.value.toString(), type, paginationIdx.value)
+        addDisposable(
+            postingListRepository.getPostingList(
+                selectedAddress.value.toString(),
+                type,
+                paginationIdx.value
+            )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -116,7 +112,6 @@ class CommunityFrameViewModel @Inject constructor(
                         _paginationIdx.value = -1
                     } else {
                         addPostingList(it)
-                        increasePageIdx()
                     }
                 }, {
                     _paginationIdx.value = -1
@@ -127,7 +122,7 @@ class CommunityFrameViewModel @Inject constructor(
 
     private fun getMyZipList() {
         val type = selectedFilter.value
-        addDisposable (
+        addDisposable(
             postingListRepository.getMyZipList(type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -139,16 +134,8 @@ class CommunityFrameViewModel @Inject constructor(
         )
     }
 
-    private fun increasePageIdx() {
-        var page = paginationIdx.value
-        if (page != null) {
-            page += 1
-            _paginationIdx.value = page!!
-        }
-    }
-
     fun getAddressListFromServer() {
-        addDisposable (
+        addDisposable(
             addressDataSource.fetchAddressList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -165,7 +152,7 @@ class CommunityFrameViewModel @Inject constructor(
     }
 
     private fun insertAddressListToLocal(addressList: List<LocalAddressEntity>) {
-        addDisposable (
+        addDisposable(
             Observable.fromCallable {
                 zeepyLocalRepository.insertAllAddress(addressList)
             }.subscribeOn(Schedulers.io())
@@ -180,28 +167,16 @@ class CommunityFrameViewModel @Inject constructor(
     }
 
     private fun getAddressListFromLocal() {
-        addDisposable (
+        addDisposable(
             zeepyLocalRepository.fetchAddressList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     _addressList.postValue(response.toMutableList())
                     if (!response.isNullOrEmpty()) {
-                        _selectedAddress.postValue(response.filter { it.isAddressCheck }.first()?.cityDistinct.toString())
+                        _selectedAddress.postValue(response.filter { it.isAddressCheck }
+                            .first()?.cityDistinct.toString())
                     }
-                }, {
-                    it.printStackTrace()
-                })
-        )
-    }
-
-    fun searchBuildingAddress(address: String) {
-        addDisposable (
-            searchAddressListRepository.searchBuildingAddressList(address)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    _resultSearchedAddress.postValue(response)
                 }, {
                     it.printStackTrace()
                 })

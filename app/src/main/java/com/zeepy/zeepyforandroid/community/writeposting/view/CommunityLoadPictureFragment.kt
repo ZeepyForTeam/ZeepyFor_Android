@@ -118,14 +118,11 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
     private val galleryActivityLauncher =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { imageList ->
             imageList.forEach { uri ->
-                Log.e("picture", "${uri}")
-                Log.e("picture", "${uri.path}")
                 val bitmap = PictureModel(uri.asBitmap(requireContext().contentResolver))
                 pictures.add(bitmap)
                 val bitmapRequestBody = BitmapRequestBody(bitmap.image!!)
                 val multipartBody = MultipartBody.Part.createFormData("img", "zeepy", bitmapRequestBody)
 
-                Log.e("file", "${getFileFromUri(requireContext(), uri)}")
                 viewModel.addFile(getFileFromUri(requireContext(), uri))
 //                viewModel.addUploadMultipartBody(multipartBody)
                 viewModel.addUploadMultipartBody(multipartBody)
@@ -146,8 +143,7 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
                 }
 
 //                viewModel.addUploadMultipartBody(pictureUri.asMultipart("imgs", requireContext().contentResolver))
-
-                val multipartBody = MultipartBody.Part.createFormData("file", "zeepy", BitmapRequestBody(bitmap!!))
+//                val multipartBody = MultipartBody.Part.createFormData("file", "zeepy", BitmapRequestBody(bitmap!!))
                 viewModel.addUploadMultipartBody(pictureUri.asMultipart(requireContext().contentResolver))
                 viewModel.changeUploadPictures(pictures)
             }
@@ -229,12 +225,9 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
 
     companion object{
         const val PICK_ANY_FILE = 100
-        /* get actual file name or extension */
+
         fun Context.getFileExtension(uri: Uri): String? = when (uri.scheme) {
-            // get file extension
             ContentResolver.SCHEME_FILE -> File(uri.path!!).extension
-            // get actual name of file
-            //ContentResolver.SCHEME_FILE -> File(uri.path!!).name
             ContentResolver.SCHEME_CONTENT -> getCursorContent(uri)
             else -> null
         }
@@ -244,8 +237,6 @@ class CommunityLoadPictureFragment: BaseFragment<FragmentCommunityLoadPictureBin
                 cursor.run {
                     val mimeTypeMap: MimeTypeMap = MimeTypeMap.getSingleton()
                     if (moveToFirst()) mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
-                    // case for get actual name of file
-                    //if (moveToFirst()) getString(getColumnIndex(OpenableColumns.DISPLAY_NAME))
                     else null
                 }.also { cursor.close() }
             }

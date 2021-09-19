@@ -28,7 +28,7 @@
                 android:id="@+id/group_choice"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1:0.146"
+                app:layout_constraintDimensionRatio="1:0.17"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 android:layout_marginTop="4dp"

@@ -2,19 +2,18 @@ package com.zeepy.zeepyforandroid.enum
 
 import java.lang.IllegalArgumentException
 
-enum class LessorAge(val age: String) {
-    TEN("10"),
-    TWENTY("20"),
-    THIRTY("30"),
-    FOURTY("40"),
-    FIFTY("50"),
-    SIXTY("60"),
-    SEVENTY("70"),
-    EIGHTY("80");
+enum class LessorAge(val age: String?) {
+    TEN("10 대"),
+    TWENTY("20 대"),
+    THIRTY("30 대"),
+    FOURTY("40 대"),
+    FIFTY("50 대"),
+    SIXTY("60 대 이상"),
+    UNKNOWN("모르겠어요");
 
     companion object {
-        fun findLessorAge(age: String): String {
-            return values().find { it.age == age }?.name ?: throw IllegalArgumentException("Age Not Matched")
+        fun findLessorAge(age: String): LessorAge {
+            return values().find { it.age == age } ?: throw IllegalArgumentException("Age Not Matched")
         }
 
         fun findLessorAgeFromLiteralString(ageLiteral: String): String {
