@@ -37,7 +37,6 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
     }
 
     private fun setDestListener() {
-        // 로그인 후 홈뷰로 이동
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.mainFrameFragment
                 && childFragmentManager.findFragmentById(R.id.myprofile_nav_host_fragment)
@@ -90,7 +89,6 @@ class MainFrameFragment : BaseFragment<FragmentMainFrameBinding>(), DirectTransi
         itemIconTintList = null
 
         setOnItemSelectedListener { item ->
-            Log.e("pageIdx", viewModel.pageIdx.value.toString())
             viewModel.changePageIdx(
                 when (item.itemId) {
                     R.id.homeFragment -> 0

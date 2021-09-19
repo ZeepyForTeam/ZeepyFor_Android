@@ -33,6 +33,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ZipFragment : BaseFragment<FragmentZipBinding>() {
     private val viewModel by viewModels<CommunityFrameViewModel>(ownerProducer = { requireParentFragment() })
+    private var isFromPostingDetail: Boolean? = false
+    private lateinit var zipAdapter: ZipAdapter
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -46,6 +48,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        changeIsFromPostingDetail()
         resetPostingList()
         setStoryZipRecyclerView()
         updatePostings()
@@ -57,6 +60,12 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         fetchPostingDirectFromHome((requireActivity() as MainActivity).initialCommunityType)
     }
 
+    private fun changeIsFromPostingDetail() {
+        val mainFrameFragment =
+            requireParentFragment().requireParentFragment().requireParentFragment()
+                .requireParentFragment()
+
+    }
 
     private fun swipeRefreshPostingList() {
         binding.swipeRefreshLayout.apply {
@@ -72,8 +81,9 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
 
     private fun setStoryZipRecyclerView() {
         binding.rvStoryzip.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = ZipAdapter { posting ->
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            zipAdapter = ZipAdapter { posting ->
                 if (posting.isCompleted) {
                     showIsCompletedDialog(posting)
                 } else {
@@ -81,6 +91,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
                 }
             }
             addItemDecoration(ItemDecoration(8, 0))
+            adapter = zipAdapter
         }
     }
 
@@ -90,6 +101,7 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
             viewModel.fetchPostingList()
             resetPostingList()
         }
+
     }
 
     private fun checkFilter() {
@@ -143,9 +155,10 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
     }
 
     private fun updatePostingList(updateData: List<PostingListModel>) {
-        val postingListAdapter = (binding.rvStoryzip.adapter as ZipAdapter)
-        if (postingListAdapter.currentList != updateData) {
-            (binding.rvStoryzip.adapter as ZipAdapter).submitList(updateData)
+        if (zipAdapter.currentList != updateData) {
+            if (isFromPostingDetail == false) {
+                zipAdapter.submitList(updateData)
+            }
         }
     }
 
@@ -153,11 +166,13 @@ class ZipFragment : BaseFragment<FragmentZipBinding>() {
         binding.rvStoryzip.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastVisible = layoutManager.findLastCompletelyVisibleItemPosition()
-                if (lastVisible >= layoutManager.itemCount-2) {
-                    if(viewModel.currentFragmentId.value != 1 &&
-                        viewModel.paginationIdx.value != -1) {
+                if (lastVisible >= layoutManager.itemCount - 2) {
+                    if (viewModel.currentFragmentId.value != 1 &&
+                        viewModel.paginationIdx.value != -1
+                    ) {
                         viewModel.changePaginationIdx(viewModel.paginationIdx.value!! + 1)
                         viewModel.fetchPostingList()
                     }

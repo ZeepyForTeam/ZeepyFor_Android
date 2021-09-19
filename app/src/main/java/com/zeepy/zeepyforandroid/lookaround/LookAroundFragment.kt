@@ -64,7 +64,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
 
         setToolbar()
         initRecyclerView()
