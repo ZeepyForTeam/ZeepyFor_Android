@@ -183,7 +183,12 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
                 viewModel.setFilterChecked(lessorType)
                 viewModel.changeFilteredStatus(true)
                 resetPostingList(viewModel.filteredBuildingList as MutableLiveData<MutableList<BuildingSummaryModel>>)
-                viewModel.setBuildingsByFiltering(lessorType)
+
+                viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
+                    if (!it.isNullOrEmpty() && it.size == viewModel.fetchedBuildingsCount.value) {
+                        viewModel.setBuildingsByFiltering(lessorType)
+                    }
+                }
             }
         }
     }

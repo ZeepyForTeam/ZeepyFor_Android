@@ -11,7 +11,8 @@ enum class CommunityTendency(@StringRes val tendency: Int) {
     KIND(R.string.lessor_kind),
     GRAZE(R.string.lessor_graze),
     SOFTY(R.string.lessor_softy),
-    BAD(R.string.lessor_bad);
+    BAD(R.string.lessor_bad),
+    ALL(R.string.filter_all_home);
 
     companion object {
         fun findTendency(tendency: Int): String {
