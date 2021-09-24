@@ -275,7 +275,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
 
     private fun subscribeObservers() {
         viewModel.buildingListLiveData.observe(viewLifecycleOwner) {
-            //Log.e("buildinglistlivedata in observer SIZEEEEEEEE", it.size.toString())
             if (it.size == viewModel.fetchedBuildingsCount.value && viewModel.isOnFiltered.value == false) {
                 if (it.size != 0) {
                     buildingsAdapter.notifyItemRemoved(buildingsAdapter.itemCount)
@@ -294,7 +293,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             }
         }
         viewModel.filteredBuildingList.observe(viewLifecycleOwner) {
-            //Log.e("filtered List size", it.size.toString())
             if (it.size != 0) {
                 val prevLastItemPosition =
                     if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
@@ -312,7 +310,6 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             binding.toolbar.apply {
                 setTitle(it.cityDistinct)
             }
-            //Log.e("selectedAddress", it.cityDistinct)
             if (viewModel.buildingListLiveData.value.isNullOrEmpty()) {
                 viewModel.searchBuildingsByAddress()
             }
