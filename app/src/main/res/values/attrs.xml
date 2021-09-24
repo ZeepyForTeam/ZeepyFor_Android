@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="zeepyCompoundButton">
+        <attr name="chip_name" format="string"/>
+        <attr name="button_type" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="MaterialSpinner">
+        <attr name="android:enabled" />
+        <attr name="android:focusable" />
+        <attr name="android:focusableInTouchMode" />
+        <attr name="android:prompt" />
+        <attr name="android:src" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="android:text" />
+        <attr name="android:gravity" />
+        <attr name="srcCompat" />
+        <attr name="spinnerMode" format="enum">
+            <enum name="dialog" value="0" />
+            <enum name="dropdown" value="1" />
+            <enum name="bottomsheet" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="zeepySpannableText">
+        <attr name="start" format="integer"/>
+        <attr name="end" format="integer"/>
+        <attr name="second_start" format="integer"/>
+        <attr name="second_end" format="integer"/>
+        <attr name="community_type" format="boolean"/>
+    </declare-styleable>
+
+</resources>

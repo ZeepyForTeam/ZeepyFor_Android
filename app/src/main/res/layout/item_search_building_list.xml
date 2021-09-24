@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="data"
+            type="com.zeepy.zeepyforandroid.map.data.BuildingModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_black_33"
+            android:textSize="14sp"
+            android:text="@{data.id == -1 ? data.fullNumberAddress : data.apartmentName}"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="29dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="서울 광진구 지피동 12-3"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_road_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textColor="@color/zeepy_gray_bd"
+            android:textSize="12sp"
+            android:text="@{data.fullRoadNameAddress}"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@id/textview_address"
+            app:layout_constraintStart_toStartOf="@id/textview_address"
+            tools:text="지피지기로 14길 20-1"/>
+
+        <View
+            android:id="@+id/view_btn_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_road_address"
+            android:layout_marginTop="25dp"
+            android:background="@color/zeepy_lightgray_e0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

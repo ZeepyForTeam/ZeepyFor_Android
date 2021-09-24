@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel" />
+        <variable
+            name="view"
+            type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".review.view.SelectAddressFragment"
+        xmlns:zeepy="http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid">
+
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/spannabletextview_notice_write_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_address"
+            android:layout_marginTop="16dp"
+            zeepy:start="0"
+            zeepy:end="8"
+            android:visibility="@{viewModel.isJustRegisterAddress ? view.INVISIBLE : view.VISIBLE}"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_address_list"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.zeepy.zeepyforandroid.customview.ReviewSpannableTextView
+            android:id="@+id/spannabletextview_notice_just_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_house"
+            android:visibility="@{viewModel.isJustRegisterAddress ? view.VISIBLE : view.INVISIBLE}"
+            android:layout_marginTop="16dp"
+            zeepy:start="0"
+            zeepy:end="9"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintStart_toStartOf="@+id/recyclerview_address_list"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_address_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            app:layout_constraintVertical_bias="0.1"
+            android:text="현재 등록된 주소"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/recyclerview_address_list"
+            app:layout_constraintTop_toBottomOf="@+id/spannabletextview_notice_write_review" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_register_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:text="직접 등록하기"
+            android:visibility="@{viewModel.addressListRegistered.empty == true ? view.GONE : view.VISIBLE}"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_address_list"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_address_list"
+            app:layout_constraintTop_toTopOf="@id/tv_address_list" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_address_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_address_list"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="16dp"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_address" />
+
+        <TextView
+            android:id="@+id/textview_address_count_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="@{viewModel.addressListRegistered.empty == true ? view.GONE : view.VISIBLE}"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:text="@string/limit_count_address"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/recyclerview_address_list"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_address_list" />
+
+        <View
+            android:id="@+id/view_btn_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.zeepy.zeepyforandroid.customview.ZeepyButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_address_list"
+            app:layout_constraintStart_toStartOf="@id/recyclerview_address_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.972" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_register_review"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.addressListRegistered.empty == true ? view.VISIBLE : view.GONE}"
+            android:background="@drawable/box_grayf7_8dp"
+            app:layout_constraintDimensionRatio="1:0.28"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview_address_list"
+            app:layout_constraintStart_toStartOf="@id/recyclerview_address_list"
+            app:layout_constraintTop_toTopOf="@id/recyclerview_address_list">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_no_address_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:text="@string/no_address_not_yet"
+                android:textColor="@color/zeepy_gray_9a"
+                android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/constraintlayout_register_review"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/constraintlayout_register_review"
+                app:layout_constraintBottom_toTopOf="@+id/textview_register_address_no_address" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_register_address_no_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:text="@string/goto_register_address"
+                android:textColor="@color/zeepy_blue_5f"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_no_address_yet"
+                app:layout_constraintEnd_toEndOf="@id/constraintlayout_register_review"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/constraintlayout_register_review" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

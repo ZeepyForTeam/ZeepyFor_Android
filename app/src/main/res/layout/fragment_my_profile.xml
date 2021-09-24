@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".myprofile.MyProfileFragment">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_main_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:lineSpacingExtra="10sp"
+            android:layout_marginTop="19.5dp"
+            android:layout_marginStart="16dp"
+            tools:text="@string/myprofile_loggedout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_manage_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_ad"
+            app:layout_constraintTop_toBottomOf="@id/tv_main_msg"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="36dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_manage_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manage_address"
+            android:textAlignment="center"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/iv_manage_address"
+            app:layout_constraintStart_toStartOf="@id/iv_manage_address"
+            app:layout_constraintEnd_toEndOf="@id/iv_manage_address"
+            android:layout_marginTop="12dp"/>
+
+        <ImageView
+            android:id="@+id/iv_manage_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_review"
+            app:layout_constraintStart_toEndOf="@id/iv_manage_address"
+            app:layout_constraintTop_toTopOf="@id/iv_manage_address"
+            app:layout_constraintBottom_toBottomOf="@id/iv_manage_address"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_manage_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manage_reviews"
+            android:textAlignment="center"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/iv_manage_review"
+            app:layout_constraintStart_toStartOf="@id/iv_manage_review"
+            app:layout_constraintEnd_toEndOf="@id/iv_manage_review"
+            android:layout_marginTop="12dp"/>
+
+        <ImageView
+            android:id="@+id/iv_wishlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_review"
+            app:layout_constraintStart_toEndOf="@id/iv_manage_review"
+            app:layout_constraintTop_toTopOf="@id/iv_manage_review"
+            app:layout_constraintBottom_toBottomOf="@id/iv_manage_review"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_wishlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wishlist"
+            android:textAlignment="center"
+            android:fontFamily="@font/nanum_square_round_bold"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/iv_wishlist"
+            app:layout_constraintStart_toStartOf="@id/iv_wishlist"
+            app:layout_constraintEnd_toEndOf="@id/iv_wishlist"
+            android:layout_marginTop="12dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintBottom_toTopOf="@id/rv_options_list"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_options_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_wishlist"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40.5dp"
+            tools:listitem="@layout/item_myprofile_option"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="4"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

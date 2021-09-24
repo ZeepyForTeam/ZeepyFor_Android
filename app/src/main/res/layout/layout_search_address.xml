@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/tv_search_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintVertical_bias="0.03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:text="주소검색"
+            android:textColor="@color/zeepy_black_3b"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_search_address"
+            app:layout_constraintDimensionRatio="8.5:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_search_address"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_address"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textCursorDrawable="@drawable/cursor"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edittext_box"
+            android:drawableLeft="@drawable/icon_search"
+            android:drawablePadding="10dp"
+            android:hint="지역, 동, 지하철역으로 입력해주세요"
+            android:inputType="text"
+            android:paddingStart="15dp"
+            android:textColor="@color/zeepy_black_2a"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/button_search"
+            app:layout_constraintBottom_toBottomOf="@id/et_search_address"
+            app:layout_constraintEnd_toEndOf="@id/et_search_address"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:layout_constraintStart_toStartOf="@id/et_search_address"
+            app:layout_constraintTop_toTopOf="@id/et_search_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:text="검색"
+            android:textColor="@color/zeepy_blue_5f" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_search_building_list"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/et_search_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

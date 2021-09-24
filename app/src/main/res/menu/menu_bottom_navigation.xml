@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/selector_tab_home"
+        android:title="home"/>
+
+    <item
+        android:id="@+id/lookAroundFragment"
+        android:icon="@drawable/selector_tab_lookaround"
+        android:title="lookAround"/>
+
+    <item
+        android:id="@+id/communityFrameFragment"
+        android:icon="@drawable/selector_tab_community"
+        android:title="community"/>
+
+    <item
+        android:id="@+id/myProfileFrameFragment"
+        android:icon="@drawable/selector_tab_mypage"
+        android:title="myProfile" />
+
+</menu>

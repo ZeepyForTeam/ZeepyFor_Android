@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="data"
+            type="com.zeepy.zeepyforandroid.community.data.entity.CollectContentModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:zeepy= "http://schemas.android.com/apk/res/com.zeepy.zeepyforandroid"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.zeepy.zeepyforandroid.customview.ZeepyCheckBox
+            android:id="@+id/checkbox_collect_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            zeepy:button_type="2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_collect_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/zeepy_gray_9a"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="14sp"
+            android:text="@{data.content}"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@id/checkbox_collect_content"
+            app:layout_constraintBottom_toBottomOf="@id/checkbox_collect_content"
+            app:layout_constraintStart_toEndOf="@id/checkbox_collect_content"
+            tools:text="제품명"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

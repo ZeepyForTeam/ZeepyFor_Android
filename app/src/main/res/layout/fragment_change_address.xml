@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zeepy.zeepyforandroid.address.ChangeAddressViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/zeepy_gray_3300">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="matrix"
+            android:layout_marginStart="18dp"
+            app:layout_constraintWidth_percent="0.03"
+            app:layout_constraintDimensionRatio="1:1.1"
+            android:background="@drawable/ic_triangle_white"
+            app:layout_constraintBottom_toTopOf="@id/constraintlayout_speech_bubble"
+            app:layout_constraintStart_toStartOf="@id/constraintlayout_speech_bubble"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_speech_bubble"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="12dp"
+            android:paddingStart="16dp"
+            android:background="@drawable/shape_white_10dp"
+            app:layout_constraintVertical_bias="0.093"
+            app:layout_constraintHorizontal_bias="0.044"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.597">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_change_address"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/textview_change_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_change_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanum_square_round_extrabold"
+                android:textColor="@color/zeepy_green_33"
+                android:textSize="12sp"
+                android:text="주소 변경하기"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview_address" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

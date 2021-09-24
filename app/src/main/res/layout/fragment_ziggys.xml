@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_planner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/planner"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_huggies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_planner"
+            app:layout_constraintBottom_toBottomOf="@id/tv_planner"
+            app:layout_constraintStart_toEndOf="@id/tv_planner"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:text="@string/huggies" />
+
+        <TextView
+            android:id="@+id/tv_hyerin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_1"
+            android:drawablePadding="12dp"
+            android:text="@string/hyerin"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/tv_planner"
+            app:layout_constraintStart_toStartOf="@id/tv_planner"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_sumi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_2"
+            android:drawablePadding="12dp"
+            android:text="@string/sumi"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_hyerin"
+            app:layout_constraintTop_toTopOf="@id/tv_hyerin"
+            app:layout_constraintBottom_toBottomOf="@id/tv_hyerin"
+            android:layout_marginStart="8dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_designer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tv_huggies"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/designer"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="87dp"/>
+
+        <TextView
+            android:id="@+id/tv_jayoung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_3"
+            android:drawablePadding="12dp"
+            android:text="@string/jayoung"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/tv_designer"
+            app:layout_constraintStart_toStartOf="@id/tv_designer"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_howdy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_designer"
+            app:layout_constraintBottom_toBottomOf="@id/tv_designer"
+            app:layout_constraintStart_toEndOf="@id/tv_designer"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:text="@string/howdy" />
+
+        <TextView
+            android:id="@+id/tv_marketer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_hyerin"
+            android:text="@string/marketer"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_hama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_marketer"
+            app:layout_constraintBottom_toBottomOf="@id/tv_marketer"
+            app:layout_constraintStart_toEndOf="@id/tv_marketer"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:text="@string/hama" />
+
+        <TextView
+            android:id="@+id/tv_eunjin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_4"
+            android:drawablePadding="12dp"
+            android:text="@string/eunjin"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/tv_marketer"
+            app:layout_constraintStart_toStartOf="@id/tv_marketer"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_juyoung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_5"
+            android:drawablePadding="12dp"
+            android:text="@string/juyoung"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_eunjin"
+            app:layout_constraintTop_toTopOf="@id/tv_eunjin"
+            app:layout_constraintBottom_toBottomOf="@id/tv_eunjin"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_eunjin"
+            android:text="@string/server"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_harvard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_server"
+            app:layout_constraintBottom_toBottomOf="@id/tv_server"
+            app:layout_constraintStart_toEndOf="@id/tv_server"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:text="@string/harvard" />
+
+        <TextView
+            android:id="@+id/tv_minkyu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_6"
+            android:drawablePadding="12dp"
+            android:text="@string/minkyu"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/tv_server"
+            app:layout_constraintStart_toStartOf="@id/tv_server"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_yein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_7"
+            android:drawablePadding="12dp"
+            android:text="@string/yein"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_minkyu"
+            app:layout_constraintTop_toTopOf="@id/tv_minkyu"
+            app:layout_constraintBottom_toBottomOf="@id/tv_minkyu"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_hyunjong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_8"
+            android:drawablePadding="12dp"
+            android:text="@string/hyunjong"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_yein"
+            app:layout_constraintTop_toTopOf="@id/tv_yein"
+            app:layout_constraintBottom_toBottomOf="@id/tv_yein"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_bokyung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_9"
+            android:drawablePadding="12dp"
+            android:text="@string/bokyoung"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_hyunjong"
+            app:layout_constraintTop_toTopOf="@id/tv_hyunjong"
+            app:layout_constraintBottom_toBottomOf="@id/tv_hyunjong"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_minkyu"
+            android:text="@string/client"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_howdoyoudo_hawayo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_client"
+            app:layout_constraintBottom_toBottomOf="@id/tv_client"
+            app:layout_constraintStart_toEndOf="@id/tv_client"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            android:textSize="12sp"
+            android:textColor="@color/zeepy_black_3b"
+            android:text="@string/howdoyoudo_hawayo" />
+
+        <TextView
+            android:id="@+id/tv_jeongrok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_10"
+            android:drawablePadding="12dp"
+            android:text="@string/jeongrok"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/tv_client"
+            app:layout_constraintStart_toStartOf="@id/tv_client"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_pyeonghwa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_11"
+            android:drawablePadding="12dp"
+            android:text="@string/pyeonghwa"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_jeongrok"
+            app:layout_constraintTop_toTopOf="@id/tv_jeongrok"
+            app:layout_constraintBottom_toBottomOf="@id/tv_jeongrok"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_jueun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_12"
+            android:drawablePadding="12dp"
+            android:text="@string/jueun"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/tv_jeongrok"
+            app:layout_constraintStart_toStartOf="@id/tv_jeongrok"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_taehoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_13"
+            android:drawablePadding="12dp"
+            android:text="@string/taehoon"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_jueun"
+            app:layout_constraintTop_toTopOf="@id/tv_jueun"
+            app:layout_constraintBottom_toBottomOf="@id/tv_jueun"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_hansol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/people_14"
+            android:drawablePadding="12dp"
+            android:text="@string/hansol"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/zeepy_gray_9a"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@id/tv_taehoon"
+            app:layout_constraintTop_toTopOf="@id/tv_taehoon"
+            app:layout_constraintBottom_toBottomOf="@id/tv_taehoon"
+            android:layout_marginStart="8dp"/>
+
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

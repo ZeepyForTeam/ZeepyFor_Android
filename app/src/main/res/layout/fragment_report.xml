@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".myprofile.ReportFragment">
+
+        <com.zeepy.zeepyforandroid.customview.ZeepyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/report_select_reason"
+            android:textSize="20dp"
+            android:fontFamily="@font/nanum_square_round_extrabold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"/>
+        
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/report_warning"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="10dp"
+            android:fontFamily="@font/nanum_square_round_regular"
+            app:layout_constraintTop_toBottomOf="@id/tv_heading"
+            app:layout_constraintStart_toStartOf="@id/tv_heading"
+            android:layout_marginTop="10dp"/>
+
+        <View
+            android:id="@+id/top_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/zeepy_gray_f4"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:layout_constraintBottom_toTopOf="@id/rv_options_list"
+            android:layout_marginTop="25dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_options_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_myprofile_option"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="4"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
