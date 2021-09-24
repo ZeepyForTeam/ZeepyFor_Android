@@ -68,7 +68,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(){
             if (success) {
                 viewModel.getUserNicknameAndEmail(userPreferenceManager.fetchUserEmail())
                 findNavController().popBackStack()
-                Log.e("access token", "${userPreferenceManager.fetchUserAccessToken()}")
             } else {
                 Toast.makeText(requireContext(), "사용자를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
             }
