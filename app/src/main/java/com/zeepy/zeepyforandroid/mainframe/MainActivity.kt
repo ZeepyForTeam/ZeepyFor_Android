@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         disableDarkMode()
         initNavController()
+
     }
 
     private fun disableDarkMode() {
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
     }
+
 
     fun getDeviceSize(): List<Int> {
         var deviceWidth = 0

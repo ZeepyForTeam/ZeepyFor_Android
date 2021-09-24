@@ -16,7 +16,8 @@
 
     <application
         android:name="com.zeepy.zeepyforandroid.application.ZeepyApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
         android:icon="@mipmap/zeepy_logo_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/zeepy_logo_round"
