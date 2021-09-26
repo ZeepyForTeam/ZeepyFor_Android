@@ -110,17 +110,19 @@
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/btn_submit_change"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_toStartOf="@id/btn_submit_change"
                 android:background="@drawable/box_grayf7_8dp"
                 android:fontFamily="@font/nanum_square_round_bold"
+                android:hint="@string/input_password_signup"
+                android:inputType="textPassword"
+                android:padding="12dp"
                 android:textColor="@color/zeepy_black_3b"
                 android:textColorHint="@color/zeepy_gray_9a"
-                android:textSize="12sp"
-                android:padding="12dp"
-                android:layout_marginStart="16dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignBottom="@id/btn_submit_change"
-                android:layout_toStartOf="@id/btn_submit_change"/>
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btn_submit_change"

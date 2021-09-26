@@ -12,6 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.MY_PROFILE
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentEditMyProfileBinding
 import com.zeepy.zeepyforandroid.home.DirectTransitionListener
@@ -98,7 +102,12 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
     private fun setOnClickListeners() {
         binding.btnSubmitChange.setOnClickListener {
-            changePasswordShowConfirmDialog(this)
+            if (checkNewPassword()) {
+                changePasswordShowConfirmDialog()
+                // TODO: API Call
+            } else {
+                Toast.makeText(context, R.string.input_password_signup, Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.tvLogout.setOnClickListener {
@@ -111,9 +120,34 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
         }
     }
 
+    private fun changePasswordShowConfirmDialog() {
+        val confirmDialog =
+            ZeepyDialogBuilder(resources.getString(R.string.change_password_confirm), MY_PROFILE)
+
+        confirmDialog.setLeftButton(R.drawable.box_grayf9_8dp, "취소")
+            .setRightButton(R.drawable.box_yellowee_8dp, "비밀번호 변경")
+            .setButtonHorizontalWeight(0.287f, 0.712f)
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    Toast.makeText(context, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+            })
+            .build()
+            .show(childFragmentManager, this.tag)
+    }
+
     private fun setOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().popBackStack()
         }
+    }
+
+    private fun checkNewPassword(): Boolean {
+        return if (binding.etPassword.text != null) binding.etPassword.text!!.length in 8..16 else false
     }
 }
