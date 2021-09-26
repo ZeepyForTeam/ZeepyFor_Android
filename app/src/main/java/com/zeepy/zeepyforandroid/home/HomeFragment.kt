@@ -3,12 +3,14 @@ package com.zeepy.zeepyforandroid.home
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.community.frame.view.CommunityFrameFragment
@@ -105,6 +107,21 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             adapter = HomeFilterAdapter {
                 setSelectLookAround(CommunityTendency.findTendency(it.tendency))
             }
+
+            addOnItemTouchListener(object: RecyclerView.OnItemTouchListener{
+                override fun onInterceptTouchEvent(recyclerview: RecyclerView, event: MotionEvent): Boolean {
+                    when (event.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            recyclerview.parent?.requestDisallowInterceptTouchEvent(true)
+                        }
+                    }
+                    return false
+                }
+
+                override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+                override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+            })
+
             (adapter as HomeFilterAdapter).notifyDataSetChanged()
             addItemDecoration(ItemDecoration(0, 8))
         }
