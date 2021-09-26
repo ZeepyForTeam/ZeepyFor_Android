@@ -74,6 +74,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private var existSelectedMarker = false
     private val markerEventListener = MarkerEventListener(context)
     private val mapViewEventListener = MapViewEventListener(context)
+    private val currentLocationChangeListener = CurrentLocationChangeListener(context)
     private var currentZoomLevel = 2
     private var mapDisplayOffset: Float = 0F
     private val firstTimeBeingAddedMarkerMap: HashMap<Int, Boolean> = HashMap()
@@ -112,6 +113,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
         myLocationButton.setOnClickListener { getGpsLocation() }
         mapView.setPOIItemEventListener(markerEventListener)
         mapView.setMapViewEventListener(mapViewEventListener)
+        mapView.setCurrentLocationEventListener(currentLocationChangeListener)
         binding.edittextSearchMap.setOnClickListener {
             findNavController().navigate(R.id.action_mapFragment_to_searchBuildingFragment)
         }
@@ -502,6 +504,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
     private fun getGpsLocation() {
         activity?.let {
             if (hasPermissions(activity as Context, LOCATION_PERMISSIONS)) {
+                Log.e("starttracking", "yes")
                 startTrackingLocation()
             } else {
                 permReqLauncher.launch(LOCATION_PERMISSIONS)
@@ -515,6 +518,25 @@ class MapFragment : BaseFragment<FragmentMapBinding>() {
 
     private fun startTrackingLocation() {
         this.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+    }
+
+    inner class CurrentLocationChangeListener(val context: Context?): MapView.CurrentLocationEventListener {
+        override fun onCurrentLocationUpdate(p0: MapView?, p1: MapPoint?, p2: Float) {
+            Log.e("CURRENT LOCATION", "UPDATED!!")
+        }
+
+        override fun onCurrentLocationDeviceHeadingUpdate(p0: MapView?, p1: Float) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onCurrentLocationUpdateFailed(p0: MapView?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onCurrentLocationUpdateCancelled(p0: MapView?) {
+            TODO("Not yet implemented")
+        }
+
     }
 
 
