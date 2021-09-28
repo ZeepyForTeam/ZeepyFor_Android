@@ -54,7 +54,7 @@ class SignInViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     if (response != null) {
-                        successSignIn(response)
+                        successSignIn(response, ZEEPY)
                     }
                 }, {
                     it.printStackTrace()
@@ -69,7 +69,7 @@ class SignInViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    successSignIn(response)
+                    successSignIn(response, KAKAO)
                 }, {
                     failedToSignIn()
                     it.printStackTrace()
@@ -83,7 +83,7 @@ class SignInViewModel @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    successSignIn(response)
+                    successSignIn(response, NAVER)
                 }, {
                     it.printStackTrace()
                     failedToSignIn()
@@ -109,15 +109,22 @@ class SignInViewModel @Inject constructor(
         _loginSuccess.postValue(false)
     }
 
-    private fun successSignIn(response: ResponseAuthDTO) {
+    private fun successSignIn(response: ResponseAuthDTO, loginType: String) {
         userPreferenceManager.apply {
             saveIsAlreadyLogin(true)
             saveUserAccessToken(response.accessToken)
             saveUserRefreshToken(response.refreshToken)
             saveUserEmail(response.userEmail)
             saveUserId(response.userId)
+            saveUserLoginType(loginType)
         }
         _loginSuccess.postValue(true)
+    }
+
+    companion object {
+        private const val ZEEPY = "zeepy"
+        private const val KAKAO = "kakao"
+        private const val NAVER = "naver"
     }
 
 }

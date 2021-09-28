@@ -20,6 +20,8 @@ import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentEditMyProfileBinding
 import com.zeepy.zeepyforandroid.home.DirectTransitionListener
 import com.zeepy.zeepyforandroid.home.HomeFragment
+import com.zeepy.zeepyforandroid.myprofile.data.ModifyPasswordReqDTO
+import com.zeepy.zeepyforandroid.myprofile.viewmodel.MyProfileViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ClassCastException
@@ -45,6 +47,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
         onAttachToParentFragment(parentFragment?.parentFragment?.parentFragment, HomeFragment())
 
+        Log.e("token: ", userPreferenceManager.fetchUserAccessToken());
 
         setToolbar()
         setOnBackPressed()
@@ -52,6 +55,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
         binding.tvNicknameContent.text = userPreferenceManager.fetchUserNickname()
         binding.tvEmailContent.text = userPreferenceManager.fetchUserEmail()
+        // TODO Change social login icon according to the user loginType
 
         // Observers
         viewModel.isWithdrawn.observe(viewLifecycleOwner, {
@@ -65,6 +69,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
                     saveUserAccessToken("")
                     saveUserRefreshToken("")
                     saveIsAlreadyLogin(false)
+                    saveUserLoginType("")
                 }
 
                 findNavController().popBackStack()
@@ -103,8 +108,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
     private fun setOnClickListeners() {
         binding.btnSubmitChange.setOnClickListener {
             if (checkNewPassword()) {
-                changePasswordShowConfirmDialog()
-                // TODO: API Call
+                changePasswordShowConfirmDialog(binding.etPassword.text.toString())
             } else {
                 Toast.makeText(context, R.string.input_password_signup, Toast.LENGTH_SHORT).show()
             }
@@ -120,7 +124,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
         }
     }
 
-    private fun changePasswordShowConfirmDialog() {
+    private fun changePasswordShowConfirmDialog(newPassword: String) {
         val confirmDialog =
             ZeepyDialogBuilder(resources.getString(R.string.change_password_confirm), MY_PROFILE)
 
@@ -134,6 +138,7 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
                 override fun clickRightButton(dialog: ZeepyDialog) {
                     Toast.makeText(context, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                    viewModel.changeUserPassword(ModifyPasswordReqDTO(newPassword))
                     dialog.dismiss()
                 }
             })
@@ -149,5 +154,9 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
     private fun checkNewPassword(): Boolean {
         return if (binding.etPassword.text != null) binding.etPassword.text!!.length in 8..16 else false
+    }
+
+    private fun getUserLoginType(): String {
+        return userPreferenceManager.fetchUserLoginType()
     }
 }

@@ -9,16 +9,14 @@ import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentWishlistBinding
 import com.zeepy.zeepyforandroid.lookaround.adapter.LookAroundListAdapter
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
-import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.map.usecase.util.data
-import com.zeepy.zeepyforandroid.myprofile.adapter.MyReviewAdapter
+import com.zeepy.zeepyforandroid.myprofile.viewmodel.MyProfileViewModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 

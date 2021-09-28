@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zeepy.zeepyforandroid.databinding.ItemMyprofileOptionBinding
 import com.zeepy.zeepyforandroid.R
 
-class MyProfileOptionsAdapter(private val dataSet: Array<String>):
+class MyProfileOptionsAdapter(private val dataSet: Array<String>, val listener: (Int) -> Unit):
     RecyclerView.Adapter<MyProfileOptionsAdapter.OptionsViewHolder>(
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OptionsViewHolder {
@@ -20,12 +20,7 @@ class MyProfileOptionsAdapter(private val dataSet: Array<String>):
         holder.binding.tvTitle.text = dataSet[position]
 
         holder.itemView.setOnClickListener {
-
-            when (position) {
-                0 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_settingsFragment)
-                2 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_reportFragment) //TODO: Remove this Report Option
-                3 -> holder.itemView.findNavController().navigate(R.id.action_myProfileFragment_to_ziggysFragment)
-            }
+            listener(position)
         }
     }
 

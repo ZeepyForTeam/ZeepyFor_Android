@@ -1,5 +1,8 @@
 package com.zeepy.zeepyforandroid.myprofile
 
+import android.content.Intent
+import android.hardware.usb.UsbDevice.getDeviceName
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -7,23 +10,20 @@ import android.text.SpannedString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.color
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
-import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentMyProfileBinding
 import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
-import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
+import com.zeepy.zeepyforandroid.myprofile.viewmodel.MyProfileViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.CustomTypefaceSpan
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,11 +67,17 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
     }
 
     private fun setOptionsRecyclerView() {
-        val options = arrayOf("환경설정", "문의 및 의견 보내기", "신고하기", "지피의 지기들", "현재 버전 1.1")
+        val options = arrayOf("환경설정", "문의 및 의견 보내기", "지피의 지기들", "현재 버전 1.1")
 
         binding.rvOptionsList.apply {
             setHasFixedSize(true)
-            adapter = MyProfileOptionsAdapter(options)
+            adapter = MyProfileOptionsAdapter(options) {
+                when (it) {
+                    0 -> findNavController().navigate(R.id.action_myProfileFragment_to_settingsFragment)
+                    1 -> sendEmailToAdmin()
+                    2 -> findNavController().navigate(R.id.action_myProfileFragment_to_ziggysFragment)
+                }
+            }
         }
     }
 
@@ -135,7 +141,8 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                                             //Log.e("parent of onClick 로그인", parentFragment.toString())
                                             //Log.e("navcontroller.currentBackStackEntry", "" + findNavController().currentBackStackEntry)
                                             //Log.e("navcontroller.previousBackStackEntry", "" + findNavController().previousBackStackEntry)
-                                            requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                                            requireActivity().findNavController(R.id.nav_host_fragment)
+                                                .navigate(R.id.action_mainFrameFragment_to_signInFragment)
                                         }
                                         "editProfile" -> {
                                             findNavController().navigate(R.id.action_myProfileFragment_to_EditMyProfileFragment)
@@ -204,5 +211,23 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
         binding.tvMainMsg.text = spannable
         binding.tvMainMsg.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun sendEmailToAdmin() {
+        val email = Intent(Intent.ACTION_SEND)
+        email.putExtra(Intent.EXTRA_SUBJECT, "")
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf("zeepy.official@gmail.com"))
+        email.putExtra(
+            Intent.EXTRA_TEXT,
+            String.format(
+                "App Version : %s\nDevice : %s\nAndroid(SDK) : %d(%s)\n내용 : ",
+                BuildConfig.VERSION_NAME,
+                Build.MODEL,
+                Build.VERSION.SDK_INT,
+                Build.VERSION.RELEASE
+            )
+        )
+        email.type = "plain/text"
+        startActivity(email)
     }
 }

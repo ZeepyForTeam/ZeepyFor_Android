@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.myprofile
+package com.zeepy.zeepyforandroid.myprofile.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -12,6 +12,8 @@ import com.zeepy.zeepyforandroid.map.usecase.GetBuildingsUserLikeUseCase
 import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.usecase.util.data
 import com.zeepy.zeepyforandroid.map.usecase.util.succeeded
+import com.zeepy.zeepyforandroid.myprofile.data.ModifyPasswordReqDTO
+import com.zeepy.zeepyforandroid.myprofile.data.ReportRequestDTO
 import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.myprofile.repository.MyProfileRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
@@ -68,7 +70,7 @@ class MyProfileViewModel @Inject constructor(
         )
     }
 
-    fun getUserReviews() {
+    private fun getUserReviews() {
         viewModelScope.launch {
             try {
                 val result = repository.getUserReviews()
@@ -110,6 +112,16 @@ class MyProfileViewModel @Inject constructor(
             try {
                 val result = repository.logout()
                 _isLoggedOut.value = true
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun changeUserPassword(modifyPasswordReqDTO: ModifyPasswordReqDTO) {
+        viewModelScope.launch {
+            try {
+                val result = repository.changeUserPassword(modifyPasswordReqDTO)
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
