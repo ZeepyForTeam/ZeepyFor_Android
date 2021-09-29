@@ -10,6 +10,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
@@ -23,6 +24,10 @@ import com.zeepy.zeepyforandroid.home.HomeFragment
 import com.zeepy.zeepyforandroid.myprofile.data.ModifyPasswordReqDTO
 import com.zeepy.zeepyforandroid.myprofile.viewmodel.MyProfileViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
+import com.zeepy.zeepyforandroid.signin.SignInViewModel
+import com.zeepy.zeepyforandroid.signin.SignInViewModel.Companion.KAKAO
+import com.zeepy.zeepyforandroid.signin.SignInViewModel.Companion.NAVER
+import com.zeepy.zeepyforandroid.signin.SignInViewModel.Companion.ZEEPY
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ClassCastException
 import javax.inject.Inject
@@ -55,7 +60,12 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
 
         binding.tvNicknameContent.text = userPreferenceManager.fetchUserNickname()
         binding.tvEmailContent.text = userPreferenceManager.fetchUserEmail()
-        // TODO Change social login icon according to the user loginType
+
+        when (getUserLoginType()) {
+            KAKAO -> binding.ivSnsLogo.load(R.drawable.kakaologo)
+            NAVER -> binding.ivSnsLogo.load(R.drawable.naver_logo_s)
+            else -> {}
+        }
 
         // Observers
         viewModel.isWithdrawn.observe(viewLifecycleOwner, {

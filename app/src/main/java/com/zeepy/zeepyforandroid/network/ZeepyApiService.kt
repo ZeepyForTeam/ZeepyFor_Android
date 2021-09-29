@@ -156,9 +156,9 @@ interface ZeepyApiService {
     @POST("/api/reports")
     fun reportComment(@Body requestReportDTO:RequestReportDTO): Completable
 
-    @GET("api/buildings/like")
+    @GET("/api/buildings/like")
     suspend fun getBuildingsUserLike(@Query ("page") page: Int): Response<BuildingsAllDTO>
 
-    @PUT("api/user/password")
+    @PUT("/api/user/password")
     suspend fun changeUserPassword(@Body modifyPasswordReqDTO: ModifyPasswordReqDTO): Response<Unit?>
 }

@@ -122,9 +122,9 @@ class SignInViewModel @Inject constructor(
     }
 
     companion object {
-        private const val ZEEPY = "zeepy"
-        private const val KAKAO = "kakao"
-        private const val NAVER = "naver"
+        const val ZEEPY = "zeepy"
+        const val KAKAO = "kakao"
+        const val NAVER = "naver"
     }
 
 }
