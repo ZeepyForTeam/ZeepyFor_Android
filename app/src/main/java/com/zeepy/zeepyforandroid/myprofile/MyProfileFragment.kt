@@ -10,6 +10,7 @@ import android.text.SpannedString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,11 +32,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
-
     private val viewModel by viewModels<MyProfileViewModel>()
-
-    @Inject
-    lateinit var userPreferenceManager: UserPreferenceManager
+    @Inject lateinit var userPreferenceManager: UserPreferenceManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -51,6 +49,10 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
         setButtonsOnClickListener()
         setOptionsRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
         setMainMsg()
     }
 

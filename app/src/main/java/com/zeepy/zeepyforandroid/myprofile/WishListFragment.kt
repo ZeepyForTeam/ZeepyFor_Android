@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
@@ -44,21 +46,24 @@ class WishListFragment: BaseFragment<FragmentWishlistBinding>() {
         viewModel.userWishList.observe(viewLifecycleOwner) {
             val prevLastItemPosition =
                 if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
-            buildingsAdapter.setListWithoutLoading(it.data as MutableList<BuildingSummaryModel>)
-            buildingsAdapter.notifyItemRangeInserted(
-                prevLastItemPosition,
-                buildingsAdapter.itemCount - prevLastItemPosition
-            )
+            it.getContentIfNotHandled()?.let { result ->
+                buildingsAdapter.setListWithoutLoading(result.data as MutableList<BuildingSummaryModel>)
+                buildingsAdapter.notifyItemRangeInserted(
+                    prevLastItemPosition,
+                    buildingsAdapter.itemCount - prevLastItemPosition
+                )
+            }
         }
 
         viewModel.getWishList()
     }
 
     private fun initRecyclerView() {
-        val uri = Uri.parse("myapp://buildingDetail")
         binding.rvWishlist.apply {
             buildingsAdapter = LookAroundListAdapter(context) {
-                findNavController().navigate(uri)
+                val buildingObjectJson = Gson().toJson(it)
+                val buildingObject: BuildingSummaryModel? = null
+                findNavController().navigate(Uri.parse("myapp://buildingDetail/${buildingObjectJson}&amp;$buildingObject"))
                 requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
                     ?.visibility = View.GONE
             }

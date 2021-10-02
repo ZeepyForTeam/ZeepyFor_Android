@@ -15,6 +15,7 @@ import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZip
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
 import com.zeepy.zeepyforandroid.imagecontrol.PreSignedUrlDTO
+import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingLikeDTO
 import com.zeepy.zeepyforandroid.myprofile.data.ModifyPasswordReqDTO
 import com.zeepy.zeepyforandroid.myprofile.data.ReportRequestDTO
 import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList

@@ -1,5 +1,6 @@
 package com.zeepy.zeepyforandroid.myprofile
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.constraintlayout.widget.Constraints
+import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,6 +31,7 @@ import com.zeepy.zeepyforandroid.signin.SignInViewModel
 import com.zeepy.zeepyforandroid.signin.SignInViewModel.Companion.KAKAO
 import com.zeepy.zeepyforandroid.signin.SignInViewModel.Companion.NAVER
 import com.zeepy.zeepyforandroid.signin.SignInViewModel.Companion.ZEEPY
+import com.zeepy.zeepyforandroid.util.MetricsConverter
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ClassCastException
 import javax.inject.Inject
@@ -62,8 +66,15 @@ class EditMyProfileFragment : BaseFragment<FragmentEditMyProfileBinding>() {
         binding.tvEmailContent.text = userPreferenceManager.fetchUserEmail()
 
         when (getUserLoginType()) {
-            KAKAO -> binding.ivSnsLogo.load(R.drawable.kakaologo)
-            NAVER -> binding.ivSnsLogo.load(R.drawable.naver_logo_s)
+            KAKAO -> {
+                val layoutParams = binding.tvEmailContent.layoutParams as ViewGroup.MarginLayoutParams
+                binding.ivSnsLogo.load(R.drawable.kakaologo)
+                layoutParams.marginStart = MetricsConverter.dpToPixel(8.0F, context).toInt()
+                binding.tvEmailContent.layoutParams = layoutParams
+            }
+            NAVER -> {
+                binding.ivSnsLogo.load(R.drawable.naver_logo_s)
+            }
             else -> {}
         }
 

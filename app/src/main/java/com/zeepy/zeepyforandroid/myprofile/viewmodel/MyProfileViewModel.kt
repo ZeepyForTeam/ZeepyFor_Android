@@ -18,6 +18,7 @@ import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.myprofile.repository.MyProfileRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.signin.controller.UserDataController
+import com.zeepy.zeepyforandroid.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -44,8 +45,8 @@ class MyProfileViewModel @Inject constructor(
     val userReviews: LiveData<SimpleReviewDTOList>
         get() = _userReviews
 
-    private val _userWishList = MutableLiveData<Result<List<BuildingSummaryModel>>>()
-    val userWishList: LiveData<Result<List<BuildingSummaryModel>>>
+    private val _userWishList = MutableLiveData<Event<Result<List<BuildingSummaryModel>>>>()
+    val userWishList: LiveData<Event<Result<List<BuildingSummaryModel>>>>
         get() = _userWishList
 
     init {
@@ -90,7 +91,7 @@ class MyProfileViewModel @Inject constructor(
             )
 
             if (result.succeeded) {
-                _userWishList.value = result
+                _userWishList.postValue(Event(result))
                 Log.e("GET ALL BUILDINGS RESPONSE", "" + result.data)
             }
         }
