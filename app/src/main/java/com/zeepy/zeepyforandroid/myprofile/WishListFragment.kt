@@ -7,18 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentWishlistBinding
 import com.zeepy.zeepyforandroid.lookaround.adapter.LookAroundListAdapter
 import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
-import com.zeepy.zeepyforandroid.mainframe.MainFrameFragmentDirections
 import com.zeepy.zeepyforandroid.map.usecase.util.data
-import com.zeepy.zeepyforandroid.myprofile.adapter.MyReviewAdapter
+import com.zeepy.zeepyforandroid.myprofile.viewmodel.MyProfileViewModel
 import com.zeepy.zeepyforandroid.util.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,21 +49,24 @@ class WishListFragment: BaseFragment<FragmentWishlistBinding>() {
         viewModel.userWishList.observe(viewLifecycleOwner) {
             val prevLastItemPosition =
                 if (buildingsAdapter.itemCount == 0) 0 else buildingsAdapter.itemCount
-            buildingsAdapter.setListWithoutLoading(it.data as MutableList<BuildingSummaryModel>)
-            buildingsAdapter.notifyItemRangeInserted(
-                prevLastItemPosition,
-                buildingsAdapter.itemCount - prevLastItemPosition
-            )
+            it.getContentIfNotHandled()?.let { result ->
+                buildingsAdapter.setListWithoutLoading(result.data as MutableList<BuildingSummaryModel>)
+                buildingsAdapter.notifyItemRangeInserted(
+                    prevLastItemPosition,
+                    buildingsAdapter.itemCount - prevLastItemPosition
+                )
+            }
         }
 
         viewModel.getWishList()
     }
 
     private fun initRecyclerView() {
-        val uri = Uri.parse("myapp://buildingDetail")
         binding.rvWishlist.apply {
             buildingsAdapter = LookAroundListAdapter(context) {
-                findNavController().navigate(uri)
+                val buildingObjectJson = Gson().toJson(it)
+                val buildingObject: BuildingSummaryModel? = null
+                findNavController().navigate(Uri.parse("myapp://buildingDetail/${buildingObjectJson}&amp;$buildingObject"))
                 requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
                     ?.visibility = View.GONE
             }
@@ -71,7 +77,10 @@ class WishListFragment: BaseFragment<FragmentWishlistBinding>() {
 
     private fun setToolbar() {
         requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
-            ?.setTitle("찜 목록")
+            ?.apply {
+                setTitle("찜 목록")
+                visibility = View.VISIBLE
+            }
     }
 
     private fun setOnBackPressed() {

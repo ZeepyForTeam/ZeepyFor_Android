@@ -2,6 +2,8 @@ package com.zeepy.zeepyforandroid.myprofile.datasource
 
 import android.util.Log
 import com.zeepy.zeepyforandroid.building.ResponseBuildingInfoDTO
+import com.zeepy.zeepyforandroid.myprofile.data.ModifyPasswordReqDTO
+import com.zeepy.zeepyforandroid.myprofile.data.ReportRequestDTO
 import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.network.ZeepyApiService
 import retrofit2.Response
@@ -21,6 +23,10 @@ class MyProfileRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getUserReviews(): SimpleReviewDTOList {
         return zeepyApiService.getUserReviews().verify()
+    }
+
+    override suspend fun changeUserPassword(modifyPasswordReqDTO: ModifyPasswordReqDTO): Unit? {
+        return zeepyApiService.changeUserPassword(modifyPasswordReqDTO).verify()
     }
 }
 

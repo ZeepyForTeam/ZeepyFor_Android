@@ -41,10 +41,6 @@ class WriteReviewViewModel @Inject constructor(
     val isJustRegisterAddress: LiveData<Boolean>
         get() = _isJustRegisterAddress
 
-    private val _isRegisterAddressFromMyProfile = MutableLiveData<Boolean>(false)
-    val isRegisterAddressFromMyProfile: LiveData<Boolean>
-        get() = _isRegisterAddressFromMyProfile
-
     private val _addressListRegistered = MutableLiveData<MutableList<LocalAddressEntity>>(mutableListOf())
     val addressListRegistered: LiveData<MutableList<LocalAddressEntity>>
         get() = _addressListRegistered
@@ -109,6 +105,7 @@ class WriteReviewViewModel @Inject constructor(
     val resultSearchedAddress: LiveData<List<SearchAddressListModel>>
         get() = _resultSearchedAddress
 
+    val isFromMyProfile = MutableLiveData<Boolean>(false)
     val checkedAge = MutableLiveData<Int>()
     val reviewOfLessor = MutableLiveData<String>()
     val detailAddress = MutableLiveData<String>()
@@ -137,10 +134,6 @@ class WriteReviewViewModel @Inject constructor(
 
     fun changeIsJustRegisterAddress(boolean: Boolean) {
         _isJustRegisterAddress.value = boolean
-    }
-
-    fun changeIsRegisterAddressFromMyProfile(boolean: Boolean) {
-        _isRegisterAddressFromMyProfile.value = boolean
     }
 
     fun selectOption(option: String){

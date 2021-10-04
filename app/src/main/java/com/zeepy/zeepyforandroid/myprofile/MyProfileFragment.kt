@@ -1,5 +1,8 @@
 package com.zeepy.zeepyforandroid.myprofile
 
+import android.content.Intent
+import android.hardware.usb.UsbDevice.getDeviceName
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -13,17 +16,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.color
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
-import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentMyProfileBinding
 import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
-import com.zeepy.zeepyforandroid.preferences.SharedPreferencesManager
+import com.zeepy.zeepyforandroid.myprofile.viewmodel.MyProfileViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.util.CustomTypefaceSpan
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,11 +35,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
-
     private val viewModel by viewModels<MyProfileViewModel>()
-
-    @Inject
-    lateinit var userPreferenceManager: UserPreferenceManager
+    @Inject lateinit var userPreferenceManager: UserPreferenceManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -51,28 +52,70 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
         setButtonsOnClickListener()
         setOptionsRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
         setMainMsg()
     }
 
     private fun setButtonsOnClickListener() {
         binding.ivManageAddress.setOnClickListener {
-            findNavController().navigate(R.id.action_myProfileFragment_to_ManageAddressFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                findNavController().navigate(R.id.action_myProfileFragment_to_ManageAddressFragment)
+            } else {
+                showLoginDialog()
+            }
         }
         binding.ivManageReview.setOnClickListener {
-            findNavController().navigate(R.id.action_myProfileFragment_to_ManageReviewFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                findNavController().navigate(R.id.action_myProfileFragment_to_ManageReviewFragment)
+            } else {
+                showLoginDialog()
+            }
         }
         binding.ivWishlist.setOnClickListener {
-            findNavController().navigate(R.id.action_myProfileFragment_to_wishListFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                findNavController().navigate(R.id.action_myProfileFragment_to_wishListFragment)
+            } else {
+                showLoginDialog()
+            }
         }
     }
 
     private fun setOptionsRecyclerView() {
-        val options = arrayOf("환경설정", "문의 및 의견 보내기", "신고하기", "지피의 지기들", "현재 버전 1.1")
+        val options = arrayOf("환경설정", "문의 및 의견 보내기", "지피의 지기들", "현재 버전 1.1")
 
         binding.rvOptionsList.apply {
             setHasFixedSize(true)
-            adapter = MyProfileOptionsAdapter(options)
+            adapter = MyProfileOptionsAdapter(options) {
+                when (it) {
+                    0 -> findNavController().navigate(R.id.action_myProfileFragment_to_settingsFragment)
+                    1 -> sendEmailToAdmin()
+                    2 -> findNavController().navigate(R.id.action_myProfileFragment_to_ziggysFragment)
+                }
+            }
         }
+    }
+
+    private fun showLoginDialog() {
+        val loginDialog = ZeepyDialogBuilder(resources.getString(R.string.login_notice_message), null)
+
+        loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "취소")
+            .setRightButton(R.drawable.box_blue_59_8dp, "좋았어, 로그인하기!")
+            .setButtonHorizontalWeight(0.287f, 0.712f)
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    requireActivity().findNavController(R.id.nav_host_fragment)
+                        .navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                    dialog.dismiss()
+                }
+            })
+            .build()
+            .show(childFragmentManager, this.tag)
     }
 
     private fun setMainMsg() {
@@ -135,7 +178,8 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                                             //Log.e("parent of onClick 로그인", parentFragment.toString())
                                             //Log.e("navcontroller.currentBackStackEntry", "" + findNavController().currentBackStackEntry)
                                             //Log.e("navcontroller.previousBackStackEntry", "" + findNavController().previousBackStackEntry)
-                                            requireActivity().findNavController(R.id.nav_host_fragment).navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                                            requireActivity().findNavController(R.id.nav_host_fragment)
+                                                .navigate(R.id.action_mainFrameFragment_to_signInFragment)
                                         }
                                         "editProfile" -> {
                                             findNavController().navigate(R.id.action_myProfileFragment_to_EditMyProfileFragment)
@@ -204,5 +248,23 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
         binding.tvMainMsg.text = spannable
         binding.tvMainMsg.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun sendEmailToAdmin() {
+        val email = Intent(Intent.ACTION_SEND)
+        email.putExtra(Intent.EXTRA_SUBJECT, "")
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf("zeepy.official@gmail.com"))
+        email.putExtra(
+            Intent.EXTRA_TEXT,
+            String.format(
+                "App Version : %s\nDevice : %s\nAndroid(SDK) : %d(%s)\n내용 : ",
+                BuildConfig.VERSION_NAME,
+                Build.MODEL,
+                Build.VERSION.SDK_INT,
+                Build.VERSION.RELEASE
+            )
+        )
+        email.type = "plain/text"
+        startActivity(email)
     }
 }

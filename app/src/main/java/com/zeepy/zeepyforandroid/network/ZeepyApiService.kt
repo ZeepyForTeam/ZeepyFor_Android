@@ -15,6 +15,9 @@ import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponseMyZip
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingDetail
 import com.zeepy.zeepyforandroid.community.data.remote.responseDTO.ResponsePostingList
 import com.zeepy.zeepyforandroid.imagecontrol.PreSignedUrlDTO
+import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingLikeDTO
+import com.zeepy.zeepyforandroid.myprofile.data.ModifyPasswordReqDTO
+import com.zeepy.zeepyforandroid.myprofile.data.ReportRequestDTO
 import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.network.auth.dto.RequestTokenDTO
 import com.zeepy.zeepyforandroid.network.auth.dto.ResponseAuthDTO
@@ -154,6 +157,9 @@ interface ZeepyApiService {
     @POST("/api/reports")
     fun reportComment(@Body requestReportDTO:RequestReportDTO): Completable
 
-    @GET("api/buildings/like")
+    @GET("/api/buildings/like")
     suspend fun getBuildingsUserLike(@Query ("page") page: Int): Response<BuildingsAllDTO>
+
+    @PUT("/api/user/password")
+    suspend fun changeUserPassword(@Body modifyPasswordReqDTO: ModifyPasswordReqDTO): Response<Unit?>
 }

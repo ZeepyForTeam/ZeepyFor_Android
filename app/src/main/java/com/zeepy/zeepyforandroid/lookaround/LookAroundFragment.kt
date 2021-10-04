@@ -1,7 +1,6 @@
 package com.zeepy.zeepyforandroid.lookaround
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -264,7 +263,8 @@ class LookAroundFragment : BaseFragment<FragmentLookaroundBinding>() {
             buildingsAdapter = LookAroundListAdapter(context) {
                 val action =
                     MainFrameFragmentDirections.actionMainFrameFragmentToBuildingDetailFragment(
-                        it
+                        it,
+                        "fromLookAround"
                     )
                 requireParentFragment().requireParentFragment().findNavController().navigate(action)
             }

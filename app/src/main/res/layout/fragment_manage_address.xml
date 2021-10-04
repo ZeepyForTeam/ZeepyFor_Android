@@ -29,7 +29,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/recyclerview_address_list"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="20dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_register_address"
