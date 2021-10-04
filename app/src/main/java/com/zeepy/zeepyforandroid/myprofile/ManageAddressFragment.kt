@@ -9,17 +9,22 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.customview.DialogClickListener
 import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog.Companion.MY_PROFILE
 import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentManageAddressBinding
+import com.zeepy.zeepyforandroid.mainframe.MainActivity
 import com.zeepy.zeepyforandroid.review.data.entity.AddressModel
+import com.zeepy.zeepyforandroid.review.view.ReviewFrameFragment
 import com.zeepy.zeepyforandroid.review.view.SelectAddressFragmentDirections
 import com.zeepy.zeepyforandroid.review.view.adapter.AddressAdapter
 import com.zeepy.zeepyforandroid.review.viewmodel.WriteReviewViewModel
@@ -29,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     // 리뷰 뷰모델 인스턴스
-    private val sharedViewModel by viewModels<WriteReviewViewModel>(ownerProducer = {requireParentFragment().requireParentFragment()})
+    private val sharedViewModel by viewModels<WriteReviewViewModel>()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -45,10 +50,11 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
 
         setOnBackPressed()
         setToolbar()
-        initView()
         setDatas()
+        initView()
         goToSearchAddress()
         getBuildingId()
+
     }
 
     private fun setToolbar() {
@@ -71,7 +77,7 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     }
 
     private fun showDeleteAddressDialog(address: LocalAddressEntity) {
-        val deleteAddressDialog = ZeepyDialogBuilder("정말 삭제하시겠습니까?", "myProfile")
+        val deleteAddressDialog = ZeepyDialogBuilder("정말 삭제하시겠습니까?", MY_PROFILE)
             .setLeftButton(R.drawable.box_grayf9_8dp,"삭제")
             .setRightButton(R.drawable.box_yellowee_8dp, "취소")
             .setDialogClickListener(object : DialogClickListener {
@@ -90,7 +96,7 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     }
 
     private fun setDatas() {
-        sharedViewModel.addressListRegistered.observe(viewLifecycleOwner){
+        sharedViewModel.addressListRegistered.observe(viewLifecycleOwner) {
             (binding.recyclerviewAddressList.adapter as AddressAdapter).submitList(it.map { it.copy() })
         }
     }
@@ -102,7 +108,8 @@ class ManageAddressFragment : BaseFragment<FragmentManageAddressBinding>() {
     }
 
     private fun goToSearchAddress() {
-        val uri = Uri.parse("myapp://search/true")
+        val flag = true
+        val uri = Uri.parse("myapp://search/$flag")
         binding.tvRegisterAddress.setOnClickListener {
             sharedViewModel.addressListRegistered.value?.let { addresses ->
                 if (addresses.count() >= 3) {

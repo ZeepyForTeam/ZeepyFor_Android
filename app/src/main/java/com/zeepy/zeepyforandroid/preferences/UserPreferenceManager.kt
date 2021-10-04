@@ -58,6 +58,14 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         return sharedPreferencesManager.getSharedPrefs(ON_BOARD, false)
     }
 
+    fun saveUserLoginType(loginType: String) {
+        sharedPreferencesManager.putSharedPref(LOGIN_TYPE, loginType)
+    }
+
+    fun fetchUserLoginType(): String {
+        return sharedPreferencesManager.getSharedPrefs(LOGIN_TYPE, "")
+    }
+
     companion object {
         private const val ACCESS_TOKEN = "access_token"
         private const val REFRESH_TOKEN = "refresh_token"
@@ -66,5 +74,6 @@ class UserPreferenceManager(private val sharedPreferencesManager: SharedPreferen
         private const val USER_EMAIL = "user_email"
         private const val USER_NICKNAME = "nickname"
         private const val ON_BOARD = "on_board"
+        private const val LOGIN_TYPE = "login_type"
     }
 }

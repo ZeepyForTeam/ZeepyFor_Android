@@ -168,7 +168,13 @@
 
         <argument
             android:name="buildingSummaryModel"
-            app:argType="com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel"/>
+            app:argType="com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel"
+            app:nullable="true" />
+
+        <argument
+            android:name="buildingSummaryModelJson"
+            app:argType="string"
+            app:nullable="true"/>
 
         <action
             android:id="@+id/action_buildingDetailFragment_to_buildingAllReviewsFragment"
@@ -180,7 +186,7 @@
 
         <deepLink
             android:id="@+id/buildingDetailFragmentDeepLink"
-            app:uri="myapp://buildingDetail"/>
+            app:uri="myapp://buildingDetail/{buildingSummaryModelJson}&amp;{null}"/>
     </fragment>
 
     <fragment
