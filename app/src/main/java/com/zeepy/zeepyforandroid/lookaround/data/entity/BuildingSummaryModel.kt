@@ -8,7 +8,7 @@ import com.zeepy.zeepyforandroid.review.data.dto.ResponseReviewDTO
 import com.zeepy.zeepyforandroid.review.data.entity.SearchAddressListModel
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+@kotlinx.parcelize.Parcelize
 data class BuildingSummaryModel (
     var id: Int,
     val buildingName: String,

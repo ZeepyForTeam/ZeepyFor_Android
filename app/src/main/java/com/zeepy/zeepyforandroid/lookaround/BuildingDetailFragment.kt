@@ -5,18 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.google.gson.Gson
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
 import com.zeepy.zeepyforandroid.databinding.FragmentBuildingDetailBinding
 import com.zeepy.zeepyforandroid.enum.*
+import com.zeepy.zeepyforandroid.lookaround.data.entity.BuildingSummaryModel
 import com.zeepy.zeepyforandroid.lookaround.viewmodel.BuildingDetailViewModel
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
-import com.zeepy.zeepyforandroid.util.ItemDecoration
 import com.zeepy.zeepyforandroid.util.ZeepyStringBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,12 +26,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
     private val viewModel by viewModels<BuildingDetailViewModel>()
-    private val args: BuildingDetailFragmentArgs by navArgs()
     @Inject lateinit var userPreferenceManager: UserPreferenceManager
+    private lateinit var buildingSummaryModel: BuildingSummaryModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.changeSummary(args.buildingSummaryModel)
+        if (arguments?.get("buildingSummaryModel") != null) {
+            viewModel.changeSummary(requireArguments().get("buildingSummaryModel") as BuildingSummaryModel)
+        }
     }
 
     override fun getFragmentBinding(
@@ -41,12 +45,24 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        buildingSummaryModel = if (arguments?.get("buildingSummaryModelJson") != "fromLookAround") {
+            Gson().fromJson(arguments?.get("buildingSummaryModelJson") as String, BuildingSummaryModel::class.java)
+        } else {
+            arguments?.get("buildingSummaryModel") as BuildingSummaryModel
+        }
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        subscribeObservers()
+
         // 현재 빌딩 id로 뷰모델 데이터 업데이트
-        viewModel.changeBuildingId(args.buildingSummaryModel.id)
+        viewModel.changeBuildingId(buildingSummaryModel.id)
+        viewModel.setBuildingsUserLikes()
 
         setToolbar()
+        setOnBackPressed()
         renderOptions()
         renderPictures()
         renderBuildingType()
@@ -54,19 +70,34 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         renderBuildingAddress()
         renderCommunicationTendency()
         setReviewContents()
+    }
 
-
+    private fun subscribeObservers() {
+        viewModel.buildingsUserLikes.observe(viewLifecycleOwner) {
+            viewModel.checkIfUserLikesBuilding()
+        }
+        viewModel.isUserLike.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.toolbar.apply {
+                    binding.checkboxScrap.isChecked = true
+                }
+            } else {
+                binding.toolbar.apply {
+                    binding.checkboxScrap.isChecked = false
+                }
+            }
+        }
     }
 
     private fun setToolbar() {
         binding.toolbar.apply {
-            setTitle(args.buildingSummaryModel.buildingName)
+            setTitle(buildingSummaryModel.buildingName)
             setLookaroundBuildingTitle()
             setBackButton {
                 findNavController().popBackStack()
             }
             setScrapButton {
-                if(binding.checkboxScrap.isChecked) {
+                if (binding.checkboxScrap.isChecked) {
                     viewModel.scrapBuilding()
                 } else {
                     viewModel.cancelScrapBuilding()
@@ -75,10 +106,16 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         }
     }
 
+    private fun setOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
+    }
+
     // FIXME: Change the rendering functions to Data Binding Later
 
     private fun setReviewContents() {
-        args.buildingSummaryModel.reviews.let {
+        buildingSummaryModel.reviews.let {
             if (it.isNullOrEmpty()) {
                 binding.btnShowAllReviews.visibility = View.GONE
                 binding.layoutRepReview.root.visibility = View.GONE
@@ -109,7 +146,7 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
                 }
                 binding.btnShowAllReviews.setOnClickListener {
                     val action = BuildingDetailFragmentDirections.actionBuildingDetailFragmentToBuildingAllReviewsFragment(
-                        args.buildingSummaryModel
+                        buildingSummaryModel
                     )
                     findNavController().navigate(action)
                 }
@@ -125,7 +162,7 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
         var softyTotal: Int = 0
         var badTotal: Int = 0
 
-        args.buildingSummaryModel.reviews.let {
+        buildingSummaryModel.reviews.let {
             if (!it.isNullOrEmpty()) {
                 it.forEach { review ->
                     when (review.communcationTendency) {
@@ -171,11 +208,11 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
     }
 
     private fun renderBuildingAddress() {
-        binding.tvAddress.text = args.buildingSummaryModel.shortAddress
+        binding.tvAddress.text = buildingSummaryModel.shortAddress
     }
 
     private fun renderPaymentType() {
-        args.buildingSummaryModel.buildingDeals.let {
+        buildingSummaryModel.buildingDeals.let {
             if (!it.isNullOrEmpty()) {
                 binding.tvDealTypeContent.text = resources.getString(DealType.findDealTypeFromString(it[0].dealType))
             }
@@ -183,14 +220,14 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
     }
 
     private fun renderBuildingType() {
-        binding.tvBuildingTypeContent.text = getString(BuildingType.findBuildingTypeFromString(args.buildingSummaryModel.buildingType))
+        binding.tvBuildingTypeContent.text = getString(BuildingType.findBuildingTypeFromString(buildingSummaryModel.buildingType))
     }
 
     private fun renderOptions() {
-        args.buildingSummaryModel.reviews.let {
+        buildingSummaryModel.reviews.let {
             if (!it.isNullOrEmpty()) {
                 if (!it[0].furnitures.isNullOrEmpty()) {
-                    binding.tvCharacteristicsContent.text = args.buildingSummaryModel.reviews[0].furnitures.joinToString(separator = ", ") { furniture ->
+                    binding.tvCharacteristicsContent.text = buildingSummaryModel.reviews[0].furnitures.joinToString(separator = ", ") { furniture ->
                         resources.getString(Options.getOptionFromString(furniture))
                     }
                 }
@@ -200,7 +237,7 @@ class BuildingDetailFragment: BaseFragment<FragmentBuildingDetailBinding>() {
 
     // FIXME: Consider using an adapter..
     private fun renderPictures() {
-        args.buildingSummaryModel.reviews.let {
+        buildingSummaryModel.reviews.let {
             if (!it.isNullOrEmpty()) {
                 if (!it[0].imageUrls.isNullOrEmpty()) {
                     it[0].imageUrls.let { images ->

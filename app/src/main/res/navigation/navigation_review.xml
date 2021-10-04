@@ -38,12 +38,12 @@
         tools:layout="@layout/fragment_search_address">
 
         <deepLink android:id="@+id/searchFragmentDeepLink"
-            app:uri="myapp://search/{isRegisterAddressFromMyProfile}"/>
+            app:uri="myapp://search/{isFromMyProfile}"/>
 
         <argument
-            android:name="isRegisterAddressFromMyProfile"
+            android:name="isFromMyProfile"
             app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="false"/>
 
         <action
             android:id="@+id/action_searchAddressFragment_to_writeDetailAddressFragment"

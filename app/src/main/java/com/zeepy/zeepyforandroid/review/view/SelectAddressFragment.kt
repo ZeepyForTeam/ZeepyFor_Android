@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.address.LocalAddressEntity
 import com.zeepy.zeepyforandroid.base.BaseFragment
@@ -37,6 +38,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>() {
         setAddressDatas()
         goToSearchAddress()
         getBuildingId()
+
+        Log.e("parent parent:", requireParentFragment().requireParentFragment().toString())
     }
 
     private fun initView() {

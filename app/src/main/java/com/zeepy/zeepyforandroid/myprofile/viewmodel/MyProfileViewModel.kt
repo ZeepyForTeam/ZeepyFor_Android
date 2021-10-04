@@ -1,4 +1,4 @@
-package com.zeepy.zeepyforandroid.myprofile
+package com.zeepy.zeepyforandroid.myprofile.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -12,10 +12,13 @@ import com.zeepy.zeepyforandroid.map.usecase.GetBuildingsUserLikeUseCase
 import com.zeepy.zeepyforandroid.map.usecase.util.Result
 import com.zeepy.zeepyforandroid.map.usecase.util.data
 import com.zeepy.zeepyforandroid.map.usecase.util.succeeded
+import com.zeepy.zeepyforandroid.myprofile.data.ModifyPasswordReqDTO
+import com.zeepy.zeepyforandroid.myprofile.data.ReportRequestDTO
 import com.zeepy.zeepyforandroid.myprofile.data.SimpleReviewDTOList
 import com.zeepy.zeepyforandroid.myprofile.repository.MyProfileRepository
 import com.zeepy.zeepyforandroid.preferences.UserPreferenceManager
 import com.zeepy.zeepyforandroid.signin.controller.UserDataController
+import com.zeepy.zeepyforandroid.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -42,8 +45,8 @@ class MyProfileViewModel @Inject constructor(
     val userReviews: LiveData<SimpleReviewDTOList>
         get() = _userReviews
 
-    private val _userWishList = MutableLiveData<Result<List<BuildingSummaryModel>>>()
-    val userWishList: LiveData<Result<List<BuildingSummaryModel>>>
+    private val _userWishList = MutableLiveData<Event<Result<List<BuildingSummaryModel>>>>()
+    val userWishList: LiveData<Event<Result<List<BuildingSummaryModel>>>>
         get() = _userWishList
 
     init {
@@ -68,7 +71,7 @@ class MyProfileViewModel @Inject constructor(
         )
     }
 
-    fun getUserReviews() {
+    private fun getUserReviews() {
         viewModelScope.launch {
             try {
                 val result = repository.getUserReviews()
@@ -88,7 +91,7 @@ class MyProfileViewModel @Inject constructor(
             )
 
             if (result.succeeded) {
-                _userWishList.value = result
+                _userWishList.postValue(Event(result))
                 Log.e("GET ALL BUILDINGS RESPONSE", "" + result.data)
             }
         }
@@ -110,6 +113,16 @@ class MyProfileViewModel @Inject constructor(
             try {
                 val result = repository.logout()
                 _isLoggedOut.value = true
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun changeUserPassword(modifyPasswordReqDTO: ModifyPasswordReqDTO) {
+        viewModelScope.launch {
+            try {
+                val result = repository.changeUserPassword(modifyPasswordReqDTO)
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
