@@ -22,6 +22,9 @@ import androidx.navigation.fragment.findNavController
 import com.zeepy.zeepyforandroid.BuildConfig
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.databinding.FragmentMyProfileBinding
 import com.zeepy.zeepyforandroid.myprofile.adapter.MyProfileOptionsAdapter
 import com.zeepy.zeepyforandroid.myprofile.viewmodel.MyProfileViewModel
@@ -58,13 +61,25 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
 
     private fun setButtonsOnClickListener() {
         binding.ivManageAddress.setOnClickListener {
-            findNavController().navigate(R.id.action_myProfileFragment_to_ManageAddressFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                findNavController().navigate(R.id.action_myProfileFragment_to_ManageAddressFragment)
+            } else {
+                showLoginDialog()
+            }
         }
         binding.ivManageReview.setOnClickListener {
-            findNavController().navigate(R.id.action_myProfileFragment_to_ManageReviewFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                findNavController().navigate(R.id.action_myProfileFragment_to_ManageReviewFragment)
+            } else {
+                showLoginDialog()
+            }
         }
         binding.ivWishlist.setOnClickListener {
-            findNavController().navigate(R.id.action_myProfileFragment_to_wishListFragment)
+            if (userPreferenceManager.fetchIsAlreadyLogin()) {
+                findNavController().navigate(R.id.action_myProfileFragment_to_wishListFragment)
+            } else {
+                showLoginDialog()
+            }
         }
     }
 
@@ -81,6 +96,26 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
                 }
             }
         }
+    }
+
+    private fun showLoginDialog() {
+        val loginDialog = ZeepyDialogBuilder(resources.getString(R.string.login_notice_message), null)
+
+        loginDialog.setLeftButton(R.drawable.box_grayf9_8dp, "취소")
+            .setRightButton(R.drawable.box_blue_59_8dp, "좋았어, 로그인하기!")
+            .setButtonHorizontalWeight(0.287f, 0.712f)
+            .setDialogClickListener(object : DialogClickListener {
+                override fun clickLeftButton(dialog: ZeepyDialog) {
+                    dialog.dismiss()
+                }
+                override fun clickRightButton(dialog: ZeepyDialog) {
+                    requireActivity().findNavController(R.id.nav_host_fragment)
+                        .navigate(R.id.action_mainFrameFragment_to_signInFragment)
+                    dialog.dismiss()
+                }
+            })
+            .build()
+            .show(childFragmentManager, this.tag)
     }
 
     private fun setMainMsg() {

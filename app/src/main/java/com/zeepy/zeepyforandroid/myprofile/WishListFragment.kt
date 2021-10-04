@@ -13,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.zeepy.zeepyforandroid.R
 import com.zeepy.zeepyforandroid.base.BaseFragment
+import com.zeepy.zeepyforandroid.customview.DialogClickListener
+import com.zeepy.zeepyforandroid.customview.ZeepyDialog
+import com.zeepy.zeepyforandroid.customview.ZeepyDialogBuilder
 import com.zeepy.zeepyforandroid.customview.ZeepyToolbar
 import com.zeepy.zeepyforandroid.databinding.FragmentWishlistBinding
 import com.zeepy.zeepyforandroid.lookaround.adapter.LookAroundListAdapter
@@ -74,7 +77,10 @@ class WishListFragment: BaseFragment<FragmentWishlistBinding>() {
 
     private fun setToolbar() {
         requireParentFragment().requireParentFragment().view?.findViewById<ZeepyToolbar>(R.id.toolbar)
-            ?.setTitle("찜 목록")
+            ?.apply {
+                setTitle("찜 목록")
+                visibility = View.VISIBLE
+            }
     }
 
     private fun setOnBackPressed() {
